@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class Vo_Funding {
 
-	private int fund_no;
-	private int fund_catd_no;
-	private String fund_front_img;
-	private String fund_title;
-	private String fund_creater;
-	private String fund_content;
-	private int fund_con_count;
-	private int fund_target_price;
-	private Date fund_regdate;
-	private Date fund_deadline;
-	private String fund_sof;
+	private int fund_no; //펀딩 번호
+	private int fund_catd_no; //카테고리 번호
+	private String fund_front_img; //펀딩 대표 이미지
+	private String fund_title; //제목
+	private String fund_creater; //작성자
+	private String fund_content; //내용
+	private int fund_con_count; //내용 카운트
+	private int fund_target_price; //목표금액
+	private Date fund_regdate; //등록날짜
+	private Date fund_deadline; //마감기한
+	private String fund_sof; //펀딩 성공여부 
 
 	public Vo_Funding() {
 		super();

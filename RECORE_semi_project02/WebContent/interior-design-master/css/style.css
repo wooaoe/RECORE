@@ -7504,8 +7504,9 @@ h1, h2, h3, h4, h5, h6 {
   .site-navbar-wrap .site-navbar-top {
     font-size: 0.8rem; }
 
-.site-navbar-top {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+/*수정한 부분*/
+/*.site-navbar-top {*/
+/*  border-bottom: 1px solid rgba(255, 255, 255, 0.1); }*/
 
 .site-navbar {
   margin-bottom: 0px;
@@ -7521,15 +7522,15 @@ h1, h2, h3, h4, h5, h6 {
       color: #fff; }
     .site-navbar .site-navigation .site-menu a {
       text-decoration: none !important;
-      font-size: 15px;
+      font-size: 18px; /*수정한 부분 원래 15px*/
       display: inline-block; }
     .site-navbar .site-navigation .site-menu > li {
       display: inline-block;
       padding: 10px 5px; }
       .site-navbar .site-navigation .site-menu > li > a {
-        padding: 10px 10px;
+        padding: 10px 10px; 
         color: rgba(255, 255, 255, 0.6);
-        font-size: 15px;
+        font-size: 18px; /*수정한 부분 원래 15px*/
         text-decoration: none !important; }
         .site-navbar .site-navigation .site-menu > li > a:hover {
           color: #fff; }
@@ -7544,7 +7545,7 @@ h1, h2, h3, h4, h5, h6 {
         padding-right: 20px; }
         .site-navbar .site-navigation .site-menu .has-children > a:before {
           position: absolute;
-          content: "\e313";
+          /*content: "\e313";*/ /*수정한 부분 카테고리 화살표 없앰*/
           font-size: 16px;
           top: 50%;
           right: 0;
@@ -7779,7 +7780,7 @@ h1, h2, h3, h4, h5, h6 {
     height: calc(100vh); }
   .site-blocks-cover.inner-page, .site-blocks-cover.inner-page .row {
     min-height: 600px;
-    height: calc(80vh); }
+    height: calc(80vh); } 
   .site-blocks-cover .sub-text {
     font-size: 1.1rem;
     text-transform: uppercase;

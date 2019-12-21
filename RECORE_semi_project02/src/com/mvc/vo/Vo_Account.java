@@ -1,23 +1,28 @@
 package com.mvc.vo;
 
 public class Vo_Account {
-	
-	private int acc_no; //계정 번호
-	private String acc_id; //계정 아이디
-	private String acc_pw; //계정 비밀번호
-	private String acc_name; //이름
-	private String acc_birth; //나이
-	private String acc_phone; //휴대폰
-	private String acc_email; //이메일
-	private String acc_addr; //주소
-	private String acc_isReg; //가입여부
-	private int acc_point; //적립금
-	private String acc_m_c; //관리자 유무
-	
-	public Vo_Account() {}
-	
+
+	private int acc_no; // 계정 번호
+	private String acc_id; // 계정 아이디
+	private String acc_pw; // 계정 비밀번호
+	private String acc_name; // 이름
+	private String acc_birth; // 나이
+	private String acc_phone; // 휴대폰
+	private String acc_email; // 이메일
+	private String acc_zipcode; // 우편번호
+	private String acc_addr; // 주소
+	private String acc_addr2; // 상세주소
+	private String acc_isReg; // 가입여부
+	private int acc_point; // 적립금
+	private String acc_m_c; // 관리자 유무
+
+	public Vo_Account() {
+		super();
+	}
+
 	public Vo_Account(int acc_no, String acc_id, String acc_pw, String acc_name, String acc_birth, String acc_phone,
-			String acc_email, String acc_addr, String acc_isReg, int acc_point, String acc_m_c) {
+			String acc_email, String acc_zipcode, String acc_addr, String acc_addr2, String acc_isReg, int acc_point,
+			String acc_m_c) {
 		super();
 		this.acc_no = acc_no;
 		this.acc_id = acc_id;
@@ -26,7 +31,9 @@ public class Vo_Account {
 		this.acc_birth = acc_birth;
 		this.acc_phone = acc_phone;
 		this.acc_email = acc_email;
+		this.acc_zipcode = acc_zipcode;
 		this.acc_addr = acc_addr;
+		this.acc_addr2 = acc_addr2;
 		this.acc_isReg = acc_isReg;
 		this.acc_point = acc_point;
 		this.acc_m_c = acc_m_c;
@@ -88,12 +95,28 @@ public class Vo_Account {
 		this.acc_email = acc_email;
 	}
 
+	public String getAcc_zipcode() {
+		return acc_zipcode;
+	}
+
+	public void setAcc_zipcode(String acc_zipcode) {
+		this.acc_zipcode = acc_zipcode;
+	}
+
 	public String getAcc_addr() {
 		return acc_addr;
 	}
 
 	public void setAcc_addr(String acc_addr) {
 		this.acc_addr = acc_addr;
+	}
+
+	public String getAcc_addr2() {
+		return acc_addr2;
+	}
+
+	public void setAcc_addr2(String acc_addr2) {
+		this.acc_addr2 = acc_addr2;
 	}
 
 	public String getAcc_isReg() {
@@ -123,9 +146,9 @@ public class Vo_Account {
 	@Override
 	public String toString() {
 		return "Vo_Account [acc_no=" + acc_no + ", acc_id=" + acc_id + ", acc_pw=" + acc_pw + ", acc_name=" + acc_name
-				+ ", acc_birth=" + acc_birth + ", acc_phone=" + acc_phone + ", acc_email=" + acc_email + ", acc_addr="
-				+ acc_addr + ", acc_isReg=" + acc_isReg + ", acc_point=" + acc_point + ", acc_m_c=" + acc_m_c + "]";
-	}	
-	
-	
+				+ ", acc_birth=" + acc_birth + ", acc_phone=" + acc_phone + ", acc_email=" + acc_email
+				+ ", acc_zipcode=" + acc_zipcode + ", acc_addr=" + acc_addr + ", acc_addr2=" + acc_addr2
+				+ ", acc_isReg=" + acc_isReg + ", acc_point=" + acc_point + ", acc_m_c=" + acc_m_c + "]";
+	}
+
 }

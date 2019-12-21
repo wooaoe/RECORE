@@ -52,20 +52,20 @@
             </div>
             <div class="col-6">
               <div class="d-flex ml-auto">
-               	<form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>
+               <<form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+                	<!-- <input type="text" name="query" placeholder="Search" />
+              		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
                 <a href="#" class="d-flex align-items-center">
                   <!-- <span class="icon-envelope mr-2"></span>  -->
-                  <span class="d-none d-md-inline-block">로그인 &nbsp;/&nbsp; 회원가입</span>
+                  <span class="d-none d-md-inline-block">로그인 &nbsp;/&nbsp; 회원가입 &nbsp;&nbsp;마이페이지</span>
                 </a>
-                <!--                 
+                <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>
                   <span class="d-none d-md-inline-block">회원가입</span>
-                </a>
-                 -->
+                </a> --> 
+                 
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1>
+              <!-- <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
@@ -91,12 +91,23 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="projects.html">Product</a>
+                      <a href="product_all.html">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">Bag / Acc</a></li>
-                        <li><a href="#">Clothing</a></li>
+                        <li><a href="product.html">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="clothing.html">Clothing</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "#">Outer</a></li>                        	
+								<li><a href = "#">Top</a></li>                        	
+								<li><a href = "#">Bottom</a></li>                        	
+                        	</ul>
+                        </li>
                         <li><a href="#">Wallet</a></li>
-                        <li><a href="#">Life</a></li>
+                        <li class = "has-children"><a href="#">Life</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "#">Supply</a></li>                        	
+								<li><a href = "#">Home</a></li>                        	
+                        	</ul>
+                        </li>
                       </ul>
                     </li>
                     <li  class="has-children"><a href="news.html">Issue</a>
