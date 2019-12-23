@@ -26,19 +26,15 @@
     <link rel="stylesheet" href="css/style.css">
 <style>
 #title{
-font-size:100px;
-}
-#deadline{
-}
-#target_price{
-}
-#creator{
-}
-#title{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:28px;
+padding-top:10px;
+padding-bottom:100px;
 }
 #btn{
 	
-	position: absolute;
+	position: relative;
 	padding-top: 10px;
     padding-bottom: 10px;
     background-color: #F25430; 
@@ -46,11 +42,46 @@ font-size:100px;
     color: white;
 	padding: 20px 100px;
    	text-align: center;  
-    font-size: 15px;
+    font-size: 20px;
     cursor: pointer;
+    font-family: Roboto, 'Noto Sans KR', sans-serif;
    	
 }
-
+#deadline{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:30px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#target_price{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:25px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#total-amount{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#total-supporter{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#creator{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:25px;
+padding-top: 10px;
+padding-bottom: 50px;
+}
 
 
 </style>    
@@ -217,26 +248,32 @@ out.println(request.getParameter("smarteditor"));
 </div>
 
  <div class="state-box">
- <div id=creator> 메이커 정보: 
-<% 
-request.setCharacterEncoding("utf-8");
-out.println(request.getParameter("creator")); %> 
-</div>
+ 
  <div id=deadline>
  <p class="remaining-day"><% 
 request.setCharacterEncoding("utf-8");
-out.println(request.getParameter("deadline")); %> 일 남음</p></div>
-                    <p class="rate-bar"><em style="width:156%"></em></p>      
-                  <p class="achievement-rate"><strong>156</strong>% 달성</p>
+out.println(request.getParameter("deadline")); %> 일 종료</p></div>
+
+                      <!-- <p class="rate-bar"><em style="width:156%"></em></p>      
+                  <!--  p class="achievement-rate"><strong>156</strong>% 달성</p>-->
 				 <div id=target_price> <p class="target_price"><strong>목표금액  <% 
 request.setCharacterEncoding("utf-8");
 out.println(request.getParameter("target_price")); %> 원 </strong></p></div>	
                   <p class="total-amount"><strong>3,138,000</strong>원  펀딩</p>
                   <p class="total-supporter"><strong>44</strong>명의 서포터</p>
-                  <div id="btn">
-                     <button class="button">펀딩하기</button>
+                  
+                  <div id=creator> 메이커 정보: 
+<% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("creator")); %> 
+</div>
+                  
+                  <div class="button" id="btn">
+                    펀딩하기
                   </div>
+                  
                 </div>
+               
           
        
         </div>
