@@ -15,6 +15,7 @@ public class Vo_Funding {
 	private Date fund_regdate; //등록날짜
 	private Date fund_deadline; //마감기한
 	private String fund_sof; //펀딩 성공여부 
+	
 
 	public Vo_Funding() {
 		super();

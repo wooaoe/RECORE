@@ -15,6 +15,7 @@ public class Vo_Account {
 	private String acc_isReg; // 가입여부
 	private int acc_point; // 적립금
 	private String acc_m_c; // 관리자 유무
+	
 
 	public Vo_Account() {
 	}

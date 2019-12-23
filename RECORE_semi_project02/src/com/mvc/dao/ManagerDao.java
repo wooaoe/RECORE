@@ -15,5 +15,6 @@ public interface ManagerDao {
 	public boolean M_update(Vo_Manager_Payment mp); // 수정
 
 	public boolean M_delete(int mseq); // 삭제
+	
 
 }

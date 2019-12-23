@@ -12,4 +12,5 @@ public interface AccountDao {
 
 	public boolean A_delete(int aseq); // 쿼리문은 update로 사용 / 회원탈퇴 여부 판단
 
+	
 }

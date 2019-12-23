@@ -11,6 +11,7 @@ public class Vo_Manager_Payment {
 	private int ppm_amount; // 수량
 	private Date ppm_date; // 날짜
 
+	
 	public Vo_Manager_Payment() {
 		super();
 	}

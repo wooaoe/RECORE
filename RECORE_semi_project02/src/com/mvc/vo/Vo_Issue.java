@@ -16,6 +16,7 @@ public class Vo_Issue {
 	private String iss_source; // 출처
 	private int iss_view_count; // 조회수
 	private String iss_note; // 주석
+	
 
 	public Vo_Issue() {
 		super();

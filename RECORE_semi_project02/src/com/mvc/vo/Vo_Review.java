@@ -11,6 +11,7 @@ public class Vo_Review {
 	private int review_rate; // 평점
 	private Date review_regdate; // 작성날짜
 
+	
 	public Vo_Review() {
 		super();
 	}

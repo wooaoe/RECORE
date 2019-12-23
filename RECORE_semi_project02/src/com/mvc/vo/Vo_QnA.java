@@ -17,6 +17,7 @@ public class Vo_QnA {
 	private int qna_view_count; //조회수
 	private int qna_pno; //현재 어떤 QnA글번호에 답글을 달았는지 알 수 있는 부모넘버 
 	
+	
 	public Vo_QnA() {
 		super();
 	}

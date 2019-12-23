@@ -20,6 +20,7 @@ public class Vo_Product {
 	private String prod_note; // 주석
 	private List<Vo_Prod_option> plist; // 상품 옵션 리스트로 관리
 
+	
 	public Vo_Product() {
 		super();
 	}

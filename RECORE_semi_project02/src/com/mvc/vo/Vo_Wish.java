@@ -5,6 +5,7 @@ public class Vo_Wish {
 	private int acc_no; // 계정 번호
 	private int prod_no; // 상품 번호
 
+	
 	public Vo_Wish() {
 		super();
 	}

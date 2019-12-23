@@ -16,5 +16,6 @@ public interface FundingDao {
 	public boolean F_insert(Vo_Funding_detail fvo); //펀딩 참여 내역 / 카드정보 입력받기
 
 	public boolean F_expire(Vo_Funding sof); // 펀딩 성공/실패 여부 판단
+	
 
 }

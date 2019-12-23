@@ -21,5 +21,6 @@ public interface ProductDao {
 	public boolean P_update(Vo_Product pvo); // 상품 수정
 
 	public boolean P_delete(int aseq); // 상품 삭제
+	
 
 }

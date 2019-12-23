@@ -16,4 +16,5 @@ public interface MyPageDao {
 
 	public boolean My_updateCart(Vo_Order cart); //장바구니 수정시 
 
+	
 }

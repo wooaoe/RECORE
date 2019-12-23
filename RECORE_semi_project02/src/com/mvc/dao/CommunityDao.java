@@ -21,4 +21,5 @@ public interface CommunityDao {
 
 	public boolean C_delete(int cseq); //삭제 
 
+	
 }

@@ -7,6 +7,7 @@ public class Vo_Prod_option {
 	private String prod_size; // 상품 사이즈
 	private int prod_stock; // 재고
 
+	
 	public Vo_Prod_option() {
 		super();
 	}

@@ -12,6 +12,7 @@ public class Vo_Order_Num {
 	private String order_addr2; // 배송 세부주소
 	private Date order_date; // 주문 날짜
 	private List<Vo_Order> olist;
+	
 
 	public Vo_Order_Num() {
 		super();

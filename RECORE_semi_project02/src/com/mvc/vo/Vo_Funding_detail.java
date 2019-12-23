@@ -12,6 +12,7 @@ public class Vo_Funding_detail {
 	private String fpm_card_cvc; //cvc번호
 	private String fpm_c_yn; //취소여부
 	
+	
 	public Vo_Funding_detail() {
 		super();
 	}

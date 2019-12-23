@@ -14,4 +14,5 @@ public interface IssueDao {
 
 	public boolean I_delete(int iseq); //이슈 삭제 
 
+	
 }
