@@ -147,8 +147,8 @@ padding-bottom: 50px;
                     <li class="has-children">
                       <a href="index.html">Funding</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">조회</a></li>
-                        <li><a href="#">등록</a></li>
+                        <li><a href="fundinglist.html">조회</a></li>
+                        <li><a href="fundingcreate.html">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
