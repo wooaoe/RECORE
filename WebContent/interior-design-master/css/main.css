@@ -325,23 +325,23 @@ h6 {
 }
 
 .wrapper--w960 {
-  max-width: 960px;
+  max-width: 11160px;
 }
 
 .wrapper--w900 {
-  max-width: 900px;
+  max-width: 11100px;
 }
 
 .wrapper--w790 {
-  max-width: 790px;
+  max-width: 11190px;
 }
 
 .wrapper--w780 {
-  max-width: 780px;
+  max-width: 11380px;
 }
 
 .wrapper--w680 {
-  max-width: 680px;
+  max-width: 11380px;
 }
 
 /* ==========================================================================
@@ -646,6 +646,7 @@ textarea {
 .card-6 .card-body {
   background: #fff;
   position: relative;
+  border: 1px solid #ffffff;
   border-bottom: none;
   padding: 30px 0;
   padding-bottom: 0;
@@ -673,7 +674,7 @@ textarea {
 
 .card-6 .card-footer {
   background: #fff;
-
+   border: 1px solid #ffffff;	
   border-top: none;
   -webkit-border-bottom-left-radius: 3px;
   -moz-border-radius-bottomleft: 3px;

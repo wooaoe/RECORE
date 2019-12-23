@@ -189,19 +189,19 @@ padding-top: 50px;
 <br>
   <div class="page-wrapper bg-dark p-t-100 p-b-50">
         <div class="wrapper wrapper--w900">
-<div class="card card-6">
-                <div class="card-heading">
+		<div class="card card-6" >
+                <div class="card-heading" >
                     <h2 class="title">펀딩 등록하기</h2>
                 </div>
-                <div class="card-body">
-                    <form method="POST">
-                        <div class="form-row">
+                <div class="card-body"style="border:0px;" >
+                    <form action="funding1.jsp" method="post" id="frm">
+                        <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 제목</div>
                             <div class="value">
                                 <input class="input--style-6" type="text" name="full_name">
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" style="border:0px;">
                             <div class="name">작성자</div>
                             <div class="value">
                                 <div class="input-group">
@@ -209,7 +209,7 @@ padding-top: 50px;
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" style="border:0px;">
                             <div class="name">목표 금액</div>
                             <div class="value">
                                 <div class="input-group">
@@ -217,7 +217,7 @@ padding-top: 50px;
                                 </div>
                             </div>
                         </div>
-                         <div class="form-row">
+                         <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 마감 기한</div>
                             <div class="value">
                                 <div class="input-group">
@@ -225,7 +225,7 @@ padding-top: 50px;
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" style="border:0px;">
                             <div class="name">본문 내용 이미지 업로드</div>
                             <div class="value">
                                 <div class="input-group js-input-file">
@@ -236,7 +236,7 @@ padding-top: 50px;
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row" style="border:0px;">
                             <div class="name">썸네일 이미지 업로드</div>
                             <div class="value">
                                 <div class="input-group js-input-file">
@@ -250,7 +250,7 @@ padding-top: 50px;
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn--radius-2 btn--blue-2" type="submit">펀딩 등록하기</button>
+                    <input type="button" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" type="submit">
                 </div>
             </div>
             </div>
@@ -259,9 +259,9 @@ padding-top: 50px;
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
 
-
+<script src="js/global.js"></script>
     <!-- Main JS-->
-    <script src="js/global.js"></script>
+    
 
 <!--form action="funding1.jsp" method="post" id="frm">
 <div id="table">
