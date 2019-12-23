@@ -10,14 +10,13 @@ public class Vo_Account {
 	private String acc_phone; // 휴대폰
 	private String acc_email; // 이메일
 	private String acc_zipcode; // 우편번호
-	private String acc_addr; // 주소
-	private String acc_addr2; // 상세주소
+	private String acc_addr; // 주 주소
+	private String acc_addr2; // 세부 주소
 	private String acc_isReg; // 가입여부
 	private int acc_point; // 적립금
 	private String acc_m_c; // 관리자 유무
 
 	public Vo_Account() {
-		super();
 	}
 
 	public Vo_Account(int acc_no, String acc_id, String acc_pw, String acc_name, String acc_birth, String acc_phone,

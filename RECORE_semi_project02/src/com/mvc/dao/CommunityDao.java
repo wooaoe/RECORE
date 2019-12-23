@@ -19,6 +19,6 @@ public interface CommunityDao {
 
 	public boolean Cr_update(Vo_Review rev); //Review 수정
 
-	public boolean C_delete(int seq); //삭제 
+	public boolean C_delete(int cseq); //삭제 
 
 }
