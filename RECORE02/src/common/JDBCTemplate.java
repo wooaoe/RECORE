@@ -1,5 +1,6 @@
 package common;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -104,5 +105,26 @@ public class JDBCTemplate {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	   
+	public static String properties() {
+		String filePath = "";
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		URL url2 = classLoader.getResource("/common/query.properties");
+
+		if (url2 == null) {
+			System.out.println("query.properties 파일 찾기 실패");
+		} else {
+			filePath = url2.getPath();
+		}
+		System.out.println("query.properties path: " + filePath);
+
+		return filePath;
 	}
 }
