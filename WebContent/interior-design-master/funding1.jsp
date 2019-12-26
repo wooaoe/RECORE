@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8"); %>
     <% response.setContentType("text/html; charset=UTF-8"); %>
@@ -8,6 +8,7 @@
     <title>RECORE &mdash; PRODUCT</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
     <link rel="stylesheet" href="fonts/icomoon/style.css">
