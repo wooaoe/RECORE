@@ -14,20 +14,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="cssMain/magnific-popup.css">
-    <link rel="stylesheet" href="cssMain/jquery-ui.css">
-    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
-    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
-    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/jquery-ui.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/bootstrap-datepicker.css">
     
     
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/fonts/flaticon/font/flaticon.css">
   
-    <link rel="stylesheet" href="cssMain/aos.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/aos.css">
 
-    <link rel="stylesheet" href="cssMain/styleProd.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
     
     
   </head>
@@ -51,7 +51,8 @@
         
         <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "imagesMain/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
+        <img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
           <div class="row align-items-center">
             <div class="col-6">
             
@@ -70,17 +71,17 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="../RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
                  
-                 <a href="../RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="../RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="../RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  
                 
@@ -110,7 +111,7 @@
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
-                    <li class="has-children" ">
+                    <li class="has-children">
                       <a href="index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="#">조회</a></li>
@@ -128,7 +129,7 @@
 								<li><a href = "Bottom.jsp">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="#">Wallet</a></li>
+                        <li><a href="Wallet.jsp">Wallet</a></li>
                         <li class = "has-children"><a href="#">Life</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "#">Supply</a></li>                        	
@@ -162,7 +163,7 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(imagesMain/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
          <div class="col-md-10">
@@ -419,9 +420,7 @@
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
-            All rights reserved | RECORE<!--  This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by 
-            <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            All rights reserved | RECORE
             </p>
           </div>
           

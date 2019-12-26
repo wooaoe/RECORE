@@ -3,12 +3,12 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-    
-    
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>RECORE &mdash; PRODUCT</title>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/aos.css">
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
+    
     
   </head>
   <body>
@@ -167,20 +168,21 @@
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
         	 <br><br><br><br>
-         	<h1>ALL</h1>
+         	<h1>Wallet</h1>
+         	<h5><span class="sub-text">&nbsp;&nbsp;Your Life</span></h5>
           </div>
         </div> 
       </div>
     </div>  
     
-    
+    <!--<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${vo.iss_no }/th_img.png  -->
 
     <div class="site-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
-              <img src="product/Sealand_Bettie_Breeze 대표이미지.jpg" alt="Image" class="img-fluid">
+              <img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/Bag/${vo.prod_no}/f_img.jpg" alt="Image" class="img-fluid">
             </a>
             <h3 class="mb-0"><a href="#">Sealand Bettie Breeze</a></h3>
             <span class="text-muted">SEALAND GEAR</span><br>
