@@ -105,4 +105,36 @@ public class JDBCTemplate {
 			e.printStackTrace();
 		}
 	}
+	
+	   
+	   /*
+	       @ 기능 : properties 파일 경로 구하는 메서드
+	   */
+	   public static String properties() {
+	      String filePath = "";
+	      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+	      if (classLoader == null) {
+	         classLoader = ClassLoader.getSystemClassLoader();
+	      }
+	      
+	      URL url2 = classLoader.getResource("/common/query.properties");
+	      
+	      if (url2 == null) {
+	         System.out.println("query.properties 파일 찾기 실패");
+	      } else {
+	         filePath = url2.getPath();
+	      }
+	      System.out.println("query.properties path: " + filePath);
+	      
+	      return filePath;
+	   }
+	   
+	/*
+	 * Properties prop = new Properties(); 
+	 * String filePath = properties();
+	 * prop.load(new FileInputStream(filePath)); 
+	 * String sql = prop.getProperty("selectAllNews");
+	 */
+	   //dao에서 할 때 마다 쓰기 
+	
 }

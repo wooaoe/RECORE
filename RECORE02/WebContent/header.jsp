@@ -8,11 +8,17 @@
           <span class="icon-close2 js-menu-toggle"></span>
         </div>
       </div>
+      
       <div class="site-mobile-menu-body"></div>
     </div> <!-- .site-mobile-menu -->
- 	 <div class="site-navbar-wrap" style="position: static;">
+ 	 <div class="site-navbar-wrap" style="position: static; background-color: #A0D9D9;">
       <div class="site-navbar-top">
         <div class="container py-3">
+        
+           <!-- @@@로고 위치 @@@-->
+        <br>
+        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "../images/donut.png"></a></div>
+        
           <div class="row align-items-center">
             <div class="col-6">
             
@@ -24,32 +30,43 @@
             -->
             
             </div>
+           
+            <!-- 페이지마다 로그인/회원가입 뜨는거 -->
             <div class="col-6">
               <div class="d-flex ml-auto">
-               	<form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>
+              
+               <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+                	<!-- <input type="text" name="query" placeholder="Search" />
+              		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="#" class="d-flex align-items-center">
-                  <!-- <span class="icon-envelope mr-2"></span>  -->
-                  <span class="d-none d-md-inline-block">로그인 &nbsp;/&nbsp; 회원가입</span>
-                </a>
-                <!--                 
+                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
+                 </a>
+                 
+                 <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
+                 
+                
+                <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>
                   <span class="d-none d-md-inline-block">회원가입</span>
-                </a>
-                 -->
+                </a> --> 
+                 
               </div>
             </div>
           </div>
         </div>
       </div>
+     
       <div class="site-navbar">
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1>
+              <!-- <h1 class="mb-0 site-logo"><a href="../index.html">RECORE</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
@@ -58,28 +75,39 @@
 
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
                     <li class="has-children">
-                      <a href="index.html">Funding</a>
+                      <a href="../index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="#">조회</a></li>
                         <li><a href="#">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="projects.html">Product</a>
+                      <a href="../RECOREProduct/Prod_All.jsp" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">Bag / Acc</a></li>
-                        <li><a href="#">Clothing</a></li>
+                        <li><a href="../RECOREProduct/BagAcc.jsp" style = "color:black;">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="../RECOREProduct/Clothing.jsp" style = "color:black;">Clothing</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "../RECOREProduct/Outer.jsp">Outer</a></li>                        	
+								<li><a href = "../RECOREProduct/TOP.jsp">Top</a></li>                        	
+								<li><a href = "../RECOREProduct/Bottom.jsp">Bottom</a></li>                        	
+                        	</ul>
+                        </li>
                         <li><a href="#">Wallet</a></li>
-                        <li><a href="#">Life</a></li>
+                        <li class = "has-children"><a href="#">Life</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "#">Supply</a></li>                        	
+								<li><a href = "#">Home</a></li>                        	
+                        	</ul>
+                        </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html">Issue</a>
+                    <li  class="has-children"><a href="../news.html" style = "color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Exhibition</a></li>
+                        <li><a href="../news.html">News</a></li>
+                        <li><a href="../exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html">Community</a>
+                    <li  class="has-children"><a href="../news.html" style = "color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
                         <li><a href="#">QnA</a></li>
                         <li><a href="#">Review</a></li>
@@ -96,5 +124,6 @@
           </div>
         </div>
       </div>
+    
     </div>
  	</div>

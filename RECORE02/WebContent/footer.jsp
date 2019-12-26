@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <div >
-    <div class="container">
+    			<!-- footer 라인 -->
+		 <footer class="site-footer border-top">
+      <div class="container">
         <div class="row">
           <div class="col-lg-4 mb-5 mb-lg-0">
             <div class="row mb-5">
@@ -26,10 +27,12 @@
                 </ul>
               </div>
             </div>
-            
           </div>
+          
+       
           <div class="col-lg-4">
            
+
             <div class="mb-5">
               <h3 class="footer-heading mb-4">Recent News</h3>
               <div class="block-25">
@@ -73,22 +76,28 @@
             
           </div>
           
+
           <div class="col-lg-4 mb-5 mb-lg-0">
+
             <div class="mb-5">
               <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit minima minus odio.</p>
+
               <form action="#" method="post">
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control border-white text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
+                  <input type="text" style = "height:50px;"class="form-control border-white text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
                   <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
                   </div>
                 </div>
               </form>
+
             </div>
+
             <div class="row">
               <div class="col-md-12">
                 <h3 class="footer-heading mb-4">Follow Us</h3>
+
                 <div>
                   <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
@@ -97,6 +106,8 @@
                 </div>
               </div>
             </div>
+
+
           </div>
           
         </div>
@@ -104,11 +115,11 @@
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | RECORE
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
           
         </div>
       </div>
-    </div>
+    </footer>

@@ -10,9 +10,9 @@
 
 <style type="text/css">
 
-	body .container .half.bg img{
+	/* body .container .half.bg img{
 		background-color: #F56D3E;
-	}
+	} */
 	
 </style>
 </head>

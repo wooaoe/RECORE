@@ -24,7 +24,7 @@
   
     <link rel="stylesheet" href="cssMain/aos.css">
 
-    <link rel="stylesheet" href="cssMain/style.css">
+    <link rel="stylesheet" href="cssMain/styleProd.css">
     
   </head>
   <body>
