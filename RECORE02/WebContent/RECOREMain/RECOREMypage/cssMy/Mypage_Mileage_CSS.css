@@ -1,0 +1,574 @@
+@charset "UTF-8";
+/* 전체 */
+html {
+    width: 100%;
+    height: 100%;
+}
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+    margin: 0;
+    padding: 0;
+}
+
+html[Attributes Style] {
+    -webkit-locale: "ko";
+}
+
+html {
+    display: block;
+    color: -internal-root-color;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    min-width: 1050px;
+    -o-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+}
+
+#header.scroll {
+    background: rgba(255,255,255,1);
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,.1);
+}
+
+#header:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+body {
+    min-width: 1050px;
+}
+
+body, code {
+    font-family: 'Noto Sans KR',sans-serif;
+    color: #353535;
+    background: #fff;
+    font-size: 13px;
+}
+
+body {
+    display: block;
+    margin: 8px;
+}
+
+#wrap {
+    position: relative;
+    margin: 0 auto;
+}
+
+div {
+    display: block;
+}
+
+#container {
+    margin: 0 auto;
+    *zoom: 1;
+    min-width: 1050px;
+}
+
+#container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#content {
+    margin-top: 156px;
+}
+    
+#content {
+    width: 1050px;
+    margin: 200px auto 100px;
+}
+
+/* 적립금 헤드 */
+.titleArea {
+    width: 1050px;
+    min-height: 30px;
+    margin: 30px auto 20px;
+}
+
+.titleArea h2 {
+    display: inline-block;
+    color: #2e2e2e;
+    font-size: 25px;
+    *display: inline;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.titleArea p {
+    display: inline-block;
+    position: relative;
+    margin: 0 0 0 6px;
+    padding: 0 0 0 10px;
+    color: #939393;
+    *display: inline;
+}
+
+/* p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+} */
+
+.titleArea p:before {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 1px;
+    height: 13px;
+    border-left: 1px solid #d9d9d9;
+}
+
+/* 적립금 현황 */
+.ec-base-box.gHalf {
+    position: relative;
+    padding: 20px 0;
+}
+
+.ec-base-box {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dfdfdf;
+    color: #404040;
+}
+
+.xans-myshop-summary {
+    margin: 0 0 20px;
+}
+
+.ec-base-box.gHalf:before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    content: "";
+    width: 1px;
+    height: 100%;
+    background-color: #e6e6e6;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.xans-myshop-summary ul:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.xans-myshop-summary ul li {
+    float: left;
+    margin: 5px 0;
+    padding: 0 45px;
+    width: 50%;
+    height: 20px;
+    font-size: 12px;
+    line-height: 1.6;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.xans-myshop-summary .title {
+    float: left;
+    width: 50%;
+    font-weight: normal;
+    box-sizing: border-box;
+}
+
+.xans-myshop-summary .data {
+    float: left;
+    width: 50%;
+    padding: 0 10px 0 10px;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+/* 적립내역 탭 */
+.ec-base-tab {
+    position: relative;
+}
+
+.ec-base-tab .menu {
+    margin: 0 0 20px;
+    border: 1px solid #cbcdce;
+    border-bottom-color: #202020;
+    border-left: 0;
+    background: #fff;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.ec-base-tab .menu:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ec-base-tab .menu li {
+    float: left;
+    border-left: 1px solid #cbcdce;
+    background: #fff;
+}
+
+.ec-base-tab .menu li.selected:first-child a {
+    left: -1px;
+}
+
+.ec-base-tab .menu li.selected a {
+    position: relative;
+    top: 0px;
+    left: -2px;
+    margin: 0 0 -1px;
+    border: 1px solid #202020;
+    border-bottom: 0;
+    color: #000;
+    font-weight: bold;
+    background: #fff;
+}
+
+.ec-base-tab .menu li:first-child a {
+    margin-left: 0;
+}
+
+.ec-base-tab .menu li a {
+    display: block;
+    min-width: 187px;
+    margin: 0 0 0 -1px;
+    padding: 12px 5px 11px;
+    color: #707070;
+    text-decoration: none;
+    outline: 0;
+    text-align: center;
+    background: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a {
+    text-decoration: none!important;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* 적립금 상세내역 */
+.ec-base-table.typeList table {
+    border-top: 1px solid #d7d5d5;
+}
+
+.ec-base-table table {
+    position: relative;
+    margin: 10px 0 0;
+    border: 1px solid #d7d5d5;
+    border-top: 0;
+    color: #fff;
+    line-height: 1.5;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table[Attributes Style] {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.ec-base-table.typeList table:before {
+    display: none;
+}
+
+.ec-base-table table:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #d7d5d5;
+}
+
+caption {
+    display: none;
+}
+
+caption {
+    display: table-caption;
+    text-align: -webkit-center;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+col {
+    display: table-column;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.ec-base-table th:first-child {
+    border-left: 0;
+}
+
+.ec-base-table thead th {
+    padding: 11px 0 10px;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    font-weight: normal;
+    background: #fff;
+}
+
+.ec-base-table th {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+th, td {
+    border: 0;
+    vertical-align: top;
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+.ec-base-table .center {
+    text-align: center;
+}
+
+.displaynone {
+    display: none !important;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.ec-base-table.typeList .center td, .ec-base-table.typeList td.center {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ec-base-table.typeList td {
+    padding: 8px 10px 7px;
+}
+
+.ec-base-table td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+.ec-base-table.typeList .center td.right {
+    padding-right: 10px;
+}
+
+.ec-base-table .right {
+    text-align: right;
+}
+
+.ec-base-table.typeList .center td.left {
+    padding-left: 10px;
+}
+
+.ec-base-table .left {
+    text-align: left;
+}
+
+}
+.ec-base-table table + .message {
+    margin: -1px 0 0;
+}
+
+.ec-base-table .message {
+    border: 1px solid #d7d5d5;
+    padding: 50px 0;
+    text-align: center;
+    color: #757575;
+    font-weight: bold;
+}
+
+/* 페이지 버튼 */
+.ec-base-paginate {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 0;
+    line-height: 0;
+}
+
+.ec-base-paginate img {
+    vertical-align: top;
+}
+
+img, fieldset {
+    border: none;
+    vertical-align: top;
+}
+
+.ec-base-paginate ol {
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+    *margin: 0;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.ec-base-paginate li:first-child {
+    margin-left: 0;
+}
+
+.ec-base-paginate li {
+    display: inline-block;
+    margin: 0 0 0 -1px;
+    border: 1px solid #d7d5d5;
+    font-size: 12px;
+    color: #757575;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+}
+
+.ec-base-paginate li a.this {
+    padding-bottom: 6px;
+    border-bottom: 3px solid #495164;
+    color: #495164;
+}
+
+.ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+}
+
+/* 풋터 */
+hr.layout {
+    display: none;
+}
+
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+#footer {
+    width: 100%;
+    background: #f9f9f9;
+    padding: 65px 0;
+    box-sizing: border-box;
+}
