@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+"WebContent/RECOREMain/RECOREProduct/Bottom.jsp"<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
@@ -24,7 +24,7 @@
   
     <link rel="stylesheet" href="cssMain/aos.css">
 
-    <link rel="stylesheet" href="cssMain/style.css">
+    <link rel="stylesheet" href="cssMain/styleProd.css">
     
   </head>
   <body>

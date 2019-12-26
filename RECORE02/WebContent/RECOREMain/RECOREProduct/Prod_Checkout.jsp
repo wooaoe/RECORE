@@ -37,97 +37,56 @@ RECORE-CHECKOUT
 
 <link rel="stylesheet" href="https://assets.kolonmall.com/_ui/css/kop/desktop/Order-a59824e1c6.css"/>
 
-<link rel="stylesheet" href="cssProd/style.css"/>
 
 
-<!-- <link rel="stylesheet" href="cssMain/style.css"/> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="cssMain/magnific-popup.css">
+    <link rel="stylesheet" href="cssMain/jquery-ui.css">
+    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
+    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
+    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
+    
+    
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  
+    <link rel="stylesheet" href="cssMain/aos.css">
+
+    <link rel="stylesheet" href="cssMain/styleProd.css">
+
 
     
     <style type="text/css">
+   
     /* 전체적인 폼 위치 편경 */
     #kolon-content{
-    
+
     	position: relative;
-    	margin: 106px 0 80px;
+    	margin: 0px 0 80px;
     	overflow: hidden;
     	padding-left: 50px;
     	padding-right: 50px;
     
     }
-  
-  .testpadding{
-  	padding: 40px;
-  }
-  
-  .navtest{
-  	text-align:center;
-  	padding: 10px;
-  }
-  
-  .footertest{
-  	background-color: #333333;
-  	text-align: center;
-  	padding: 0.5em 0;
-  }
-  
-  #productInfo{
-  	text-align: center;
-  	color: black;
-  }
-  
-  #logResMy{
-  	margin-left: 300px;
-  	position: relative;
-  	top: 50%;
-  }
-  .xans-myshop-orderstate .cs {
-  	padding: 12px;
-  }
+    
+    .way-info {
+	float: left;
+	width: 300px
+}
     
     </style>
     
 </head>
 
 
-<!-- header -->
-
-<div class="site-wrap">
-
-  <!--   <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div> .site-mobile-menu -->
-    
-    
-   <!--  <div class="site-navbar-wrap" style = "background-color: white;"> -->
-      <div class="site-navbar-top">
-        <div class="container py-3">
-        
-        <!-- @@@로고 위치 @@@-->
-        <br>
-        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "imagesMain/donut.png"></a></div>
-       <!--  </div> -->
-          <div class="row align-items-center">
-            <div class="col-6">
-              <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
-            </div>
-            
-            
-          </div>
-        </div>
-      </div>
-</div>
-
-
-
 <body class = "series-site V2 layout-width-1000">
+
+<!-- header -->
+	<%@ include file="/header.jsp" %>
 
 <section id="kolon-content">
 	<article class="cart-wrap">
@@ -164,8 +123,9 @@ RECORE-CHECKOUT
 							<td class="thumb"><a href="product_detail_test.html"><img
 									src="imagesProd/shop/single-products/ulkin01.jpg"
 									alt="[RE;CODE] 점퍼 후드 스트링백 상품 썸네일"></a></td>
+									
 							<td class="product text-left"><h4>
-									UL:KIN&nbsp;<small></small>
+									UL:KIN&nbsp;<small>gggg</small>
 								</h4>
 								<p>
 									<a href="/Product/RYBAW19152KHX">@@상품 제목@@</a>
@@ -188,6 +148,7 @@ RECORE-CHECKOUT
 					</tbody>
 				</table>
 			</div>
+			
 			
 			<!-- 주문상품 금액 / 배송비 / 총 주문금액 -->
 			<div class="billing-v2">
@@ -248,22 +209,13 @@ RECORE-CHECKOUT
 								name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp;<label
 								for="new_addrV2">새로 입력</label></span><span class="radio"><input
 								name="deliveryType" type="radio" id="cvs_addrV2" value="CVSNET">
-								
-								<!-- 편의점 픽업 옵션 삭제 -->
-								
-								<!-- i></i><label
-								for="cvs_addrV2">편의점 픽업
-									<div class="help">
-										<span class="tool-tip">주문상품이 편의점 픽업이 가능한 상품으로<br>구성된
-											경우에 편의점 픽업을 선택할 수 있습니다.
-										</span>
-									</div>
-							</label> --></span>
-							<button type="button" class="btn btn-line btn-small">나의
-								배송지</button>
+								</span>
+							<button type="button" class="btn btn-line btn-small" style = "background-color:#A0D9D9; color: white">
+							나의 	배송지</button>
 						</div>
 					</dd>
-					<div style="display: block;">
+					
+					<div style= "display: block;">
 						<dt>
 							우편번호<em class="required" aria-required="true">필수</em>
 						</dt>
@@ -274,7 +226,8 @@ RECORE-CHECKOUT
 										readonly="" value="">
 								</div>
 								<div class="col-3">
-									<button type="button" class="btn btn-line btn-small">우편번호찾기</button>
+									<button type="button" class="btn btn-line btn-small" style = "background-color:#A0D9D9; color: white;">
+									우편번호찾기</button>
 								</div>
 							</div>
 							<div class="row">
@@ -289,22 +242,7 @@ RECORE-CHECKOUT
 						</dt>
 						<dd>
 							<div class="row">
-								<div class="col-1">
-									<input type="text" name="codeName" placeholder="편의점명"
-										readonly="" value="">
-								</div>
-								<div class="col-2">
-									<button type="button" class="btn btn-line btn-small">편의점
-										찾기</button>
-								</div>
-							</div>
-							<div class="row">
-								<input type="text" class="full" placeholder="편의점 전화번호"
-									readonly="" value="">
-								<p class="cvs-guide">
-									<!-- <span class="tag">안내</span><span class="txt">편의점 픽업 상품은
-										배송완료 후 6일 이내 수령해야 하며, 기간 내 미 수령 시, 배송비 고객 부담으로 반품처리됩니다.</span> -->
-								</p>
+								ddddddddd
 							</div>
 						</dd>
 					</div>
@@ -396,63 +334,21 @@ RECORE-CHECKOUT
 		<!-- 포인트 사용 -->
 		<form>
 			<div class="order-write sale-select">
-				<!-- <h5>보유금 사용</h5>
-				<dl class="order-form">
-					<dt>Gift Code</dt>
-					<dd>
-						<div class="col-1 box-input number-input ">
-							<div class="input-wrapper">
-								<input name="appliedEmployeeCouponAmount" type="text"
-									class=" full" readonly="" value=""><span><em>원</em>
-									/ <i>0</i>장</span>
-							</div>
-							<p class="desc">각 Gift Code 금액이상의 주문상품에 사용가능합니다.</p>
-						</div>
-						<div>
-							<button type="button" class="btn btn-line btn-small">번호입력</button>
-						</div>
-					</dd>-->
-					
 					<br>
 					
 					
 					<!-- 예치금 -->
-					<dt>예치금</dt>
-					<dd>
-						<div class="col-1 box-input number-input">
-							<div class="input-wrapper">
-								<input name="usedDepositInput" type="text" class="full"
-									placeholder="0" value="0"><span><em>원</em> / 0원</span>
-							</div>
-						</div>
-						<div>
-							<span class="checkbox"><input name="allDepositCheckbox"
-								type="checkbox" id="allDepositCheckboxV2" value=""><i></i></span><label
-								for="allDepositCheckboxV2">모두사용</label>
-						</div>
-					</dd>
+					<dt>적립금</dt>
 					
-					<!-- 포인트 -->
-					<dt>포인트</dt>
-					<dd>
-						<div class="col-1 box-input number-input">
-							<div class="input-wrapper">
-								<input name="usedPointInput" type="text" class="full"
-									placeholder="0" value="0"><span><em>P</em> / 0P</span>
-							</div>
-							<p class="desc">
-								보유포인트내에서 주문금액만큼 즉시 사용이 가능합니다.<br>RECORE포인트와 쿠폰 사용시 유효기간을 꼭
-								확인해 주시고 유효기간이 지나기 전에 입금해 주시기 바라며 유효기간이 이후 입금할 경우 주문이 취소됩니다.
-							</p>
-						</div>
 						<div>
-							<span class="checkbox"><input name="allPointCheckbox"
-								id="allPointV2" type="checkbox" value=""><i></i></span><label
-								for="allPointV2">모두사용</label>
+							<input type = "text" value = "원" style = "text-align: right;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="checkbox"><input name="allDepositCheckbox"
+								type="checkbox" id="allDepositCheckboxV2" value=""><i></i></span>
+								<label for="allDepositCheckboxV2">모두사용</label>
 						</div>
-					</dd>
-				</dl>
-			</div>
+					
+					
+					
 		</form>
 		
 		
@@ -482,13 +378,20 @@ RECORE-CHECKOUT
 						name="keepPayment" type="checkbox" id="keepPayment" value=""><i></i></span><label
 						for="keepPayment">지금 선택한 결제수단을 다음에도 사용</label>
 				</div>
-				<div class="way-info">
-					<div class="card" style="display: block;">
-						<h5>신용카드 이용안내</h5>
+				
+		
+				<!-- 신용카드 이용안내 폼 -->
+				
+				<div class="way-info01">
+					<br><br>
+					<div class="card01" style="display: block;">
+						<br><br>
+						<h5 style = "text-align: center;">신용카드 이용안내</h5>
+						<br>
 						<dl>
-							<dt>무이자 할부</dt>
+							<dt style = "text-align: center;">무이자 할부</dt>
 							<dd>
-								<ul>
+								<ul style = "position: center;">
 									<li><span class="thumb"><img
 											src="//s3-ap-northeast-2.amazonaws.com/kop.images/Comm_Img/card/card41.gif"
 											alt="신한카드"></span><span class="txt">5만원이상 2~6개월 무이자할부</span></li>
@@ -515,7 +418,7 @@ RECORE-CHECKOUT
 											alt="전북카드"></span><span class="txt">5만원이상 2~3개월 무이자할부</span></li>
 								</ul>
 							</dd>
-							<dt>즉시할인</dt>
+							<dt style = "text-align: center;">즉시할인</dt>
 							<dd>
 								<ul>
 									<li><span class="thumb"><img
@@ -534,25 +437,9 @@ RECORE-CHECKOUT
 		<div class="cart-info">
 			<div class="col">
 			
-			<!-- footer -->
-			
-			<footer class="footer section text-center">
-		11111111111111111111111111111111111
-			</footer>
-			
-			
-			
+		<%-- 	<%@ include file="/RECOREMain/RECOREProduct/footer.jsp" %>  --%>
           </div>
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		</div> 
 		
 		
 		<!-- 오른쪽에 뜨는 결제 정보 폼 -->
