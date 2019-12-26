@@ -69,14 +69,17 @@
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
                 <a href="../RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
                  
                  <a href="../RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="../RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="../RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  
                 
                 <!--              
