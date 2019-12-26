@@ -2,17 +2,30 @@ package com.mvc.vo;
 
 public class Vo_Wish {
 
-	private int acc_no; // 계정 번호
 	private int prod_no; // 상품 번호
+	private int acc_no; // 계정 번호
+	private String prod_front_img; //상품 이미지
+	private String prod_name; //상품명
+	private int prod_price; //가격
 
-	
 	public Vo_Wish() {
 		super();
 	}
 
-	public Vo_Wish(int acc_no, int prod_no) {
+	public Vo_Wish(int prod_no, int acc_no, String prod_front_img, String prod_name, int prod_price) {
 		super();
+		this.prod_no = prod_no;
 		this.acc_no = acc_no;
+		this.prod_front_img = prod_front_img;
+		this.prod_name = prod_name;
+		this.prod_price = prod_price;
+	}
+
+	public int getProd_no() {
+		return prod_no;
+	}
+
+	public void setProd_no(int prod_no) {
 		this.prod_no = prod_no;
 	}
 
@@ -24,17 +37,34 @@ public class Vo_Wish {
 		this.acc_no = acc_no;
 	}
 
-	public int getProd_no() {
-		return prod_no;
+	public String getProd_front_img() {
+		return prod_front_img;
 	}
 
-	public void setProd_no(int prod_no) {
-		this.prod_no = prod_no;
+	public void setProd_front_img(String prod_front_img) {
+		this.prod_front_img = prod_front_img;
+	}
+
+	public String getProd_name() {
+		return prod_name;
+	}
+
+	public void setProd_name(String prod_name) {
+		this.prod_name = prod_name;
+	}
+
+	public int getProd_price() {
+		return prod_price;
+	}
+
+	public void setProd_price(int prod_price) {
+		this.prod_price = prod_price;
 	}
 
 	@Override
 	public String toString() {
-		return "Vo_Wish [acc_no=" + acc_no + ", prod_no=" + prod_no + "]";
+		return "Vo_Wish [prod_no=" + prod_no + ", acc_no=" + acc_no + ", prod_front_img=" + prod_front_img
+				+ ", prod_name=" + prod_name + ", prod_price=" + prod_price + "]";
 	}
-
+	
 }

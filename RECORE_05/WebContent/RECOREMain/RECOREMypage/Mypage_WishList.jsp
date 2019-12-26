@@ -2,30 +2,34 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8");%>
+<%@ page import="com.mvc.vo.Vo_Account" %>
+<%@ page import="com.mvc.vo.Vo_Wish" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Mapage_WishList</title>
 
-<link rel="stylesheet" type="text/css" href="cssMy/Mypage_WishList_CSS.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMy/Mypage_WishList_CSS.css"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="cssMain/magnific-popup.css">
-    <link rel="stylesheet" href="cssMain/jquery-ui.css">
-    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
-    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
-    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/jquery-ui.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.theme.default.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/bootstrap-datepicker.css">
     
     
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/flaticon/font/flaticon.css">
   
-    <link rel="stylesheet" href="cssMain/aos.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/aos.css">
 
-    <link rel="stylesheet" href="cssMain/styleMy.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/styleMy.css">
 
 <style type="text/css">
   
@@ -65,13 +69,18 @@
 </head>
 
 <body id="main">
-
+<%
+	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
+	/* List<Vo_wish> vo_wish = (List)request.getAttribute("vo_wish");
+	Object vo_wish = request.getAttribute("vo_wish"); */
+	List<Vo_Wish> vo_wish2 = (List<Vo_Wish>)request.getAttribute("vo_wish");
+%>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 
 	<div id="wrap">
 	    <div id="container">
-	        <div id="content" style="margin-top: 100px;">
+	        <div id="content" style="margin-top: 210px;">
 	        
 				<div class="titleArea">
 				    <h2>관심상품</h2>
@@ -107,63 +116,82 @@
 				            </tr>
 			            </thead>
 			            <tbody class="xans-element- xans-myshop xans-myshop-wishlistitem center">
-			            	<tr class="xans-record-">
-								<td>
-									<input name="wish_idx[]" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox">
-								</td>
-				                <td class="thumb">
-				                	<a href="상품1경로@@@@@@@@@">
-				                	<img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt="">
-				                	</a>
-			                	</td>
-				                <td class="left">
-				                    <strong class="name">
-				                    <a href="상품1경로@@@@@" class="ec-product-name">[프레시버블]<br>유기농 소프넛(솝베리) 친환경 살림 세트 500g</a>
-				                    </strong>
-				                    <ul class="xans-element- xans-myshop xans-myshop-optionall option">
-				                    	<li class="xans-record-">
-											<strong class="displaynone"></strong>
-											<span class="displaynone">(개)</span><br>
-											<a href="#none" onclick="NewWishlist.showOptionChangeLayer('wishlist_option_modify_layer_0')" class="btnNormal gBlank5 displaynone">옵션변경</a>
-				                            <div class="optionModify ec-base-layer" id="wishlist_option_modify_layer_0">
-				                                <div class="header">
-				                                    <h3>옵션변경</h3>
-				                                </div>
-				                                <div class="content">
-													<ul class="prdInfo">
-														<li></li>
-				                                        <li class="option"></li>
-				                                    </ul>
-													<div class="prdModify">
-				                                        <h4>상품옵션</h4>
-			                                        </div>
-				                                </div>
-				                                <div class="ec-base-button">
-				                                    <a href="#none" class="btnSubmitFix sizeS " onclick="NewWishlist.modify('add', '0', '135');">추가</a>
-				                                    <a href="#none" class="btnNormalFix sizeS" onclick="NewWishlist.modify('update', '0', '135');">변경</a>
-				                                </div>
-					                                <a href="#none" class="close" onclick="$('.optionModify').hide();"><img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
-					                            </div>
-						
-				                        </li>
-									</ul>
-								</td>
-				                <td class="price right">
-									<strong class="">25,500원<br></strong><br><strong class="displaynone">25500</strong>
-								</td>
-				                <td><span class="txtInfo"></span></td>
-				                <td>
-				                	<div class="txtInfo">기본배송<div class="displaynone">(해외배송가능)</div></div>
-				                </td>
-				                <td>
-									<span class="">2,500원<br></span> 조건</td>
-				                <td class="price right">28,000원</td>
-				                <td class="button">
-				                    <a href="#none" onclick="NewWishlist.actionOrder('order', 0)" class="btnSubmit ">주문하기</a>
-				                    <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a>
-				                    <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
-				                </td>
-			            	</tr>
+			            	<c:forEach var="wish" items="${list_wish}">
+				            	<tr class="xans-record-">
+									<td>
+										<input name="wish_idx[]" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox">
+									</td>
+					                <td class="thumb">
+					                	<a href="상품1경로@@@@@@@@@">
+					                		<img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt="">
+					                	</a>
+				                	</td>
+					                <td class="left">
+					                    <strong class="name">
+					                    <!-- <a href="상품1경로@@@@@" class="ec-product-name">[프레시버블]<br>유기농 소프넛(솝베리) 친환경 살림 세트 500g</a> -->
+					                    <%-- <a href="상품1경로@@@@@" class="ec-product-name"><%=vo_wish.get(0).getProd_name() %></a> --%>
+					                    	<a href="상품1경로@@@@@" class="ec-product-name">${wish.prod_name}</a>
+					                    </strong>
+					                    <ul class="xans-element- xans-myshop xans-myshop-optionall option">
+					                    	<li class="xans-record-">
+												<strong class="displaynone"></strong>
+												<span class="displaynone">(개)</span><br>
+												<a href="#none" onclick="NewWishlist.showOptionChangeLayer('wishlist_option_modify_layer_0')" class="btnNormal gBlank5 displaynone">옵션변경</a>
+					                            <div class="optionModify ec-base-layer" id="wishlist_option_modify_layer_0">
+					                                <div class="header">
+					                                    <h3>옵션변경</h3>
+					                                </div>
+					                                <div class="content">
+														<ul class="prdInfo">
+															<li></li>
+					                                        <li class="option"></li>
+					                                    </ul>
+														<div class="prdModify">
+					                                        <h4>상품옵션</h4>
+				                                        </div>
+					                                </div>
+					                                <div class="ec-base-button">
+					                                    <a href="#none" class="btnSubmitFix sizeS " onclick="NewWishlist.modify('add', '0', '135');">추가</a>
+					                                    <a href="#none" class="btnNormalFix sizeS" onclick="NewWishlist.modify('update', '0', '135');">변경</a>
+					                                </div>
+						                                <a href="#none" class="close" onclick="$('.optionModify').hide();"><img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
+						                            </div>
+							
+					                        </li>
+										</ul>
+									</td>
+					                <td class="price right">
+										<!-- <strong class="">25,500원<br></strong><br><strong class="displaynone">25500</strong> -->
+										<%-- <strong class=""><%=vo_wish2.get(0).getProd_price() %>원<br></strong><br><strong class="displaynone">25500</strong> --%>
+										<strong class="">${wish.prod_price }원<br></strong><br><strong class="displaynone">25500</strong>
+									</td>
+					                <td><span class="txtInfo"></span></td>
+					                <td>
+					                	<div class="txtInfo">기본배송<div class="displaynone">(해외배송가능)</div></div>
+					                </td>
+					                <td>
+										<span class="">2,500원<br></span> 조건</td>
+					                <!-- <td class="price right">28,000원</td> -->
+					                <%-- <td class="price right"><%=vo_wish2.get(0).getProd_price() %>원</td> --%>
+					                <td class="price right">${wish.prod_price }원</td>
+					                <td class="button">
+					                    <a href="#none" onclick="NewWishlist.actionOrder('order', 0)" class="btnSubmit ">주문하기</a>
+					                    <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a>
+					                    <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
+					                </td>
+				            	</tr>
+							</c:forEach>
+							<!-- <tr>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+								<td>확인@@@@@@@</td>
+							</tr> -->
 						</tbody>
 					</table>
 					<p class="message displaynone">관심상품 내역이 없습니다.</p>
@@ -201,7 +229,8 @@
 					</a>
 				</div>
 			</div><!-- content 끝@@@@@@ -->
-				
+		</div>
+		</div>
 	        <hr class="layout">
 	        
 			<!-- footer -->
