@@ -37,7 +37,14 @@
 	<%@ include file="/header.jsp" %>
     
     <div class="site-section" style="padding:10px;">
-    	<div class="" style="width:100%; text-align: right; margin-top:3rem; padding-right: 17%; "><div><img src="<%=request.getContextPath() %>/RECOREMain/images/icon/list.png" width="30px" height="30px"></div><div class="text-muted" style="font-size: 10pt;">목록</div></div>
+    	<div class="" style="width:100%; text-align: right; margin-top:3rem; padding-right: 17%; ">
+    	<div>
+    	<img src="<%=request.getContextPath() %>/RECOREMain/images/icon/previous.png" width="20px" height="20px" style="margin-left: 10px" onclick="location.href='issue.do?command=newsPrepage&iss_no=${issue_vo.iss_no}'">
+    	<img src="<%=request.getContextPath() %>/RECOREMain/images/icon/list.png" width="30px" height="30px" style="margin-left: 10px" onclick="location.href='issue.do?command=selectAllNews&pageno=${page}'">
+    	<img src="<%=request.getContextPath() %>/RECOREMain/images/icon/next.png" width="20px" height="20px" style="margin-left: 10px" onclick="location.href='issue.do?command=newsNextpage&iss_no=${issue_vo.iss_no}'">    	
+    	</div>
+    	<div class="text-muted" style="font-size: 10pt;"></div>
+    	</div>
     	<h1  style="margin-top:5rem; font-size: 3rem; text-align: center;" >${issue_vo.iss_title }</h1>
     	<div style="text-align: right; padding-right: 17%; padding-top: 30px; padding-bottom: 20px">${issue_vo.iss_regdate }</div>
     </div>
@@ -121,7 +128,7 @@
         </div>
         <div style="text-align: right; margin-right: 100px;">${issue_vo.iss_writer }</div>
     	<div style="text-align: right; margin-right: 100px;">${issue_vo.iss_source }</div>
-    	<div style="text-align: right; margin-right: 100px;">${issue_vo.iss_note }</div>
+    	<div style="text-align: right; margin-right: 100px;"><a href="${issue_vo.iss_note }">${issue_vo.iss_note }</a></div>
       </div>
     </div>
 
