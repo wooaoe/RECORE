@@ -3,6 +3,9 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
     
     
 <!DOCTYPE html>
@@ -27,6 +30,14 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/aos.css">
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
+    
+    <style type="text/css">
+    	#img-fluid{
+    		max-width: 100%;
+    		height: 350px;
+    	}    
+    </style>
+    
     
   </head>
   <body>
@@ -161,7 +172,7 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style= "background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg)" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
          <div class="col-md-10">
@@ -174,21 +185,25 @@
     </div>  
     
     
-
+	
     <div class="site-section">
       <div class="container">
         <div class="row">
+        
+          <c:forEach var="prod" items = "${plist}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
-              <img src="product/Sealand_Bettie_Breeze 대표이미지.jpg" alt="Image" class="img-fluid">
+            <%-- <%=request.getContextPath()%> --%>
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.jpg" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="#">Sealand Bettie Breeze</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>223,000원</b></span>
+            <h3 class="mb-0"><a href="#">${prod.prod_name}</a></h3>
+            <span class="text-muted">${prod.prod_brand}</span><br>
+            <span class = "mb-0"><b><fmt:formatNumber value="${prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
           </div>
+          </c:forEach>
          
           
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
+          <!-- <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
               <img src="product/Sealand_Bettie_TT 대표이미지.jpg" alt="Image" class="img-fluid">
             </a>
@@ -297,9 +312,10 @@
             <span class="text-muted">CUCELYP</span>
           </div>
           <br>
+          -->
         </div>
       </div>
-    </div>
+    </div> 
   
   
 
@@ -426,19 +442,19 @@
     </footer>
   </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/aos.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-3.3.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-ui.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/popper.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/owl.carousel.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.stellar.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.countdown.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.magnific-popup.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap-datepicker.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/aos.js"></script>
 
-  <script src="js/main.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/main.js"></script>
     
   </body>
 </html>

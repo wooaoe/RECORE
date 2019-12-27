@@ -1,7 +1,6 @@
 package com.mvc.controller;
 
-import java.io.IOException;
-import java.util.List;
+import java.io.IOException;import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,10 +16,9 @@ import com.mvc.vo.Vo_Product;
 /**
  * Servlet implementation class Product_Controller
  */
-@WebServlet("/Product.do")
+@WebServlet("/a.do")
 public class Product_Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,15 +37,28 @@ public class Product_Controller extends HttpServlet {
 		ProductDao dao = new ProductDaoImp();
 		
 		String command = request.getParameter("command");
+		System.out.println(command);
 		
 		if(command.equals("ProdSelectAll")) {
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			
 			System.out.println(plist);
-			
-			request.setAttribute("productAll_list", plist);
+			  
+			request.setAttribute("plist", plist);
+			 
 			dispatch("./RECOREMain/RECOREProduct/Prod_All.jsp", request, response);
+		
+		}else if(command.equals("BagAccSelectAll")) {
+			
+			List<Vo_Product> bclist = dao.BC_selectAll();
+			
+			System.out.println(bclist);
+			
+			request.setAttribute("bclist", bclist);
+			
+			dispatch("./RECOREMain/RECOREProduct/BagAcc.jsp", request, response);
+			
 		}
 	
 	
@@ -56,14 +67,14 @@ public class Product_Controller extends HttpServlet {
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response) {
 		
-		RequestDispatcher dispatch = request.getRequestDispatcher(url);
+		
 		try {
-			
+			RequestDispatcher dispatch = request.getRequestDispatcher(url);
 			dispatch.forward(request, response);
 		
 		} catch (ServletException | IOException e) {
 			
-			e.printStackTrace();
+			System.out.println("페이지 이동 실패!");
 		}
 		
 		

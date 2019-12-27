@@ -2,6 +2,7 @@ package com.mvc.vo;
 
 public class Vo_Prod_option {
 
+	private int prod_no; //상품 번호
 	private int prod_id; // 상품아이디
 	private String prod_color; // 상품 색상
 	private String prod_size; // 상품 사이즈
@@ -12,14 +13,23 @@ public class Vo_Prod_option {
 		super();
 	}
 
-	public Vo_Prod_option(int prod_id, String prod_color, String prod_size, int prod_stock) {
+	public Vo_Prod_option(int prod_no, int prod_id, String prod_color, String prod_size, int prod_stock) {
 		super();
+		this.prod_no = prod_no;
 		this.prod_id = prod_id;
 		this.prod_color = prod_color;
 		this.prod_size = prod_size;
 		this.prod_stock = prod_stock;
 	}
 
+	public int getProd_no() {
+		return prod_no;
+	}
+	public void setProd_no(int prod_no) {
+		this.prod_no = prod_no;
+	}
+	
+	
 	public int getProd_id() {
 		return prod_id;
 	}
@@ -54,7 +64,7 @@ public class Vo_Prod_option {
 
 	@Override
 	public String toString() {
-		return "Vo_Prod_option [prod_id=" + prod_id + ", prod_color=" + prod_color + ", prod_size=" + prod_size
+		return "Vo_Prod_option [prod_no = " + prod_no + ", prod_id=" + prod_id + ", prod_color=" + prod_color + ", prod_size=" + prod_size
 				+ ", prod_stock=" + prod_stock + "]";
 	}
 
