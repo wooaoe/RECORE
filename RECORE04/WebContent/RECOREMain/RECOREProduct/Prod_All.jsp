@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; PRODUCT</title>
+    <title>RECORE &mdash; ALL</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -33,7 +33,7 @@
     
     <style type="text/css">
     	#img-fluid{
-    		max-width: 100%;
+    		width: 420px;
     		height: 350px;
     	}    
     </style>
@@ -128,21 +128,21 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Prod_All.jsp" style = "color:black;">Product</a>
+                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="BagAcc.jsp" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Clothing.jsp" style = "color:black;">Clothing</a>
+                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Outer.jsp">Outer</a></li>                        	
-								<li><a href = "TOP.jsp">Top</a></li>                        	
-								<li><a href = "Bottom.jsp">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
+								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
+								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Wallet.jsp">Wallet</a></li>
-                        <li class = "has-children"><a href="#">Life</a>
+                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "#">Supply</a></li>                        	
-								<li><a href = "#">Home</a></li>                        	
+								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
+								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -179,6 +179,7 @@
          <!-- <span class="sub-text">Our Awesome</span> --> 
         	 <br><br><br><br>
          	<h1>ALL</h1>
+         	<h5><span class="sub-text">Your beautiful Life</span></h5>
           </div>
         </div> 
       </div>
@@ -194,7 +195,7 @@
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
             <%-- <%=request.getContextPath()%> --%>
-              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.jpg" alt="Image" class="img-fluid"> 
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
             <h3 class="mb-0"><a href="#">${prod.prod_name}</a></h3>
             <span class="text-muted">${prod.prod_brand}</span><br>
@@ -203,116 +204,7 @@
           </c:forEach>
          
           
-          <!-- <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Bettie_TT 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Bettie TT</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>223,000원</b></span>
-            <br>
-            <br>
-          </div>
           
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Buddy S_Flare 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Buddy S Flare</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>141,000원</b></span>
-          </div>
-          <br>
-
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Buddy S_Lava 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Buddy S Lava</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>141,000원</b></span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Jolla_Vintage 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Jolla Vintage</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>147,000원</b></span>
-          </div>
-          <br>
-          
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin01.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="Prod_SingleDetail.jsp">UL:KINxUPCYCLING LABEL FRAME CLUTCH_HASSAM</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin02.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KIN FRAME TOTE BAG FERNAND_BLACK</a></h3>
-            <span class="text-muted">UL:KIN</span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin03.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KIN FRAME TOTE BAG FERNAND_NAVY</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin04.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KINxMODERN ALCHEMIST UGLY SHOES BAG_BLACK</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin05.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KINxMODERN ALCHEMIST UGLY SHOES BAG_WHITE</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/cucelyp01.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">600D Draw Backpack_GREEN</a></h3>
-            <span class="text-muted">CUCELYP</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/cucelyp02.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">600D Draw Backpack_NAVY</a></h3>
-            <span class="text-muted">CUCELYP</span>
-          </div>
-          <br>
-          -->
         </div>
       </div>
     </div> 

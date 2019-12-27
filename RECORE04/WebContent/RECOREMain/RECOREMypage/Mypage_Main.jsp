@@ -78,8 +78,6 @@
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 	
-	
-	
 	<div id="wrap">
     	<div id="container">
        		 <div id="content" style="margin-top: 100px;">

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; PRODUCT</title>
+    <title>RECORE &mdash; BAG/ACC</title>
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,7 +33,7 @@
     
     <style type="text/css">
     	#img-fluid{
-    		max-width: 100%;
+    		width: 350px;
     		height: 350px;
     	}    
     </style>
@@ -128,21 +128,21 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Prod_All.jsp" style = "color:black;">Product</a>
+                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="BagAcc.jsp" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Clothing.jsp" style = "color:black;">Clothing</a>
+                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Outer.jsp">Outer</a></li>                        	
-								<li><a href = "TOP.jsp">Top</a></li>                        	
-								<li><a href = "Bottom.jsp">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
+								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
+								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Wallet.jsp">Wallet</a></li>
-                        <li class = "has-children"><a href="#">Life</a>
+                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "#">Supply</a></li>                        	
-								<li><a href = "#">Home</a></li>                        	
+								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
+								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -179,6 +179,7 @@
          <!-- <span class="sub-text">Our Awesome</span> --> 
         	 <br><br><br><br>
          	<h1>BAG & ACC</h1>
+         	<h5><span class="sub-text">&nbsp;Your beautiful Life</span></h5>
           </div>
         </div> 
       </div>
@@ -194,7 +195,7 @@
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
             <%-- <%=request.getContextPath()%> --%>
-              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${bacc.prod_no}/f_img.jpg" alt="Image" class="img-fluid"> 
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${bacc.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
             <h3 class="mb-0"><a href="#">${bacc.prod_name}</a></h3>
             <span class="text-muted">${bacc.prod_brand}</span><br>

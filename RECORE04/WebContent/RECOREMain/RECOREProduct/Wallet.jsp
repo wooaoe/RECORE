@@ -3,13 +3,15 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; PRODUCT</title>
-    
-    <meta charset="utf-8">
+    <title>RECORE &mdash; WALLET</title>
+   	
+   	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
@@ -28,6 +30,12 @@
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
     
+    <style type="text/css">
+    	#img-fluid{
+    		max-width: 350px;
+    		height: 350px;
+    	}    
+    </style>
     
   </head>
   <body>
@@ -44,7 +52,7 @@
     </div> <!-- .site-mobile-menu -->
     
     
-    <div class="site-navbar-wrap" style = "background-color:white;" >
+    <div class="site-navbar-wrap" style = "background-color: white;">
       <div class="site-navbar-top">
         <div class="container py-3">
         
@@ -52,17 +60,15 @@
         <br>
         <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
         <img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
+        
           <div class="row align-items-center">
             <div class="col-6">
-            
-            <!--
-              <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
+              <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
               <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
               <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a>
-            -->
-            
+              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
             </div>
+            
             <div class="col-6">
               <div class="d-flex ml-auto">
               
@@ -71,17 +77,17 @@
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
                  </a>
                  
                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니&nbsp;&nbsp;</span></a>
                  
                 
                 <!--              
@@ -95,6 +101,7 @@
           </div>
         </div>
       </div>
+      
       
       
       
@@ -118,21 +125,21 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Prod_All.jsp" style = "color:black;">Product</a>
+                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="BagAcc.jsp" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Clothing.jsp" style = "color:black;">Clothing</a>
+                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Outer.jsp">Outer</a></li>                        	
-								<li><a href = "TOP.jsp">Top</a></li>                        	
-								<li><a href = "Bottom.jsp">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
+								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
+								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Wallet.jsp">Wallet</a></li>
-                        <li class = "has-children"><a href="#">Life</a>
+                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "#">Supply</a></li>                        	
-								<li><a href = "#">Home</a></li>                        	
+								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
+								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -167,138 +174,32 @@
         <div class="row align-items-center">
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
-        	 <br><br><br><br>
-         	<h1>Wallet</h1>
-         	<h5><span class="sub-text">&nbsp;&nbsp;Your Life</span></h5>
+         	<br><br><br><br>
+         	<h1>WALLET</h1>
+         	<h5><span class="sub-text">&nbsp;Your beautiful Life</span></h5>
           </div>
         </div> 
       </div>
     </div>  
     
-    <!--<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${vo.iss_no }/th_img.png  -->
+    
 
     <div class="site-section">
       <div class="container">
         <div class="row">
+          
+          <c:forEach var="wallet" items = "${walist}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="#" class="d-block figure">
-              <img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/Bag/${vo.prod_no}/f_img.jpg" alt="Image" class="img-fluid">
+            <%-- <%=request.getContextPath()%> --%>
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${wallet.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="#">Sealand Bettie Breeze</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>223,000원</b></span>
+            <h3 class="mb-0"><a href="#">${wallet.prod_name}</a></h3>
+            <span class="text-muted">${wallet.prod_brand}</span><br>
+            <span class = "mb-0"><b><fmt:formatNumber value="${wallet.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
           </div>
+          </c:forEach>
          
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Bettie_TT 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Bettie TT</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>223,000원</b></span>
-            <br>
-            <br>
-          </div>
-          
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Buddy S_Flare 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Buddy S Flare</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>141,000원</b></span>
-          </div>
-          <br>
-
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Buddy S_Lava 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Buddy S Lava</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>141,000원</b></span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/Sealand_Jolla_Vintage 대표이미지.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">Sealand Jolla Vintage</a></h3>
-            <span class="text-muted">SEALAND GEAR</span><br>
-            <span class = "mb-0"><b>147,000원</b></span>
-          </div>
-          <br>
-          
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin01.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="Prod_SingleDetail.jsp">UL:KINxUPCYCLING LABEL FRAME CLUTCH_HASSAM</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin02.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KIN FRAME TOTE BAG FERNAND_BLACK</a></h3>
-            <span class="text-muted">UL:KIN</span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin03.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KIN FRAME TOTE BAG FERNAND_NAVY</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin04.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KINxMODERN ALCHEMIST UGLY SHOES BAG_BLACK</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/ulkin05.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">UL:KINxMODERN ALCHEMIST UGLY SHOES BAG_WHITE</a></h3>
-            <span class="text-muted">UL:KIN</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/cucelyp01.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">600D Draw Backpack_GREEN</a></h3>
-            <span class="text-muted">CUCELYP</span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="product/cucelyp02.jpg" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">600D Draw Backpack_NAVY</a></h3>
-            <span class="text-muted">CUCELYP</span>
-          </div>
-          <br>
         </div>
       </div>
     </div>
@@ -428,19 +329,19 @@
     </footer>
   </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/aos.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-3.3.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-ui.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/popper.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/owl.carousel.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.stellar.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.countdown.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.magnific-popup.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap-datepicker.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/aos.js"></script>
 
-  <script src="js/main.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/main.js"></script>
     
   </body>
 </html>
