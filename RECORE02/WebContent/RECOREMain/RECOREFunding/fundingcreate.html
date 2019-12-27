@@ -20,6 +20,7 @@
 
     <title>RECORE &mdash; PRODUCT</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="./js/HuskyEZCreator.js" charset="utf-8"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -228,21 +229,132 @@ padding-top: 50px;
                         <div class="form-row" style="border:0px;">
                             <div class="name">본문 내용 이미지 업로드</div>
                             <div class="value">
-                                <div class="input-group js-input-file">
-                                    <input class="input-file" type="file" name="detail" id="file">
-                                    <label class="label--file" for="file">파일을 선택하세요</label>
-                                    <span class="input-file__info">파일이 아직 선택되지 않았습니다.</span>
+                                <div class="input">
+                                     <input type="file" class="file" id="file" accept="image/*" data-max-size="5000" />
+                               
+                                    <script>
+    $("document").ready(function () {
+
+        $('input[type=file]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+                // Reject big files
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+                // Replace ctrlq with your own API key
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res) {
+                    	 console.log(res.data.link);                  	
+                        $('body').append('<img src="' + res.data.link + '" />');
+                        alert("파일첨부완료");
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                $.ajax(settings).done(function (response) {
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
                         </div>
+						
+						
                         <div class="form-row" style="border:0px;">
                             <div class="name">썸네일 이미지 업로드</div>
                             <div class="value">
-                                <div class="input-group js-input-file">
+                                <div class="input">
                                     <input class="input-file" type="file" name="detail" id="file">
-                                    <label class="label--file" for="file">파일을 선택하세요</label>
-                                    <span class="input-file__info">파일이 아직 선택되지 않았습니다.</span>
+                               <input type="file" class="file2" accept="image/*" data-max-size="5000" />
+                               <label class="label--file" for="file"> </label>
+                                    <script>
+    $("document").ready(function () {
+
+        $('input[type=file2]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+                // Reject big files
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+                // Replace ctrlq with your own API key
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res2) {
+                    	 console.log(res2.data.link);                  	
+                        $('body').append('<img src="' + res2.data.link + '" />');
+                        alert("파일첨부완료");
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                $.ajax(settings).done(function (response) {
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
+                               
+                               
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
