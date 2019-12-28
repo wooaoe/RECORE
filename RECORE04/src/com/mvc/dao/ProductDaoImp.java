@@ -16,6 +16,7 @@ import com.mvc.vo.Vo_Wish;
 
 public class ProductDaoImp implements ProductDao {
 
+	
 	@Override
 	public List<Vo_Product> P_selectAll() {
 
@@ -81,6 +82,7 @@ public class ProductDaoImp implements ProductDao {
 		return plist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> BC_selectAll() {
 
@@ -141,6 +143,7 @@ public class ProductDaoImp implements ProductDao {
 		return bclist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Clo_selectAll() {
 
@@ -201,6 +204,7 @@ public class ProductDaoImp implements ProductDao {
 		return clolist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Outer_selectAll() {
 
@@ -263,6 +267,7 @@ public class ProductDaoImp implements ProductDao {
 		return outlist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Top_selectAll() {
 
@@ -325,6 +330,7 @@ public class ProductDaoImp implements ProductDao {
 		return toplist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Bottom_selectAll() {
 
@@ -387,6 +393,7 @@ public class ProductDaoImp implements ProductDao {
 		return bottlist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Wallet_selectAll() {
 
@@ -449,6 +456,7 @@ public class ProductDaoImp implements ProductDao {
 		return walist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Life_selectAll() {
 
@@ -511,6 +519,7 @@ public class ProductDaoImp implements ProductDao {
 		return lifelist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Supply_selectAll() {
 
@@ -571,6 +580,7 @@ public class ProductDaoImp implements ProductDao {
 		return supplylist;
 	}
 
+	
 	@Override
 	public List<Vo_Product> Home_selectAll() {
 
@@ -631,6 +641,7 @@ public class ProductDaoImp implements ProductDao {
 		return homelist;
 	}
 
+	
 	@Override
 	public Vo_Product P_selectOne(int pseq) {
 
@@ -691,30 +702,35 @@ public class ProductDaoImp implements ProductDao {
 		return pvo;
 	}
 
+	
 	@Override
 	public boolean P_insert(Vo_Product pvo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
 	@Override
 	public boolean P_insert(Vo_Cart cvo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
 	@Override
 	public boolean P_insert(Vo_Wish wvo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
 	@Override
 	public boolean P_update(Vo_Product pvo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
 	@Override
 	public boolean P_delete(int aseq) {
 		// TODO Auto-generated method stub

@@ -85,8 +85,6 @@
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/RECOREMain/plugins/revolution-slider/revolution/fonts/font-awesome/css/font-awesome.css">
 
-
-
 <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900">  -->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/RECOREMain/fonts/icomoon/style.css">
@@ -144,11 +142,7 @@
 	}
 
 </style>
-
-
 </head>
-
-
 
 <body id="body">
 
@@ -166,7 +160,8 @@
 							href="<%=request.getContextPath()%>/RECOREMain/index.html">Home</a></li>
 						<li><a href="Product.do?command=ProdSelectAll">Product</a></li>
 
-						<!-- 카테고리 타고 넘어오는 부분 종류 뭔지 써주기 -->
+						
+						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
 						<li class="active"><a
 							href="Product.do?command=${pvo.prod_comm}">${pvo.prod_kinds}</a></li>
 					</ol>
@@ -219,22 +214,6 @@
 								<li data-target='#carousel-custom' data-slide-to='1'><img
 									src='<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png'
 									alt='' /></li>
-
-								<!-- <li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='imagesProd/shop/single-products/ulkin01.jpg' alt='' />
-							</li> 
-							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='imagesProd/shop/single-products/ulkin01.jpg' alt='' />
-							</li> 
-							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='imagesProd/shop/single-products/ulkin01.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='imagesProd/shop/single-products/ulkin01.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='imagesProd/shop/single-products/ulkin01.jpg' alt='' />
-							</li> -->
 							</ol>
 
 						</div>
@@ -249,14 +228,14 @@
 						<h2>${pvo.prod_name}</h2>
 						<p class="product-price">
 							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
-							</fmt:formatNumber>
-							원
+							</fmt:formatNumber>원
 						</p>
 
 						<!-- @@상세 정보글@@ -->
 						<p class="product-description mt-20">제품 정보 글 쓰는 곳</p>
 						<p>제품 정보 글 쓰는 곳</p>
 						<br>
+
 
 						<!-- @@상품 색상@@ -->
 						<div class="color-swatches">
@@ -266,19 +245,18 @@
 								<a href="" class="swatch-violet"></a>
 							</li> -->
 								<li><span style="position: relative;">${pvo.plist}</span></li>
-								<!-- <li>
-								<a href="" class="swatch-cream"></a>
-							</li> -->
 							</ul>
 						</div>
 
+
 						<!-- @@사이즈@@ -->
 						<div class="product-size">
-							<span>사이즈:</span> <select class="form-control">
-								<option>////</option>
+							<span>사이즈:</span> 
+							<select class="form-control">
+								<option>FREE</option>
 								<!-- <option>M</option>
-							<option>L</option>
-							<option>XL</option> -->
+								<option>L</option>
+								<option>XL</option>  -->
 							</select>
 						</div>
 
@@ -317,7 +295,8 @@
 							</div>
 						</div>
 
-						<script type="text/javascript">
+
+						<!-- <script type="text/javascript">
 							function change(num) {
 
 								var number = ($(num).attr('value'));
@@ -328,26 +307,24 @@
 									$(num).attr('value', plus_num);
 								}
 							}
-						</script>
+						</script> -->
 
 
 
 
-
-						<!-- 장바구니 / 바로구매 / 관심상품 -->
+						<!-- @@장바구니 / 바로구매 / 관심상품@@ -->
 
 						<!-- 최상위 폴더 / 해당파일이 존재하는 폴더 / 해당파일 -->
 						<a href="../RECOREMypage/Mypage_Cart.jsp"
-							class="btn btn-main mt-20">장바구니 추가</a> <a
-							href="Prod_Checkout.jsp" class="btn btn-main mt-20">바로 구매</a> <a
-							href="../RECOREMypage/Mypage_WishList.jsp"
-							class="btn btn-main mt-20">관심상품</a>
+							class="btn btn-main mt-20">장바구니 추가</a> 
+						<a href="Prod_Checkout.jsp" class="btn btn-main mt-20">바로 구매</a> 
+						<a href="../RECOREMypage/Mypage_WishList.jsp" class="btn btn-main mt-20">관심상품</a>
 					</div>
 				</div>
 			</div>
 
 
-			<!-- 상품 상세 내용 / 리뷰 -->
+			<!-- @@ Detail / Q&A / Review @@ -->
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="tabCommon mt-20">
@@ -361,8 +338,10 @@
 								aria-expanded="false">Q&A</a></li>
 						</ul>
 						<div class="tab-content patternbg">
+							
 							<!-- <h4 id = "productInfo">제품 설명 헤드라인</h4>
 					<p style = "text-align: center;">dddddddddddddddd</p> -->
+
 
 							<!-- @@ 상세 내용 이미지 들어가는 곳 @@ -->
 							<c:forEach begin="1" end="${pvo.prod_con_count}" step="1" var="i">
@@ -374,35 +353,42 @@
 								</div>
 							</c:forEach>
 
-							<!-- 리뷰 상세 -->
+
+							<!-- @@리뷰 상세@@ -->
 							<div id="reviews" class="tab-pane fade">
 								<div class="post-comments">
 									<ul class="media-list comments-list m-bot-50 clearlist">
 
 										<!-- Comment Item start-->
-										<li class="media"><a class="pull-left" href="#"> <img
-												class="media-object comment-avatar"
-												src="imagesProd/blog/avater-1.jpg" alt="" width="50"
-												height="50" />
+										<li class="media"><a class="pull-left" href="#"> 
+											<img class="media-object comment-avatar" src="imagesProd/blog/avater-1.jpg" 
+											alt="" width="50" height="50" />
 										</a>
 
 											<div class="media-body">
 												<div class="comment-info">
 													<h4 class="comment-author">
+														<!-- @@고객 아이디@@ -->
 														<a href="#">motop**</a>
-
 													</h4>
-													<time datetime="2019-12-24T23:00">Dec 23, 2019, at
-														11:34</time>
-													<a class="comment-button" href="#"><i
-														class="tf-ion-chatbubbles"></i>Reply</a>
+													
+													<!-- @@ 글 작성 시간 @@ -->
+													<time datetime="2019-12-24T23:00">Dec 23, 2019, at 11:34</time>
+													
+													<!-- @@ reply누르면 댓글 작성할 수 있게 @@  -->
+													<a class="comment-button" href="#">
+													<i class="tf-ion-chatbubbles"></i>Reply</a>
 												</div>
-
+												
+												<!-- @@ 고객 리뷰글 가져오기 @@  -->
 												<p>리뷰글 적는 곳</p>
-											</div></li>
-										<!-- End Comment Item -->
+												
+											</div>
+										</li>
+										<!-- @@ 리뷰 작성 끝 @@ -->
 
-										<!-- Comment Item start-->
+
+										<!-- @@ 위에 리뷰 반복 @@-->
 										<li class="media"><a class="pull-left" href="#"> <img
 												class="media-object comment-avatar"
 												src="imagesProd/blog/avater-4.jpg" alt="" width="50"
@@ -448,7 +434,8 @@
 												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
 													elit. Quisque at magna ut ante eleifend eleifend.</p>
 
-											</div></li>
+											</div>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -460,7 +447,7 @@
 	</section>
 
 
-	<!-- 연관 상품 추천 -->
+	<!-- @@ 연관 상품 추천 @@ -->
 	<section class="products related-products section">
 		<div class="container">
 			<div class="row">
@@ -478,38 +465,38 @@
 
 							<!-- Bag이면 가방이랑 연관된 상품, ACC면 악세사리랑 연관된 상품이 뜨도록 어떻게??? -->
 							<c:if test="${pvo.prod_kinds eq pvo.prod_kinds}">
-
 								<img class="img-responsive"
 									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png"
 									alt="product-img" />
-
 							</c:if>
 
 
 							<div class="preview-meta">
 								<ul>
-									<!--이미지 마우스오버할 때 검색/관심상품/장바구니 추가할 수 있게 -->
+									<!--@@ 이미지 마우스오버할 때 검색/관심상품/장바구니 추가할 수 있게 @@ -->
 									<li><span data-toggle="modal" data-target="#product-modal">
 											<i class="tf-ion-ios-search"></i>
-									</span></li>
+										</span>
+									</li>
 
-									<!-- 관심상품 -->
+									<!-- @@ 관심상품 @@ -->
 									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
 
-									<!-- 장바구니 -->
+									<!-- @@ 장바구니 @@ -->
 									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
 								</ul>
 							</div>
 						</div>
 
-						<!-- 상품 이름, 가격 -->
+						<!-- @@ 상품 이름, 가격 @@ -->
 						<div class="product-content">
 							<h4>
 								<a href="Product.do?command=${pvo.prod_comm}">${pvo.prod_name}</a>
 							</h4>
 							<p class="price"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
-							</fmt:formatNumber>
-							원</p>
+							</fmt:formatNumber>원
+							</p>
+							
 						</div>
 					</div>
 				</div>
