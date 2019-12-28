@@ -1,7 +1,6 @@
 package com.mvc.vo;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Vo_Product {
@@ -19,6 +18,8 @@ public class Vo_Product {
 	private double prod_dc; // 할인율
 	private Date prod_regdate; // 작성날짜
 	private String prod_note; // 주석
+	private String prod_kinds; // 상품 종류(bag, acc 등)
+	private String prod_comm; //command 값 (디테일 페이지에서 카테고리 타고 넘어갈 때 사용)
 	private List<Vo_Prod_option> plist; // 상품 옵션 리스트로 관리
 
 	public Vo_Product() {
@@ -27,7 +28,7 @@ public class Vo_Product {
 
 	public Vo_Product(int prod_no, int prod_catd, String prod_front_img, String prod_th_img, String prod_name,
 			String prod_brand, int prod_price, String prod_content, int prod_con_count, String prod_dc_yn,
-			double prod_dc, Date prod_regdate, String prod_note, List<Vo_Prod_option> plist) {
+			double prod_dc, Date prod_regdate, String prod_note, String prod_kinds, String prod_comm, List<Vo_Prod_option> plist) {
 		super();
 		this.prod_no = prod_no;
 		this.prod_catd = prod_catd;
@@ -42,6 +43,8 @@ public class Vo_Product {
 		this.prod_dc = prod_dc;
 		this.prod_regdate = prod_regdate;
 		this.prod_note = prod_note;
+		this.prod_kinds = prod_kinds;
+		this.prod_comm = prod_comm;
 		this.plist = plist;
 	}
 
@@ -149,6 +152,23 @@ public class Vo_Product {
 		this.prod_note = prod_note;
 	}
 
+	public String getProd_kinds() {
+		return prod_kinds;
+	}
+
+	public void setProd_kinds(String prod_kinds) {
+		this.prod_kinds = prod_kinds;
+	}
+	
+	public String getProd_comm() {
+		
+		return prod_comm;
+	}
+	
+	public void setProd_comm(String prod_comm) {
+		this.prod_comm = prod_comm;
+	}
+
 	public List<Vo_Prod_option> getPlist() {
 		return plist;
 	}
@@ -163,7 +183,7 @@ public class Vo_Product {
 				+ ", prod_th_img=" + prod_th_img + ", prod_name=" + prod_name + ", prod_brand=" + prod_brand
 				+ ", prod_price=" + prod_price + ", prod_content=" + prod_content + ", prod_con_count=" + prod_con_count
 				+ ", prod_dc_yn=" + prod_dc_yn + ", prod_dc=" + prod_dc + ", prod_regdate=" + prod_regdate
-				+ ", prod_note=" + prod_note + ", plist=" + plist + "]";
+				+ ", prod_note=" + prod_note + ", prod_kinds=" + prod_kinds + ", plist=" + prod_comm + ", plist=" + plist + "]";
 	}
 
 }

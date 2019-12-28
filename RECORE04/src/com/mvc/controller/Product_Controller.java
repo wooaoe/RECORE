@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
+import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 
 /**
@@ -40,8 +41,10 @@ public class Product_Controller extends HttpServlet {
 		ProductDao dao = new ProductDaoImp();
 
 		String command = request.getParameter("command");
-		System.out.println(command);
+		
+		System.out.println("[command] : " + command);
 
+		
 		if (command.equals("ProdSelectAll")) {
 
 			List<Vo_Product> plist = dao.P_selectAll();
@@ -141,6 +144,20 @@ public class Product_Controller extends HttpServlet {
 			request.setAttribute("homelist", homelist);
 
 			dispatch("./RECOREMain/RECOREProduct/Home.jsp", request, response);
+			
+		}else if(command.equals("ProdDetail")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			
+			System.out.println("pseq : " + pseq);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			
+			request.setAttribute("pvo", pvo);
+			
+			
+			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+			
 		}
 	}
 	

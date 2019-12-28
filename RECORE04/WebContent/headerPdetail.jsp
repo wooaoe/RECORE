@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  </head>
+ 
+  <body>
+
 	<div style="background: #F25430;" >
     <div class="site-mobile-menu">
       <div class="site-mobile-menu-header">
@@ -17,7 +25,7 @@
         
            <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html"><img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
+        <div style = "text-align: center; position:relative; top:15.5px;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html"><img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
         
           <div class="row align-items-center">
             <div class="col-6">
@@ -32,13 +40,13 @@
             </div>
            
             <!-- 페이지마다 로그인/회원가입 뜨는거 -->
-            <div class="col-6">
-              <div class="d-flex ml-auto">
+            <div class="col-6" >
+              <div class="d-flex ml-auto" style = "font-size: 9pt; position:relative; left:360px; top:20px;">
               
-               <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<!-- <input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>  -->
-              	</form>
+             <!--   <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+                	<input type="text" name="query" placeholder="Search" />
+              		<a href="#search"> &nbsp; Search</a> 
+              	</form> -->
                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
                  </a>
@@ -64,18 +72,18 @@
         </div>
       </div>
      
-      <div class="site-navbar">
+      <div class="site-navbar" style = "margin-bottom: 80px; width: 80%;">
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
               <!-- <h1 class="mb-0 site-logo"><a href="../index.html">RECORE</a></h1> -->
-             
             </div>
+            
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
-                <div class="container">
+                <div class="container" style = "position: static;">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1">
                     <li class="has-children">
                       <a href="index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
@@ -127,6 +135,8 @@
         </div>
       </div>
     
-    
     </div>
  	</div>
+ 	
+</body>
+</html>

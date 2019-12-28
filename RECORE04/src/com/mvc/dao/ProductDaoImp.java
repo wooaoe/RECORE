@@ -64,7 +64,7 @@ public class ProductDaoImp implements ProductDao {
 
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				plist.add(tmp);
 				System.out.println("plist 값 : " + plist);
@@ -126,7 +126,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13),rs.getString(14), rs.getString(15), polist);
 
 				bclist.add(tmp);
 			}
@@ -186,7 +186,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				clolist.add(tmp);
 			}
@@ -246,7 +246,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				outlist.add(tmp);
 			}
@@ -308,7 +308,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				toplist.add(tmp);
 			}
@@ -370,7 +370,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				bottlist.add(tmp);
 			}
@@ -432,7 +432,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				walist.add(tmp);
 			}
@@ -494,7 +494,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				lifelist.add(tmp);
 			}
@@ -554,7 +554,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				supplylist.add(tmp);
 			}
@@ -614,7 +614,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), polist);
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
 
 				homelist.add(tmp);
 			}
@@ -630,16 +630,65 @@ public class ProductDaoImp implements ProductDao {
 
 		return homelist;
 	}
-	
-	
+
 	@Override
 	public Vo_Product P_selectOne(int pseq) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Vo_Product pvo = new Vo_Product();
+		List<Vo_Prod_option> polist = new ArrayList<>();
+
+//		1. PROD_OPTION 쿼리 실행문장 (Vo_Product에서 옵션을 리스트로 관리하기 때문에) 
+
+		try {
+
+			String sql = "SELECT * FROM PROD_OPTION WHERE PROD_NO = ?";
+			System.out.println("option query 실행: " + sql);
+
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pseq);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Vo_Prod_option tmp = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getInt(5));
+
+				polist.add(tmp);
+				System.out.println("polist의 vo 값: " + tmp);
+			}
+
+		} catch (SQLException e1) {
+
+		}
+
+		try {
+
+			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO = ?";
+
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pseq);
+			rs = pstm.executeQuery();
+			System.out.println("product query 실행" + sql);
+
+			while (rs.next()) {
+				pvo = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
+						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14), rs.getString(15), polist);
+
+				System.out.println("pvo 값: " + pvo);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		
-		
-		
-		
-		
-		return null;
+		} finally {
+			close(rs, pstm, con);
+		}
+
+		return pvo;
 	}
 
 	@Override

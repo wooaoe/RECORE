@@ -34,7 +34,7 @@
     <style type="text/css">
     	#img-fluid{
     		width: 420px;
-    		height: 350px;
+    		height: 400px;
     	}    
     </style>
     
@@ -191,15 +191,17 @@
       <div class="container">
         <div class="row">
         
+        <!-- @@ 이미지 들어가는 곳 @@ -->
           <c:forEach var="prod" items = "${plist}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
+            <a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}" class="d-block figure">
             <%-- <%=request.getContextPath()%> --%>
               <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="#">${prod.prod_name}</a></h3>
+            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}">${prod.prod_name}</a></h3>
             <span class="text-muted">${prod.prod_brand}</span><br>
             <span class = "mb-0"><b><fmt:formatNumber value="${prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+          	<br><br>
           </div>
           </c:forEach>
          
