@@ -1,12 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <% request.setCharacterEncoding("UTF-8"); %>
+    <% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
-
     <title>RECORE &mdash; PRODUCT</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="./js/HuskyEZCreator.js" charset="utf-8"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -26,25 +25,68 @@
 
     <link rel="stylesheet" href="css/style.css">
 <style>
-table{
-width:100%;
+#title{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:28px;
+padding-top:10px;
+padding-bottom:100px;
 }
-th{
-text-align-last: center; 
-border: 2px solid black; 
+#btn{
+	
+	position: relative;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #F25430; 
+    border: 1px;
+    color: white;
+	padding: 20px 100px;
+   	text-align: center;  
+    font-size: 20px;
+    cursor: pointer;
+    font-family: Roboto, 'Noto Sans KR', sans-serif;
+   	
 }
-th,td{
-padding: 10px;
+#deadline{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:30px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#target_price{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:25px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#total-amount{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#total-supporter{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:20px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+#creator{
+color: #676363;
+font-family: Roboto, 'Noto Sans KR', sans-serif;
+font-size:25px;
+padding-top: 10px;
+padding-bottom: 50px;
 }
 
-#table{margin-left:25%;
-}
-#button1{
-padding-top: 50px;
-}
 
-
-</style>   
+</style>    
+ 
+    
   </head>
   <body>
   
@@ -159,7 +201,7 @@ padding-top: 50px;
         <div class="row align-items-center">
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
-         	<h1>펀딩 등록하기</h1>
+         	<h1>펀딩 상세보기</h1>
           </div>
         </div> 
       </div>
@@ -168,97 +210,76 @@ padding-top: 50px;
     
 
     <div class="site-section">
+      <div class="container">
+        <div class="row">
 
-<p style="font-size:48px; text-align:center;">펀딩 등록하기</p>
-<br>
-<br>
-<br>
-
-
-<form action="funding1.jsp" method="post" id="frm">
-<div id="table">
-<table >
-     <tr>
-     		
-     		
-           <th align = "center">제목</th>    
-            
-            <td> <input type="text" id="title" name="title" style="width:650px"/> </td>
-     
-       </tr>
-    <tr>
-            <th>작성자   </th>
-            <td> <input type="text" id="creator" name="creator" style="width:650px"/></td>
-       </tr>
-
-       	 <tr>
-            <th>목표금액    </th>
-            <td> <input type="number" id="target_price" name="target_price" style="width:650px"/>원</td>
-       
-     </tr>
- 
-      <tr>
-            <th>마감기한    </th>
-            <td> <input type="date" id="deadline" name="deadline" style="width:650px"/></td>
-       
-    
-    </tr>   
-   <tr>
-	 <th>  
-   	 펀딩 내용</th><td>
-    <textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
-  
-    </td>
-    </tr>
-   <tr>
-    <td>
-    <div id="button1">
-    <input type="button" id="savebutton" value="펀딩 등록하기" /></div>
-
-    </td>
-    </tr>
-</table>
+        
+<div id=title>
+          <% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("title")); %>  
 </div>
-</form>
+
+<!--  div id=creator>
+<!% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("creator")); %> 
+</div>
+
+<!--  div id=target_price>
+<!--% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("target_price")); %>  
+</div>
 
 
+<!--div id=deadline>
+<!--% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("deadline")); %>  
+</div-->
 
-<script type="text/javascript"> 
-$(function(){
-    //전역변수선언
-    var editor_object = [];
-     
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: editor_object,
-        elPlaceHolder: "smarteditor",
-        sSkinURI: "SmartEditor2Skin.html",
-        htParams : {
-            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseToolbar : true,            
-            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseVerticalResizer : true,    
-            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseModeChanger : true,
-        }
-    });
-     
-    //전송버튼 클릭이벤트
-    $("#savebutton").click(function(){
-        //id가 smarteditor인 textarea에 에디터에서 대입
-        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-         
-        // 이부분에 에디터 validation 검증
-         
-        //폼 submit
-        $("#frm").submit();
-    })
-})
-</script>
 
+<div id=smarteditor>
+<%
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("smarteditor"));
+%>
+</div>
+
+ <div class="state-box">
+ 
+ <div id=deadline>
+ <p class="remaining-day"><% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("deadline")); %> 일 종료</p></div>
+
+                      <!-- <p class="rate-bar"><em style="width:156%"></em></p>      
+                  <!--  p class="achievement-rate"><strong>156</strong>% 달성</p>-->
+				 <div id=target_price> <p class="target_price"><strong>목표금액  <% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("target_price")); %> 원 </strong></p></div>	
+                  <p class="total-amount"><strong>3,138,000</strong>원  펀딩</p>
+                  <p class="total-supporter"><strong>44</strong>명의 서포터</p>
+                  
+                  <div id=creator> 메이커 정보: 
+<% 
+request.setCharacterEncoding("utf-8");
+out.println(request.getParameter("creator")); %> 
+</div>
+                  
+                  <div class="button" id="btn">
+                    펀딩하기
+                  </div>
+                  
+                </div>
+               
+          
        
+        </div>
       </div>
+    </div>
     
-  
   
 
     <footer class="site-footer">
