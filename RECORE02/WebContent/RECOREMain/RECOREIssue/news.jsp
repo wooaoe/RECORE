@@ -32,7 +32,7 @@
 	<style type="text/css">
 		.newsButtonWhite{
 			background-color: white; 
-			border:2px solid ;
+			border:1px solid ;
 			border-radius: 50%; 
 			border-color:#a0d9d9; 
 			width: 30px; 
@@ -180,6 +180,16 @@
           <div class="col-12 text-center">
             <span class="sub-title">뉴스</span>
             <h2 class="font-weight-bold text-black mb-5">News</h2>
+            <span class="" onclick="location.href='issue.do?command=insertNewspage&iss_catd_no=4'"
+			style="background-color:#a0d9d9;
+			width: 70px; 
+			height: 30px;
+			font-size:13px; 
+			text-align: center;
+			float: right; 
+			padding-top: 3px;
+			margin-bottom: 15px;
+			color:white;">글쓰기</span>
           </div>
         </div>
         
@@ -237,7 +247,8 @@
 		        		<div class="newsButton" onclick="location.href='issue.do?command=selectAllNews&pageno=${page+1 }'">${page+1}</div>
         			</c:otherwise>
         		</c:choose>
-        	
+        		
+        		
         	</div>
         	
         </div>

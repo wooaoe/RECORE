@@ -1,5 +1,6 @@
 package com.mvc.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.mvc.dao.IssueDao;
 import com.mvc.dao.IssueDaoImpl;
 import com.mvc.vo.Vo_Issue;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import java.util.Enumeration;
 import java.util.List;
 
 
@@ -172,6 +177,99 @@ public class Issue_Controller extends HttpServlet {
 			request.setAttribute("page", page);
 
 			dispatch("./RECOREMain/RECOREIssue/exhibition_detail.jsp", request, response);
+			
+		}else if(command.equals("insertNewspage")) {
+			int iss_catd_no = Integer.parseInt(request.getParameter("iss_catd_no"));
+			request.setAttribute("iss_catd_no", iss_catd_no);
+			
+			dispatch("./RECOREMain/RECOREIssue/news_insertpage.jsp", request, response);
+		
+		}else if(command.equals("insertNews")) {
+			
+			String savepath = request.getServletContext().getRealPath("RECOREMain\\RECOREIssue\\images");
+
+			int size = 1024*1024*10;
+			
+			MultipartRequest mul = new MultipartRequest(request, savepath, size,"UTF-8", new DefaultFileRenamePolicy());
+			
+			
+			String iss_title = mul.getParameter("iss_title");
+			String iss_writer = mul.getParameter("iss_writer");
+			String iss_source = mul.getParameter("iss_source");
+			String iss_note = mul.getParameter("iss_note");
+			int iss_catd_no =Integer.parseInt(mul.getParameter("iss_catd_no"));
+			
+			Vo_Issue vo = new Vo_Issue();
+			vo.setIss_catd_no(iss_catd_no);
+			vo.setIss_title(iss_title);
+			vo.setIss_writer(iss_writer);
+			vo.setIss_con_count(1);
+			vo.setIss_source(iss_source);
+			vo.setIss_note(iss_note);
+			
+			boolean res = dao.I_insert(vo);
+			
+			int i_seq = dao.I_getSeqCurrval();
+			Vo_Issue ivo = dao.I_selectOne(i_seq);
+			
+			
+			String newpath = request.getServletContext().getRealPath("RECOREMain\\RECOREIssue\\images\\"+ivo.getIss_no());
+			System.out.println("newpath : "+newpath);
+			File folder = new File(newpath);
+
+			if (!folder.exists()) {
+				try{
+				    folder.mkdir(); //폴더 생성합니다.
+				    System.out.println("폴더가 생성되었습니다.");
+			        } 
+			        catch(Exception e){
+				    e.getStackTrace();
+				}        
+		         }else {
+				System.out.println("이미 폴더가 생성되어 있습니다.");
+			}
+			
+	
+
+			String iss_front_img = mul.getFilesystemName("iss_front_img");
+			String iss_th_img = mul.getFilesystemName("iss_th_img");
+			String iss_content = mul.getFilesystemName("iss_content");
+			
+			File iss_front_img_file = new File(savepath+"\\"+iss_front_img); // 현재 대표이미지 파일
+			File iss_th_img_file = new File(savepath+"\\"+iss_th_img); // 현재 썸네일이미지 파일
+			File iss_content_file = new File(savepath+"\\"+iss_content);	// 현재 내용이미지 파일
+			
+			File iss_front_img_newfile = new File(newpath+"\\"+"f_img.png");
+			File iss_th_img_file_newfile = new File(newpath+"\\"+"th_img.png");
+			File iss_content_img_newfile = new File(newpath+"\\"+"con_img1.png");
+
+			
+			//파일경로 변경,파일이름 복사
+			if(iss_front_img_file.exists()) {
+				iss_front_img_file.renameTo(iss_front_img_newfile);
+				iss_front_img_file.delete();
+			}
+			
+			if(iss_th_img_file.exists()) {
+				iss_th_img_file.renameTo(iss_th_img_file_newfile);
+				iss_th_img_file.delete();
+			}
+			
+			if(iss_content_file.exists()) {
+				iss_content_file.renameTo(iss_content_img_newfile);
+				iss_content_file.delete();
+			}
+			
+			
+			
+			
+//			Enumeration e = mul.getFileNames();
+//				//파일 여러개의 이름을 가져옴
+//			while(e.hasMoreElements()) {
+//				System.out.println("fileName : " + mul.getFilesystemName((String)e.nextElement()));
+//			}
+			
+			response.sendRedirect("./RECOREMain/index.jsp");
 			
 		}
 		
