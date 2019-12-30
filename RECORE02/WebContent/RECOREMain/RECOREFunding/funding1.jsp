@@ -6,6 +6,7 @@
     
     
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -270,7 +271,7 @@ out.println(request.getParameter("title")); %>
 	
 	
 	<div id=smarteditor>
-	out.println("file");
+	res2.data.link
 	</div>
 	
 	 <div class="state-box">

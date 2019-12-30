@@ -3,9 +3,7 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-    
-    
-    
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 
     <!-- Main CSS-->
-    <link href="./css/main.css" rel="stylesheet" media="all">
+    <link href="cssMain/main.css" rel="stylesheet" media="all">
 
    <title>RECORE &mdash; PRODUCT</title>
     
@@ -203,7 +201,7 @@ padding-top: 50px;
                     <h2 class="title">펀딩 등록하기</h2>
                 </div>
                 <div class="card-body"style="border:0px;" >
-                    <form action="funding1.jsp" method="get" id="frm">
+                    <form action="funding1.jsp" method="post" id="frm" enctype="multipart/form-data">
                         <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 제목</div>
                             <div class="value">
@@ -251,13 +249,12 @@ padding-top: 50px;
 
             if ($files.length) {
 
-                // Reject big files
                 if ($files[0].size > $(this).data("max-size") * 10240) {
                     console.log("Please select a smaller file");
                     return false;
                 }
 
-                // Replace ctrlq with your own API key
+          
                 var apiUrl = 'https://api.imgur.com/3/image';
                 var apiKey = 'fac99c105facfd0';
 
@@ -281,10 +278,12 @@ padding-top: 50px;
                         console.log("Uploading ");
                     },
                     success: function (res) {
-                    	 console.log(res.data.link);                  	
+                    	                   	
                         $('body').append('<img src="' + res.data.link + '" />');
                         alert("파일첨부완료");
-                        alert(res.data.link);
+                       
+                        return  res.data.link;
+                        
                     },
                     error: function () {
                         alert("Failed ");
@@ -294,6 +293,7 @@ padding-top: 50px;
                 	
                     console.log("Done");
                 });
+                
             }
         });
     });
@@ -353,6 +353,7 @@ padding-top: 50px;
                     	 console.log(res2.data.link);                  	
                         $('body').append('<img src="' + res2.data.link + '" />');
                         alert("파일첨부완료");
+                        return res2.data.link;
                     },
                     error: function () {
                         alert("Failed ");
@@ -377,6 +378,28 @@ padding-top: 50px;
                                             
                         
                     </form>
+                    <script>
+                      function test2(){
+        var form = $("form")[0];        
+        var formData = new FormData(form);
+
+        $.ajax({
+            cache : false,
+            url : "${pageContext.request.contextPath}/funding1.jsp", 
+            processData: false,
+            contentType: false,
+            type : 'POST', 
+            data : formData, 
+            success : function(data) {
+                var jsonObj = JSON.parse(data);
+            }, // success 
+    
+            error : function(xhr, status) {
+                alert(xhr + " : " + status);
+            }
+        }); // $.ajax */    }
+</script>
+                    
                 </div>
                 <div class="card-footer">
                
