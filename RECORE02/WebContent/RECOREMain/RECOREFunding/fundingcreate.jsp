@@ -360,6 +360,7 @@ padding-top: 50px;
                                
 
 
+
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
