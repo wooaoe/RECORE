@@ -1,0 +1,787 @@
+@charset "UTF-8";
+
+/* 전체적인 부분 */
+html {
+    width: 100%;
+    height: 100%;
+}
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    display: block;
+    color: -internal-root-color;
+}
+
+body {
+    min-width: 1050px;
+}
+
+body, code {
+    font-family: 'Noto Sans KR',sans-serif;
+    color: #353535;
+    background: #fff;
+    font-size: 13px;
+}
+
+body {
+    display: block;
+    margin: 8px;
+}
+
+#wrap {
+    position: relative;
+    margin: 0 auto;
+}
+
+div {
+    display: block;
+}
+
+#container {
+    margin: 0 auto;
+    *zoom: 1;
+    min-width: 1050px;
+}
+
+#container:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+#content {
+    width: 1050px;
+    margin: 200px auto 100px;
+}
+
+/* 관심상품 title */
+.titleArea {
+    width: 1050px;
+    min-height: 30px;
+    margin: 30px auto 20px;
+}
+
+.titleArea h2 {
+    display: inline-block;
+    color: #2e2e2e;
+    font-size: 25px;
+    *display: inline;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+/* 관심상품 테이블  */
+.ec-base-table.typeList table {
+    border-top: 1px solid #d7d5d5;
+}
+
+.ec-base-table table {
+    position: relative;
+    margin: 10px 0 0;
+    border: 1px solid #d7d5d5;
+    border-top: 0;
+    color: #fff;
+    line-height: 1.5;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table[Attributes Style] {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.ec-base-table.typeList table:before {
+    display: none;
+}
+
+.ec-base-table table:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #d7d5d5;
+}
+
+caption {
+    display: none;
+}
+
+caption {
+    display: table-caption;
+    text-align: -webkit-center;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+col {
+    display: table-column;
+}
+
+/* 테이블 thead */
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.ec-base-table th:first-child {
+    border-left: 0;
+}
+
+.ec-base-table thead th {
+    padding: 11px 0 10px;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    font-weight: normal;
+    background: #fff;
+    text-align: center;
+}
+
+.ec-base-table th {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+th, td {
+    border: 0;
+    vertical-align: top;
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+input[type=radio], input[type=checkbox] {
+    width: 13px;
+    height: 13px;
+    border: 0;
+}
+
+input, select, textarea {
+    font-size: 100%;
+    font-family: "돋움",Dotum;
+    color: #353535;
+    vertical-align: middle;
+}
+
+input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+}
+
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+/* 테이블 tbody */
+.ec-base-table .center {
+    text-align: center;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.ec-base-table.typeList .center td, .ec-base-table.typeList td.center {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ec-base-table.typeList td {
+    padding: 8px 10px 7px;
+}
+
+.ec-base-table td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.xans-myshop-wishlist td.thumb img {
+    max-width: 80px;
+}
+
+.ec-base-table img {
+    vertical-align: middle;
+}
+
+.ec-base-table.typeList .center td.left {
+    padding-left: 10px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.ec-base-table .left {
+    text-align: left;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.xans-myshop-wishlist td div.option, .xans-myshop-wishlist td ul.option > li {
+    margin: 9px 0 0;
+    color: #707070;
+    line-height: 16px;
+}
+
+li {
+    list-style: none;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+.xans-myshop-wishlist td ul.option > li > strong {
+    display: block;
+    color: #353535;
+}
+
+.displaynone {
+    display: none !important;
+}
+
+[class^='btnNormal'], a[class^='btnNormal'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #222;
+    background-color: #fff;
+}
+
+.gBlank5 {
+    display: block;
+    margin-top: 5px;
+}
+
+.xans-myshop-wishlist .optionModify {
+    display: none;
+    width: 450px;
+    color: #707070;
+}
+
+.ec-base-layer {
+    position: absolute;
+    z-index: 100;
+    border: 1px solid #757575;
+    background: #fff;
+}
+
+.ec-base-layer .header {
+    padding: 7px 35px 7px 19px;
+    color: #fff;
+    background: #124734;
+}
+
+.ec-base-layer .header > h1, .ec-base-layer .header > h3 {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.ec-base-layer .content {
+    padding: 20px;
+    font-size: 12px;
+}
+
+.xans-myshop-wishlist .optionModify .prdInfo {
+    margin: 0 0 10px;
+    padding: 0 0 10px;
+    border-bottom: 1px dotted #b0b1b3;
+    line-height: 1.5;
+}
+
+ul ul {
+    list-style-type: circle;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+}
+
+.xans-myshop-wishlist .optionModify .prdInfo li {
+    color: #353535;
+    font-weight: bold;
+}
+
+.xans-myshop-wishlist .optionModify .prdInfo li.option {
+    color: #707070;
+    font-weight: normal;
+}
+
+.xans-myshop-wishlist .optionModify .prdModify h4 {
+    color: #353535;
+    font-size: 12px;
+}
+
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.ec-base-layer .ec-base-button {
+    padding: 9px;
+    border-top: 1px solid #d7d5d5;
+    text-align: center;
+    background: #fbfafa;
+}
+
+.ec-base-button {
+    padding: 10px 0;
+    text-align: center;
+}
+
+[class^='btn'][class*='Fix'].sizeS {
+    width: 96px;
+}
+
+[class^='btn'][class*='Fix'] {
+    width: 72px;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+[class^='btn'].sizeS {
+    padding: 6px 8px;
+}
+
+[class^='btnSubmit'], a[class^='btnSubmit'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #fff;
+    background-color: #05ce7c;
+}
+
+.ec-base-layer .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 11px 20px;
+    cursor: pointer;
+}
+
+img, fieldset {
+    border: none;
+    vertical-align: top;
+}
+
+.ec-base-table.typeList .center td.right {
+    padding-right: 10px;
+}
+
+.xans-myshop-wishlist td.price {
+    word-break: normal;
+}
+
+.ec-base-table .right {
+    text-align: right;
+}
+
+.txtInfo {
+    color: #707070;
+}
+
+.xans-myshop-wishlist td.button a {
+    width: 90px;
+    margin: 1px 0;
+}
+
+[class^='btn'] .icoDelete {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: -2px 2px 0 0;
+    vertical-align: middle;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+[class^='btn'] i {
+    display: none \0/IE8;
+}
+
+i {
+    font-style: italic;
+}
+
+[class^='btn'] .icoDelete:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 4px;
+    width: 2px;
+    height: 10px;
+    background: #77797d;
+}
+
+[class^='btn'] .icoDelete:after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 0;
+    width: 10px;
+    height: 2px;
+    background: #77797d;
+}
+
+.ec-base-table table + .message {
+    margin: -1px 0 0;
+}
+
+.ec-base-table .message {
+    border: 1px solid #d7d5d5;
+    padding: 50px 0;
+    text-align: center;
+    color: #757575;
+    font-weight: bold;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* 테이블 밑 버튼 */
+.ec-base-button:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.ec-base-button .gLeft {
+    float: left;
+    text-align: left;
+}
+
+.ec-base-button .text {
+    margin: 0 6px 0 10px;
+    color: #353535;
+    line-height: 24px;
+}
+
+[class^='btnEm'], a[class^='btnEm'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #555;
+    background-color: #fff;
+    border: solid 1px #aaa;
+    margin-left: 5px;
+}
+
+[class^='btnSubmit'] .icoDelete:before, [class^='btnSubmit'] .icoDelete:after, [class^='btnEm'] .icoDelete:before, [class^='btnEm'] .icoDelete:after {
+    background: #f0f0f0;
+}
+
+[class^='btn'] .icoDelete:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 4px;
+    width: 2px;
+    height: 10px;
+    background: #77797d;
+}
+
+[class^='btnSubmit'] .icoDelete:before, [class^='btnSubmit'] .icoDelete:after, [class^='btnEm'] .icoDelete:before, [class^='btnEm'] .icoDelete:after {
+    background: #f0f0f0;
+}
+
+[class^='btn'] .icoDelete:after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 0;
+    width: 10px;
+    height: 2px;
+    background: #77797d;
+}
+
+.ec-base-button .gRight {
+    float: right;
+    text-align: right;
+}
+
+[class^='btn'][class*='Fix'].sizeM {
+    width: 120px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+[class^='btn'].sizeM {
+    padding: 10px 16px;
+}
+
+/* 맨밑 페이지 표시 */
+.ec-base-paginate {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 0;
+    line-height: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ec-base-paginate img {
+    vertical-align: top;
+}
+
+.ec-base-paginate ol {
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+    *margin: 0;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.ec-base-paginate li:first-child {
+    margin-left: 0;
+}
+
+.ec-base-paginate li {
+    display: inline-block;
+    margin: 0 0 0 -1px;
+    border: 1px solid #d7d5d5;
+    font-size: 12px;
+    color: #757575;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+}
+
+.ec-base-paginate li a.this {
+    padding-bottom: 6px;
+    border-bottom: 3px solid #495164;
+    color: #495164;
+}
+
+.ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+}
+
+/* 풋터 */
+#footer {
+    width: 100%;
+    background: #f9f9f9;
+    padding: 65px 0;
+    box-sizing: border-box;
+}
+
+hr.layout {
+    display: none;
+}
+
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+
+
+/* a태그 */
+a {
+    text-decoration: none!important;
+}
+
+a {
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+    color: #000;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-line: underline;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+}
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
