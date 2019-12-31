@@ -49,7 +49,14 @@ public class Mypage_Controller extends HttpServlet {
 		ProductDao_Impl pdao = new ProductDao_Impl();
 		
 		if(command.equals("orderlist")) {
-			dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
+			System.out.println(map.get("list_order"));
+			List test = (List)map.get("list_order");
+			if(test.isEmpty()) {
+				response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
+			}else {
+				request.setAttribute("list_wish", map.get("list_order"));
+				dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
+			}
 			
 		}else if(command.equals("main")){
 			List test = (List)map.get("list_order");
