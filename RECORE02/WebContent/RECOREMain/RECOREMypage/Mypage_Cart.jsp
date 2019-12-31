@@ -64,7 +64,7 @@
 <body id="main">
 	
 	<!-- header -->
-	<%@ include file="/header.jsp" %>
+	<%@ include file="header.jsp" %>
 	
 	<!-- 장바구니 시작 -->
 	<div id="wrap">

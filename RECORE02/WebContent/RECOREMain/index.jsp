@@ -1,5 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <% request.setCharacterEncoding("UTF-8"); %>
+    <% response.setContentType("text/html; charset=UTF-8");%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
+    
+    <%
+	Vo_Account vo = (Vo_Account)session.getAttribute("vo");
+	%>
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <title>RECORE &mdash; RECORE</title>
     <meta charset="utf-8">
@@ -37,12 +48,12 @@
     </div> <!-- .site-mobile-menu -->
     
     
-    <div class="site-navbar-wrap" style="background-color: white;">
+    <div class="site-navbar-wrap" style="background-color: #A0D9D9;">
       <div class="site-navbar-top">
         <div class="container py-3">
        
         <!--@@ 로고 위치 @@-->
-        <div style = "text-align: center;"><a href = "index.html"><img alt="" src = "images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "index.jsp"><img alt="" src = "images/donut.png"></a></div>
         
         
           <div class="row align-items-center">
@@ -62,17 +73,22 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
-                 </a>
-                 
-                 <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
-                  <br>
-                  <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
-                 
-                
+    <c:if test="${empty vo }">
+    <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+    <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span></a>
+    <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+    <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
+    <br>
+    <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
+    </c:if>
+    
+    <c:if test="${!empty vo }">
+    <a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    <span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
+    </c:if>         
                 <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>

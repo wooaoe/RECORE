@@ -47,19 +47,19 @@
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
     <c:if test="${empty vo }">
-    <a href="./RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+    <a href="../../RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
     <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span></a>
-    <a href="./RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+    <a href="../../RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
     <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
     <br>
-    <a href="./RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    <a href="../../RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
     <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
     </c:if>
     
     <c:if test="${!empty vo }">
-    <a href="./Account_Controller.do?command=logout" class="d-flex align-items-center">
+    <a href="../../Account_Controller.do?command=logout" class="d-flex align-items-center">
     <span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
-    <a href="./RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    <a href="../../RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
     <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
     </c:if>             
                 <!--              
