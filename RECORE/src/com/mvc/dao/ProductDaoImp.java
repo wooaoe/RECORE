@@ -42,7 +42,6 @@ public class ProductDaoImp implements ProductDao {
 						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
 
 				plist.add(tmp);
-				System.out.println("plist 값 : " + plist);
 
 			}
 		} catch (SQLException e) {
@@ -83,7 +82,7 @@ public class ProductDaoImp implements ProductDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rs, pstm, con);
 		}
 
@@ -91,28 +90,33 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public List<Vo_Product> BC_selectAll() {
+	public List<Vo_Product> Parent_selectAll(int catdid) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<Vo_Product> bclist = new ArrayList<Vo_Product>();
+		List<Vo_Product> prntlist = new ArrayList<Vo_Product>();
 
 //		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
-			String sql = "SELECT * FROM PRODUCT WHERE CATD_NO = 6 ORDER BY PROD_NO DESC";
+			String sql = "SELECT * FROM PRODUCT p JOIN CATEGORY_DETAIL c ON(p.CATD_NO = c.CATD_NO) WHERE c.CAT_ID = ? "
+					+ "ORDER BY PROD_NO DESC";
 
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, catdid);
 			rs = pstm.executeQuery();
 
+			System.out.println("parent 쿼리 실행 : " + sql);
+			
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
 						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
 
-				bclist.add(tmp);
+				prntlist.add(tmp);
+				System.out.println("parent 쿼리 실행 값 : " + prntlist);
 			}
 
 		} catch (SQLException e) {
@@ -122,24 +126,26 @@ public class ProductDaoImp implements ProductDao {
 			close(rs, pstm, con);
 		}
 
-		return bclist;
+		return prntlist;
 	}
 
 	@Override
-	public List<Vo_Product> Clo_selectAll() {
+	public List<Vo_Product> Child_selectAll(int catdno) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<Vo_Product> clolist = new ArrayList<Vo_Product>();
+		List<Vo_Product> childlist = new ArrayList<Vo_Product>();
 
 //		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
-			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO IN(161, 162, 202, 210, 213, 216, 218, 221, 222)";
+			String sql = "SELECT * FROM PRODUCT P JOIN CATEGORY_DETAIL CD \r\n"
+					+ "ON (P.CATD_NO = CD.CATD_NO) WHERE P.CATD_NO = ? ORDER BY PROD_NO DESC";
 
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, catdno);
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
@@ -147,42 +153,7 @@ public class ProductDaoImp implements ProductDao {
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
 						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
 
-				clolist.add(tmp);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-			close(rs, pstm, con);
-		}
-
-		return clolist;
-	}
-
-	@Override
-	public List<Vo_Product> Outer_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Product> outlist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
-
-		try {
-
-			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO IN(161,162,163,164) ORDER BY PROD_NO DESC";
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
-
-				outlist.add(tmp);
+				childlist.add(tmp);
 			}
 
 		} catch (SQLException e) {
@@ -194,229 +165,77 @@ public class ProductDaoImp implements ProductDao {
 			close(rs, pstm, con);
 		}
 
-		return outlist;
+		return childlist;
 	}
 
+
 	@Override
-	public List<Vo_Product> Top_selectAll() {
+	public List<Vo_Category_Detail> CD_selectAll(int catdid) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<Vo_Product> toplist = new ArrayList<Vo_Product>();
 
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
+		List<Vo_Category_Detail> cdlist = new ArrayList<Vo_Category_Detail>();
+
+		String sql = "SELECT * FROM CATEGORY_DETAIL WHERE CAT_ID = ?";
 
 		try {
 
-			String sql = "SELECT * FROM PRODUCT WHERE CATD_NO = 8 ORDER BY PROD_NO DESC";
-
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, catdid);
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+				Vo_Category_Detail tmp = new Vo_Category_Detail(rs.getInt(1), rs.getInt(2), rs.getString(3),
+						rs.getString(4), rs.getString(5));
 
-				toplist.add(tmp);
+				cdlist.add(tmp);
+				System.out.println("카테고리 디테일 값 : " + cdlist);
 			}
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
-
 		} finally {
 
 			close(rs, pstm, con);
 		}
 
-		return toplist;
+		return cdlist;
 	}
 
 	@Override
-	public List<Vo_Product> Bottom_selectAll() {
+	public Vo_Category_Detail CD_selectAll2(int catdno) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		List<Vo_Product> bottlist = new ArrayList<Vo_Product>();
 
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
+		Vo_Category_Detail cdvo2 = new Vo_Category_Detail();
+
+		String sql = "SELECT * FROM CATEGORY_DETAIL WHERE CATD_NO = ?";
 
 		try {
 
-			String sql = "SELECT * FROM PRODUCT WHERE CATD_NO = 9 ORDER BY PROD_NO DESC";
-
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, catdno);
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+				cdvo2 = new Vo_Category_Detail(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5));
 
-				bottlist.add(tmp);
+				System.out.println("카테고리 디테일 값2 : " + cdvo2);
 			}
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
-
 		} finally {
 
 			close(rs, pstm, con);
 		}
 
-		return bottlist;
-	}
-
-	@Override
-	public List<Vo_Product> Wallet_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Product> walist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
-
-		try {
-
-			String sql = "SELECT * FROM PRODUCT WHERE CATD_NO = 10 ORDER BY PROD_NO DESC";
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
-
-				walist.add(tmp);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-			close(rs, pstm, con);
-		}
-
-		return walist;
-	}
-
-	@Override
-	public List<Vo_Product> Life_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Product> lifelist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
-
-		try {
-
-			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO IN(228,229,230,231,232,246,247,248,249) ORDER BY PROD_NO DESC";
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
-
-				lifelist.add(tmp);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-			close(rs, pstm, con);
-		}
-
-		return lifelist;
-	}
-
-	@Override
-	public List<Vo_Product> Supply_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Product> supplylist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 
-
-		try {
-
-			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO BETWEEN 228 AND 236 ORDER BY PROD_NO DESC";
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
-
-				supplylist.add(tmp);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-		} finally { // 마지막 catch문에 close
-
-			close(rs, pstm, con);
-		}
-
-		return supplylist;
-	}
-
-	@Override
-	public List<Vo_Product> Home_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Product> homelist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 
-
-		try {
-
-			String sql = "SELECT * FROM PRODUCT WHERE PROD_NO BETWEEN 246 AND 254 ORDER BY PROD_NO DESC";
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
-
-				homelist.add(tmp);
-			}
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-		} finally { // 마지막 catch문에 close
-
-			close(rs, pstm, con);
-		}
-
-		return homelist;
+		return cdvo2;
 	}
 
 	@Override

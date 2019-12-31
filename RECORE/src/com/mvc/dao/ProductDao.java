@@ -14,31 +14,20 @@ public interface ProductDao {
 
 	public List<Vo_Product> P_selectAll(); // 상품 리스트 전체 조회
 	
-	public List<Vo_Product> BC_selectAll(); // 가방,악세사리 조회
+	public List<Vo_Product> Parent_selectAll(int catdid);
 	
-	public List<Vo_Product> Clo_selectAll(); // 옷 전체 조회
-	
-	public List<Vo_Product> Outer_selectAll(); // 외투 전체 조회
-	
-	public List<Vo_Product> Top_selectAll(); // 상의 전체 조회
-	
-	public List<Vo_Product> Bottom_selectAll(); // 바지 전체 조회 
-	
-	public List<Vo_Product> Wallet_selectAll(); // 지갑 전체 조회
-
-	public List<Vo_Product> Life_selectAll(); // 라이프 전체 조회
-	
-	public List<Vo_Product> Supply_selectAll(); // 문구류 전체 조회
-	
-	public List<Vo_Product> Home_selectAll(); // 리빙 전체 조회
+	public List<Vo_Product> Child_selectAll(int pseq); // 옷 전체 조회
 	
 	public List<Vo_Prod_option> option_selectAll(); //상품 옵션 
-
+	
 	public Vo_Product P_selectOne(int pseq); // 상품 선택 조회
+	
+	public List<Vo_Category_Detail> CD_selectAll(int catid); //카테고리 아이디 받아서 Clothing, Life 구분하기 
+	
+	public Vo_Category_Detail CD_selectAll2(int catdno); //카테고리 번호 받아서 Bag,Wallet,outer 등 구분하기 
 	
 	public Vo_Category_Detail CD_selectOne(Vo_Product pvo); //카테고리 선택 조회
 	
-//	public List<Vo_Prod_option> po_selectOne(Vo_Product pvo); //상품 옵션 선택 조회
 	public ArrayList<Vo_Prod_option> po_selectOne(Vo_Product pvo); //상품 옵션 선택 조회
 
 	public boolean P_insert(Vo_Product pvo); // 상품 등록
@@ -52,6 +41,8 @@ public interface ProductDao {
 	public boolean P_update(Vo_Product pvo); // 상품 수정
 
 	public boolean P_delete(int aseq); // 상품 삭제
+
+	
 
 
 	

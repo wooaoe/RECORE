@@ -45,81 +45,42 @@ public class Product_Controller extends HttpServlet {
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
 			request.setAttribute("plist", plist);
-
+						
 			dispatch("./RECOREMain/RECOREProduct/Prod_All.jsp", request, response);
 
-		} else if (command.equals("BagAccSelectAll")) {
+		} else if (command.equals("ParentSelectAll")) {
+			
+			int catdid = Integer.parseInt(request.getParameter("catdid"));
+			System.out.println("catdid : " + catdid);
+			
+			List<Vo_Product> parent = dao.Parent_selectAll(catdid);
+			System.out.println("parent selectAll" + parent);
+			request.setAttribute("parent", parent);
+			
+			Vo_Category_Detail cdvo = dao.CD_selectAll2(catdid);
+			request.setAttribute("cdvo", cdvo);
+			
+			List<Vo_Category_Detail> cdlist = dao.CD_selectAll(catdid);
+			request.setAttribute("cdlist", cdlist);
+			 
+			//페이지 하나에서 시퀀스 넘버로 구분 
+			dispatch("./RECOREMain/RECOREProduct/Parent.jsp", request, response);
 
-			List<Vo_Product> bclist = dao.BC_selectAll();
-			System.out.println(bclist);
-			request.setAttribute("bclist", bclist);
-
-			dispatch("./RECOREMain/RECOREProduct/BagAcc.jsp", request, response);
-
-		} else if (command.equals("ClothingSelectAll")) {
-
-			List<Vo_Product> clolist = dao.Clo_selectAll();
-			System.out.println(clolist);
-			request.setAttribute("clolist", clolist);
-
-			dispatch("./RECOREMain/RECOREProduct/Clothing.jsp", request, response);
-
-		} else if (command.equals("OuterSelectAll")) {
-
-			List<Vo_Product> outlist = dao.Outer_selectAll();
-			System.out.println(outlist);
-			request.setAttribute("outlist", outlist);
-
-			dispatch("./RECOREMain/RECOREProduct/Outer.jsp", request, response);
-
-		} else if (command.equals("TopSelectAll")) {
-
-			List<Vo_Product> toplist = dao.Top_selectAll();
-			System.out.println(toplist);
-			request.setAttribute("toplist", toplist);
-
-			dispatch("./RECOREMain/RECOREProduct/TOP.jsp", request, response);
-
-		} else if (command.equals("BottomSelectAll")) {
-
-			List<Vo_Product> bottlist = dao.Bottom_selectAll();
-			System.out.println(bottlist);
-			request.setAttribute("bottlist", bottlist);
-
-			dispatch("./RECOREMain/RECOREProduct/Bottom.jsp", request, response);
-
-		} else if (command.equals("WalletSelectAll")) {
-
-			List<Vo_Product> walist = dao.Wallet_selectAll();
-			System.out.println(walist);
-			request.setAttribute("walist", walist);
-
-			dispatch("./RECOREMain/RECOREProduct/Wallet.jsp", request, response);
-
-		} else if (command.equals("LifeSelectAll")) {
-
-			List<Vo_Product> lifelist = dao.Life_selectAll();
-			System.out.println(lifelist);
-			request.setAttribute("lifelist", lifelist);
-
-			dispatch("./RECOREMain/RECOREProduct/Life.jsp", request, response);
-
-		} else if (command.equals("SupplySelectAll")) {
-
-			List<Vo_Product> suplist = dao.Supply_selectAll();
-			System.out.println(suplist);
-			request.setAttribute("suplist", suplist);
-
-			dispatch("./RECOREMain/RECOREProduct/Supply.jsp", request, response);
-
-		} else if (command.equals("HomeSelectAll")) {
-
-			List<Vo_Product> homelist = dao.Home_selectAll();
-			System.out.println(homelist);
-			request.setAttribute("homelist", homelist);
-
-			dispatch("./RECOREMain/RECOREProduct/Home.jsp", request, response);
-
+		} else if (command.equals("ChildSelectAll")) {
+			
+			int catdno = Integer.parseInt(request.getParameter("catdno"));
+			System.out.println(catdno);
+			
+			List<Vo_Product> child = dao.Child_selectAll(catdno);
+			System.out.println(child);
+			request.setAttribute("child", child);
+			
+			Vo_Category_Detail cdvo2 = dao.CD_selectAll2(catdno);
+			request.setAttribute("cdvo2", cdvo2);
+			
+			dispatch("./RECOREMain/RECOREProduct/Child.jsp", request, response);
+		
+		
 		} else if (command.equals("ProdDetail")) {
 
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
