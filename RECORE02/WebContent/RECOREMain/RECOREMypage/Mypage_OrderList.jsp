@@ -277,7 +277,7 @@
 	        <hr class="layout">
 	        
 	        <!-- footer -->
-			<%@ include file="/RECOREMain/RECOREMypage/footer.jsp" %>	
+			<%@ include file="/footer.jsp" %>	
 	
   
 </body>
