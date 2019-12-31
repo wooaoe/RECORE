@@ -1,0 +1,777 @@
+@charset "UTF-8";
+/* 전체 */
+#wrap {
+    position: relative;
+    margin: 0 auto;
+}
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    display: block;
+}
+
+body, code {
+    font-family: 'Noto Sans KR',sans-serif;
+    color: #353535;
+    background: #fff;
+    font-size: 13px;
+}
+
+html {
+    color: -internal-root-color;
+}
+
+#container {
+    margin: 0 auto;
+    *zoom: 1;
+    min-width: 1050px;
+}
+
+element.style {
+    margin-top: 210px;
+}
+
+#content {
+    margin-top: 156px;
+}
+
+#content {
+    width: 1050px;
+    margin: 200px auto 100px;
+}
+
+/* 주문조회 제목  */
+.titleArea {
+    width: 1050px;
+    min-height: 30px;
+    margin: 30px auto 20px;
+}
+
+.titleArea h2 {
+    display: inline-block;
+    color: #2e2e2e;
+    font-size: 25px;
+    *display: inline;
+}
+
+/* 주문내역조회 or 취소/환불 선택  부분 */
+.ec-base-tab {
+    position: relative;
+}
+
+.ec-base-tab .menu {
+    margin: 0 0 20px;
+    border: 1px solid #cbcdce;
+    border-bottom-color: #202020;
+    border-left: 0;
+    background: #fff;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.ec-base-tab .menu:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ec-base-tab .menu li {
+    float: left;
+    border-left: 1px solid #cbcdce;
+    background: #fff;
+}
+
+li {
+    list-style: none;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+ul {
+    list-style-type: disc;
+}
+
+.ec-base-tab .menu li.selected a {
+    position: relative;
+    top: 0px;
+    left: -2px;
+    margin: 0 0 -1px;
+    border: 1px solid #202020;
+    border-bottom: 0;
+    color: #000;
+    font-weight: bold;
+    background: #fff;
+}
+
+.ec-base-tab .menu li:first-child a {
+    margin-left: 0;
+}
+
+.ec-base-tab .menu li a {
+    display: block;
+    min-width: 187px;
+    margin: 0 0 0 -1px;
+    padding: 12px 5px 11px;
+    color: #707070;
+    text-decoration: none;
+    outline: 0;
+    text-align: center;
+    background: #fff;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a {
+    text-decoration: none!important;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.displaynone {
+    display: none;
+}
+
+.displaynone {
+    display: none !important;
+}
+
+/* 날짜 선택 부분 */
+form {
+    display: block;
+    margin-top: 0em;
+}
+
+.ec-base-box {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dfdfdf;
+    color: #404040;
+}
+
+img, fieldset {
+    border: none;
+    vertical-align: top;
+}
+
+fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+
+legend {
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 0;
+    height: 0;
+    line-height: 0;
+}
+
+legend {
+    display: block;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}
+
+.ec-base-box {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dfdfdf;
+    color: #404040;
+}
+
+.xans-myshop-orderhistoryhead .stateSelect {
+    display: inline-block;
+    padding: 0 12px 0 0;
+    margin: 0 5px 0 2px;
+    background: url(//img.echosting.cafe24.com/skin/base/common/ico_bar.gif) no-repeat 100% 6px;
+}
+
+select {
+    height: 27px;
+    border: 1px solid #d5d5d5;
+}
+
+input, select, textarea {
+    font-size: 100%;
+    font-family: "돋움",Dotum;
+    color: #353535;
+    vertical-align: middle;
+}
+
+select:not(:-internal-list-box) {
+    overflow: visible !important;
+}
+
+select {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: -internal-light-dark-color(white, black);
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    border-radius: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(169, 169, 169);
+    border-image: initial;
+}
+
+option {
+    font-weight: normal;
+    display: block;
+    white-space: pre;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+.xans-myshop-orderhistoryhead fieldset .period {
+    display: inline-block;
+    margin: 0 2px;
+    font-size: 0;
+    vertical-align: middle;
+}
+
+.xans-myshop-orderhistoryhead fieldset .period a {
+    padding: 0;
+    border: 0;
+}
+
+[class^='btnNormal'], a[class^='btnNormal'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #222;
+    background-color: #fff;
+}
+
+.xans-myshop-orderhistoryhead fieldset .period {
+    display: inline-block;
+    margin: 0 2px;
+    font-size: 0;
+    vertical-align: middle;
+}
+
+.xans-myshop-orderhistoryhead fieldset .period img {
+    margin: 0 0 0 -1px;
+}
+
+.xans-myshop-orderhistoryhead fieldset img {
+    vertical-align: middle;
+}
+
+[class^='btn'] img {
+    margin: -2px 1px 0;
+    vertical-align: middle;
+}
+
+.xans-myshop-orderhistoryhead fieldset .fText {
+    width: 72px;
+    height: 22px;
+    margin: 0 0 0 2px;
+    padding: 0 6px;
+    border: 1px solid #d5d5d5;
+    line-height: 22px;
+    font-size: 12px;
+}
+
+input[type=text], input[type=password] {
+    height: 22px;
+    line-height: 22px;
+    padding: 2px 4px;
+    border: 1px solid #d5d5d5;
+    color: #353535;
+    font-size: 12px;
+}
+
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+
+.xans-myshop-orderhistoryhead fieldset button {
+    width: 14px;
+    height: 14px;
+    margin: 0 5px 0 2px;
+    background: none;
+}
+
+button {
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+button {
+    -webkit-appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: buttonface;
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+
+input[type="image" i] {
+    -webkit-appearance: initial;
+    background-color: initial;
+    cursor: pointer;
+    padding: initial;
+    border: initial;
+}
+
+.xans-myshop-orderhistoryhead ul {
+    margin: 10px 0 0;
+    color: #939393;
+    line-height: 1.5;
+}
+
+.xans-myshop-orderhistoryhead ul li {
+    padding: 0 0 0 9px;
+    background: url(//img.echosting.cafe24.com/skin/base/common/ico_square2.gif) no-repeat 4px 7px;
+}
+
+input[type="hidden" i] {
+    display: none;
+    -webkit-appearance: initial;
+    background-color: initial;
+    cursor: default;
+    padding: initial;
+    border: initial;
+}
+
+/* 주문 상품 정보  */
+.xans-myshop-orderhistorylistitem .title {
+    margin: 40px 0 10px 10px;
+}
+
+.xans-myshop-orderhistorylistitem .title h3 {
+    color: #353535;
+    font-size: 12px;
+}
+
+h1, h3 {
+    margin: 0;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.ec-base-table.typeList table {
+    border-top: 1px solid #d7d5d5;
+}
+
+.ec-base-table table {
+    position: relative;
+    margin: 10px 0 0;
+    border: 1px solid #d7d5d5;
+    border-top: 0;
+    color: #fff;
+    line-height: 1.5;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table[Attributes Style] {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.ec-base-table.typeList table:before {
+    display: none;
+}
+
+.ec-base-table table:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #d7d5d5;
+}
+
+caption {
+    display: none;
+}
+
+caption {
+    display: table-caption;
+    text-align: -webkit-center;
+}
+
+colgroup {
+    display: table-column-group;
+}
+
+col {
+    display: table-column;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.ec-base-table th:first-child {
+    border-left: 0;
+}
+
+.ec-base-table thead th {
+    padding: 11px 0 10px;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    font-weight: normal;
+    background: #fff;
+}
+
+.ec-base-table th {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+th, td {
+    border: 0;
+    vertical-align: top;
+}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+.ec-base-table .center {
+    text-align: center;
+}
+
+.ec-base-table.typeList .center td, .ec-base-table.typeList td.center {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td.number {
+    letter-spacing: -1px;
+}
+
+.ec-base-table.typeList td {
+    padding: 8px 10px 7px;
+}
+
+.ec-base-table td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td .line {
+    text-decoration: underline;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td.number [class^="btn"], .xans-myshop-orderhistorylistitem.ec-base-table td.state [class^="btn"] {
+    margin: 1px 0;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td.thumb img {
+    width: 80px;
+}
+
+.ec-base-table img {
+    vertical-align: middle;
+}
+
+.ec-base-table.typeList .center td.left {
+    padding-left: 10px;
+}
+
+.ec-base-table .top th, .ec-base-table th.top, .ec-base-table .top td, .ec-base-table td.top {
+    vertical-align: top;
+}
+
+.ec-base-table .left {
+    text-align: left;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td.product div.option, .xans-myshop-orderhistorylistitem.ec-base-table td.product ul.option > li {
+    margin: 9px 0 0;
+    color: #757575;
+    line-height: 16px;
+}
+
+.xans-myshop-orderhistorylistitem.ec-base-table td.product ul.option > li > strong {
+    display: block;
+    color: #353535;
+}
+
+.gBlank5 {
+    display: block;
+    margin-top: 5px;
+}
+
+.ec-base-table.typeList .center td.right {
+    padding-right: 10px;
+}
+
+.ec-base-table .right {
+    text-align: right;
+}
+
+.txtEm {
+    color: #333;
+}
+
+.ec-base-table table + .message {
+    margin: -1px 0 0;
+}
+
+.ec-base-table .message {
+    border: 1px solid #d7d5d5;
+    padding: 50px 0;
+    text-align: center;
+    color: #757575;
+    font-weight: bold;
+}
+
+/* 주문내역 밑 버튼 */
+.ec-base-paginate {
+    margin: 30px 0;
+    text-align: center;
+    font-size: 0;
+    line-height: 0;
+}
+
+.ec-base-paginate img {
+    vertical-align: top;
+}
+
+.ec-base-paginate ol {
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+    *margin: 0;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.ec-base-paginate li:first-child {
+    margin-left: 0;
+}
+
+.ec-base-paginate li {
+    display: inline-block;
+    margin: 0 0 0 -1px;
+    border: 1px solid #d7d5d5;
+    font-size: 12px;
+    color: #757575;
+    vertical-align: top;
+    *display: inline;
+    *zoom: 1;
+}
+
+.ec-base-paginate li a.this {
+    padding-bottom: 6px;
+    border-bottom: 3px solid #495164;
+    color: #495164;
+}
+
+.ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+}
+
+/* footer */
+hr.layout {
+    display: none;
+}
+
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+#footer {
+    width: 100%;
+    background: #f9f9f9;
+    padding: 65px 0;
+    box-sizing: border-box;
+}
+
