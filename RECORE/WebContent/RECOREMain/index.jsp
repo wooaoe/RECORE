@@ -4,12 +4,6 @@
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	<%@page import="com.mvc.vo.Vo_Category_Detail"%>
 	
-	<% Vo_Category_Detail cdvo = (Vo_Category_Detail)request.getAttribute("cdvo");%>
-	<%! int catdid; %>
-	<% for(int i = 3; i < 8; i++){
-		catdid = i;
-	}
-	%>
     
 <!DOCTYPE html>
 <html lang="en">
