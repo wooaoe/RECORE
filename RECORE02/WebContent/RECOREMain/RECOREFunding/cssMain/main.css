@@ -325,23 +325,23 @@ h6 {
 }
 
 .wrapper--w960 {
-  max-width: 11160px;
+  max-width: 960px;
 }
 
 .wrapper--w900 {
-  max-width: 11100px;
+  max-width: 900px;
 }
 
 .wrapper--w790 {
-  max-width: 11190px;
+  max-width: 70px;
 }
 
 .wrapper--w780 {
-  max-width: 11380px;
+  max-width: 780px;
 }
 
 .wrapper--w680 {
-  max-width: 11380px;
+  max-width: 680px;
 }
 
 /* ==========================================================================
@@ -373,6 +373,7 @@ h6 {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  
 }
 
 .btn--pill {

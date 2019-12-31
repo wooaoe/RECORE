@@ -1,7 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+    <%request.setCharacterEncoding("UTF-8");%>
+	<%response.setContentType("text/html; charset=UTF-8");%>
+
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
- <!-- Main CSS-->
+ <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>펀딩 등록하기</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+    <!-- Main CSS-->
     <link href="cssMain/main.css" rel="stylesheet" media="all">
 
    <title>RECORE &mdash; PRODUCT</title>
@@ -24,6 +46,141 @@
     <link rel="stylesheet" href="cssMain/aos.css">
 
     <link rel="stylesheet" href="cssMain/styleProd.css">
+<style>
+table{
+width:100%;
+}
+th{
+text-align-last: center; 
+border: 2px solid black; 
+}
+th,td{
+padding: 10px;
+}
+
+#table{margin-left:25%;
+}
+#button1{
+padding-top: 50px;
+}
+
+
+</style> 
+  
+<script>
+    $("document").ready(function file1() {
+
+        $('input[type=file]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+               
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+           
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res) {
+                    	 console.log(res.data.link);                  	
+                        $('body').append('<img src="' + res.data.link + '" />');
+                        
+                        alert("파일첨부완료");
+                        alert(res.data.link);
+                        return res.data.link;
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                
+                $.ajax(settings).done(function (response) {
+                	
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
+ <script>
+    $("document").ready(function() {
+
+        $('input[type=file2]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+           
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+              
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res2) {
+                    	 console.log(res2.data.link);                  	
+                        $('body').append('<img src="' + res2.data.link + '" />');
+                        alert("파일첨부완료");
+                        return res2.data.link;
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                $.ajax(settings).done(function (response) {
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
 
   </head>
   <body>
@@ -80,7 +237,8 @@
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-<ul class="site-menu js-clone-nav d-none d-lg-block">
+
+              <ul class="site-menu js-clone-nav d-none d-lg-block">
                     <li class="has-children">
                       <a href="index.html">Funding</a>
                       <ul class="dropdown arrow-top">
@@ -92,8 +250,7 @@
                       <a href="product_all.html">Product</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="product.html">Bag / Acc</a></li>
-                        <li class = "has-children">
-                        <a href="clothing.html">Clothing</a>
+                        <li class = "has-children"><a href="clothing.html">Clothing</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "#">Outer</a></li>                        	
 								<li><a href = "#">Top</a></li>                        	
@@ -139,7 +296,7 @@
         <div class="row align-items-center">
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
-         	<h1>Funding</h1>
+         	<h1>펀딩 등록하기</h1>
           </div>
         </div> 
       </div>
@@ -148,138 +305,170 @@
     
 
     <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="funding1.html" class="d-block figure">
-              <img src="funding/art_th.png" alt="Image" class="img-fluid">
-           	</a>
-            <h3 class="mb-0"><a href="funding1.html">플라스틱 해양쓰레기, 아프리카 예술품으로 재탄생하다![오션솔]</a></h3>
-          <a href="funding1.html">
-            <span class="text-muted">쏘쿨아프리카</span><br>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-            </a>
-          </div>
-         
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/bag_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">파인애플 가죽으로 만든 친환경 데일리 백 </a></h3>
-            <span class="text-muted">사만사타바사/한국에스티엘</span><br>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-            <br>
-            <br>
-          </div>
-          
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/brush_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">디자인까지 생각한 환경을 위한 에코콘브러쉬</a></h3>
-            <span class="text-muted">DOGO</span><br>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
 
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/case_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">[NO 플라스틱] 캐나다,유럽에서 핫한 친환경 폰케이스, 한국에 상륙하다</a></h3>
-            <span class="text-muted">플라이맥스</span><br>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/cookie_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">[메이에르] 영양만점! 골라먹는 친환경 반려동물 건강쿠키!</a></h3>
-            <span class="text-muted">농업회사법인 메이에르</span><br>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/diamond_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">[친환경 다이아몬드] 식물처럼 재배해서 만든 다이아몬드가 있다</a></h3>
-            <span class="text-muted">다미보석</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/earphone_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">기술과 아날로그의 조화, 친환경 소재와 나무로 만든 자연을 품은 이어폰</a></h3>
-            <span class="text-muted">(주)맥스컴코리아</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-            <br>
-            <br>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/football_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">터지지 않는 친환경 블루볼, ONE WORLD FUTBOL </a></h3>
-            <span class="text-muted">카이쿠라</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/frame_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">위생/보관/인테리어를 한 번에! 친환경 4단 원목 접이식 매트리스 프레임 </a></h3>
-            <span class="text-muted">(주)하우스미디어</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/hair_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">샴푸 5병 = 1 고체샴푸바, 환경과 두피를 모두 살리는 고 그린 헤어!</a></h3>
-            <span class="text-muted">(주)아렌시아</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/jean_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">밥스 친환경 스판프리미엄진 스타일을 넘어 멋스러움을 추구하다!!</a></h3>
-            <span class="text-muted">페레나이도</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-          
-          <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="funding/perfume_th.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">지구를 살리는 친환경 마크 : 친환경섬유향수 300ml 대용량</a></h3>
-            <span class="text-muted">(주)라이트앤워시</span>
-            <span class = "mb-0"><b>1,000,000원 목표</b></span>
-          </div>
-          <br>
-        </div>
+<p style="font-size:48px; text-align:center;">펀딩 등록하기</p>
+<br>
+<br>
+<br>
+  <div class="page-wrapper bg-dark p-t-100 p-b-50">
+        <div class="wrapper wrapper--w900">
+		<div class="card card-6" >
+                <div class="card-heading" >
+                    <h2 class="title">펀딩 등록하기</h2>
+                </div>
+                <div class="card-body"style="border:0px;" >
+
+                    <form action="funding1.jsp" method="post" id="frm" enctype="multipart/form-data">
+
+                        <div class="form-row" style="border:0px;">
+                            <div class="name">펀딩 제목</div>
+                            <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-6" id="title" type="text" name="title">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" style="border:0px;">
+                            <div class="name">작성자</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" id="creator" type="text" name="creator" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" style="border:0px;">
+                            <div class="name">목표 금액</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" id="target_price" type="number" name="target_price" >
+                                </div>
+                            </div>
+                        </div>
+                         <div class="form-row" style="border:0px;">
+                            <div class="name">펀딩   마감 기한</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" id="deadline" type="date" name="deadline" >   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" style="border:0px;">
+                            <div class="name">본문 내용 이미지 업로드</div>
+                            <div class="value">
+                                <div class="input">
+                                     <input type="file" class="file" id="file" name="file" accept="image/*" data-max-size="5000" />
+                               
+
+
+                                </div>
+                                <div class="label--desc">이미지 파일을 업로드 하세요</div>
+                            </div>
+                        </div>	
+                        <div class="form-row" style="border:0px;">
+                            <div class="name">썸네일 이미지 업로드</div>
+                            <div class="value">
+                                <div class="input">
+                                    <input class="input-file" type="file" name="file2" id="file2">
+                               <input type="file" class="file2" accept="image/*" data-max-size="5000" />
+                               <label class="label--file" for="file"> </label>
+
+                               
+                                </div>
+                                <div class="label--desc">이미지 파일을 업로드 하세요</div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <input type="submit" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" >           
+                    </form>
+                    <script>
+                      function test2(){
+        var form = $("form")[0];        
+        var formData = new FormData(form);
+
+        $.ajax({
+            cache : false,
+            url : "${pageContext.request.contextPath}/funding1.jsp", 
+            processData: false,
+            contentType: false,
+            type : 'POST', 
+            data : formData, 
+            success : function(data) {
+                var jsonObj = JSON.parse(data);
+            }, // success 
+    
+            error : function(xhr, status) {
+                alert(xhr + " : " + status);
+            }
+        }); // $.ajax */    }
+</script>
+                    
+                </div>
+                <div class="card-footer">
+               
+                </div>
+            </div>
+            </div>
+            </div>
+
+    <!-- Jquery JS-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+<script src="js/global.js"></script>
+    <!-- Main JS-->
+    
+
+<!--form action="funding1.jsp" method="post" id="frm">
+<div id="table">
+<table >
+     <tr>
+     		
+     		
+           <th align = "center">제목</th>    
+            
+            <td> <input type="text" id="title" name="title" style="width:650px"/> </td>
+     
+       </tr>
+    <tr>
+            <th>작성자   </th>
+            <td> <input type="text" id="creator" name="creator" style="width:650px"/></td>
+       </tr>
+
+       	 <tr>
+            <th>목표금액    </th>
+            <td> <input type="number" id="target_price" name="target_price" style="width:650px"/>원</td>
+       
+     </tr>
+ 
+      <tr>
+            <th>마감기한    </th>
+            <td> <input type="date" id="deadline" name="deadline" style="width:650px"/></td>
+       
+    
+    </tr>   
+   <tr>
+	 <th>  
+   	 펀딩 내용</th><td>
+    <textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+  
+    </td>
+    </tr>
+   <tr>
+    <td>
+    <div id="button1">
+    <input type="button" id="savebutton" value="펀딩 등록하기" /></div>
+
+    </td>
+    </tr>
+</table>
+</div>
+</form-->
+
+
+
+
+       
       </div>
-    </div>
+    
   
   
 
