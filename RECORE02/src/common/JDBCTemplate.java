@@ -125,7 +125,6 @@ public class JDBCTemplate {
 	      } else {
 	         filePath = url2.getPath();
 	      }
-	      System.out.println("query.properties path: " + filePath);
 	      
 	      return filePath;
 	   }

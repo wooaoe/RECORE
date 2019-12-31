@@ -29,7 +29,31 @@
 
     <link rel="stylesheet" href="<%=request.getContextPath() %>/RECOREMain/css/style.css">
     
-
+	<style type="text/css">
+		.newsButtonWhite{
+			background-color: white; 
+			border:1px solid ;
+			border-radius: 50%; 
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;"
+		}
+		.newsButton{
+			background-color: #a0d9d9; 
+			border:2px solid ; 
+			border-radius: 50%;  
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;
+		}
+	
+	</style>
     
   </head>
   <body>
@@ -116,7 +140,7 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath() %>/RECOREMain/images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath() %>/RECOREMain/RECOREIssue/backimg/news.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-10">
@@ -151,34 +175,84 @@
     -->
     <div class="site-section">
       <div class="container">
+      
         <div class="row">
           <div class="col-12 text-center">
             <span class="sub-title">뉴스</span>
             <h2 class="font-weight-bold text-black mb-5">News</h2>
+            <span class="" onclick="location.href='issue.do?command=insertNewspage&iss_catd_no=4'"
+			style="background-color:#a0d9d9;
+			width: 70px; 
+			height: 30px;
+			font-size:13px; 
+			text-align: center;
+			float: right; 
+			padding-top: 3px;
+			margin-bottom: 15px;
+			color:white;">글쓰기</span>
           </div>
         </div>
+        
         <div class="row">
-	
 		
-		<c:forEach begin="0" end="7" var="vo" items="${issue_list }">
-			<div class="col-lg-3 col-md-6 mb-4">
-            <div class="person" onclick="location.href='issue.do?command=selectOneNews&iss_no=${vo.iss_no}'">
-              <div class="bio-img">
-                  <img src="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${vo.iss_no }/th_img.png" alt="Image" class="img-fluid">
-                <div class="social">
-					<span style="font-size: 8pt; color:white;"><b>${vo.iss_source }</b></span>
-                </div>
-              </div>
-              <h2><span style="font-size: 12pt;"><b>${vo.iss_title }</b></span></h2>
-              <span class="sub-title">${vo.iss_writer }</span>
-            </div>
-          </div>
-		</c:forEach>
+			<c:forEach begin="${(page-1)*8 }" end="${((page-1)*8)+7 }" var="vo">
+				<c:choose>
+					<c:when test="${vo >= issue_list.size() }">
+						<div class="col-lg-3 col-md-6 mb-4">
+				           <div class="person">
+				             <div class="bio-img">
+				               <div class="social">
+								<span style="font-size: 8pt; color:white;"><b></b></span>
+				               </div>
+				             </div>
+				             <h2><span style="font-size: 12pt;"><b></b></span></h2>
+				             <span class="sub-title"></span>
+				           </div>
+				         </div>
+					</c:when>
+					<c:otherwise>
+						<div class="col-lg-3 col-md-6 mb-4">
+				           <div class="person" onclick="location.href='issue.do?command=selectOneNews&pageno=${page }&iss_no=${issue_list.get(vo).iss_no}'">
+				             <div class="bio-img">
+				                 <img src="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${issue_list.get(vo).iss_no }/th_img.png" alt="Image" class="img-fluid">
+				               <div class="social">
+								<span style="font-size: 8pt; color:white;"><b>${issue_list.get(vo).iss_source }</b></span>
+				               </div>
+				             </div>
+				             <h2><span style="font-size: 12pt;"><b>${issue_list.get(vo).iss_title }</b></span></h2>
+				             <span class="sub-title">${issue_list.get(vo).iss_writer }</span>
+				           </div>
+				         </div>
+					</c:otherwise>
+				</c:choose>
+		         
+			</c:forEach>
 			
-		  
-
-
         </div>
+        
+        
+        <div class="row" style="text-align: center;">
+        	
+        	<div class="" style="width:100%; margin-top:20px; text-align :center; padding-left: 44%;">
+        		
+        		<c:choose>
+        			<c:when test="${page eq 1 }">
+		        		<div class="newsButtonWhite">1</div>
+		        		<div class="newsButton" onclick="location.href='issue.do?command=selectAllNews&pageno=2'">2</div>
+		        		<div class="newsButton" onclick="location.href='issue.do?command=selectAllNews&pageno=3'">3</div>
+        			</c:when>
+        			<c:otherwise>
+		        		<div class="newsButton" onclick="location.href='issue.do?command=selectAllNews&pageno=${page-1 }'">${page-1 }</div>
+        				<div class="newsButtonWhite" onclick="location.href='issue.do?command=selectAllNews&pageno=${page }'">${page }</div>
+		        		<div class="newsButton" onclick="location.href='issue.do?command=selectAllNews&pageno=${page+1 }'">${page+1}</div>
+        			</c:otherwise>
+        		</c:choose>
+        		
+        		
+        	</div>
+        	
+        </div>
+        
       </div>
     </div>
 
