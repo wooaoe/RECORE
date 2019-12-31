@@ -1,7 +1,5 @@
 package com.mvc.vo;
 
-
-
 public class Vo_Order {
 
 	private int prod_id; // 상품 아이디
@@ -9,7 +7,6 @@ public class Vo_Order {
 	private int order_price; // 금액
 	private String order_tno; // 송장번호
 	private String order_status; // 상태
-	
 
 	public Vo_Order() {
 		super();
