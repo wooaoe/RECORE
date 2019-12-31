@@ -46,8 +46,11 @@
                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
+                  <a href="mypage.do?command=main" class="d-flex align-items-center">
+<%--                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> --%>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  
                 
                 <!--              
@@ -73,7 +76,7 @@
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
 
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1">
                     <li class="has-children">
                       <a href="<%=request.getContextPath()%>/RECOREMain/index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">

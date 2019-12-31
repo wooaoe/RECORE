@@ -3,7 +3,6 @@ package com.mvc.vo;
 
 
 public class Vo_Order {
-
 	private int prod_id; // 상품 아이디
 	private int order_amount; // 주문 수량
 	private int order_price; // 금액

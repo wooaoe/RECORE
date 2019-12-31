@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8");%>
-
+<%@ page import="com.mvc.vo.Vo_Order_Num" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,12 +65,26 @@
   	position: relative;
   }
   
+  thead {
+    text-align: center;
+  }
+  
+  #left{
+  	text-align: center;
+  }
   </style>
 
 
 </head>
 <body id="main">
-
+<%
+	int acc_point = (int)request.getAttribute("acc_point");
+	List<Vo_Order_Num> list_order = (List<Vo_Order_Num>)request.getAttribute("list_order");
+	int sum_point = 0;
+	for(int i=0;i<list_order.size();i++){
+		sum_point += list_order.get(i).getOrder_point();
+	}
+%>
 	
 		<!-- header 시작 -->
 	<%@ include file="/header.jsp" %>
@@ -86,13 +103,13 @@
 					<div class="xans-element- xans-myshop xans-myshop-summary ec-base-box gHalf">
 						<ul>
 							<li class="">
-								<strong class="title">총 적립금</strong> <span class="data"><span id="xans_myshop_summary_total_mileage">0원</span>&nbsp;</span>
+								<strong class="title">총 적립금</strong> <span class="data"><span id="xans_myshop_summary_total_mileage"><fmt:formatNumber value="<%=acc_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
 							</li>
 			            	<li class="">
-								<strong class="title">사용가능 적립금</strong> <span class="data"><span id="xans_myshop_summary_avail_mileage">0원</span>&nbsp;</span>
+								<strong class="title">사용가능 적립금</strong> <span class="data"><span id="xans_myshop_summary_avail_mileage"><fmt:formatNumber value="<%=acc_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
 							</li>
 				            <li class="">
-								<strong class="title">사용된 적립금</strong> <span class="data"><span id="xans_myshop_summary_used_mileage">0원</span>&nbsp;</span>
+								<strong class="title">사용된 적립금</strong> <span class="data"><span id="xans_myshop_summary_used_mileage"><fmt:formatNumber value="<%=sum_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
 							</li>
 				            <li class="">
 								<strong class="title">미가용 적립금</strong> <span class="data"><span id="xans_myshop_summary_unavail_mileage">0원</span>&nbsp;</span>
@@ -112,7 +129,7 @@
 					<div class="xans-element- xans-myshop xans-myshop-historylist">
 						<div class="ec-base-table typeList">
 	            			<table border="1" summary="">
-								<caption>적립금 내역</caption>
+								<!-- <caption>적립금 내역</caption> -->
 				                <colgroup>
 									<col style="width:15%">
 									<col style="width:15%">
@@ -123,32 +140,28 @@
 									<tr>
 										<th scope="col">주문날짜</th>
 				                        <th scope="col">적립금</th>
-				                        <th scope="col">관련 주문</th>
-				                        <th scope="col">내용</th>
+				                        <th scope="col">주문 번호</th>
+				                        <th scope="col">&nbsp;&nbsp;내용</th>
 			               		    </tr>
 		               		    </thead>
-								<tbody class="displaynone center">
+								<!-- <tbody class="displaynone center"> -->
+								<tbody class="center">
+								<c:if test="${null eq list_order}">
+									<p class="message ">적립금 내역이 없습니다.</p>
+								</c:if>
+								<c:if test="${null ne list_order}">
+								<c:forEach var="order" items="${list_order}">
 									<tr class="">
-										<td></td>
-				                        <td class="right"></td>
-				                        <td></td>
-				                        <td class="left"></td>
+										<td>${order.order_date}</td>
+				                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
+				                        <td>${order.order_no}</td>
+				                        <td class="left" id="left">사용</td>
 				                    </tr>
-									<tr class="">
-										<td></td>
-				                        <td class="right"></td>
-				                        <td></td>
-				                        <td class="left"></td>
-			                    	</tr>
-									<tr class="">
-										<td></td>
-				                        <td class="right"></td>
-				                        <td></td>
-				                        <td class="left"></td>
-				                    </tr>
+				                </c:forEach>
+								</c:if>
 								</tbody>
 							</table>
-							<p class="message ">적립금 내역이 없습니다.</p>
+							<!-- <p class="message ">적립금 내역이 없습니다.</p> -->
 	        			</div>
 					</div>
 				</div>
@@ -172,7 +185,8 @@
 				</div>
 
 	        </div><!-- content end  -->
-
+		</div>
+	</div>
 	        <hr class="layout">
 	        
 		<!-- footer -->

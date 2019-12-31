@@ -14,9 +14,9 @@ public interface ProductDao {
 
 	public boolean P_insert(Vo_Product pvo); // 상품 등록
 
-	public boolean P_insert(Vo_Cart cvo); // 장바구니
+	public boolean P_insertCart(int acc_no, int prod_id); // 장바구니
 
-	public boolean P_insert(Vo_Wish wvo); // 관심상품
+	public boolean P_insertWish(int acc_no, int prod_no); // 관심상품
 
 	public boolean P_update(Vo_Product pvo); // 상품 수정
 

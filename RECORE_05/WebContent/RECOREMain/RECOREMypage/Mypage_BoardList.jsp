@@ -112,6 +112,8 @@
 							<tbody class="">
 								<tr>
 									<td colspan="6" class="message">게시물이 없습니다.</td>
+									<!-- 작성자이름은 session account통해서 가져오기 -->
+									<!-- 카테고리명은 vo_qna확인해서 숫자에따라 if로 출력하기  -->
 					           	</tr>
 				           	</tbody>
 							<tbody class="displaynone center">

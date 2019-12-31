@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8");%>
+<%@ page import="com.mvc.vo.Vo_Order_Num" %>
+<%@ page import="com.mvc.vo.Vo_Order" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,7 +79,17 @@
 </head>
 
 <body id="main"> 
-     
+<%
+	List list_order = (List)request.getAttribute("list_order");
+	int count = 0;
+	/* for(int i=0;i<list_order.size();i++){
+		Vo_Order_Num vo = (Vo_Order_Num)list_order.get(i);
+		Vo_Order tmp = vo.getOlist().get(i);
+		if(tmp.getOrder_status().equals("입금완료")){
+			count++;
+		}
+	} */
+%>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 	
@@ -97,9 +112,9 @@
 					<div class="state">
 						<ul class="order">
 							<li class="testwRap1" style="background: rgb(249, 249, 249);">
-	               				<strong style="color: rgb(53, 53, 53);">입금전</strong>
+	               				<strong style="color: rgb(53, 53, 53);">입금완료</strong>
 	               				<a href="입금전링크@@@" class="count testCount1" style="color: rgb(0, 0, 0);">
-	                				<span id="xans_myshop_orderstate_shppied_before_count">0</span>
+	                				<span id="xans_myshop_orderstate_shppied_before_count"><%=count %></span>
 	               				</a>
 	           				</li>
 	           				<li class="testwRap2" style="background: rgb(249, 249, 249);">

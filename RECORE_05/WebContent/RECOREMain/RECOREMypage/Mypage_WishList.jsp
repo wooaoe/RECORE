@@ -6,6 +6,7 @@
 <%@ page import="com.mvc.vo.Vo_Wish" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,9 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/styleMy.css">
 
 <style type="text/css">
+  .ec-base-table thead th {
+    text-align: center;
+  }
   
   .testpadding{
   	padding: 40px;
@@ -63,9 +67,44 @@
   	position: relative;
   }
   
+  [class^='btnSubmit'], a[class^='btnSubmit'] {
+  	color: white;
+  }
+  
   </style>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	
+	$(function(){ 
+		$("input[name=chk]").click(function(){ //전체선택 후 상품 체크박스가 하나라도 체크 해제되면 전체선택 취소해준다
+			if($("input[name=all]:checked").length == 1){ // 전체 선택이 되어있다면
+				if($("input[name=chk]:checked").length != 300){ // 수정필요@@@@ 상품의 길이 가져와야함
+					$("input[name=all]").prop("checked",false); //전체 선택 해제
+				}
+			}
+		});
+	});
 
+	function allchk(bool){ //전체 선택 박스가 체크 되면 실행
+		$("input[type=checkbox]").each(function(){
+			$(this).prop("checked",bool); //나머지 상품들을 전부 체크로 바꿔준다
+		});
+	}
+	
+	function deleteChecked(){
+		alert("버튼 클릭?");
+		var Arr_prod_no = new Array();
+		for(var i=0;i<$('#chktd input').length;i++){
+			var box = document.getElementById("wish_idx_"+i);
+			if(box.checked){
+				Arr_prod_no.push(document.getElementById("wish_idx_"+i).value);
+			}
+		}
+		location.href="mypage.do?command=deletecheckedwish&arr_chk="+Arr_prod_no;
+		console.log(Arr_prod_id);
+	}
+</script>
 </head>
 
 <body id="main">
@@ -73,14 +112,14 @@
 	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
 	/* List<Vo_wish> vo_wish = (List)request.getAttribute("vo_wish");
 	Object vo_wish = request.getAttribute("vo_wish"); */
-	List<Vo_Wish> vo_wish2 = (List<Vo_Wish>)request.getAttribute("vo_wish");
+	List<Vo_Wish> vo_wish = (List<Vo_Wish>)request.getAttribute("list_wish");
 %>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 
 	<div id="wrap">
 	    <div id="container">
-	        <div id="content" style="margin-top: 210px;">
+	        <div id="content" style="margin-top: 130px;">
 	        
 				<div class="titleArea">
 				    <h2>관심상품</h2>
@@ -88,7 +127,7 @@
 		
 				<div class="xans-element- xans-myshop xans-myshop-wishlist ec-base-table typeList xans-record-">
 					<table border="1" summary="" class="">
-						<caption>관심상품 목록</caption>
+						<%-- <caption>관심상품 목록</caption> --%><!-- css display:none이 적용안되는 듯. 일단 주석처리-->
 					    <colgroup>
 							<col style="width:27px;">
 							<col style="width:92px">
@@ -103,7 +142,7 @@
 						<thead>
 							<tr>
 								<th scope="col">
-									<input type="checkbox" onclick="NewWishlist.checkAll(this);">
+									<input type="checkbox" name="all" id="allCheck" onclick="allchk(this.checked);">
 								</th>
 				                <th scope="col">이미지</th>
 				                <th scope="col">상품정보</th>
@@ -116,21 +155,29 @@
 				            </tr>
 			            </thead>
 			            <tbody class="xans-element- xans-myshop xans-myshop-wishlistitem center">
-			            	<c:forEach var="wish" items="${list_wish}">
+			            	<c:if test="${null eq list_wish}">
+			            		<!-- <p class="message displaynone">관심상품 내역이 없습니다.</p> -->
+			            		<tr><td colspan="9"><p class=""><br>관심상품 내역이 없습니다.</p></td></tr>
+			            	</c:if>
+			            	<!-- @@@@@wish 리스트 반복문@@@@@ -->
+			            	<c:if test="${null ne list_wish}"> 
+			            	<c:forEach var="wish" items="${list_wish}" varStatus="status">
 				            	<tr class="xans-record-">
-									<td>
-										<input name="wish_idx[]" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox">
+									<td id="chktd"><!-- wish_idx[] 원래 input name-->
+										<!-- <input name="chk" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox"> -->
+										<input type="checkbox" id="wish_idx_${status.index}" name="chk" value="${wish.prod_no}">
 									</td>
 					                <td class="thumb">
 					                	<a href="상품1경로@@@@@@@@@">
-					                		<img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt="">
+					                		<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${wish.prod_no}/f_img.png">
+					                		<!-- <img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt=""> -->
 					                	</a>
 				                	</td>
 					                <td class="left">
 					                    <strong class="name">
 					                    <!-- <a href="상품1경로@@@@@" class="ec-product-name">[프레시버블]<br>유기농 소프넛(솝베리) 친환경 살림 세트 500g</a> -->
 					                    <%-- <a href="상품1경로@@@@@" class="ec-product-name"><%=vo_wish.get(0).getProd_name() %></a> --%>
-					                    	<a href="상품1경로@@@@@" class="ec-product-name">${wish.prod_name}</a>
+					                    	<a href="상품1경로@@@@@" class="ec-product-name"><strong>[${wish.prod_brand}]</strong><br>${wish.prod_name}</a>
 					                    </strong>
 					                    <ul class="xans-element- xans-myshop xans-myshop-optionall option">
 					                    	<li class="xans-record-">
@@ -163,24 +210,29 @@
 					                <td class="price right">
 										<!-- <strong class="">25,500원<br></strong><br><strong class="displaynone">25500</strong> -->
 										<%-- <strong class=""><%=vo_wish2.get(0).getProd_price() %>원<br></strong><br><strong class="displaynone">25500</strong> --%>
-										<strong class="">${wish.prod_price }원<br></strong><br><strong class="displaynone">25500</strong>
+										<strong class=""><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원<br></strong><br><strong class="displaynone">25500</strong>
 									</td>
 					                <td><span class="txtInfo"></span></td>
 					                <td>
 					                	<div class="txtInfo">기본배송<div class="displaynone">(해외배송가능)</div></div>
 					                </td>
 					                <td>
-										<span class="">2,500원<br></span> 조건</td>
+										<!-- <span class="">2,500원<br></span> 조건</td> -->
+										<span class="">무료배송<br></span>  </td>
 					                <!-- <td class="price right">28,000원</td> -->
 					                <%-- <td class="price right"><%=vo_wish2.get(0).getProd_price() %>원</td> --%>
-					                <td class="price right">${wish.prod_price }원</td>
+					                <td class="price right"><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원</td>
 					                <td class="button">
 					                    <a href="#none" onclick="NewWishlist.actionOrder('order', 0)" class="btnSubmit ">주문하기</a>
 					                    <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a>
-					                    <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
+					                    <!-- <a href="mypage.do?command=insertcart&prod_id=수정@@@@@@@@" class="btnNormal ">장바구니담기</a> -->
+					                    <!-- <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a> -->
+					                    <a href="mypage.do?command=deletewishone&prod_no=${wish.prod_no}" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
 					                </td>
 				            	</tr>
 							</c:forEach>
+							</c:if>
+							<%-- </c:otherwise> --%>
 							<!-- <tr>
 								<td>확인@@@@@@@</td>
 								<td>확인@@@@@@@</td>
@@ -194,18 +246,19 @@
 							</tr> -->
 						</tbody>
 					</table>
-					<p class="message displaynone">관심상품 내역이 없습니다.</p>
+					<!-- <p class="message displaynone">관심상품 내역이 없습니다.</p> -->
 				</div>
 				
 				<div class="xans-element- xans-myshop xans-myshop-wishlistbutton ec-base-button xans-record-">
 					<span class="gLeft">
 				        <strong class="text">선택상품을</strong>
-				        <a href="#none" class="btnEm" onclick="NewWishlist.deleteSelect();"><i class="icoDelete"></i> 삭제하기</a>
+				        <a href="#none" class="btnEm" onclick="deleteChecked();"><i class="icoDelete"></i> 삭제하기</a>
 				        <a href="#none" class="btnNormal" onclick="NewWishlist.basket();">장바구니 담기</a>
 				    </span>
 					<span class="gRight">
 				        <a href="#none" class="btnSubmitFix sizeM" onclick="NewWishlist.orderAll();">전체상품주문</a>
-				        <a href="#none" class="btnEmFix sizeM" onclick="NewWishlist.deleteAll();">관심상품 비우기</a>
+				        <!-- <a href="#none" class="btnEmFix sizeM" onclick="NewWishlist.deleteAll();">관심상품 비우기</a> -->
+				        <a href="mypage.do?command=deletewishall" class="btnEmFix sizeM">관심상품 비우기</a>
 				    </span>
 				</div>
 				
