@@ -359,6 +359,7 @@ padding-top: 50px;
                                      <input type="file" class="file" id="file" name="file" accept="image/*" data-max-size="5000" />
                                
 
+
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
