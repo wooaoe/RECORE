@@ -1,6 +1,7 @@
 package com.mvc.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,11 +10,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mvc.dao.AccountDao;
+import com.mvc.dao.AccountDaoImp;
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
+import com.mvc.vo.Vo_Account;
+import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
-
 
 @WebServlet("/a.do")
 public class Product_Controller extends HttpServlet {
@@ -39,7 +45,7 @@ public class Product_Controller extends HttpServlet {
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
 			request.setAttribute("plist", plist);
-		
+
 			dispatch("./RECOREMain/RECOREProduct/Prod_All.jsp", request, response);
 
 		} else if (command.equals("BagAccSelectAll")) {
@@ -118,18 +124,82 @@ public class Product_Controller extends HttpServlet {
 
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
 			System.out.println("pseq : " + pseq);
+
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 
+			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
+			request.setAttribute("cdvo", cdvo);
+
+			/* List<Vo_Prod_option> povo = dao.po_selectOne(pvo); */
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			
+			List<Vo_Product> plist = dao.P_selectAll();
+			System.out.println(plist);
+			request.setAttribute("plist", plist);
+
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
 
+		} else if (command.equals("Order")) {
+
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+
+			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
+			request.setAttribute("cdvo", cdvo);
+
+			/* List<Vo_Prod_option> povo = dao.po_selectOne(pvo); */
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			
+			List<Vo_Product> plist = dao.P_selectAll();
+			System.out.println(plist);
+			request.setAttribute("plist", plist);
+			
+			List<Vo_Prod_option> polist = dao.option_selectAll();
+			System.out.println("polist : " + polist);
+			request.setAttribute("polist", polist);
+			
+		    AccountDaoImp dao2 = new AccountDaoImp();
+		    Vo_Account acc = dao2.A_selectAccount("user1", "user1");
+		    HttpSession session = request.getSession();
+		    session.setAttribute("acc", acc);
+			
+			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout.jsp", request, response);
+
 		}
+
 	}
+	
+//	int pseq = Integer.parseInt(request.getParameter("pseq"));
+//	System.out.println("pseq : " + pseq);
+//
+//	Vo_Prod_option povo = new Vo_Prod_option();
+//	request.setAttribute("povo", povo);
+//	
+//	Vo_Product prod = new Vo_Product();
+//	request.setAttribute("prod", prod);
+//	
+//	
+//	boolean order = dao.O_insert(povo, prod);
+//
+//	if (order) {
+//		response.sendRedirect("./RECOREMain/RECOREProduct/Prod_Checkout.jsp");
+//	} else {
+//		dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+//	}
+//	
+	
+
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			
+
 			RequestDispatcher dispatch = request.getRequestDispatcher(url);
 			dispatch.forward(request, response);
 

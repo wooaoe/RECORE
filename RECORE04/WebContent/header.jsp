@@ -75,7 +75,7 @@
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                  <ul class="site-menu js-clone-nav d-none d-lg-block"  style = "position:relative; z-index: 1">
                     <li class="has-children">
                       <a href="index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">

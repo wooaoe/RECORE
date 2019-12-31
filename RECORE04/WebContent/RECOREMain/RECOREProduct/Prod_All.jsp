@@ -6,13 +6,12 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
-    
-    
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; ALL</title>
-    <meta charset="utf-8">
+    <title>RECORE &mdash; BAG/ACC</title>
+   	
+   	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
@@ -33,14 +32,13 @@
     
     <style type="text/css">
     	#img-fluid{
-    		width: 420px;
-    		height: 400px;
+    		max-width: 350px;
+    		height: 350px;
     	}    
     </style>
     
-    
   </head>
-  <body>
+  <body id = "body">
   
   <div class="site-wrap">
 
@@ -54,7 +52,7 @@
     </div> <!-- .site-mobile-menu -->
     
     
-    <div class="site-navbar-wrap" style = "background-color:white;" >
+    <div class="site-navbar-wrap" style = "background-color: white;">
       <div class="site-navbar-top">
         <div class="container py-3">
         
@@ -62,17 +60,15 @@
         <br>
         <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
         <img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
+        
           <div class="row align-items-center">
             <div class="col-6">
-            
-            <!--
-              <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
+              <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
               <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
               <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a>
-            -->
-            
+              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
             </div>
+            
             <div class="col-6">
               <div class="d-flex ml-auto">
               
@@ -81,17 +77,17 @@
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
                  </a>
                  
                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니&nbsp;&nbsp;</span></a>
                  
                 
                 <!--              
@@ -105,6 +101,7 @@
           </div>
         </div>
       </div>
+      
       
       
       
@@ -172,12 +169,12 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style= "background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg)" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
-        	 <br><br><br><br>
+         	<br><br><br><br>
          	<h1>ALL</h1>
          	<h5><span class="sub-text">Your beautiful Life</span></h5>
           </div>
@@ -186,12 +183,12 @@
     </div>  
     
     
-	
+
     <div class="site-section">
       <div class="container">
         <div class="row">
-        
-        <!-- @@ 이미지 들어가는 곳 @@ -->
+          
+          <!-- @@ 이미지 들어가는 곳 @@ -->
           <c:forEach var="prod" items = "${plist}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
             <a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}" class="d-block figure">
@@ -205,135 +202,19 @@
           </div>
           </c:forEach>
          
-          
-          
         </div>
       </div>
-    </div> 
-  
-  
+    </div>
 
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 mb-5 mb-lg-0">
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Navigation</h3>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Team</a></li>
-                </ul>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Membership</a></li>
-                </ul>
-              </div>
-            </div>
-
-            
-          </div>
-          <div class="col-lg-4">
-           
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-4">Recent News</h3>
-              <div class="block-25">
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-          
-
-          <div class="col-lg-4 mb-5 mb-lg-0">
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit minima minus odio.</p>
-
-              <form action="#" method="post">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control border-white text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                  </div>
-                </div>
-              </form>
-
-            </div>
-
-           <!-- <div class="row">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Follow Us</h3>
-
-                <div>
-                    <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-                </div>
-              </div>
-            </div>-->
+	 <!-- 상단으로 올라가기 -->
+    <div style = "position: fixed; bottom: 30px; right: 30px;">
+		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
+	</div>
 
 
-          </div>
-          
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
-            All rights reserved | RECORE
-            </p>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
+
+    <%@ include file="/footer.jsp" %>
+    
   </div>
 
   <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-3.3.1.min.js"></script>

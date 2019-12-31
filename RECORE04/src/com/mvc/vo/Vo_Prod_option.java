@@ -21,6 +21,13 @@ public class Vo_Prod_option {
 		this.prod_size = prod_size;
 		this.prod_stock = prod_stock;
 	}
+	
+	public Vo_Prod_option(int prod_no, String prod_color) {
+		super();
+		this.prod_no = prod_no;
+		this.prod_color = prod_color;
+	}
+	
 
 	public int getProd_no() {
 		return prod_no;

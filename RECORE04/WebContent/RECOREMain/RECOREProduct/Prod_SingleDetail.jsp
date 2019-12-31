@@ -17,7 +17,8 @@
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -45,18 +46,15 @@
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
-
-
-
 <title>RECORE - PRODUCT</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="description" content="Aviato E-Commerce Template">
   
   <meta name="author" content="Themefisher.com">
 
-<!-- Mobile Specific Meta-->
-<meta name="viewport" content="width=device-width, initial-scale=1">
+Mobile Specific Meta
+<meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
 <!-- 상품 상세페이지 UI css -->
 
@@ -98,30 +96,14 @@
 
 <!-- 임의로 스타일 적용하기 -->
 <style type="text/css">
+	
 	.testpadding {
 		padding: 80px;
-	}
-	
-	.navtest {
-		text-align: center;
-		padding: 10px;
-	}
-	
-	.footertest {
-		background-color: #333333;
-		text-align: center;
-		padding: 10em 0;
 	}
 	
 	#productInfo {
 		text-align: center;
 		color: black;
-	}
-	
-	#logResMy {
-		margin-left: 200px;
-		position: relative;
-		top: 50%;
 	}
 	
 	#frontimg {
@@ -146,7 +128,7 @@
 
 <body id="body">
 
-	<%@ include file="/headerPdetail.jsp"%>
+	<%@ include file="/footerPdetail.jsp"%>
 
 
 
@@ -155,15 +137,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
+				
 					<ol class="breadcrumb">
 						<li><a
 							href="<%=request.getContextPath()%>/RECOREMain/index.html">Home</a></li>
 						<li><a href="Product.do?command=ProdSelectAll">Product</a></li>
 
-						
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
-						<li class="active"><a
-							href="Product.do?command=${pvo.prod_comm}">${pvo.prod_kinds}</a></li>
+    			    	<li class="active"><a
+							href="Product.do?command=${pvo.prod_comm}">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
@@ -205,7 +187,7 @@
 
 
 
-							<!-- @@ 이미지 넘어가는 부분(왜 안넘어가냐고 @@ -->
+							<!-- @@ 이미지 넘어가는 부분 @@ -->
 							<ol class='carousel-indicators mCustomScrollbar meartlab'>
 								<li data-target='#carousel-custom' data-slide-to='0'
 									class='active'><img
@@ -225,38 +207,36 @@
 				<!-- @@상품 이름, 가격 / 상세 정보글@@ -->
 				<div class="col-md-7" style="position: relative; left: 50px;">
 					<div class="single-product-details">
-						<h2>${pvo.prod_name}</h2>
+						<h2 style = "margin-top: 0px;">${pvo.prod_name}</h2>
 						<p class="product-price">
 							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원
 						</p>
 
 						<!-- @@상세 정보글@@ -->
-						<p class="product-description mt-20">제품 정보 글 쓰는 곳</p>
-						<p>제품 정보 글 쓰는 곳</p>
+						<p class="product-description mt-20">${pvo.prod_note}&nbsp;</p>
+						<!-- <p>제품 정보 글 쓰는 곳</p>
+						<br> -->
+						
 						<br>
-
-
-						<!-- @@상품 색상@@ -->
-						<div class="color-swatches">
-							<span>색상:</span>
-							<ul>
-								<!-- <li>
-								<a href="" class="swatch-violet"></a>
-							</li> -->
-								<li><span style="position: relative;">${pvo.plist}</span></li>
-							</ul>
+						<div class="product-size">
+							<span>색상:</span> 
+							<select class="form-control">
+								<c:forEach var = "color" items = "${povo}">
+								<option>${color.prod_color}</option>
+								</c:forEach>
+							</select>
 						</div>
-
+						
+						
 
 						<!-- @@사이즈@@ -->
 						<div class="product-size">
 							<span>사이즈:</span> 
 							<select class="form-control">
-								<option>FREE</option>
-								<!-- <option>M</option>
-								<option>L</option>
-								<option>XL</option>  -->
+								<c:forEach var = "size" items = "${povo}">
+								<option>${size.prod_size}</option>
+								</c:forEach>
 							</select>
 						</div>
 
@@ -295,30 +275,22 @@
 							</div>
 						</div>
 
-
-						<!-- <script type="text/javascript">
-							function change(num) {
-
-								var number = ($(num).attr('value'));
-								if (number == 9) { // 숫자가 9이상이라면 초기화
-									$(num).attr('value', '0');
-								} else {
-									var plus_num = parseInt(number) + 1;
-									$(num).attr('value', plus_num);
-								}
-							}
-						</script> -->
-
-
-
-
 						<!-- @@장바구니 / 바로구매 / 관심상품@@ -->
 
 						<!-- 최상위 폴더 / 해당파일이 존재하는 폴더 / 해당파일 -->
+						<br>
+						<div class = "color-swatches">
+							<span>총 금액 :</span><span style = "margin-left: 5px;"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
+							</fmt:formatNumber>원
+						</span>		
+						</div>
+						<br><br>
 						<a href="../RECOREMypage/Mypage_Cart.jsp"
-							class="btn btn-main mt-20">장바구니 추가</a> 
-						<a href="Prod_Checkout.jsp" class="btn btn-main mt-20">바로 구매</a> 
-						<a href="../RECOREMypage/Mypage_WishList.jsp" class="btn btn-main mt-20">관심상품</a>
+							class="btn btn-main mt-20">장바구니</a>&nbsp;&nbsp;
+						<a href="Product.do?command=Order&pseq=${pvo.prod_no}" 
+						class="btn btn-main mt-20">바로 구매</a>&nbsp;&nbsp; 
+						<a href="../RECOREMypage/Mypage_WishList.jsp" 
+						class="btn btn-main mt-20">관심상품</a>
 					</div>
 				</div>
 			</div>
@@ -455,22 +427,24 @@
 					<h2>연관 상품</h2>
 				</div>
 			</div>
+			<%-- <div>${pvo.prod_catd}</div> --%>
+			
 			<div class="row">
+			<!-- @@ 연관 상품 @@ -->
+			<c:set var = "i" value = "0"></c:set>
+			<c:forEach var = "sub" items = "${plist}">
+			<c:choose >
+			<c:when test="${sub.prod_catd eq pvo.prod_catd && i < 4}"> 
 				<div class="col-md-3">
 					<div class="product-item">
 						<div class="product-thumb">
-
+						
 							<!-- 세일 여부 -->
 							<!-- <span class="bage">Sale</span> -->
-
 							<!-- Bag이면 가방이랑 연관된 상품, ACC면 악세사리랑 연관된 상품이 뜨도록 어떻게??? -->
-							<c:if test="${pvo.prod_kinds eq pvo.prod_kinds}">
 								<img class="img-responsive"
-									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png"
+									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${sub.prod_no}/f_img.png"
 									alt="product-img" />
-							</c:if>
-
-
 							<div class="preview-meta">
 								<ul>
 									<!--@@ 이미지 마우스오버할 때 검색/관심상품/장바구니 추가할 수 있게 @@ -->
@@ -478,104 +452,33 @@
 											<i class="tf-ion-ios-search"></i>
 										</span>
 									</li>
-
 									<!-- @@ 관심상품 @@ -->
 									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
-
 									<!-- @@ 장바구니 @@ -->
 									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
 								</ul>
 							</div>
 						</div>
-
 						<!-- @@ 상품 이름, 가격 @@ -->
 						<div class="product-content">
 							<h4>
-								<a href="Product.do?command=${pvo.prod_comm}">${pvo.prod_name}</a>
+								<a href="<%-- Product.do?command=${pvo.prod_comm} --%>#"
+								style = "overflow:hidden; word-wrap:break-word;">${sub.prod_name}</a>
 							</h4>
-							<p class="price"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
+							<p class="price"><fmt:formatNumber value="${sub.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원
 							</p>
-							
 						</div>
 					</div>
 				</div>
-
-				<!-- 위에랑 똑같이 -->
-				<div class="col-md-3">
-					<div class="product-item">
-						<div class="product-thumb">
-							<img class="img-responsive"
-								src="imagesProd/shop/products/product-1.jpg" alt="product-img" />
-							<div class="preview-meta">
-								<ul>
-									<li><span data-toggle="modal" data-target="#product-modal">
-											<i class="tf-ion-ios-search-strong"></i>
-									</span></li>
-									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
-									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="product-content">
-							<h4>
-								<a href="product-single.html">Rainbow Shoes</a>
-							</h4>
-							<p class="price">$200</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- 위와 같음 -->
-				<div class="col-md-3">
-					<div class="product-item">
-						<div class="product-thumb">
-							<img class="img-responsive"
-								src="imagesProd/shop/products/product-2.jpg" alt="product-img" />
-							<div class="preview-meta">
-								<ul>
-									<li><span data-toggle="modal" data-target="#product-modal">
-											<i class="tf-ion-ios-search"></i>
-									</span></li>
-									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
-									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="product-content">
-							<h4>
-								<a href="product-single.html">Strayhorn SP</a>
-							</h4>
-							<p class="price">$230</p>
-						</div>
-					</div>
-				</div>
-
-				<!-- 03 -->
-				<div class="col-md-3">
-					<div class="product-item">
-						<div class="product-thumb">
-							<img class="img-responsive"
-								src="imagesProd/shop/products/product-3.jpg" alt="product-img" />
-							<div class="preview-meta">
-								<ul>
-									<li><span data-toggle="modal" data-target="#product-modal">
-											<i class="tf-ion-ios-search"></i>
-									</span></li>
-									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
-									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="product-content">
-							<h4>
-								<a href="product-single.html">Bradley Mid</a>
-							</h4>
-							<p class="price">$200</p>
-						</div>
-					</div>
-				</div>
-			</div>
+				<c:set var = "i" value = "${i+1}"></c:set>
+			  </c:when>
+			 </c:choose>
+			</c:forEach>
+			
+			
+			
+			</div> 
 		</div>
 	</section>
 
@@ -589,33 +492,51 @@
 			<i class="tf-ion-close"></i>
 		</button>
 		<div class="modal-dialog " role="document">
-			<div class="modal-content">
-				<div class="modal-body">
+			<!-- @@ modal 폼 사이즈와 위치 조절 @@ -->
+			<div class="modal-content" style = "position: relative; width: 650px; right: 90px;">
+				<div class="modal-body" style = "padding-top: 25px; padding-bottom: 25px;">
 					<div class="row">
-						<div class="col-md-8">
+					<!-- @@ 해당 상품 사진 @@ -->
+					<c:set var = "i" value = "0"></c:set>
+					<c:forEach var = "modal" items = "${plist}">
+					<c:choose>
+					<c:when test="${modal.prod_catd eq pvo.prod_catd && i < 2}">
+						<div class="col-md-8" >
 							<div class="modal-image">
-								<img class="img-responsive"
-									src="imagesProd/shop/products/modal-product.jpg" /> 연관상품 돋보기
-								누르면 미리 보기 가능 (장바구니 추가까지)
+								<img  class="img-responsive"
+									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${modal.prod_no}/f_img.png" /> 
 							</div>
 						</div>
-						<div class="col-md-3">
+						
+						<!-- @@ 상품 이름, 가격, 상세 내용 들어가는 곳 @@ -->
+						<div class="col-md-3" style = "padding: 0px; margin-left: 15px;">
 							<div class="product-short-details">
-								<h2 class="product-title">GM Pendant, Basalt Grey</h2>
-								<p class="product-price">$200</p>
-								<p class="product-short-description">Lorem ipsum dolor sit
-									amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo
-									laborum numquam rem aut officia dicta cumque.</p>
-								<a href="" class="btn btn-main">Add To Cart</a> <a href=""
-									class="btn btn-transparent">View Product Details</a>
+								<h2 class="product-title">${modal.prod_name}</h2>
+								<p class="product-price"><fmt:formatNumber value="${modal.prod_price}" groupingUsed="true">
+							</fmt:formatNumber>원</p>
+								<p class="product-short-description">${modal.prod_note}</p>
+								<a href="" class="btn btn-main" style = "display: flex; height: 6vh;
+								justify-content: center; align-items: center;">장바구니</a> 
+								<a href="Product.do?command=ProdDetail&pseq=${modal.prod_no}"
+									class="btn btn-transparent">상세페이지</a>
 							</div>
 						</div>
+					<c:set var = "i" value = "${i+1}"></c:set>	
+					</c:when>
+					</c:choose>
+					</c:forEach>
+					
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	
+	<!-- @@ 화살표 누르면 상단으로 @@ -->
+	
+	<div style = "position: fixed; bottom: 30px; right: 30px;">
+		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
+	</div>
 
 
 	<!-- footer -->
