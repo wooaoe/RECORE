@@ -269,7 +269,7 @@ out.println(request.getParameter("title")); %>
 	
 	
 	<div id=smarteditor>
-	out.println("file");
+	
 	</div>
 	
 	 <div class="state-box">
@@ -277,14 +277,13 @@ out.println(request.getParameter("title")); %>
 	 <div id=deadline>
 	 <p class="remaining-day"><% 
 	out.println(request.getParameter("deadline")); 
-	String deadline =request.getParameter("deadline"); 
-	out.println(deadline);
+
 	
 	%> 	 
 	<script>
 
 var x = setInterval(function() {
-var t1=moment(deadline);
+var t1=<%=request.getParameter("deadline")%>
 var now=moment();
 var diffTime={
 		d:moment.duration(t1.diff(now)).days(),

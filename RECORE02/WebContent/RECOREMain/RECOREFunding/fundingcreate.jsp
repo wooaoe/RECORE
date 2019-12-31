@@ -25,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 
     <!-- Main CSS-->
-    <link href="./css/main.css" rel="stylesheet" media="all">
+    <link href="cssMain/main.css" rel="stylesheet" media="all">
 
    <title>RECORE &mdash; PRODUCT</title>
     
@@ -66,7 +66,123 @@ padding-top: 50px;
 }
 
 
-</style>   
+</style> 
+  
+<script>
+    $("document").ready(function file1() {
+
+        $('input[type=file]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+               
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+           
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res) {
+                    	 console.log(res.data.link);                  	
+                        $('body').append('<img src="' + res.data.link + '" />');
+                        
+                        alert("파일첨부완료");
+                        alert(res.data.link);
+                        return res.data.link;
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                
+                $.ajax(settings).done(function (response) {
+                	
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
+ <script>
+    $("document").ready(function() {
+
+        $('input[type=file2]').on("change", function () {
+
+            var $files = $(this).get(0).files;
+
+            if ($files.length) {
+
+           
+                if ($files[0].size > $(this).data("max-size") * 10240) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+              
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'fac99c105facfd0';
+
+                var formData = new FormData();
+                formData.append("image", $files[0]);
+
+                var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": apiUrl,
+                    "method": "POST",
+                    "datatype": "json",
+                    "headers": {
+                        "Authorization": "Client-ID " + apiKey
+                    },
+                    "processData": false,
+                    "contentType": false,
+                    "data": formData,
+                    beforeSend: function (xhr) {
+                    	alert("파일첨부중, 약 10초간 기다려주세요");
+                        console.log("Uploading ");
+                    },
+                    success: function (res2) {
+                    	 console.log(res2.data.link);                  	
+                        $('body').append('<img src="' + res2.data.link + '" />');
+                        alert("파일첨부완료");
+                        return res2.data.link;
+                    },
+                    error: function () {
+                        alert("Failed ");
+                    }
+                }
+                $.ajax(settings).done(function (response) {
+                    console.log("Done");
+                });
+            }
+        });
+    });
+</script>
+
   </head>
   <body>
   
@@ -202,7 +318,7 @@ padding-top: 50px;
                     <h2 class="title">펀딩 등록하기</h2>
                 </div>
                 <div class="card-body"style="border:0px;" >
-                    <form action="funding1.jsp" method="get" id="frm">
+                    <form action="funding1.jsp" method='post' id="frm" >
                         <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 제목</div>
                             <div class="value">
@@ -241,68 +357,10 @@ padding-top: 50px;
                                 <div class="input">
                                      <input type="file" class="file" id="file" name="file" accept="image/*" data-max-size="5000" />
                                
-                                    <script>
-    $("document").ready(function () {
-
-        $('input[type=file]').on("change", function () {
-
-            var $files = $(this).get(0).files;
-
-            if ($files.length) {
-
-                // Reject big files
-                if ($files[0].size > $(this).data("max-size") * 10240) {
-                    console.log("Please select a smaller file");
-                    return false;
-                }
-
-                // Replace ctrlq with your own API key
-                var apiUrl = 'https://api.imgur.com/3/image';
-                var apiKey = 'fac99c105facfd0';
-
-                var formData = new FormData();
-                formData.append("image", $files[0]);
-
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": apiUrl,
-                    "method": "POST",
-                    "datatype": "json",
-                    "headers": {
-                        "Authorization": "Client-ID " + apiKey
-                    },
-                    "processData": false,
-                    "contentType": false,
-                    "data": formData,
-                    beforeSend: function (xhr) {
-                    	alert("파일첨부중, 약 10초간 기다려주세요");
-                        console.log("Uploading ");
-                    },
-                    success: function (res) {
-                    	 console.log(res.data.link);                  	
-                        $('body').append('<img src="' + res.data.link + '" />');
-                        alert("파일첨부완료");
-                        alert(res.data.link);
-                    },
-                    error: function () {
-                        alert("Failed ");
-                    }
-                }
-                $.ajax(settings).done(function (response) {
-                	
-                    console.log("Done");
-                });
-            }
-        });
-    });
-</script>
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
-                        </div>
-						
-						
+                        </div>	
                         <div class="form-row" style="border:0px;">
                             <div class="name">썸네일 이미지 업로드</div>
                             <div class="value">
@@ -310,60 +368,7 @@ padding-top: 50px;
                                     <input class="input-file" type="file" name="file2" id="file2">
                                <input type="file" class="file2" accept="image/*" data-max-size="5000" />
                                <label class="label--file" for="file"> </label>
-                                    <script>
-    $("document").ready(function () {
-
-        $('input[type=file2]').on("change", function () {
-
-            var $files = $(this).get(0).files;
-
-            if ($files.length) {
-
-                // Reject big files
-                if ($files[0].size > $(this).data("max-size") * 10240) {
-                    console.log("Please select a smaller file");
-                    return false;
-                }
-
-                // Replace ctrlq with your own API key
-                var apiUrl = 'https://api.imgur.com/3/image';
-                var apiKey = 'fac99c105facfd0';
-
-                var formData = new FormData();
-                formData.append("image", $files[0]);
-
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": apiUrl,
-                    "method": "POST",
-                    "datatype": "json",
-                    "headers": {
-                        "Authorization": "Client-ID " + apiKey
-                    },
-                    "processData": false,
-                    "contentType": false,
-                    "data": formData,
-                    beforeSend: function (xhr) {
-                    	alert("파일첨부중, 약 10초간 기다려주세요");
-                        console.log("Uploading ");
-                    },
-                    success: function (res2) {
-                    	 console.log(res2.data.link);                  	
-                        $('body').append('<img src="' + res2.data.link + '" />');
-                        alert("파일첨부완료");
-                    },
-                    error: function () {
-                        alert("Failed ");
-                    }
-                }
-                $.ajax(settings).done(function (response) {
-                    console.log("Done");
-                });
-            }
-        });
-    });
-</script>
+                                   
                                
                                
                                 </div>
@@ -371,10 +376,7 @@ padding-top: 50px;
                             </div>
                         </div>
                         <br><br>
-                        <input type="submit" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" >
-                       
-                                            
-                        
+                        <input type="submit" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" >           
                     </form>
                 </div>
                 <div class="card-footer">
