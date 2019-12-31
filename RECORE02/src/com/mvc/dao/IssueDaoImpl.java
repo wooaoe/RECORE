@@ -267,7 +267,9 @@ public class IssueDaoImpl implements IssueDao {
 		} finally {
 			close(rs,pstmt,con);
 		}
-
+		
+		System.out.println(i_seq);
+		
 		return i_seq;
 	}
 	

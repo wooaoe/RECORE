@@ -212,6 +212,7 @@ public class Issue_Controller extends HttpServlet {
 			int i_seq = dao.I_getSeqCurrval();
 			Vo_Issue ivo = dao.I_selectOne(i_seq);
 			
+			System.out.println(ivo);
 			
 			String newpath = request.getServletContext().getRealPath("RECOREMain\\RECOREIssue\\images\\"+ivo.getIss_no());
 			System.out.println("newpath : "+newpath);
