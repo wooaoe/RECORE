@@ -5,11 +5,37 @@
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<%@ page import = "java.util.List" %>
+	<%@ page import = "com.mvc.vo.Vo_Product" %>
+	<%@ page import = "com.mvc.vo.Vo_Category_Detail" %>
+	
+	<%List<Vo_Product> child = (List)request.getAttribute("child"); %>
+	<%Vo_Category_Detail cdvo2 = (Vo_Category_Detail)request.getAttribute("cdvo2"); %>
+	<%! String kinds;%>
+  	<% if(cdvo2.getCatd_no() == 6){
+  		 kinds = "Bag/Acc";  
+  	 }else if(cdvo2.getCatd_no() == 7){
+  		 kinds = "OUTER";
+  	 }else if(cdvo2.getCatd_no() == 8){
+  		 kinds = "TOP";
+  	 }else if(cdvo2.getCatd_no() == 9){
+  		 kinds = "BOTTOM";
+  	 }else if(cdvo2.getCatd_no() == 10){
+  		 kinds = "WALLET";
+  	 }else if(cdvo2.getCatd_no() == 11){
+  		 kinds = "SUPPLY";
+  	 }else if(cdvo2.getCatd_no() == 12){
+  		 kinds = "HOME";
+  	 }
+  	%>
+	
+	
+	
     
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; ${cdvo.catd_name}</title>
+    <title>RECORE &mdash; <%=kinds%></title>
    	
    	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
