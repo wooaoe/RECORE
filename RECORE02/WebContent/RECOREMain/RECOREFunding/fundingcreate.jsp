@@ -3,8 +3,7 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-    
-    
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -318,7 +317,9 @@ padding-top: 50px;
                     <h2 class="title">펀딩 등록하기</h2>
                 </div>
                 <div class="card-body"style="border:0px;" >
-                    <form action="funding1.jsp" method='post' id="frm" >
+
+                    <form action="funding1.jsp" method="post" id="frm" enctype="multipart/form-data">
+
                         <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 제목</div>
                             <div class="value">
@@ -357,6 +358,7 @@ padding-top: 50px;
                                 <div class="input">
                                      <input type="file" class="file" id="file" name="file" accept="image/*" data-max-size="5000" />
                                
+
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
                             </div>
@@ -368,8 +370,7 @@ padding-top: 50px;
                                     <input class="input-file" type="file" name="file2" id="file2">
                                <input type="file" class="file2" accept="image/*" data-max-size="5000" />
                                <label class="label--file" for="file"> </label>
-                                   
-                               
+
                                
                                 </div>
                                 <div class="label--desc">이미지 파일을 업로드 하세요</div>
@@ -378,6 +379,28 @@ padding-top: 50px;
                         <br><br>
                         <input type="submit" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" >           
                     </form>
+                    <script>
+                      function test2(){
+        var form = $("form")[0];        
+        var formData = new FormData(form);
+
+        $.ajax({
+            cache : false,
+            url : "${pageContext.request.contextPath}/funding1.jsp", 
+            processData: false,
+            contentType: false,
+            type : 'POST', 
+            data : formData, 
+            success : function(data) {
+                var jsonObj = JSON.parse(data);
+            }, // success 
+    
+            error : function(xhr, status) {
+                alert(xhr + " : " + status);
+            }
+        }); // $.ajax */    }
+</script>
+                    
                 </div>
                 <div class="card-footer">
                
@@ -441,37 +464,6 @@ padding-top: 50px;
 
 
 
-<script type="text/javascript"> 
-$(function(){
-    //전역변수선언
-    var editor_object = [];
-     
-    nhn.husky.EZCreator.createInIFrame({
-        oAppRef: editor_object,
-        elPlaceHolder: "smarteditor",
-        sSkinURI: "SmartEditor2Skin.html",
-        htParams : {
-            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseToolbar : true,            
-            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseVerticalResizer : true,    
-            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseModeChanger : true,
-        }
-    });
-     
-    //전송버튼 클릭이벤트
-    $("#savebutton").click(function(){
-        //id가 smarteditor인 textarea에 에디터에서 대입
-        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-         
-        // 이부분에 에디터 validation 검증
-         
-        //폼 submit
-        $("#frm").submit();
-    })
-})
-</script>
 
        
       </div>
