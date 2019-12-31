@@ -5,11 +5,15 @@
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<%@page import="com.mvc.vo.Vo_Category_Detail"%>
+	
+	<% Vo_Category_Detail cdvo = (Vo_Category_Detail)request.getAttribute("cdvo");%>
     
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; BAG/ACC</title>
+  
+    <title>RECORE &mdash; ALL</title>
    	
    	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -38,7 +42,10 @@
     </style>
     
   </head>
+  
   <body id = "body">
+  
+  
   
   <div class="site-wrap">
 
@@ -58,7 +65,7 @@
         
         <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
         <img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
         
           <div class="row align-items-center">
@@ -109,48 +116,49 @@
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <!-- <h1 class="mb-0 site-logo"><a href="../index.html">RECORE</a></h1> -->
-             
+              <!-- <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
                     <li class="has-children">
-                      <a href="index.html" style = "color:black;">Funding</a>
+                      <a href="index.html" style="color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="#">조회</a></li>
                         <li><a href="#">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
+                    
+                      <a href= "Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
-								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
-								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
-                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
-								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Issue</a>
+                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Exhibition</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Community</a>
+                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
                         <li><a href="#">QnA</a></li>
                         <li><a href="#">Review</a></li>

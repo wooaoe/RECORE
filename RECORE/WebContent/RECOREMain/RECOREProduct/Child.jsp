@@ -5,11 +5,37 @@
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	<%@ page import = "java.util.List" %>
+	<%@ page import = "com.mvc.vo.Vo_Product" %>
+	<%@ page import = "com.mvc.vo.Vo_Category_Detail" %>
+	
+	<%List<Vo_Product> child = (List)request.getAttribute("child"); %>
+	<%Vo_Category_Detail cdvo2 = (Vo_Category_Detail)request.getAttribute("cdvo2"); %>
+	<%! String kinds;%>
+  	<% if(cdvo2.getCatd_no() == 6){
+  		 kinds = "Bag/Acc";  
+  	 }else if(cdvo2.getCatd_no() == 7){
+  		 kinds = "OUTER";
+  	 }else if(cdvo2.getCatd_no() == 8){
+  		 kinds = "TOP";
+  	 }else if(cdvo2.getCatd_no() == 9){
+  		 kinds = "BOTTOM";
+  	 }else if(cdvo2.getCatd_no() == 10){
+  		 kinds = "WALLET";
+  	 }else if(cdvo2.getCatd_no() == 11){
+  		 kinds = "SUPPLY";
+  	 }else if(cdvo2.getCatd_no() == 12){
+  		 kinds = "HOME";
+  	 }
+  	%>
+	
+	
+	
     
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RECORE &mdash; CLOTHING</title>
+    <title>RECORE &mdash; <%=kinds%></title>
    	
    	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,13 +58,13 @@
     
     <style type="text/css">
     	#img-fluid{
-    		width: 350px;
+    		max-width: 350px;
     		height: 350px;
     	}    
     </style>
     
   </head>
-  <body>
+  <body id = "body">
   
   <div class="site-wrap">
 
@@ -58,7 +84,7 @@
         
         <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
         <img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
         
           <div class="row align-items-center">
@@ -101,56 +127,57 @@
           </div>
         </div>
       </div>
-      </div>
       
       
       
-     <div class="site-navbar">
+      
+       <div class="site-navbar">
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <!-- <h1 class="mb-0 site-logo"><a href="../index.html">RECORE</a></h1> -->
-             
+              <!-- <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
                     <li class="has-children">
-                      <a href="index.html" style = "color:black;">Funding</a>
+                      <a href="index.html" style="color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="#">조회</a></li>
                         <li><a href="#">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
+                    
+                      <a href= "Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
-								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
-								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
-                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
-								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Issue</a>
+                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Exhibition</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Community</a>
+                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
                         <li><a href="#">QnA</a></li>
                         <li><a href="#">Review</a></li>
@@ -175,8 +202,8 @@
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
          	<br><br><br><br>
-         	<h1>Clothing</h1>
-         	<h5><span class="sub-text">&nbsp;Clothes</span></h5>
+         	<h1>${cdvo2.catd_name}</h1>
+         	<h5><span class="sub-text">&nbsp;Your beautiful Life</span></h5>
           </div>
         </div> 
       </div>
@@ -189,15 +216,15 @@
         <div class="row">
           
           <!-- @@ 이미지 들어가는 곳 @@ -->
-          <c:forEach var="clo" items = "${clolist}">
+          <c:forEach var="child" items = "${child}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="Product.do?command=ProdDetail&pseq=${clo.prod_no}" class="d-block figure">
+            <a href="Product.do?command=ProdDetail&pseq=${child.prod_no}" class="d-block figure">
             <%-- <%=request.getContextPath()%> --%>
-              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${clo.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${child.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${clo.prod_no}">${clo.prod_name}</a></h3>
-            <span class="text-muted">${clo.prod_brand}</span><br>
-            <span class = "mb-0"><b><fmt:formatNumber value="${clo.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${child.prod_no}">${child.prod_name}</a></h3>
+            <span class="text-muted">${child.prod_brand}</span><br>
+            <span class = "mb-0"><b><fmt:formatNumber value="${child.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
           	<br><br>
           </div>
           </c:forEach>
@@ -205,14 +232,17 @@
         </div>
       </div>
     </div>
-  
-	<!-- 상단으로 올라가기 -->
+
+	 <!-- 상단으로 올라가기 -->
     <div style = "position: fixed; bottom: 30px; right: 30px;">
 		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
 	</div>
-  
+
+
 
     <%@ include file="/footer.jsp" %>
+    
+  </div>
 
   <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-3.3.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-migrate-3.0.1.min.js"></script>

@@ -2,30 +2,21 @@
     pageEncoding="UTF-8"%>
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
+	<%@page import="com.mvc.vo.Vo_Category_Detail"%>
+	
+	<% Vo_Category_Detail cdvo = (Vo_Category_Detail)request.getAttribute("cdvo");%>
+	<%! int catdid; %>
+	<% for(int i = 3; i < 8; i++){
+		catdid = i;
+	}
+	%>
     
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    
     <title>RECORE &mdash; RECORE</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    
-    
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-  
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/style.css">
-    
+    <%@ include file = "/head.jsp" %>
     
   </head>
   
@@ -119,19 +110,19 @@
                     
                       <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="../Product.do?command=BagAccSelectAll"> Bag / Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ClothingSelectAll">Clothing</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=OuterSelectAll">Outer</a></li>                        	
-								<li><a href = "../Product.do?command=TopSelectAll">Top</a></li>                        	
-								<li><a href = "../Product.do?command=BottomSelectAll">Bottom</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="../Product.do?command=WalletSelectAll">Wallet</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=LifeSelectAll">Life</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=SupplySelectAll">Supply</a></li>                        	
-								<li><a href = "../Product.do?command=HomeSelectAll">Home</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
