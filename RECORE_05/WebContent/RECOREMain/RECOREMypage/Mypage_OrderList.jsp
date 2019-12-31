@@ -146,7 +146,7 @@
 				    </div>
 				    
 					<table border="1" summary="">
-						<caption>주문 상품 정보</caption>
+						<!-- <caption>주문 상품 정보</caption> -->
 				        <colgroup>
 							<col style="width:135px;">
 							<col style="width:93px;">
@@ -277,7 +277,7 @@
 	        <hr class="layout">
 	        
 	        <!-- footer -->
-			<%-- <%@ include file="/RECOREMain/RECOREMypage/footer.jsp" %> --%>	
+   		<%@ include file="/footer.jsp" %>
 	
   
 </body>

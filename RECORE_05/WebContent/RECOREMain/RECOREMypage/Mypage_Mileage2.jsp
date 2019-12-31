@@ -106,7 +106,7 @@
 								<strong class="title">총 적립금</strong> <span class="data"><span id="xans_myshop_summary_total_mileage"><fmt:formatNumber value="<%=acc_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
 							</li>
 			            	<li class="">
-								<strong class="title">사용가능 적립금</strong> <span class="data"><span id="xans_myshop_summary_avail_mileage"><fmt:formatNumber value="<%=acc_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
+								<strong class="title">사용가능 적립금</strong> <span class="data"><span id="xans_myshop_summary_avail_mileage"><fmt:formatNumber value="<%=acc_point - sum_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
 							</li>
 				            <li class="">
 								<strong class="title">사용된 적립금</strong> <span class="data"><span id="xans_myshop_summary_used_mileage"><fmt:formatNumber value="<%=sum_point%>" groupingUsed="true"></fmt:formatNumber>원</span>&nbsp;</span>
