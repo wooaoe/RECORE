@@ -39,16 +39,17 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
                  </a>
-                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                 
+                 <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
-                  <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+<%--                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> --%>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  
                 
@@ -69,50 +70,50 @@
           <div class="row align-items-center">
             <div class="col-2">
               <!-- <h1 class="mb-0 site-logo"><a href="../index.html">RECORE</a></h1> -->
-             
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-                  <ul class="site-menu js-clone-nav d-none d-lg-block"  style = "position:relative; z-index: 1">
+
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1">
                     <li class="has-children">
-                      <a href="index.html" style = "color:black;">Funding</a>
+                      <a href="<%=request.getContextPath()%>/RECOREMain/index.html" style = "color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="#">조회</a></li>
                         <li><a href="#">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
+                      <a href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/Prod_All.jsp" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
+                        <li><a href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/BagAcc.jsp" style = "color:black;">Bag / Acc</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/Clothing.jsp" style = "color:black;">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	
-								<li><a href = "Product.do?command=TopSelectAll">Top</a></li>                        	
-								<li><a href = "Product.do?command=BottomSelectAll">Bottom</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/RECOREMain/RECOREProduct/Outer.jsp">Outer</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/RECOREMain/RECOREProduct/TOP.jsp">Top</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/RECOREMain/RECOREProduct/Bottom.jsp">Bottom</a></li>                       	
                         	</ul>
                         </li>
-                        <li><a href="Product.do?command=WalletSelectAll">Wallet</a></li>
-                        <li class = "has-children"><a href="Product.do?command=LifeSelectAll">Life</a>
+                        <li><a href="#">Wallet</a></li>
+                        <li class = "has-children"><a href="#">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=SupplySelectAll">Supply</a></li>                        	
-								<li><a href = "Product.do?command=HomeSelectAll">Home</a></li>                        	
+								<li><a href = "#">Supply</a></li>                        	
+								<li><a href = "#">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Issue</a>
+                    <li  class="has-children"><a href="<%=request.getContextPath()%>/RECOREMain/news.html" style = "color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Exhibition</a></li>
+                        <li><a href="<%=request.getContextPath()%>/RECOREMain/news.html">News</a></li>
+                        <li><a href="<%=request.getContextPath()%>/RECOREMain/exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Community</a>
+                    <li  class="has-children"><a href="../news.html" style = "color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Review</a></li>
+                        <li><a href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/qna_board.jsp">QnA</a></li>
+                        <li><a href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/review/review_board.jsp">Review</a></li>
                       </ul>
                     </li>
 <!--
@@ -126,7 +127,6 @@
           </div>
         </div>
       </div>
-    
     
     </div>
  	</div>

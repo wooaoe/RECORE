@@ -9,24 +9,24 @@
 <title>Mypage_OrderList</title>
 
 
-<link rel="stylesheet" type="text/css" href="cssMy/Mypage_OrderList_CSS.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMy/Mypage_OrderList_CSS.css"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="cssMain/magnific-popup.css">
-    <link rel="stylesheet" href="cssMain/jquery-ui.css">
-    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
-    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
-    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/jquery-ui.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.theme.default.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/bootstrap-datepicker.css">
     
     
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/flaticon/font/flaticon.css">
   
-    <link rel="stylesheet" href="cssMain/aos.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/aos.css">
 
-    <link rel="stylesheet" href="cssMain/styleMy.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/styleMy.css">
     
 
 <style type="text/css">
@@ -59,6 +59,10 @@
   
   #header{
   	position: relative;
+  }
+  
+  thead{
+  	text-align: center;
   }
   
   </style>
@@ -103,7 +107,7 @@
 					        <div class="stateSelect ">
 					            <select id="order_status" name="order_status" class="fSelect">
 									<option value="all">전체 주문처리상태</option>
-									<option value="shipped_before">입금전</option>
+									<option value="shipped_before">입금완료</option>
 									<option value="shipped_standby">배송준비중</option>
 									<option value="shipped_begin">배송중</option>
 									<option value="shipped_complate">배송완료</option>
@@ -146,7 +150,7 @@
 				    </div>
 				    
 					<table border="1" summary="">
-						<caption>주문 상품 정보</caption>
+						<!-- <caption>주문 상품 정보</caption> -->
 				        <colgroup>
 							<col style="width:135px;">
 							<col style="width:93px;">
@@ -167,11 +171,11 @@
 				                <th scope="col">취소/교환/반품</th>
 				            </tr>
 			            </thead>
-						<tbody class="center displaynone">
+						<tbody class="center">
 							<tr class="">
-								<td class="number displaynone">
+								<td class="number ">
 				                	<p></p>
-						            <p><a href="detail.html" class="line">[]</a></p>
+						            <p><a href="detail.html" class="line">[주문번호]</a></p>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
 				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
 				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
@@ -183,67 +187,29 @@
 			                	</td>
 				                <td class="product left top">
 				                    <strong class="name"></strong>
-				                    <div class="option displaynone"></div>
+				                    <div class="option">상품정보@@</div>
 				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
-				                    	<li class=""><strong></strong> (개)</li>
+				                    	<!-- <li class=""><strong></strong> (개)</li> -->
 									</ul>
-									<p class="gBlank5 displaynone">무이자할부 상품</p>
+									<p class="gBlank5">무이자할부 상품</p>
 				                </td>
-				                <td></td>
+				                <td>수량@@</td>
 				                <td class="right">
-									<strong></strong><div class="displaynone"></div>
+									<strong></strong><div class="">주문금액@@@@</div>
 								</td>
 				                <td class="state">
 				                    <p class="txtEm"></p>
 				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
+				                    <p class=""><a href="#none" class="line" onclick="">[주문상태@@]</a></p>
 				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
 				                </td>
 				                <td>
-				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
-				                    <p class="displaynone">-</p>
-				                </td>
-				            </tr>
-							<tr class="">
-								<td class="number displaynone">
-				                    <p></p>
-                                    <p><a href="detail.html" class="line">[]</a></p>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
-				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
-				                    <a href="return.html" class="btnNormal displaynone">반품신청</a>
-				                </td>
-				                <td class="thumb">
-				                	<a href="/product/detail.html">
-				                	<img src="//img.echosting.cafe24.com/thumb/img_product_small.gif" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="">
-				                	</a>
-			                	</td>
-				                <td class="product left top">
-				                    <strong class="name"></strong>
-				                    <div class="option displaynone"></div>
-				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
-										<li class=""><strong></strong> (개)</li>
-									</ul>
-									<p class="gBlank5 displaynone">무이자할부 상품</p>
-				                </td>
-				                <td></td>
-				                <td class="right">
-									<strong></strong>
-									<div class="displaynone"></div>
-								</td>
-				                <td class="state">
-				                    <p class="txtEm"></p>
-				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
-				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
-				                </td>
-				                <td>
+				                	<a href="cancel.html" class="btnNormal">취소신청</a>
+				                    <a href="exchange.html" class="btnNormal">교환신청</a>
+				                    <a href="return.html" class="btnNormal">반품신청</a>
 				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
 				                    <p class="displaynone">-</p>
 				                </td>
@@ -274,10 +240,12 @@
 				</div>
 			</div>
 	        
+	    </div>
+	</div>
 	        <hr class="layout">
 	        
 	        <!-- footer -->
-			<%@ include file="/footer.jsp" %>
+   		<%@ include file="/footer.jsp" %>
 	
   
 </body>

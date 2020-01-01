@@ -209,7 +209,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   letter-spacing: 2px;
 }
 
-/* .category-box {
+.category-box {
   background-size: cover;
   margin-bottom: 30px;
   min-height: 350px;
@@ -307,7 +307,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 .page-header h1 {
   font-weight: 200;
   margin: 0 0 6px 0;
-} */
+}
 
 .page-header .breadcrumb {
   background: transparent;

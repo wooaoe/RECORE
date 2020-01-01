@@ -3,16 +3,6 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-	
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	<%@ page import = "com.mvc.vo.Vo_Prod_option" %>
-	<%@ page import = "com.mvc.vo.Vo_Product" %>
-	<%@ page import = "com.mvc.vo.Vo_Account" %>
-	<%@ page import = "java.util.List" %>
-	<%@ page import = "java.util.ArrayList" %>
-	
-	
     
 <!DOCTYPE html>
 <html>
@@ -32,10 +22,10 @@ RECORE-CHECKOUT
 <meta content="9e69513f-3466-4c49-a861-ec68fe0777c8" name="csrf-token">
 <meta name="google-site-verification" content="BR5o5r7ViKMPI6vloq9TUj0OAZkmujygD-KXjxO2ABY" />
 
-    <!-- <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/>
+    <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/>
     <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-32-707cb76054.png" sizes="32x32">
     <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-128-d1761d33cd.png" sizes="128x128">
-    <link rel="apple-touch-icon-precomposed" href=""> -->
+    <link rel="apple-touch-icon-precomposed" href="/_ui/img/favicon/series/favicon-152.png">
 
 
 <link rel="stylesheet" href="https://assets.kolonmall.com/_ui/css/kop/common-f380db13f2.css"/>
@@ -53,20 +43,22 @@ RECORE-CHECKOUT
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/magnific-popup.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/jquery-ui.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="cssMain/magnific-popup.css">
+    <link rel="stylesheet" href="cssMain/jquery-ui.css">
+    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
+    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
+    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
     
     
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
   
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/aos.css">
+    <link rel="stylesheet" href="cssMain/aos.css">
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/css/style.css">
+    <link rel="stylesheet" href="cssMain/styleProd.css">
+
+
     
     <style type="text/css">
    
@@ -92,22 +84,6 @@ RECORE-CHECKOUT
 
 
 <body class = "series-site V2 layout-width-1000">
-
-	<% List<Vo_Prod_option> polist = (List)request.getAttribute("polist");%>
-	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); 
-		int price = 0;
-		for(int i = 0; i < polist.size(); i++){
-		 if(polist.get(i).getProd_no() == pvo.getProd_no()){
-			price = polist.get(i).getProd_stock() * pvo.getProd_price(); 
-		 }else{ 
-		} 	
-	   }
-	%>
-	
-	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
-	<% String[] arr = acc.getAcc_phone().split("-"); %>
-	
-	
 
 <!-- header -->
 	<%@ include file="/header.jsp" %>
@@ -144,45 +120,28 @@ RECORE-CHECKOUT
 					<!-- 장바구니에 담았던 상품 정보 들어감 -->
 					<tbody>
 						<tr>
-							<td class="thumb" style = ""><a href="product_detail_test.html"><img
-									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png"
-									alt=""></a></td>
+							<td class="thumb"><a href="product_detail_test.html"><img
+									src="imagesProd/shop/single-products/ulkin01.jpg"
+									alt="[RE;CODE] 점퍼 후드 스트링백 상품 썸네일"></a></td>
 									
-							<td class="product text-left">
-								<!-- @@ 상품 브랜드 @@ -->
-								<h4 style = "position: relative; top: 20px;">
-									${pvo.prod_brand}&nbsp;
+							<td class="product text-left"><h4>
+									UL:KIN&nbsp;<small>gggg</small>
 								</h4>
-								<p style = "width: 600px; position: relative; top: 20px;">
-									<a href="/Product/RYBAW19152KHX">${pvo.prod_name}</a>
+								<p>
+									<a href="/Product/RYBAW19152KHX">@@상품 제목@@</a>
 								</p>
-								
-								<ul class="meta" style = "position: relative; top: 20px;">
-									<li><em>수량</em>
-									<% for(int i = 0; i < polist.size(); i++){ %>
-									<% if(pvo.getProd_no() == polist.get(i).getProd_no()) { %>
-										<span><%=polist.get(i).getProd_stock()%></span></li>
-									<li><em>옵션</em>&nbsp;<span><%=polist.get(i).getProd_color() %>,
-									<%=polist.get(i).getProd_size()%></span></li>
-									<% } else { %>
-									<% } %>
-									<% } %>
+								<ul class="meta">
+									<li><em>수량 </em><span>1</span></li>
+									<li><em>옵션</em>&nbsp;<span>@색상@, @사이즈@</span></li>
 								</ul>
 								<div class="options"></div>
-								</td>
-							<td class="price">
-							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
-							</fmt:formatNumber>원
-							</td>
-							<!-- @@ 상품 수량 @@ -->
-							<td class="range">
-							<% for(int i = 0; i < polist.size(); i++){ %>
-									<% if(pvo.getProd_no() == polist.get(i).getProd_no()) { %>
-										<%=polist.get(i).getProd_stock()%>
-									<% } else { %>
-									<% } %>
-									<% } %>
-							</td>
+								
+								<!-- 편의점 픽업 가능 옵션 삭제 -->
+								<div class="additional">
+									<!-- <span class="cvs-usable-tag">편의점픽업 가능</span> -->
+								</div></td>
+							<td class="price">@가격@</td>
+							<td class="range">1</td>
 							<td class="delivery division" rowspan="1"><div>택배배송</div>
 								<div class="cost">배송비 무료</div></td>
 						</tr>
@@ -195,12 +154,7 @@ RECORE-CHECKOUT
 			<div class="billing-v2">
 				<div class="default-pay">
 					<div>
-					<c:set var = "sum" value = "${pvo.prod_price}"></c:set>
-						<strong>주문상품금액</strong>
-						<span>
-						<fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber>원
-						</span>
+						<strong>주문상품금액</strong><span>59,000</span>원
 					</div>
 				</div>
 				<div class="delivery-cost">
@@ -219,8 +173,7 @@ RECORE-CHECKOUT
 				</div>
 				<div class="total">
 					<div>
-						<strong>총 주문금액</strong><span id="totalBasePriceV2"><em><fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber></em>원</span>
+						<strong>총 주문금액</strong><span id="totalBasePriceV2"><em>59,000</em>원</span>
 					</div>
 				</div>
 			</div>
@@ -234,9 +187,9 @@ RECORE-CHECKOUT
 				<dl class="order-form">
 					<dt>주문고객</dt>
 					<dd class="user-info">
-						<span id="customerNameArea"><%=acc.getAcc_name()%></span><span
-							id="customerMobileNumberArea"><%=acc.getAcc_phone() %></span><span
-							id="customerEmailArea"><%=acc.getAcc_email() %></span>
+						<span id="customerNameArea">최승혜</span><span
+							id="customerMobileNumberArea">01064733048</span><span
+							id="customerEmailArea">motop68@gmail.com</span>
 					</dd>
 					<dt class="mb-22">
 						받는분<em class="required" aria-required="true">필수</em>
@@ -244,7 +197,7 @@ RECORE-CHECKOUT
 					<dd class="mb-22">
 						<div class="col-2">
 							<input name="firstName" type="text" placeholder="이름을 입력하세요."
-								maxlength="10" value="<%=acc.getAcc_name()%>">
+								maxlength="10" value="최승혜">
 						</div>
 					</dd>
 					<dt></dt>
@@ -307,8 +260,8 @@ RECORE-CHECKOUT
 								<option value="017">017</option>
 								<option value="018">018</option>
 								<option value="019">019</option></select><input name="cellPhone2"
-								type="tel" maxlength="4" value="<%= arr[1]%>"><input
-								name="cellPhone3" type="tel" maxlength="4" value="<%=arr[2]%>">
+								type="tel" maxlength="4" value="6473"><input
+								name="cellPhone3" type="tel" maxlength="4" value="3048">
 						</div>
 					</dd>
 					<dt>전화번호</dt>
@@ -381,16 +334,24 @@ RECORE-CHECKOUT
 		<!-- 포인트 사용 -->
 		<form>
 			<div class="order-write sale-select">
-			<br>
-			<!-- 예치금 -->
-			<dt>적립금</dt>
-			<div>
-				<input type = "text" value = "원" style = "text-align: right;"/>&nbsp;&nbsp;&nbsp;&nbsp;
-				<span class="checkbox"><input name="allDepositCheckbox" type="checkbox" 
-				id="allDepositCheckboxV2" value=""><i></i></span>
-				<label for="allDepositCheckboxV2">모두사용</label>
-			</div>
+					<br>
+					
+					
+					<!-- 예치금 -->
+					<dt>적립금</dt>
+					
+						<div>
+							<input type = "text" value = "원" style = "text-align: right;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="checkbox"><input name="allDepositCheckbox"
+								type="checkbox" id="allDepositCheckboxV2" value=""><i></i></span>
+								<label for="allDepositCheckboxV2">모두사용</label>
+						</div>
+					
+					
+					
 		</form>
+		
+		
 		
 		
 		<!-- 결제수단 선택 폼 -->
@@ -484,13 +445,12 @@ RECORE-CHECKOUT
 		<!-- 오른쪽에 뜨는 결제 정보 폼 -->
 		<div style="min-height: 771.063px;">
 			<div class="react-sticky" style="transform: translateZ(0px);">
-				<article class="sticky-menu" style = "position: relative; bottom: 800px;">
-					<div class="sticky-bill" >
+				<article class="sticky-menu" style="left: 0px;">
+					<div class="sticky-bill">
 						<h1>결제정보</h1>
 						<div class="default-pay">
 							<div>
-								<strong>주문상품금액</strong><span><fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber><em>원</em></span>
+								<strong>주문상품금액</strong><span>59,000<em>원</em></span>
 							</div>
 						</div>
 						<div class="sale-pay">
@@ -513,9 +473,12 @@ RECORE-CHECKOUT
 						</div>
 						<div class="total">
 							<div>
-								<strong>총 결제예정금액</strong><span data-total-price="<fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber>"><em><fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber></em>원</span>
+								<strong>총 결제예정금액</strong><span data-total-price="59,000"><em>59,000</em>원</span>
+							</div>
+						</div>
+						<div class="saving-point">
+							<div>
+								<strong>적립 예정 포인트</strong><span>2,950<em> P</em></span>
 							</div>
 						</div>
 					</div>
@@ -549,6 +512,5 @@ RECORE-CHECKOUT
 	</article>
 </section>
 
-</body>
 </html>
-
+</body>

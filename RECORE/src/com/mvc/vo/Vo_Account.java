@@ -7,8 +7,8 @@ public class Vo_Account {
 	private String acc_pw; // 계정 비밀번호
 	private String acc_name; // 이름
 	private String acc_birth; // 나이
-	private String acc_email; // 이메일
 	private String acc_phone; // 휴대폰
+	private String acc_email; // 이메일
 	private String acc_zipcode; // 우편번호
 	private String acc_addr; // 주 주소
 	private String acc_addr2; // 세부 주소

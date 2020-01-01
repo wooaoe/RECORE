@@ -23,8 +23,7 @@
     
     
   </head>
-  
-  <body id="body">
+  <body>
   
   <div class="site-wrap">
 
@@ -70,11 +69,14 @@
                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+                  <a href="../mypage.do?command=main" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-                  <br>
-                  <a href="RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  
+                  <a href="../mypage.do?command=cartlist" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+<!--                   <a href="RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a> -->
                  
                 
                 <!--              
@@ -111,22 +113,21 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                    
-                      <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
+                      <a href="RECOREProduct/Prod_All.jsp" style="color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="../Product.do?command=BagAccSelectAll"> Bag / Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ClothingSelectAll">Clothing</a>
+                        <li><a href="RECOREProduct/BagAcc.jsp" >Bag / Acc</a></li>
+                        <li class = "has-children"><a href="RECOREProduct/Clothing.jsp">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=OuterSelectAll">Outer</a></li>                        	
-								<li><a href = "../Product.do?command=TopSelectAll">Top</a></li>                        	
-								<li><a href = "../Product.do?command=BottomSelectAll">Bottom</a></li>                        	
+								<li><a href = "RECOREProduct/Outer.jsp">Outer</a></li>                        	
+								<li><a href = "RECOREProduct/TOP.jsp">Top</a></li>                        	
+								<li><a href = "RECOREProduct/Bottom.jsp">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="../Product.do?command=WalletSelectAll">Wallet</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=LifeSelectAll">Life</a>
+                        <li><a href="#" >Wallet</a></li>
+                        <li class = "has-children"><a href="#">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=SupplySelectAll">Supply</a></li>                        	
-								<li><a href = "../Product.do?command=HomeSelectAll">Home</a></li>                        	
+								<li><a href = "#">Supply</a></li>                        	
+								<li><a href = "#">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -626,12 +627,9 @@
                 </ul>
               </div>
             </div>
+
+            
           </div>
-          
-          <!-- 상단으로 올라가기 -->
-          <div style = "position: fixed; bottom: 30px; right: 30px;">
-			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
-		  </div>
           
           <!-- footer -->
           <div class="col-lg-4">
@@ -706,8 +704,7 @@
                   <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="
-                  pl-3 pr-3"><span class="icon-linkedin"></span></a>
+                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
                 </div>
               </div>
             </div>
