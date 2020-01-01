@@ -1,29 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%request.setCharacterEncoding("UTF-8");%>
+	<%response.setContentType("text/html; charset=UTF-8");%>
+	<%@page import="com.mvc.vo.Vo_Category_Detail"%>
+	
+    
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    
     <title>RECORE &mdash; RECORE</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="cssMain/magnific-popup.css">
-    <link rel="stylesheet" href="cssMain/jquery-ui.css">
-    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
-    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
-    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
-    
-    
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-  
-    <link rel="stylesheet" href="cssMain/aos.css">
-
-    <link rel="stylesheet" href="cssMain/style.css">
-    
+    <%@ include file = "/head.jsp" %>
     
   </head>
-  <body>
+  
+  <body id="body">
   
   <div class="site-wrap">
 
@@ -40,6 +31,11 @@
     <div class="site-navbar-wrap" style="background-color: white;">
       <div class="site-navbar-top">
         <div class="container py-3">
+       
+        <!--@@ 로고 위치 @@-->
+        <div style = "text-align: center;"><a href = "index.html"><img alt="" src = "images/donut.png"></a></div>
+        
+        
           <div class="row align-items-center">
             <div class="col-6">
             
@@ -53,16 +49,25 @@
             </div>
             <div class="col-6">
               <div class="d-flex ml-auto" >
-               <<form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+               <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="#" class="d-flex align-items-center">
-                  <!-- <span class="icon-envelope mr-2"></span>  -->
-                  <span class="d-none d-md-inline-block" style="color:black;">로그인</span>
-                  <span class="d-none d-md-inline-block" style="color:black;">회원가입</span>
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span>
-                </a>
+                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
+                 </a>
+                 
+                 <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="../mypage.do?command=main" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  
+                  <a href="../mypage.do?command=cartlist" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 
+                
                 <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>
@@ -74,6 +79,9 @@
           </div>
         </div>
       </div>
+      
+      
+      
       <div class="site-navbar">
         <div class="container py-1">
           <div class="row align-items-center">
@@ -94,29 +102,30 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="product_all.html" style="color:black;">Product</a>
+                    
+                      <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="product.html" >Bag / Acc</a></li>
-                        <li class = "has-children"><a href="clothing.html">Clothing</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Outer.jsp">Outer</a></li>                        	
-								<li><a href = "TOP.jsp">Top</a></li>                        	
-								<li><a href = "Bottom.jsp">Bottom</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="#" >Wallet</a></li>
-                        <li class = "has-children"><a href="#">Life</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "#">Supply</a></li>                        	
-								<li><a href = "#">Home</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
                     <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Exhibition</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
                     <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
@@ -144,39 +153,84 @@
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-                <div class="site-blocks-cover overlay" style="background-image: url(imagesMain/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">Interior Design Company</span>
-   				         <h1>Experience Interior Design</h1>
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>DOKGO SUJI</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div> 
             </div>
             <div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(imagesMain/backimg2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/img01.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">Interior Design Company</span>
-   				         <h1>Experience Interior Design</h1>
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>NAMGUNG SUNGIL</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div>
      	        </div>
             <div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(imagesMain/backimg3.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">Interior Design Company</span>
-   				         <h1>Experience Interior Design</h1>
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>SUNWO SEUNGHYE</h1>
+  				        </div>
+   				     </div>
+ 				     </div>
+ 				   </div> 
+           		</div>
+           		<div class="carousel-item">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
+      				<div class="container">
+      				  <div class="row align-items-center text-center justify-content-center">
+  				        <div class="col-md-8">
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>HWANGBO DOYOUNG</h1>
+  				        </div>
+   				     </div>
+ 				     </div>
+ 				   </div> 
+           		</div>
+           		<div class="carousel-item">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
+      				<div class="container">
+      				  <div class="row align-items-center text-center justify-content-center">
+  				        <div class="col-md-8">
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>JAEKAL HEEJIN</h1>
+  				        </div>
+   				     </div>
+ 				     </div>
+ 				   </div> 
+           		</div>
+           		<div class="carousel-item">
+                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+      				<br><br>
+      				<div class="container">
+      				  <div class="row align-items-center text-center justify-content-center">
+  				        <div class="col-md-8">
+   				         <span class="sub-text">RECORE</span>
+   				         <h1>PANG DONGHYUN</h1>
   				        </div>
    				     </div>
  				     </div>
@@ -301,6 +355,13 @@
           </div>
 
         </div>
+        
+        <!-- <div class="row mt-5 text-center">
+          <div class="col-12">
+            <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
+          </div>
+        </div> -->
+        
       </div>
     </div>
 
@@ -380,8 +441,8 @@
 
       <div class="row">
         <div class="col-12 text-center">
-          <span class="sub-title">Exhibition</span>
-          <h2 class="font-weight-bold text-black mb-5">기획전 & 전시</h2>
+          <span class="sub-title"><a href = "exhibition.html" style = "color:#F56D3E;">Exhibition</a></span>
+          <h2 class="font-weight-bold text-black mb-5"><a href = "exhibition.html" style = "color:black;">기획전 & 전시</a></h2>
         </div>
       </div>
 
@@ -413,6 +474,14 @@
         </div>
         
       </div>
+      
+      <!-- <div class="row mt-5 text-center">
+          <div class="col-12">
+            <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
+          </div>
+        </div> -->
+      
+      
     </div>
 
 
@@ -484,8 +553,8 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <span class="sub-title">News &amp; Issue</span>
-            <h2 class="font-weight-bold text-black mb-5">뉴스 &amp; 이슈</h2>
+            <span class="sub-title"><a href = "news.html" style = "color: #F56D3E;">News &amp; Issue</a></span>
+            <h2 class="font-weight-bold text-black mb-5"><a href = "news.html" style = "color:black;">뉴스 &amp; 이슈</a></h2>
           </div>
         </div>
         <div class="row mb-5">
@@ -512,11 +581,14 @@
           </div>
 
         </div>
-        <div class="row mt-5 text-center">
+        
+        <!-- 포스트 전체보기 -->
+        <!-- <div class="row mt-5 text-center">
           <div class="col-12">
             <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
           </div>
-        </div>
+        </div> -->
+        
       </div>
     </div>
 
@@ -545,9 +617,12 @@
                 </ul>
               </div>
             </div>
-
-            
           </div>
+          
+          <!-- 상단으로 올라가기 -->
+          <div style = "position: fixed; bottom: 30px; right: 30px;">
+			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
+		  </div>
           
           <!-- footer -->
           <div class="col-lg-4">
@@ -622,7 +697,8 @@
                   <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+                  <a href="#" class="
+                  pl-3 pr-3"><span class="icon-linkedin"></span></a>
                 </div>
               </div>
             </div>
