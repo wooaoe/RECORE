@@ -1,7 +1,6 @@
 package com.mvc.vo;
 
 import java.sql.Date;
-import java.util.List;
 
 public class Vo_Product {
 
@@ -18,16 +17,18 @@ public class Vo_Product {
 	private double prod_dc; // 할인율
 	private Date prod_regdate; // 작성날짜
 	private String prod_note; // 주석
-	private List<Vo_Prod_option> plist; // 상품 옵션 리스트로 관리
+	private String prod_comm; // 커맨드 값 보내기
+	/*
+	 * private List<Vo_Prod_option> plist; // 상품 옵션 리스트로 관리
+	 */
 
-	
 	public Vo_Product() {
 		super();
 	}
 
 	public Vo_Product(int prod_no, int prod_catd, String prod_front_img, String prod_th_img, String prod_name,
 			String prod_brand, int prod_price, String prod_content, int prod_con_count, String prod_dc_yn,
-			double prod_dc, Date prod_regdate, String prod_note, List<Vo_Prod_option> plist) {
+			double prod_dc, Date prod_regdate, String prod_note, String prod_comm) {
 		super();
 		this.prod_no = prod_no;
 		this.prod_catd = prod_catd;
@@ -42,7 +43,7 @@ public class Vo_Product {
 		this.prod_dc = prod_dc;
 		this.prod_regdate = prod_regdate;
 		this.prod_note = prod_note;
-		this.plist = plist;
+		this.prod_comm = prod_comm;
 	}
 
 	public int getProd_no() {
@@ -149,12 +150,12 @@ public class Vo_Product {
 		this.prod_note = prod_note;
 	}
 
-	public List<Vo_Prod_option> getPlist() {
-		return plist;
+	public String getProd_comm() {
+		return prod_comm;
 	}
 
-	public void setPlist(List<Vo_Prod_option> plist) {
-		this.plist = plist;
+	public void setProd_comm(String prod_comm) {
+		this.prod_comm = prod_comm;
 	}
 
 	@Override
@@ -163,7 +164,7 @@ public class Vo_Product {
 				+ ", prod_th_img=" + prod_th_img + ", prod_name=" + prod_name + ", prod_brand=" + prod_brand
 				+ ", prod_price=" + prod_price + ", prod_content=" + prod_content + ", prod_con_count=" + prod_con_count
 				+ ", prod_dc_yn=" + prod_dc_yn + ", prod_dc=" + prod_dc + ", prod_regdate=" + prod_regdate
-				+ ", prod_note=" + prod_note + ", plist=" + plist + "]";
+				+ ", prod_note=" + prod_note + ", prod_comm=" + prod_comm + "]";
 	}
 
 }

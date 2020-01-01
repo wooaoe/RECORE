@@ -17,7 +17,7 @@ import javax.xml.ws.Response;
 
 import com.mvc.dao.AccountDaoImpl;
 import com.mvc.dao.MypageDao_Impl;
-import com.mvc.dao.ProductDao_Impl;
+import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Wish;
@@ -46,7 +46,7 @@ public class Mypage_Controller extends HttpServlet {
 		Map<String,Object> map = mdao.selectMypage(vo.getAcc_no());
 		
 		//wish, cart insert
-		ProductDao_Impl pdao = new ProductDao_Impl();
+		ProductDaoImp pdao = new ProductDaoImp();
 		
 		if(command.equals("orderlist")) {
 			System.out.println(map.get("list_order"));

@@ -81,9 +81,9 @@
 	int acc_point = (int)request.getAttribute("acc_point");
 	List<Vo_Order_Num> list_order = (List<Vo_Order_Num>)request.getAttribute("list_order");
 	int sum_point = 0;
-	for(int i=0;i<list_order.size();i++){
+	/* for(int i=0;i<list_order.size();i++){
 		sum_point += list_order.get(i).getOrder_point();
-	}
+	} */
 %>
 	
 		<!-- header 시작 -->

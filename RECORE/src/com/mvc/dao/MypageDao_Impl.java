@@ -110,22 +110,22 @@ public class MypageDao_Impl implements MyPageDao{
 			e.printStackTrace();
 		}
 		
-		try {
-			pstmt = con.prepareStatement(sql_qna);
-			pstmt.setInt(1, accseq);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				vo_qna = new Vo_QnA(
-							rs.getInt(1),rs.getInt(2),rs.getString(6),rs.getDate(9)
-							);
-				list_qna.add(vo_qna);
-			}
-			map.put("list_qna", list_qna);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			pstmt = con.prepareStatement(sql_qna);
+//			pstmt.setInt(1, accseq);
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				vo_qna = new Vo_QnA(
+//							rs.getInt(1),rs.getInt(2),rs.getString(6),rs.getDate(9)
+//							);
+//				list_qna.add(vo_qna);
+//			}
+//			map.put("list_qna", list_qna);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		
 		try {
 			pstmt = con.prepareStatement(sql_wish);
