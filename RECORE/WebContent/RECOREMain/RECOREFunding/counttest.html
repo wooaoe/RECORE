@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h4 class="title">펀딩종료</h4>
+<div id="countDay">
+ 
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script>
+var x = setInterval(function() {
+var t1=moment('2020-01-01');
+var now=moment();
+var diffTime={
+		d:moment.duration(t1.diff(now)).days(),
+		h:moment.duration(t1.diff(now)).hours(),
+		m:moment.duration(t1.diff(now)).minutes(),
+		s:moment.duration(t1.diff(now)).seconds()
+		
+}
+console.log(diffTime.d +"일"+diffTime.h+"시간"+diffTime.m+"분"+diffTime.s+"초");
+document.getElementById("countDay").innerHTML = "펀딩종료까지 " + diffTime.d +"일 " + diffTime.h + "시간 " + diffTime.m + "분 "+diffTime.s+"초 남았습니다.";
+
+
+});
+ 
+</script>
+ 
+
+
+</body>
+</html>
