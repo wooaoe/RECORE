@@ -1,3 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <% request.setCharacterEncoding("UTF-8"); %>
+    <% response.setContentType("text/html; charset=UTF-8");%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
+    
+    <%
+	Vo_Account vo = (Vo_Account)session.getAttribute("vo");
+	%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,7 +33,8 @@
     
     
   </head>
-  <body>
+  
+  <body id="body">
   
   <div class="site-wrap">
 
@@ -42,7 +53,7 @@
         <div class="container py-3">
        
         <!--@@ 로고 위치 @@-->
-        <div style = "text-align: center;"><a href = "index.html"><img alt="" src = "images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "index.jsp"><img alt="" src = "images/donut.png"></a></div>
         
         
           <div class="row align-items-center">
@@ -62,6 +73,7 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
+              	<c:if test="${empty vo }">
                 <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
@@ -70,9 +82,20 @@
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
-                 
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 </c:if>
                 
+                <c:if test="${!empty vo }">
+    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>   
                 <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>
@@ -107,21 +130,22 @@
                       </ul>
                     </li>
                     <li class="has-children">
-                      <a href="RECOREProduct/Prod_All.jsp" style="color:black;">Product</a>
+                    
+                      <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="RECOREProduct/BagAcc.jsp" >Bag / Acc</a></li>
-                        <li class = "has-children"><a href="RECOREProduct/Clothing.jsp">Clothing</a>
+                        <li><a href="../Product.do?command=BagAccSelectAll"> Bag / Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ClothingSelectAll">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "RECOREProduct/Outer.jsp">Outer</a></li>                        	
-								<li><a href = "RECOREProduct/TOP.jsp">Top</a></li>                        	
-								<li><a href = "RECOREProduct/Bottom.jsp">Bottom</a></li>                        	
+								<li><a href = "../Product.do?command=OuterSelectAll">Outer</a></li>                        	
+								<li><a href = "../Product.do?command=TopSelectAll">Top</a></li>                        	
+								<li><a href = "../Product.do?command=BottomSelectAll">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="#" >Wallet</a></li>
-                        <li class = "has-children"><a href="#">Life</a>
+                        <li><a href="../Product.do?command=WalletSelectAll">Wallet</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=LifeSelectAll">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "#">Supply</a></li>                        	
-								<li><a href = "#">Home</a></li>                        	
+								<li><a href = "../Product.do?command=SupplySelectAll">Supply</a></li>                        	
+								<li><a href = "../Product.do?command=HomeSelectAll">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -621,9 +645,12 @@
                 </ul>
               </div>
             </div>
-
-            
           </div>
+          
+          <!-- 상단으로 올라가기 -->
+          <div style = "position: fixed; bottom: 30px; right: 30px;">
+			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
+		  </div>
           
           <!-- footer -->
           <div class="col-lg-4">
@@ -698,7 +725,8 @@
                   <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
                   <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+                  <a href="#" class="
+                  pl-3 pr-3"><span class="icon-linkedin"></span></a>
                 </div>
               </div>
             </div>
