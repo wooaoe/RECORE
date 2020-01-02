@@ -5,7 +5,6 @@
 <% 	response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import = "java.util.List" %>
 <%@ page import = "com.mvc.vo.Vo_Product" %>
 
 <!DOCTYPE html>
@@ -53,14 +52,16 @@
 
 	<%@ include file="/footerPdetail.jsp"%>
 
-	<%List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
-	<% if(plist.get(0).getProd_catd() == 6){ %>
+	<% if(pvo.getProd_catd() == 6 || pvo.getProd_catd() == 7 || pvo.getProd_catd() == 8 ||
+		  pvo.getProd_catd() == 9 || pvo.getProd_catd() == 10 || pvo.getProd_catd() == 11 ||
+		  pvo.getProd_catd() == 12){ %>
 	<% url = "ChildSelectAll"; %>
-	<% catdno = 6; %>
-	<%}	%>
+	<% } %>
+	
 	
 
 	<!--상품 상세 페이지 -->
@@ -76,7 +77,7 @@
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
     			    	<li class="active"><a
-							href="Product.do?command=<%=url%>&<%=catdno%>">${cdvo.catd_name}</a></li>
+							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
@@ -216,11 +217,11 @@
 						</span>		
 						</div>
 						<br><br>
-						<a href="../RECOREMypage/Mypage_Cart.jsp"
+						<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist"
 							class="btn btn-main mt-20">장바구니</a>&nbsp;&nbsp;
 						<a href="Product.do?command=Order&pseq=${pvo.prod_no}" 
 						class="btn btn-main mt-20">바로 구매</a>&nbsp;&nbsp; 
-						<a href="../RECOREMypage/Mypage_WishList.jsp" 
+						<a href="<%=request.getContextPath()%>/mypage.do?command=wishlist" 
 						class="btn btn-main mt-20">관심상품</a>
 					</div>
 				</div>
