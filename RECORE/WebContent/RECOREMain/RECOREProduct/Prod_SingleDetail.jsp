@@ -5,6 +5,8 @@
 <% 	response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import = "java.util.List" %>
+<%@ page import = "com.mvc.vo.Vo_Product" %>
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -51,7 +53,15 @@
 
 	<%@ include file="/footerPdetail.jsp"%>
 
-
+	<%List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	
+	<%! String url; %>
+	<%! int catdno;  %>
+	<% if(plist.get(0).getProd_catd() == 6){ %>
+	<% url = "ChildSelectAll"; %>
+	<% catdno = 6; %>
+	<%}	%>
+	
 
 	<!--상품 상세 페이지 -->
 	<section class="single-product">
@@ -66,7 +76,7 @@
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
     			    	<li class="active"><a
-							href="Product.do?command=${pvo.prod_comm}">${cdvo.catd_name}</a></li>
+							href="Product.do?command=<%=url%>&<%=catdno%>">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
