@@ -5,7 +5,6 @@
 <!-- UserSession -->
 <% String admin = (String)session.getAttribute("user"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 
 <html style="font-size: 16px;">
@@ -15,10 +14,10 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js "></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qna.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/manager/manager.css">
-	<%@ include file="/RECOREMain/RECORECommunity/head.jsp" %>
-	
+<link rel="stylesheet" href="<%=request.getContextPath()%>/qna_manager/qna/css/qna.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/qna_manager/manager/manager.css">
+	<jsp:include page="/head.jsp"></jsp:include>
+
 
 </head>
 <body >
