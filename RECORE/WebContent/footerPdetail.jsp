@@ -12,8 +12,15 @@
 		bottom:10px; "
 			
 		}
+	
+	
+	
 	</style>
+	
+	
+	
   </head>
+ 
   <body>
  
     			<!-- footer 라인 -->
@@ -30,7 +37,7 @@
            	<img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a>
           </div>
           
-          <div class="col-6" >
+          <%-- <div class="col-6" >
               <div class="d-flex ml-auto" >
               
                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
@@ -47,7 +54,7 @@
                  
                 
               </div>
-            </div>
+            </div> --%>
             
         </div>
       </div>

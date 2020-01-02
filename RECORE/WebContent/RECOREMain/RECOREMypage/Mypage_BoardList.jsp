@@ -9,26 +9,26 @@
 <title>Mypage_BoardList</title>
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMy/Mypage_BoardList_CSS.css"/>
+<link rel="stylesheet" type="text/css" href="cssMy/Mypage_BoardList_CSS.css"/>
 	
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/magnific-popup.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/jquery-ui.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.carousel.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/owl.theme.default.min.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="cssMain/magnific-popup.css">
+    <link rel="stylesheet" href="cssMain/jquery-ui.css">
+    <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
+    <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
+    <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
     
     
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
   
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/aos.css">
+    <link rel="stylesheet" href="cssMain/aos.css">
 
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/styleMy.css">
+    <link rel="stylesheet" href="cssMain/styleMy.css">
 
 
 
@@ -71,6 +71,7 @@
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 
+
 		<!-- BoardList -->
 		
 	    <div id="container" style = "position: static;">
@@ -112,8 +113,6 @@
 							<tbody class="">
 								<tr>
 									<td colspan="6" class="message">게시물이 없습니다.</td>
-									<!-- 작성자이름은 session account통해서 가져오기 -->
-									<!-- 카테고리명은 vo_qna확인해서 숫자에따라 if로 출력하기  -->
 					           	</tr>
 				           	</tbody>
 							<tbody class="displaynone center">
@@ -157,8 +156,7 @@
        
 		<!-- footer -->
 		<%@ include file="/footer.jsp" %>
-		<%-- <jsp:include page="/footer.jsp"></jsp:include> --%>
-	 <%--  <%=request.getContextPath()%> --%>
+	  
 	
 </body>
 </html>

@@ -2,29 +2,77 @@
 	pageEncoding="UTF-8"%>
 	<% request.setCharacterEncoding("UTF-8"); %>
     <% response.setContentType("text/html; charset=UTF-8");%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
     <link rel="stylesheet" href="fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="cssMain/magnific-popup.css">
     <link rel="stylesheet" href="cssMain/jquery-ui.css">
     <link rel="stylesheet" href="cssMain/owl.carousel.min.css">
     <link rel="stylesheet" href="cssMain/owl.theme.default.min.css">
     <link rel="stylesheet" href="cssMain/bootstrap-datepicker.css">
-    
-    
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-  
     <link rel="stylesheet" href="cssMain/aos.css">
-
     <link rel="stylesheet" href="cssMain/style2.css">
     
-    
+<script language="javascript">
+function goPopup(){
+	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+    var pop = window.open("jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+}
+/** API 서비스 제공항목 확대 (2017.02) **/
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+					, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+	document.form.roadAddrPart1.value = roadAddrPart1;
+	document.form.addrDetail.value = addrDetail;
+	document.form.zipNo.value = zipNo;
+}
+</script>
+
+<script type="text/javascript">
+function checkDuplId2(){
+	var doc = document.getElementsByName("member_id")[0];
+	if(doc.value.trim()==""||doc.value==null){
+		
+	} else{
+		var target = "../../Account_Controller.do?command=idchk&id="+doc.value.trim();
+		open(target,"","width=200,heigh=200");
+	}
+	
+}
+
+function checkDuplId1(){
+    if ($('#member_id').length > 0) {
+        var sMemberId = $('#member_id').val();
+        var aEleId = [$('#member_id')];
+    } else {
+        var sMemberId = $.trim($('#form').find('#member_id').val());
+        var aEleId = [$('#form #member_id')];
+    }
+
+    var bCheck = checkIdValidation(sMemberId);
+
+    if (bCheck['passed'] == false) {
+        $('#idMsg').addClass('error').html(bCheck['msg']);
+        return true;
+    }
+
+    AuthSSLManager.weave({
+        'auth_mode': 'encrypt',
+        'aEleId': aEleId,
+        'auth_callbackName': 'checkIdEncryptedResultForMobile'
+    });
+}
+
+</script>
 <title>회원가입</title>
 <style type="text/css">
 hr {
@@ -576,6 +624,7 @@ col {
     line-height: 1.5;
 } */
 table {
+	margin : 30px;
     width: 100%;
     border: 0;
     border-spacing: 0;
@@ -623,7 +672,8 @@ p {
     margin-inline-end: 0px;
 }
 .xans-member-join > h3 {
-    padding: 50px 0 10px;
+	margin : 30px;
+    padding: 0px 0 10px;
     font-size: 16px;
     color: #2e2e2e;
 }
@@ -810,7 +860,7 @@ html {
 <body>
 
 
-<%@ include file="/header.jsp" %>
+<%@ include file="/RECOREMain/RECOREAccount/header.jsp" %>
 
 
 	<div id="wrap">
@@ -830,7 +880,7 @@ html {
 					<h2>회원 가입</h2>
 				</div>
 
-				<form id="joinForm" name="joinForm" action="/exec/front/Member/join/" method="post" target="_self" enctype="multipart/form-data">
+				<form id="form" name="form" action="../../Account_Controller.do?command=Acc_insert" method="post" target="_self">
 					<input id="useSimpleSignin" name="useSimpleSignin" value="F" type="hidden" /> 
 					<input id="member_name_cert_flag" name="member_name_cert_flag" value="F" type="hidden" /> 
 					<input id="is_name_auth_use" name="is_name_auth_use" value="F" type="hidden" /> 
@@ -957,7 +1007,7 @@ html {
 											</div> (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
 										</td>
 									</tr>
-									<tr>
+<!-- 									<tr>
 										<th scope="row">비밀번호 확인 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
 											alt="필수" /></th>
@@ -966,180 +1016,20 @@ html {
 											fw-label="비밀번호 확인" fw-msg="비밀번호가 일치하지 않습니다."
 											autocomplete="off" maxlength="16" 0="disabled" value=""
 											type="password" /> <span id="pwConfirmMsg"></span></td>
-									</tr>
-									
-									
-									<!-- @@@@@@비밀번호 확인 없앰@@@@@@@@ -->
-									
-									<!-- <tr class="displaynone">
-										<th scope="row">비밀번호 확인 질문 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td><select id="hint" name="hint" fw-filter=""
-											fw-label="hint" fw-msg="">
-												<option value="hint_01">기억에 남는 추억의 장소는?</option>
-												<option value="hint_02">자신의 인생 좌우명은?</option>
-												<option value="hint_03">자신의 보물 제1호는?</option>
-												<option value="hint_04">가장 기억에 남는 선생님 성함은?</option>
-												<option value="hint_05">타인이 모르는 자신만의 신체비밀이 있다면?</option>
-												<option value="hint_06">추억하고 싶은 날짜가 있다면?</option>
-												<option value="hint_07">받았던 선물 중 기억에 남는 독특한 선물은?</option>
-												<option value="hint_08">유년시절 가장 생각나는 친구 이름은?</option>
-												<option value="hint_09">인상 깊게 읽은 책 이름은?</option>
-												<option value="hint_10">읽은 책 중에서 좋아하는 구절이 있다면?</option>
-												<option value="hint_11">자신이 두번째로 존경하는 인물은?</option>
-												<option value="hint_12">친구들에게 공개하지 않은 어릴 적 별명이 있다면?</option>
-												<option value="hint_13">초등학교 때 기억에 남는 짝꿍 이름은?</option>
-												<option value="hint_14">다시 태어나면 되고 싶은 것은?</option>
-												<option value="hint_15">내가 좋아하는 캐릭터는?</option>
-										</select></td>
-									</tr>
-									<tr class="displaynone">
-										<th scope="row">비밀번호 확인 답변 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td><input id="hint_answer" name="hint_answer"
-											fw-filter="" fw-label="비밀번호 확인시 답변" fw-msg=""
-											class="inputTypeText" placeholder="" value="" type="text" /></td>
 									</tr> -->
-									<!-- <tr>
+									<tr>
 										<th scope="row" id="nameTitle">이름 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
 											alt="필수" /></th>
 										<td><span id="nameContents"><input id="name"
 												name="name" fw-filter="isFill&isMax[30]" fw-label="이름"
 												fw-msg="" class="ec-member-name" placeholder=""
-												maxlength="30" value="" type="text" /></span> <span
-											id="under14Msg" class="displaynone">14세 미만 사용자는 법정대리인
-												동의가 필요합니다.</span></td>
+												maxlength="30" value="" type="text" /></span>
 									</tr>
 									</select>
 									</td>
-									</tr> -->
-									
-									
-									
-									<!-- @@@주소 공공API 사용하기@@@ -->
-									<tr class="">
-										<th scope="row">주소 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="displaynone" alt="필수" /></th>
-										<td><input id="postcode1" name="postcode1"
-											fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg=""
-											class="inputTypeText" placeholder="" readonly="readonly"
-											maxlength="14" value="" type="text" /> <a href="#none"
-											class="btnNormal" onclick="" id="postBtn">우편번호</a><br /> <input
-											id="addr1" name="addr1" fw-filter="" fw-label="주소" fw-msg=""
-											class="inputTypeText" placeholder="" readonly="readonly"
-											value="" type="text" /> 기본주소<br /> <input id="addr2"
-											name="addr2" fw-filter="" fw-label="주소" fw-msg=""
-											class="inputTypeText" placeholder="" value="" type="text" />
-											나머지주소 (선택입력가능)</td>
 									</tr>
 									
-									<!-- @@@@@@번호 입력받아야 함@@@@@@ -->
-									
-									 <tr class="">
-										<th scope="row">휴대전화 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="" alt="필수" /></th>
-										<td><select id="mobile1" name="mobile[]"
-											fw-filter="isNumber&isFill" fw-label="휴대전화" fw-alone="N"
-											fw-msg="">
-												<option value="010">010</option>
-												<option value="011">011</option>
-												<option value="016">016</option>
-												<option value="017">017</option>
-												<option value="018">018</option>
-												<option value="019">019</option>
-										</select>-<input id="mobile2" name="mobile[]" maxlength="4"
-											fw-filter="isNumber&isFill" fw-label="휴대전화" fw-alone="N"
-											fw-msg="" value="" type="text" />-<input id="mobile3"
-											name="mobile[]" maxlength="4" fw-filter="isNumber&isFill"
-											fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text" />
-											
-											
-											
-											<!-- <button type="button" id="btn_action_verify_mobile"
-												class="btnNormal "
-												onclick="memberVerifyMobile.joinSendVerificationNumber(); return false;">인증번호받기</button>
-											<p class="txtWarn gBlank5 displaynone"
-												id="result_send_verify_mobile_fail"></p>
-											<ul class="txtInfo gBlank5 displaynone"
-												id="result_send_verify_mobile_success">
-												<li>인증번호가 발송되었습니다.</li>
-												<li>인증번호를 받지 못하셨다면 휴대폰 번호를 확인해 주세요.</li>
-											</ul> --></td>
-									</tr>
-									
-									
-									<!-- @@@휴대폰 인증 없앰@@@@ -->
-									
-									<!-- <tr class="displaynone" id="confirm_verify_mobile">
-										<th scope="row">인증번호 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td>
-											<div class="verify">
-												<input id="verify_sms_number" name="verify_sms_number"
-													fw-filter="isMax[15]" fw-label="verify_sms_number"
-													fw-msg="" class="inputTypeText" placeholder=""
-													maxlength="15" value="" type="text" /> <span class="time"
-													id="expiryTime"></span>
-											</div>
-											<button type="button" class="btnNormal"
-												id="btn_verify_mobile_confirm"
-												onclick="memberVerifyMobile.joinVerifySmsNumberConfirm(); return false;">확인</button>
-										</td>
-									</tr> -->
-									
-									
-									
-									<!--@@@이메일 입력받아야 함@@@-->									
-									
-									<tr>
-										<th scope="row">이메일 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td><input id="email1" name="email1"
-											fw-filter="isFill&isEmail" fw-label="이메일" fw-alone="N"
-											fw-msg="" value="" type="text" /> <span id="emailMsg"></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						
-						
-						
-						<!-- @@@@추가 정보@@@ -->
-						<h3 class=" ">추가정보</h3>
-						<br>
-						<div class="ec-base-table typeWrite ">
-							<table border="1" summary="">
-								<caption>회원 추가정보</caption>
-								<colgroup>
-									<col style="width: 150px;" />
-									<col style="width: auto;" />
-								</colgroup>
-								<tbody>
-								
-								<!-- @@@성별 구분 없앰@@@ -->
-								
-									<!-- <tr class="displaynone">
-										<th scope="row">성별 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="displaynone" alt="필수" /></th>
-										<td><input id="is_sex0" name="is_sex" fw-filter=""
-											fw-label="성별" fw-msg="" value="M" type="radio" /><label
-											for="is_sex0">남자</label> <input id="is_sex1" name="is_sex"
-											fw-filter="" fw-label="성별" fw-msg="" value="F" type="radio" /><label
-											for="is_sex1">여자</label></td>
-									</tr> -->
-									
-									
-									
-									<!-- @@@@생년월일 받아야함@@@@ -->
 									<tr class="">
 										<th scope="row">생년월일 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
@@ -1163,25 +1053,59 @@ html {
 												type="radio" /><label for="is_solar_calendar1">음력</label></span></td>
 									</tr>
 									
+									<!--@@@이메일 입력받아야 함@@@-->									
+									
+									<tr>
+										<th scope="row">이메일 <img
+											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
+											alt="필수" /></th>
+										<td><input id="email1" name="email1"
+											fw-filter="isFill&isEmail" fw-label="이메일" fw-alone="N"
+											fw-msg="" value="" type="text" /> <span id="emailMsg"></span>
+										</td>
+									</tr>
 									
 									
-									<!-- @@@14세이상입니다 없앰@@@@  -->
-									
-									<!-- <tr class="">
-										<th scope="row">본인은 만 14세 이상입니다. <img
+									<!-- @@@@@@번호 입력받아야 함@@@@@@ -->
+									 <tr class="">
+										<th scope="row">휴대전화 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
 											class="" alt="필수" /></th>
-										<td><label for=add10><input id="add10"
-												name="add1[]" fw-filter="isFill" fw-label="추가항목1" fw-msg=""
-												value="만 14세 이상입니다." type="checkbox" />만 14세 이상입니다.</label></td>
-									</tr> -->
+										<td><select id="mobile1" name="mobile[]"
+											fw-filter="isNumber&isFill" fw-label="휴대전화" fw-alone="N"
+											fw-msg="">
+												<option value="010">010</option>
+												<option value="011">011</option>
+												<option value="016">016</option>
+												<option value="017">017</option>
+												<option value="018">018</option>
+												<option value="019">019</option>
+										</select>-<input id="mobile2" name="mobile[]" maxlength="4"
+											fw-filter="isNumber&isFill" fw-label="휴대전화" fw-alone="N"
+											fw-msg="" value="" type="text" />-<input id="mobile3"
+											name="mobile[]" maxlength="4" fw-filter="isNumber&isFill"
+											fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text" />
+										</td>
+									</tr>
 									
-
+									
+									<!-- @@@주소 공공API 사용하기@@@ -->
+									<tr class="">
+										<th scope="row">주소 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif" class="displaynone" alt="필수" />
+										</th>
+										<td>
+										<input type="hidden" id="confmKey" name="confmKey" value=""  >
+										<input type="text" id="zipNo" name="zipNo" fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg="" class="inputTypeText" placeholder="우편번호" readonly="readonly"
+											maxlength="14" value="" type="text" /> 
+										<a onclick="goPopup();" class="btnNormal" id="postBtn">주소검색</a><br/> 
+										<input type="text" id="roadAddrPart1" name="roadAddrPart1" class="inputTypeText" placeholder="도로명주소" readonly="readonly" value="" /> 도로명주소
+										<br/> 
+										<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" value="" /> 상세주소
+											</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
-						
-						
 						
 						<!-- @@@이용약관 동의@@@ -->
 						<br><br>
@@ -1198,7 +1122,7 @@ html {
 							<h3>[필수] 이용약관 동의</h3>
 							<div class="content">
 								<p>
-									제1조(목적)<br />이 약관은 (주)지에스넷비전(전자상거래 사업자)이 운영하는 달리살다 사이버 몰(이하
+									제1조(목적)<br />이 약관은 (주)지에스넷비전(전자상거래 사업자)이 운영하는 RECORE 사이버 몰(이하
 									“몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의
 									권리.의무 및 책임사항을 규정함을 목적으로 합니다.<br />※「PC통신, 무선 등을 이용하는 전자상거래에
 									대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
@@ -1214,7 +1138,7 @@ html {
 								<p>
 									제3조 (약관 등의 명시와 설명 및 개정) <br />① “몰”은 이 약관의 내용과 상호 및 대표자 성명,
 									영업소 소재지 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호, 전자우편주소, 사업자등록번호,
-									통신판매업 신고번호, 개인정보보호 책임자등을 이용자가 쉽게 알 수 있도록 달리살다 사이버몰의 초기
+									통신판매업 신고번호, 개인정보보호 책임자등을 이용자가 쉽게 알 수 있도록 RECORE 사이버몰의 초기
 									서비스화면(전면)에 게시합니다. 다만, 약관의 내용은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.<br />②
 									“몰은 이용자가 약관에 동의하기에 앞서 약관에 정하여져 있는 내용 중 청약철회, 배송책임, 환불조건 등과 같은
 									중요한 내용을 이용자가 이해할 수 있도록 별도의 연결화면 또는 팝업화면 등을 제공하여 이용자의 확인을 구하여야
@@ -1660,10 +1584,6 @@ html {
 									수신여부를 변경하실 수 있습니다.</p>
 							</div>
 							<ul class="check">
-<!-- 								<li class=""><span>SMS 수신을 동의하십니까?</span> <label
-									for=is_sms0><input id="is_sms0" name="is_sms"
-										fw-filter="isFill" fw-label="is_sms" fw-msg=""
-										class="ec-base-chk" value="T" type="checkbox" />동의함</label></li> -->
 								<li class=""><span>이메일 수신을 동의하십니까?</span> <label
 									for=is_news_mail0><input id="is_news_mail0"
 										name="is_news_mail" fw-filter="isFill" fw-label="is_news_mail"
@@ -1672,33 +1592,15 @@ html {
 							</ul>
 						</div>
 						<div class="ec-base-button">
-							<a href="#none" class="btnSubmitFix sizeM"
-								onclick="memberJoinAction()">회원가입</a>
-						</div>
-						<div id="ec_shop_member_confirm-infolayer"
-							class="joinConfirm ec-base-layer">
-
-
-
-
-							<div class="ec-base-button">
-								<a href="#none" class="btnSubmitFix sizeS"
-									id="ec_shop_confirm-checkingjoininfo_action">회원가입</a> <a
-									href="#none" class="btnNormalFix sizeS"
-									onclick="CheckingJoinInfoLayerClose()">닫기</a>
-							</div>
-							<a href="#none" class="close"><img
-								src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif"
-								alt="닫기" onclick="CheckingJoinInfoLayerClose()" /></a>
+							<input type="submit" value="회원가입" class="btnSubmitFix sizeM">
 						</div>
 					</div>
 				</form>
 			</div>
 			<hr class="layout" />
    
-    <%@ include file="/footer.jsp" %>
-    
-   <!--  <footer class="site-footer border-top">
+   
+    <footer class="site-footer border-top">
     <div class="container">
         <div class="row">
           <div class="col-lg-4 mb-5 mb-lg-0">
@@ -1800,15 +1702,15 @@ html {
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
-            Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
           
         </div>
       </div>
-      </footer> -->
+      </footer>
 	
 	
 			<!-- 결제를 위한 필수 영역 -->

@@ -385,56 +385,17 @@ public class ProductDaoImp implements ProductDao {
 		return false;
 	}
 
-	  @Override
-	   public boolean P_insertCart(int acc_no, int prod_id) {
-	      Connection con = getConnection();
-	      PreparedStatement pstmt = null;
-	      int res = 0;
-	      String sql = "INSERT INTO CART VALUES(?,?,?)";
-	      
-	      try {
-	         pstmt = con.prepareStatement(sql);
-	         pstmt.setInt(1, acc_no);
-	         pstmt.setInt(2, prod_id);
-	         pstmt.setInt(3, 1); //wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
-	         res = pstmt.executeUpdate();
-	         
-	         if(res>0) {
-	            commit(con);
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         close(pstmt,con);
-	      }
-	      
-	      return (res>0)?true:false;
-	   }
+	@Override
+	public boolean P_insert(Vo_Cart cvo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-	   @Override
-	   public boolean P_insertWish(int acc_no, int prod_no) {
-	      Connection con = getConnection();
-	      PreparedStatement pstmt = null;
-	      int res = 0;
-	      String sql = "INSERT INTO WISH VALUES(?,?)";
-	      
-	      try {
-	         pstmt = con.prepareStatement(sql);
-	         pstmt.setInt(1, acc_no);
-	         pstmt.setInt(2, prod_no);
-	         res = pstmt.executeUpdate();
-	         
-	         if(res>0) {
-	            commit(con);
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         close(pstmt,con);
-	      }
-	      
-	      return (res>0)?true:false;
-	   }
+	@Override
+	public boolean P_insert(Vo_Wish wvo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
 	public boolean P_update(Vo_Product pvo) {

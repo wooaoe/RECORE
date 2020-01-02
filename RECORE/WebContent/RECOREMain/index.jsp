@@ -1,15 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%request.setCharacterEncoding("UTF-8");%>
-	<%response.setContentType("text/html; charset=UTF-8");%>
-	
+    <% request.setCharacterEncoding("UTF-8"); %>
+    <% response.setContentType("text/html; charset=UTF-8");%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
     
+    <%
+	Vo_Account vo = (Vo_Account)session.getAttribute("vo");
+	%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    
     <title>RECORE &mdash; RECORE</title>
-    <%@ include file = "/head.jsp" %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,700,900"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    
+    
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    
     
   </head>
   
@@ -32,7 +53,7 @@
         <div class="container py-3">
        
         <!--@@ 로고 위치 @@-->
-        <div style = "text-align: center;"><a href = "index.html"><img alt="" src = "images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "index.jsp"><img alt="" src = "images/donut.png"></a></div>
         
         
           <div class="row align-items-center">
@@ -52,6 +73,7 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
+              	<c:if test="${empty vo }">
                 <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
@@ -59,13 +81,21 @@
                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
-                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                  <br>
+                  <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
-                 
+                 </c:if>
                 
+                <c:if test="${!empty vo }">
+    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>   
                 <!--              
                 <a href="#" class="d-flex align-items-center">
                   <span class="icon-phone mr-2"></span>
@@ -103,19 +133,19 @@
                     
                       <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
+                        <li><a href="../Product.do?command=BagAccSelectAll"> Bag / Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ClothingSelectAll">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
+								<li><a href = "../Product.do?command=OuterSelectAll">Outer</a></li>                        	
+								<li><a href = "../Product.do?command=TopSelectAll">Top</a></li>                        	
+								<li><a href = "../Product.do?command=BottomSelectAll">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6">Life</a>
+                        <li><a href="../Product.do?command=WalletSelectAll">Wallet</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=LifeSelectAll">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
+								<li><a href = "../Product.do?command=SupplySelectAll">Supply</a></li>                        	
+								<li><a href = "../Product.do?command=HomeSelectAll">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -126,10 +156,10 @@
                         <li><a href="exhibition.html">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
-                        <li><a href="qna.do?command=review_list">Review</a></li>
+                        <li><a href="#">QnA</a></li>
+                        <li><a href="#">Review</a></li>
                       </ul>
                     </li>
 <!--
