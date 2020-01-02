@@ -67,7 +67,7 @@ body .container .half.bg img {
     apiURL += "&redirect_uri=" + redirectURI;
     apiURL += "&state=" + state;
     session.setAttribute("state", state);
- %> 
+ %>
 	<!-- header 시작 -->
 
 	<%-- <%@ include file="/RECOREMain/RECOREAccount/header.jsp" %> --%>
