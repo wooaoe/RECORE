@@ -22,6 +22,9 @@
     		max-width: 350px;
     		height: 350px;
     	}    
+    	html{
+    		scroll-behavior: smooth;
+    	}
     </style>
     
   </head>

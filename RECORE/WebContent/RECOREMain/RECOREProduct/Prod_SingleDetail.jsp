@@ -53,15 +53,15 @@
 
 	<%@ include file="/footerPdetail.jsp"%>
 
-	<%List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
-	<% if(pvo.getProd_catd() == 6){ %>
+	<% if(pvo.getProd_catd() == 6 || pvo.getProd_catd() == 7 || pvo.getProd_catd() == 8 ||
+		  pvo.getProd_catd() == 9 || pvo.getProd_catd() == 10 || pvo.getProd_catd() == 11 ||
+		  pvo.getProd_catd() == 12){ %>
 	<% url = "ChildSelectAll"; %>
-	<% catdno = 6; %>
-	<%}	%>
+	<% } %>
 	
 
 	<!--상품 상세 페이지 -->
@@ -77,7 +77,7 @@
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
     			    	<li class="active"><a
-							href="Product.do?command=<%=url%>&<%=catdno%>">${cdvo.catd_name}</a></li>
+							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
