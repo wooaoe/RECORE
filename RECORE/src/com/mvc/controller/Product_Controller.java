@@ -98,6 +98,7 @@ public class Product_Controller extends HttpServlet {
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
+			System.out.println("plist : " + plist.get(0).getProd_no());
 			request.setAttribute("plist", plist);
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);

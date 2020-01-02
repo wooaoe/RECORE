@@ -187,6 +187,7 @@ tr {
     vertical-align: middle;
     font-weight: normal;
     background: #fff;
+    text-align: center;
 }
 
 .ec-base-table th {
