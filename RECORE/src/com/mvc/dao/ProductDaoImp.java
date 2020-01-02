@@ -30,18 +30,21 @@ public class ProductDaoImp implements ProductDao {
 
 		try {
 
-			String sql2 = "SELECT * FROM PRODUCT ORDER BY PROD_NO DESC";
+			String sql = "SELECT * FROM PRODUCT ORDER BY PROD_NO DESC";
 
-			pstm = con.prepareStatement(sql2);
+			pstm = con.prepareStatement(sql);
+			System.out.println("prod_all query 준비 : " + sql);
 			rs = pstm.executeQuery();
+			System.out.println("prod_all query 실행 : " + sql);
 
 			while (rs.next()) {
 
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				plist.add(tmp);
+				System.out.println("product All : " + plist);
 
 			}
 		} catch (SQLException e) {
@@ -113,7 +116,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				prntlist.add(tmp);
 				System.out.println("parent 쿼리 실행 값 : " + prntlist);
@@ -151,7 +154,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				childlist.add(tmp);
 			}
@@ -259,7 +262,7 @@ public class ProductDaoImp implements ProductDao {
 			while (rs.next()) {
 				pvo = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
 						rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13), rs.getString(14));
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				System.out.println("pvo 값: " + pvo);
 
@@ -382,56 +385,56 @@ public class ProductDaoImp implements ProductDao {
 		return false;
 	}
 
-	@Override
-	public boolean P_insertCart(int acc_no, int prod_id) {
-		Connection con = getConnection();
-		PreparedStatement pstmt = null;
-		int res = 0;
-		String sql = "INSERT INTO CART VALUES(?,?,?)";
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, acc_no);
-			pstmt.setInt(2, prod_id);
-			pstmt.setInt(3, 1); //wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
-			res = pstmt.executeUpdate();
-			
-			if(res>0) {
-				commit(con);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt,con);
-		}
-		
-		return (res>0)?true:false;
-	}
+	  @Override
+	   public boolean P_insertCart(int acc_no, int prod_id) {
+	      Connection con = getConnection();
+	      PreparedStatement pstmt = null;
+	      int res = 0;
+	      String sql = "INSERT INTO CART VALUES(?,?,?)";
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, acc_no);
+	         pstmt.setInt(2, prod_id);
+	         pstmt.setInt(3, 1); //wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
+	         res = pstmt.executeUpdate();
+	         
+	         if(res>0) {
+	            commit(con);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt,con);
+	      }
+	      
+	      return (res>0)?true:false;
+	   }
 
-	@Override
-	public boolean P_insertWish(int acc_no, int prod_no) {
-		Connection con = getConnection();
-		PreparedStatement pstmt = null;
-		int res = 0;
-		String sql = "INSERT INTO WISH VALUES(?,?)";
-		
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, acc_no);
-			pstmt.setInt(2, prod_no);
-			res = pstmt.executeUpdate();
-			
-			if(res>0) {
-				commit(con);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt,con);
-		}
-		
-		return (res>0)?true:false;
-	}
+	   @Override
+	   public boolean P_insertWish(int acc_no, int prod_no) {
+	      Connection con = getConnection();
+	      PreparedStatement pstmt = null;
+	      int res = 0;
+	      String sql = "INSERT INTO WISH VALUES(?,?)";
+	      
+	      try {
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, acc_no);
+	         pstmt.setInt(2, prod_no);
+	         res = pstmt.executeUpdate();
+	         
+	         if(res>0) {
+	            commit(con);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt,con);
+	      }
+	      
+	      return (res>0)?true:false;
+	   }
 
 	@Override
 	public boolean P_update(Vo_Product pvo) {

@@ -1,7 +1,6 @@
 package com.mvc.controller;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mvc.dao.AccountDao;
-import com.mvc.dao.AccountDaoImpl;
+import com.mvc.dao.AccountDaoImp;
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
@@ -99,6 +98,7 @@ public class Product_Controller extends HttpServlet {
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
+			System.out.println("plist : " + plist.get(0).getProd_no());
 			request.setAttribute("plist", plist);
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
@@ -126,7 +126,7 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("polist : " + polist);
 			request.setAttribute("polist", polist);
 			
-		    AccountDaoImpl dao2 = new AccountDaoImpl();
+		    AccountDaoImp dao2 = new AccountDaoImp();
 		    Vo_Account acc = dao2.A_selectAccount("user1", "user1");
 		    HttpSession session = request.getSession();
 		    session.setAttribute("acc", acc);

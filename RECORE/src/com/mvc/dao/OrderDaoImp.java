@@ -28,12 +28,12 @@ public class OrderDaoImp implements OrderDao {
 			pstm = con.prepareStatement(sql);
 			rs = pstm.executeQuery();
 			
-			while(rs.next()) {
-				Vo_Order tmp = new Vo_Order(rs.getInt(1), rs.getInt(2),
-						rs.getInt(3), rs.getString(4), rs.getString(5));
-				
-				order.add(tmp);
-			}
+//			while(rs.next()) {
+//				Vo_Order tmp = new Vo_Order(rs.getInt(1), rs.getInt(2),
+//						rs.getInt(3), rs.getString(4), rs.getString(5));
+//				
+//				order.add(tmp);
+//			}
 			
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -43,10 +43,10 @@ public class OrderDaoImp implements OrderDao {
 				
 		String sql2 = "SELECT * FROM ORDER_NUM";
 		
-//		try {
-//			pstm = con.prepareStatement(sql2);
-//			rs = pstm.executeQuery();
-//			
+		try {
+			pstm = con.prepareStatement(sql2);
+			rs = pstm.executeQuery();
+			
 //			while(rs.next()) {
 //				Vo_Order_Num tmp2 = new Vo_Order_Num(rs.getInt(1), rs.getInt(2),
 //						rs.getString(3), rs.getString(4), rs.getString(5),
@@ -54,12 +54,12 @@ public class OrderDaoImp implements OrderDao {
 //				
 //				orderNum.add(tmp2);
 //			}
-//			
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 			
