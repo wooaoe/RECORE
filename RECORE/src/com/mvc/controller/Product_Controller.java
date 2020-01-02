@@ -88,6 +88,7 @@ public class Product_Controller extends HttpServlet {
 
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
+			System.out.println("pvo catdno : " + pvo.getProd_catd());
 
 			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
 			request.setAttribute("cdvo", cdvo);
@@ -98,7 +99,6 @@ public class Product_Controller extends HttpServlet {
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
-			System.out.println("plist : " + plist.get(0).getProd_no());
 			request.setAttribute("plist", plist);
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);

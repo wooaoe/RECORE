@@ -54,10 +54,11 @@
 	<%@ include file="/footerPdetail.jsp"%>
 
 	<%List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
-	<% if(plist.get(0).getProd_catd() == 6){ %>
+	<% if(pvo.getProd_catd() == 6){ %>
 	<% url = "ChildSelectAll"; %>
 	<% catdno = 6; %>
 	<%}	%>

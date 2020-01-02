@@ -106,8 +106,6 @@ RECORE-CHECKOUT
 	
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
 	<% String[] arr = acc.getAcc_phone().split("-"); %>
-	
-	
 
 <!-- header -->
 	<%@ include file="/header.jsp" %>
