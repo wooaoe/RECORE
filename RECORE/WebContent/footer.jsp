@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    
     			<!-- footer 라인 -->
 		 <footer class="site-footer border-top">
       <div class="container">

@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8");%>
+<%@ page import="com.mvc.vo.Vo_Order_Num" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,13 +69,23 @@
   	text-align: center;
   }
   
+  a:link { color: black; text-decoration: none;}
+  a:visited { color: black; text-decoration: none;}
+  a:hover {
+    color: #F56D3E;
+    text-decoration: underline;
+  }
+  
   </style>
 
 
 </head>
 
 <body id="main">
+<%
+	List<Vo_Order_Num> list_order = (List<Vo_Order_Num>)request.getAttribute("list_order");
 
+%>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 
@@ -172,14 +186,20 @@
 				            </tr>
 			            </thead>
 						<tbody class="center">
+						<c:if test="${null eq list_order}">
+							<tr><td colspan="7"><p class="message ">주문 내역이 없습니다.</p></td></tr>
+						</c:if>
+						<c:if test="${null ne list_order}">
+						<c:set var="count" value="0"></c:set>
+						<c:forEach var="order" items="${list_order}">
 							<tr class="">
 								<td class="number ">
-				                	<p></p>
-						            <p><a href="detail.html" class="line">[주문번호]</a></p>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
+				                	<br><p>${order.order_date}
+						            <br><a href="detail.html" class="line">[${order.order_no}]</a></p>
+				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
 				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
 				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
-				                    <a href="return.html" class="btnNormal displaynone">반품신청</a>
+				                    <a href="return.html" class="btnNormal displaynone">반품신청</a> -->
 				                </td>
 				                <td class="thumb">
 				                	<a href="/product/detail.html">
@@ -193,14 +213,15 @@
 									</ul>
 									<p class="gBlank5">무이자할부 상품</p>
 				                </td>
-				                <td>수량@@</td>
+				                <td>${order.olist[count].order_amount}개</td>
+				                <!-- <td>1개</td> -->
 				                <td class="right">
-									<strong></strong><div class="">주문금액@@@@</div>
+									<strong></strong><div class=""><fmt:formatNumber value="${order.olist[count].order_price}" groupingUsed="true"></fmt:formatNumber>원</div>
 								</td>
 				                <td class="state">
 				                    <p class="txtEm"></p>
 				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class=""><a href="#none" class="line" onclick="">[주문상태@@]</a></p>
+				                    <p class=""><a href="#none" class="line" onclick="">[${order.olist[count].order_status}]</a></p>
 				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
 				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
@@ -214,9 +235,12 @@
 				                    <p class="displaynone">-</p>
 				                </td>
 				            </tr>
+				            <c:set var="count" value="${count+1}"></c:set>
+				        </c:forEach>
+				        </c:if>
 						</tbody>
 					</table>
-					<p class="message ">주문 내역이 없습니다.</p>
+					<!-- <p class="message ">주문 내역이 없습니다.</p> -->
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">
