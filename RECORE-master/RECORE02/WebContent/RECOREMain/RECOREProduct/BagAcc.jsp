@@ -3,7 +3,12 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
     
+    <%
+	Vo_Account vo = (Vo_Account)session.getAttribute("vo");
+	%>    
     
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +56,7 @@
         
         <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "imagesMain/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "../index.jsp"><img alt="" src = "imagesMain/logo.png"></a></div>
           <div class="row align-items-center">
             <div class="col-6">
             
@@ -70,6 +75,7 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
+              	<c:if test="${empty vo }">
                 <a href="../RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
@@ -78,8 +84,20 @@
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="../RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지</span></a>
-                 
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="../RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 </c:if>
+                
+                <c:if test="${!empty vo }">
+    				<a href="../../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="../RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="../RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>        
                 
                 <!--              
                 <a href="#" class="d-flex align-items-center">

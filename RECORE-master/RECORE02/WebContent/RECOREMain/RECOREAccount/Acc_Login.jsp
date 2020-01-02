@@ -74,7 +74,7 @@ body .container .half.bg img {
 	<div id="header">
 		<section class="menu">
 			<nav class="navtest">
-				<a href="../index.jsp"><img src="Accimages/donut.png" /></a>
+				<a href="../index.jsp"><img src="Accimages/logo.png" /></a>
 			</nav>
 		</section>
 	</div>
@@ -83,21 +83,21 @@ body .container .half.bg img {
 		<section class="container">
 			<article class="half">
 				<h1>로그인</h1>
-				<div class="tabs">
+				<div class="tabs" style="margin:25px 0px">
 					<span class="tab signin active"><a href="Acc_Login.jsp">sign in</a></span>
 				</div>
 
 				<div class="content">
 					<div class="signin-cont cont">
 						<form action="../../Account_Controller.do?command=login" method="post" id="loginForm" name="loginForm" >
-							<input type="text" name="acc_id" id="id" class="inpt" required="required" placeholder="아이디" ;"><label for="id">아이디</label>
-							<input type="password" name="acc_pw" id="password" class="inpt"required="required" placeholder="비밀번호" > <label for="password">비밀번호</label> 
+							<input type="text" name="acc_id" id="id" class="inpt" required="required" placeholder="아이디" style="height:35px"><label for="id">아이디</label>
+							<input type="password" name="acc_pw" id="password" class="inpt"required="required" placeholder="비밀번호" style="height:35px"> <label for="password">비밀번호</label> 
 							<div class="submit-wrap">
 								<input type="submit" value="로그인" style="text-align: center;" class="submit" > <span class="tab signup active">
 <!-- 							<input type="checkbox" id="remember" class="checkbox" checked>
 						        <label for="remember">아이디 저장</label> -->
-								<a href="<%=apiURL%>" class="more" ><img width="200" style="margin-top: 0px;" src="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Accimages/login.PNG"/></a>
-								<a href="Acc_Signup.jsp" class="more" style="margin-top: 15px;">회원가입</a></span> 
+								<a href="<%=apiURL%>" class="more" ><img width="250" style="padding: 25px; margin-top : -10px;" src="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Accimages/login.PNG"/></a>
+								<a href="Acc_Signup.jsp" class="more" style="margin-top: -10px;">회원가입</a></span> 
 								<a href="#" class="more" style="margin-top: 15px;">아이디/비밀번호 찾기</a>
 							</div>
 						</form>

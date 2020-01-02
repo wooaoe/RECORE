@@ -3,7 +3,6 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +85,7 @@ RECORE-CHECKOUT
 <body class = "series-site V2 layout-width-1000">
 
 <!-- header -->
-	<%@ include file="/header.jsp" %>
+	<%@ include file="header.jsp" %>
 
 <section id="kolon-content">
 	<article class="cart-wrap">

@@ -92,7 +92,7 @@ public class Account_Controller extends HttpServlet {
 
 			boolean res = dao.A_insert(vo);
 			if (res) {
-				response.sendRedirect("./RECOREMain/index.html");
+				response.sendRedirect("./RECOREMain/index.jsp");
 			} else {
 
 			}

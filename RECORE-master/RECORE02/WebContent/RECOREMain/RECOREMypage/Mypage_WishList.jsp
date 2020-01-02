@@ -67,7 +67,7 @@
 <body id="main">
 
 	<!-- header -->
-	<%@ include file="/header.jsp" %>
+	<%@ include file="header.jsp" %>
 
 	<div id="wrap">
 	    <div id="container">

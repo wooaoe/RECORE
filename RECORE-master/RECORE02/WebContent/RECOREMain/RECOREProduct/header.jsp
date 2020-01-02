@@ -24,7 +24,7 @@
         
            <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "../images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "../index.html"><img alt="" src = "../images/logo.png"></a></div>
         
           <div class="row align-items-center">
             <div class="col-6">
@@ -62,7 +62,7 @@
                  </c:if>
                 
                 <c:if test="${!empty vo }">
-    				<a href="Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<a href="../../Account_Controller.do?command=logout" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
     				<a href="/RECORE02/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>

@@ -69,7 +69,7 @@
 <body id="main">
 
 	<!-- header -->
-	<%@ include file="/header.jsp" %>
+	<%@ include file="header.jsp" %>
 
 	<div id="wrap">
 	    <div id="container">
@@ -277,7 +277,7 @@
 	        <hr class="layout">
 	        
 	        <!-- footer -->
-			<%@ include file="/RECOREMain/RECOREMypage/footer.jsp" %>	
+			<%@ include file="/footer.jsp" %>	
 	
   
 </body>

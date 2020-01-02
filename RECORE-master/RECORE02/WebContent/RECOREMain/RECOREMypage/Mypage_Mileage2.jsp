@@ -70,7 +70,7 @@
 
 	
 		<!-- header 시작 -->
-	<%@ include file="/header.jsp" %>
+	<%@ include file="header.jsp" %>
 	
 	
 	<!-- 적립금 -->

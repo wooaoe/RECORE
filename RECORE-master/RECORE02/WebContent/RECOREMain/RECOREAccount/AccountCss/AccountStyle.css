@@ -46,7 +46,6 @@ body .container h1 {
 }
 body .container .tabs {
   width: 100%;
-  margin-bottom: 29px;
   border-bottom: 1px solid #d9d9d9;
 }
 body .container .tabs .tab {
@@ -274,66 +273,6 @@ body .container .content .signup-cont {
   	padding: 10px;
   }
   
-  #footer {
-    width: 100%;
-    background: #f9f9f9;
-    padding: 65px 0;
-    box-sizing: border-box;
-}
-#footer .footIn {
-    width: 1050px;
-    margin: 0 auto;
-}
-#footer .footIn .footL {
-    float: left;
-}
-#footer .footIn .footL .utilMenu {
-    margin-bottom: 25px;
-}
-#footer .footIn .footL .utilMenu li {
-    float: left;
-    margin-right: 30px;
-}
-#footer .footIn .footL .utilMenu li a {
-    color: #555;
-    font-weight: 500;
-}
-#footer .footIn .footL .footCon ol {
-    margin-bottom: 20px;
-}
-#footer .footIn .footL .footCon ol li {
-    display: inline-block;
-    color: #999;
-    line-height: 20px;
-    font-weight: 300;
-}
-#footer .footIn .footL .footCon p {
-    color: #999;
-    font-size: 12px;
-}
-#footer .footIn .footR {
-    float: right;
-    padding-left: 60px;
-    box-sizing: border-box;
-}
-#footer .footIn .footR .footSns {
-    text-align: right;
-    margin-bottom: 20px;
-    margin-top: 10px;
-}
-#footer .footIn .footR .footSns li a img {
-    transition: all .5s;
-}
-#footer .footIn .footR .footSns li a img:nth-of-type(2) {
-    position: absolute;
-    left: 0;
-    opacity: 0;
-}
-#footer .footIn .footR p {
-    color: #999;
-    margin-bottom: 25px;
-    font-weight: 300;
-}
 hr {
     display: block;
     unicode-bidi: isolate;
@@ -1113,66 +1052,6 @@ html {
     color: -internal-root-color;
 }
 
-#footer {
-    width: 100%;
-    background: #f9f9f9;
-    padding: 65px 0;
-    box-sizing: border-box;
-}
-#footer .footIn {
-    width: 1050px;
-    margin: 0 auto;
-}
-#footer .footIn .footL {
-    float: left;
-}
-#footer .footIn .footL .utilMenu {
-    margin-bottom: 25px;
-}
-#footer .footIn .footL .utilMenu li {
-    float: left;
-    margin-right: 30px;
-}
-#footer .footIn .footL .utilMenu li a {
-    color: #555;
-    font-weight: 500;
-}
-#footer .footIn .footL .footCon ol {
-    margin-bottom: 20px;
-}
-#footer .footIn .footL .footCon ol li {
-    display: inline-block;
-    color: #999;
-    line-height: 20px;
-    font-weight: 300;
-}
-#footer .footIn .footL .footCon p {
-    color: #999;
-    font-size: 12px;
-}
-#footer .footIn .footR {
-    float: right;
-    padding-left: 60px;
-    box-sizing: border-box;
-}
-#footer .footIn .footR .footSns {
-    text-align: right;
-    margin-bottom: 20px;
-    margin-top: 10px;
-}
-#footer .footIn .footR .footSns li a img {
-    transition: all .5s;
-}
-#footer .footIn .footR .footSns li a img:nth-of-type(2) {
-    position: absolute;
-    left: 0;
-    opacity: 0;
-}
-#footer .footIn .footR p {
-    color: #999;
-    margin-bottom: 25px;
-    font-weight: 300;
-}
 input[type="hidden" i] {
     display: none;
     -webkit-appearance: initial;

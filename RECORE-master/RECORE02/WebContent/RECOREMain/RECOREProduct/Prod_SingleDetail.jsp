@@ -3,7 +3,6 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
-    
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
 <head>
@@ -112,7 +111,7 @@
 
 <body id="body">
 
-<%@ include file="/header.jsp" %>
+<%@ include file="header.jsp" %>
 
 <!-- Main Menu Section -->
 <!-- <section class="menu">

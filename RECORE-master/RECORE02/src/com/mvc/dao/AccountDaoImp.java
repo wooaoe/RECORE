@@ -52,7 +52,8 @@ public class AccountDaoImp implements AccountDao {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		int res = 0;
-		String sql = " INSERT INTO ACCOUNT VALUES(ACC_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Y', 10000, 'C')";
+		
+		String sql = " INSERT INTO ACCOUNT VALUES(ACC_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Y', 10000, 'C' )";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -67,15 +68,18 @@ public class AccountDaoImp implements AccountDao {
 			pstmt.setString(9, vo.getAcc_addr2());
 			
 			res = pstmt.executeUpdate();
+			
 			if(res>0) {
 				commit(con);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("실패");
 		} finally {
 			close(pstmt,con);
 		}		
-		return res>0?true:false;
+		return (res>0)?true:false;
 	}
 
 	@Override

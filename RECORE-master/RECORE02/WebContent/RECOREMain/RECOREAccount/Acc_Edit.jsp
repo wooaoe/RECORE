@@ -1,7 +1,11 @@
+<%@page import="com.mvc.dao.AccountDaoImp"%>
+<%@page import="com.sun.org.apache.bcel.internal.generic.ACONST_NULL"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<% request.setCharacterEncoding("UTF-8"); %>
 	<% response.setContentType("text/html; charset=UTF-8"); %>
+	<%@ page import="com.mvc.vo.Vo_Account"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +29,24 @@
 
     <link rel="stylesheet" href="cssMain/style2.css">
     
-<title>RECORE EDIT</title>
+<script language="javascript">
+function goPopup(){
+	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+    var pop = window.open("jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+}
+/** API 서비스 제공항목 확대 (2017.02) **/
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+					, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+	document.form.roadAddrPart1.value = roadAddrPart1;
+	document.form.addrDetail.value = addrDetail;
+	document.form.zipNo.value = zipNo;
+}
+</script>
+    
+<title>회원 정보 수정</title>
 
 <style type="text/css">
 input[type="hidden" i] {
@@ -806,12 +827,21 @@ th {
     font-weight: bold;
     text-align: -internal-center;
 }
+.xans-member-join #phone2, .xans-member-join #phone3, .xans-member-join #mobile2, .xans-member-join #mobile3 {
+    width: 50px;
+    margin: 0 4px;
+}
+.xans-member-join #birth_month, .xans-member-join #marry_month, .xans-member-join #partner_month, .xans-member-join #birth_day, .xans-member-join #marry_day, .xans-member-join #partner_day {
+    width: 30px;
+    margin: 0 4px 0 0;
+}
 </style>
 </head>
 <body>
 
 <!-- header -->
 <%@ include file="/header.jsp" %>
+
 
 	<div id="wrap">
 
@@ -853,6 +883,7 @@ th {
 											readonly="readonly" value="" type="text" /> (영문소문자/숫자,
 											4~16자)</td>
 									</tr>
+									
 									<tr>
 										<th scope="row">비밀번호 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
@@ -870,6 +901,7 @@ th {
 											</div> (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
 										</td>
 									</tr>
+									
 									<tr class="">
 										<th scope="row">비밀번호 확인 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
@@ -880,6 +912,7 @@ th {
 											autocomplete="off" maxlength="16" 0="disabled" value=""
 											type="password" /> <span id="pwConfirmMsg"></span></td>
 									</tr>
+									
 									<tr style="display:">
 										<th scope="row" id="">이름 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
@@ -887,25 +920,41 @@ th {
 										<td><input id="name" name="name"
 											fw-filter="isFill&isMax[30]" fw-label="이름" fw-msg=""
 											class="ec-member-name" placeholder="" maxlength="30"
-											readonly="readonly" value="" type="text" /></td>
+											readonly="readonly" value="" type="text" readonly="readonly" /></td>
 									</tr>
-									<tr class="">
-										<th scope="row">주소 <img
+									
+										<tr class="">
+										<th scope="row">생년월일 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="displaynone" alt="필수" /></th>
-										<td><input id="postcode1" name="postcode1"
-											fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg=""
-											class="inputTypeText" placeholder="" readonly="readonly"
-											maxlength="14" value="" type="text" /> <a href="#none"
-											class="btnNormal"
-											onclick="ZipcodeFinder.Opener.bind('postBtn', 'postcode1', 'postcode2', 'addr1', 'layer', 'ko_KR');"
-											id="postBtn">우편번호</a><br /> <input id="addr1" name="addr1"
-											fw-filter="" fw-label="주소" fw-msg="" class="inputTypeText"
-											placeholder="" readonly="readonly" value="" type="text" />
-											기본주소<br /> <input id="addr2" name="addr2" fw-filter=""
-											fw-label="주소" fw-msg="" class="inputTypeText" placeholder=""
-											value="" type="text" /> 나머지주소 (선택입력가능)</td>
+											class="" alt="필수" /></th>
+										<td><input id="birth_year" name="birth_year"
+											fw-filter="isFill" fw-label="생년월일" fw-msg=""
+											class="inputTypeText" placeholder="" maxlength="4" value=""
+											type="text" style="width: 40px" readonly="readonly" /> 년 <input id="birth_month" name="birth_month"
+											fw-filter="isFill" fw-label="생년월일" fw-msg=""
+											class="inputTypeText" placeholder="" maxlength="2" value=""
+											type="text" style="width: 25px" readonly="readonly" /> 월 <input id="birth_day" name="birth_day"
+											fw-filter="isFill" fw-label="생년월일" fw-msg=""
+											class="inputTypeText" placeholder="" maxlength="2" value=""
+											type="text" style="width: 25px" readonly="readonly" /> 일 <span class="gIndent20 "><input
+												id="is_solar_calendar0" name="is_solar_calendar"
+												fw-filter="isFill" fw-label="생년월일" fw-msg="" value="T"
+												type="radio" checked="checked" /><label
+												for="is_solar_calendar0">양력</label> <input
+												id="is_solar_calendar1" name="is_solar_calendar"
+												fw-filter="isFill" fw-label="생년월일" fw-msg="" value="F"
+												type="radio" /><label for="is_solar_calendar1">음력</label></span></td>
 									</tr>
+									
+									<tr>
+										<th scope="row">이메일 <img
+											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
+											alt="필수" /></th>
+										<td><input id="email1" name="email1"
+											fw-filter="isFill&isEmail" fw-label="이메일" fw-alone="N"
+											fw-msg="" value="" type="text" /> <span id="emailMsg"></span>
+									</tr>
+									
 									<tr class="">
 										<th scope="row">휴대전화 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
@@ -921,126 +970,35 @@ th {
 												<option value="019">019</option>
 										</select>-<input id="mobile2" name="mobile[]" maxlength="4"
 											fw-filter="isNumber&isFill" fw-label="휴대전화" fw-alone="N"
-											fw-msg="" value="" type="text" />-<input id="mobile3"
+											fw-msg="" value="" type="text" style="width: 50px"/>-<input id="mobile3"
 											name="mobile[]" maxlength="4" fw-filter="isNumber&isFill"
-											fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text" />
-											<button type="button" class="btnNormal "
-												id="btn_action_verify_mobile"
-												onclick="memberVerifyMobile.editSendVerificationNumber(); return false;">인증번호받기</button>
+											fw-label="휴대전화" fw-alone="N" fw-msg="" value="" type="text" style="width: 50px"/>
 
-											<p class="txtWarn gBlank5 displaynone"
-												id="result_send_verify_mobile_fail"></p>
-
-											<ul class="txtInfo gBlank5 displaynone"
-												id="result_send_verify_mobile_success">
-												<li>인증번호가 발송되었습니다.</li>
-
-												<li>인증번호를 받지 못하셨다면 휴대폰 번호를 확인해 주세요.</li>
-
-											</ul></td>
 									</tr>
-									<tr class="displaynone" id="confirm_verify_mobile">
-										<th scope="row">인증번호 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-
+									
+									<tr class="">
+										<th scope="row">주소 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif" class="displaynone" alt="필수" />
+										</th>
 										<td>
-
-											<div class="verify">
-
-												<input id="verify_sms_number" name="verify_sms_number"
-													fw-filter="isMax[15]" fw-label="verify_sms_number"
-													fw-msg="" class="inputTypeText" placeholder=""
-													maxlength="15" value="" type="text" /> <span class="time"
-													id="expiryTime"></span>
-
-											</div>
-
-											<button type="button" class="btnNormal"
-												id="btn_verify_mobile_confirm"
-												onclick="memberVerifyMobile.editVerifySmsNumberConfirm(); return false;">확인</button>
-
-										</td>
-
+										<input type="hidden" id="confmKey" name="confmKey" value=""  >
+										<input type="text" id="zipNo" name="zipNo" fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg="" class="inputTypeText" placeholder="우편번호" readonly="readonly"
+											maxlength="14" value="" type="text" /> 
+										<a onclick="goPopup();" class="btnNormal" id="postBtn">주소검색</a><br/> 
+										<input type="text" id="roadAddrPart1" name="roadAddrPart1" class="inputTypeText" placeholder="도로명주소" readonly="readonly" value="" /> 도로명주소
+										<br/> 
+										<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" value="" /> 상세주소
+											</td>
 									</tr>
-									<tr>
-										<th scope="row">이메일 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td><input id="email1" name="email1"
-											fw-filter="isFill&isEmail" fw-label="이메일" fw-alone="N"
-											fw-msg="" value="" type="text" /> <span id="emailMsg"></span>
-											<p class="displaynone">
-												이메일 주소 변경 시 로그아웃 후 재인증을 하셔야만 로그인이 가능합니다.<br />인증 메일은 24시간
-												동안 유효하며, 유효 시간이 만료된 후에는 가입 정보로 로그인 하셔서 재발송 요청을 해주시기 바랍니다.
-											</p></td>
-									</tr>
-									<tr class="">
-										<th scope="row">이메일 수신여부 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											alt="필수" /></th>
-										<td><input id="is_news_mail0" name="is_news_mail"
-											fw-filter="isFill" fw-label="is_news_mail" fw-msg=""
-											value="T" type="radio" /><label for="is_news_mail0">수신함</label>
-											<input id="is_news_mail1" name="is_news_mail"
-											fw-filter="isFill" fw-label="is_news_mail" fw-msg=""
-											value="F" type="radio" checked="checked" /><label
-											for="is_news_mail1">수신안함</label>
-											<p>쇼핑몰에서 제공하는 유익한 이벤트 소식을 이메일로 받으실 수 있습니다.</p></td>
-									</tr>
+
 								</tbody>
 							</table>
 						</div>
-						<h3 class=" ">추가정보</h3>
-						<div class="ec-base-table typeWrite ">
-							<table border="1" summary="">
-								<caption>회원 추가정보</caption>
-								<colgroup>
-									<col style="width: 150px;" />
-									<col style="width: auto;" />
-								</colgroup>
-								<tbody>
-									<tr class="">
-										<th scope="row">생년월일 <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="" alt="필수" /></th>
-										<td><input id="birth_year" name="birth_year"
-											fw-filter="isFill" fw-label="생년월일" fw-msg=""
-											class="inputTypeText" placeholder="" maxlength="4" value=""
-											type="text" /> 년 <input id="birth_month" name="birth_month"
-											fw-filter="isFill" fw-label="생년월일" fw-msg=""
-											class="inputTypeText" placeholder="" maxlength="2" value=""
-											type="text" /> 월 <input id="birth_day" name="birth_day"
-											fw-filter="isFill" fw-label="생년월일" fw-msg=""
-											class="inputTypeText" placeholder="" maxlength="2" value=""
-											type="text" /> 일 <span class="gIndent20 "><input
-												id="is_solar_calendar0" name="is_solar_calendar"
-												fw-filter="isFill" fw-label="생년월일" fw-msg="" value="T"
-												type="radio" checked="checked" /><label
-												for="is_solar_calendar0">양력</label> <input
-												id="is_solar_calendar1" name="is_solar_calendar"
-												fw-filter="isFill" fw-label="생년월일" fw-msg="" value="F"
-												type="radio" /><label for="is_solar_calendar1">음력</label></span></td>
-									</tr>
 
-									<tr class="">
-										<th scope="row">본인은 만 14세 이상입니다. <img
-											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
-											class="" alt="필수" /></th>
-										<td><label for=add10><input id="add10"
-												name="add1[]" fw-filter="isFill" fw-label="추가항목1" fw-msg=""
-												value="만 14세 이상입니다." type="checkbox" checked="checked" />만
-												14세 이상입니다.</label></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
 						<div class="ec-base-button justify">
-							<a href="#none" class="btnSubmitFix sizeM"
-								onclick="memberEditAction()">회원정보수정</a> <a href="/index.html"
-								class="btnEmFix sizeM">취소</a> <span class="gRight"> <a
-								href="#none" class="btnEmFix sizeM"
-								onclick="memberDelAction(0, -1, -1)">회원탈퇴</a>
+							<a href="#none" class="btnSubmitFix sizeM" onclick="memberEditAction()">회원정보수정</a> 
+								<a href="/index.html" class="btnEmFix sizeM">취소</a> 
+							<span class="gRight"> 
+								<a href="#none" class="btnEmFix sizeM" onclick="memberDelAction(0, -1, -1)">회원탈퇴</a>
 							</span>
 						</div>
 						<div class="layerLeave ec-base-layer" id="">
