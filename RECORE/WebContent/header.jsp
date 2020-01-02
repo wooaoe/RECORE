@@ -17,7 +17,8 @@
         
            <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html"><img alt="" src = "<%=request.getContextPath()%>/RECOREMain/images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
+        <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
         
           <div class="row align-items-center">
             <div class="col-6">
@@ -86,7 +87,7 @@
                     <li class="has-children">
                       <a href="Product.do?command=ProdSelectAll" style = "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="Product.do?command=BagAccSelectAll" style = "color:black;">Bag / Acc</a></li>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=6" style = "color:black;">Bag / Acc</a></li>
                         <li class = "has-children"><a href="Product.do?command=ClothingSelectAll" style = "color:black;">Clothing</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "Product.do?command=OuterSelectAll">Outer</a></li>                        	

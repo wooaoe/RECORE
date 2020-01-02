@@ -32,7 +32,9 @@
         <div class="container py-3">
        
         <!--@@ 로고 위치 @@-->
-        <div style = "text-align: center;"><a href = "index.html"><img alt="" src = "images/donut.png"></a></div>
+        <br>
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
+        <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
         
         
           <div class="row align-items-center">

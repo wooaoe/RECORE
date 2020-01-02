@@ -132,7 +132,6 @@ public class Product_Controller extends HttpServlet {
 		    session.setAttribute("acc", acc);
 			
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout.jsp", request, response);
-
 		}
 
 	}
