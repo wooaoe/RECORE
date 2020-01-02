@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+body {
+    background: #fff;
+    font-size: 12px;
+    color: #000;
+}
+
+body {
+    height: 100%;
+    font-size: 12px;
+    font-family: 'Verdana', "gulim", "굴림";
+    margin: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: block;
+    margin: 8px;
+}
+
+html {
+    font-size: 12px;
+    height: 100%;
+}
+
+html, button, input, select, textarea {
+    color: #000000;
+}
+
+html {
+    color: -internal-root-color;
+}
+.mypage-wrap {
+    min-width: 1560px;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, form, dl, dt, dd, ol, ul, li, input, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: top;
+    background: transparent;
+}
+.mypage-wrap:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 120px;
+    border-bottom: 1px solid #ddd;
+    clear: both;
+}
+.mypage-area {
+    min-width: 1400px;
+    max-width: 1800px;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+.mypage-cont {
+    width: calc(100% - 210px);
+    padding: 0;
+    float: right;
+}
+section {
+    padding: 10px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block;
+}
+.n-section-title {
+    border-bottom: 3px solid #000000;
+    padding-bottom: 14px;
+    margin-top: 48px;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+    position: relative;
+}
+.n-section-title .tit {
+    display: inline-block;
+    font-size: 24px;
+    font-family: 'Musinsa',sans-serif !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+h1 {
+    font-size: 22px;
+}
+h1, h2, h3, h4, h5 {
+    margin: 0;
+}
+:-webkit-any(article,aside,nav,section) h1 {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+}
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.n-section-title {
+    border-bottom: 3px solid #000000;
+    padding-bottom: 14px;
+    margin-top: 48px;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+    position: relative;
+}
+.n-section-title .order {
+    overflow: hidden;
+    padding: 12px 0 6px 0;
+}
+dl {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.n-section-title .order dt, .n-section-title .order dd {
+    float: left;
+}
+dt {
+    display: block;
+}
+.n-section-title .order dd {
+    font-weight: bold;
+    margin: 0 30px 0 6px;
+}
+.n-section-title .order dt, .n-section-title .order dd {
+    float: left;
+}
+
+dd {
+    display: block;
+    margin-inline-start: 40px;
+}
+.n-section-title + .n-table.table-col {
+    border-top: none;
+}
+.n-table.table-col {
+    border-top: 1px solid #000000;
+}
+.n-table {
+    width: 100%;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.mypage-wrap:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 120px;
+    border-bottom: 1px solid #ddd;
+    clear: both;
+}
+link {
+    display: none;
+}
+
+.mypage-area {
+    min-width: 1400px;
+    max-width: 1800px;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+colgroup {
+    display: table-column-group;
+}
+col {
+    display: table-column;
+}
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.n-table.table-col th {
+    height: 52px;
+    border-bottom: 1px solid #000000;
+    font-size: 16px;
+    vertical-align: middle;
+    font-weight: normal;
+}
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.n-table.table-col td {
+    height: 70px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f5f5f5;
+    text-align: center;
+    vertical-align: middle;
+    word-break: break-all;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.n-table.table-col .n-prd-row {
+    margin: 10px 0;
+}
+.n-prd-row {
+    display: table;
+    min-height: 96px;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+    text-align: left;
+    position: relative;
+}
+.n-prd-row .img-block {
+    display: table-cell;
+    width: 80px;
+    padding-top: 96px;
+    vertical-align: middle;
+}
+.n-table a, .n-table button {
+    display: inline-block;
+    vertical-align: middle;
+}
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+.img-block {
+    display: block;
+    padding-top: 120%;
+    position: relative;
+    overflow: hidden;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.n-prd-row {
+    display: table;
+    min-height: 96px;
+    font-family: 'Gulim','Apple SD Gothic',Auto,sans-serif;
+    line-height: 1.5;
+    font-size: 14px;
+    text-align: left;
+    position: relative;
+}
+.img-block > img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.n-prd-row .info {
+    display: table-cell;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.n-prd-row .info .brand {
+    font-weight: 300;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.n-prd-row .info li {
+    font-size: 14px;
+    line-height: 22px;
+}
+ul, li {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.n-prd-row .info a {
+    display: inline-block;
+}
+.n-table a, .n-table button {
+    display: inline-block;
+    vertical-align: middle;
+}
+.n-table .ml-8 {
+    margin-left: 8px;
+}
+.n-table a, .n-table button {
+    display: inline-block;
+    vertical-align: middle;
+}
+.n-table button {
+    font-family: inherit;
+    display: inline-block;
+}
+.txt-lighter {
+    color: #aaaaaa;
+}
+button {
+    padding: 0;
+    border: 0;
+    -webkit-appearance: none;
+    background: none;
+}
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+    *vertical-align: middle;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+    *overflow: visible;
+}
+button, select {
+    text-transform: none;
+}
+button, input {
+    line-height: normal;
+}
+html, button, input, select, textarea {
+    color: #000000;
+}
+button {
+    -webkit-appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: buttonface;
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+.n-prd-row .info .name {
+    max-height: 44px;
+    font-weight: bold;
+    overflow: hidden;
+}
+.n-prd-row .info .option {
+    font-weight: 300;
+    color: #777777;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
