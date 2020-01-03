@@ -38,7 +38,7 @@ public class AccountDaoImp implements AccountDao {
 			}
 
 		} catch (SQLException e) {
-
+			
 			e.printStackTrace();
 		} finally {
 			close(rs, pstm, con);
@@ -71,6 +71,7 @@ public class AccountDaoImp implements AccountDao {
 				commit(con);
 			}
 		} catch (SQLException e) {
+			System.out.println("실패");
 			e.printStackTrace();
 		} finally {
 			close(pstmt,con);

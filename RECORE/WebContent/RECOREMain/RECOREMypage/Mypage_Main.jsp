@@ -154,8 +154,8 @@
 		           			<p><a href="Mypage_OrderList.jsp">고객님께서 주문하신 상품의<br> 주문내역을 확인하실 수 있습니다.</a></p>
 		        		</li>
 		        		<li class="shopMain profile">
-		            		<h3><a href="회원정보 링크@@@"><strong>Profile</strong><br><span>회원 정보</span></a></h3>
-		            		<p><a href="회원정보 링크@@@">회원이신 고객님의 개인정보를<br> 관리하는 공간입니다.</a></p>
+		            		<h3><a href="../RECOREAccount/Acc_Edit.jsp"><strong>Profile</strong><br><span>회원 정보</span></a></h3>
+		            		<p><a href="../RECOREAccount/Acc_Edit.jsp">회원이신 고객님의 개인정보를<br> 관리하는 공간입니다.</a></p>
 		        		</li>
 		        		<li class="shopMain board">
 		           			<h3><a href="Mypage_FundingList.jsp"><strong>Funding</strong><br><span>펀딩내역 조회</span></a></h3>

@@ -53,7 +53,7 @@
         <div class="container py-3">
        
         <!--@@ 로고 위치 @@-->
-        <div style = "text-align: center;"><a href = "index.jsp"><img alt="" src = "images/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "index.jsp"><img alt="" src = "images/logo.png"></a></div>
         
         
           <div class="row align-items-center">

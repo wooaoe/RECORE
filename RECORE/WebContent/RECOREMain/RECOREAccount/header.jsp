@@ -25,7 +25,7 @@
         
            <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "../index.jsp"><img alt="" src = "Accimages/donut.png"></a></div>
+        <div style = "text-align: center;"><a href = "../index.jsp"><img alt="" src = "Accimages/logo.png"></a></div>
         
           <div class="row align-items-center">
             <div class="col-6">

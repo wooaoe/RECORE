@@ -860,7 +860,7 @@ html {
 <body>
 
 
-<%@ include file="/RECOREMain/RECOREAccount/header.jsp" %>
+<%@ include file="header.jsp" %>
 
 
 	<div id="wrap">
@@ -881,6 +881,7 @@ html {
 				</div>
 
 				<form id="form" name="form" action="../../Account_Controller.do?command=Acc_insert" method="post" target="_self">
+					
 					<input id="useSimpleSignin" name="useSimpleSignin" value="F" type="hidden" /> 
 					<input id="member_name_cert_flag" name="member_name_cert_flag" value="F" type="hidden" /> 
 					<input id="is_name_auth_use" name="is_name_auth_use" value="F" type="hidden" /> 
@@ -1007,7 +1008,7 @@ html {
 											</div> (영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 10자~16자)
 										</td>
 									</tr>
-<!-- 									<tr>
+ 									<tr>
 										<th scope="row">비밀번호 확인 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
 											alt="필수" /></th>
@@ -1016,7 +1017,7 @@ html {
 											fw-label="비밀번호 확인" fw-msg="비밀번호가 일치하지 않습니다."
 											autocomplete="off" maxlength="16" 0="disabled" value=""
 											type="password" /> <span id="pwConfirmMsg"></span></td>
-									</tr> -->
+									</tr>
 									<tr>
 										<th scope="row" id="nameTitle">이름 <img
 											src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif"
