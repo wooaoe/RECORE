@@ -56,9 +56,9 @@
     
     <style type="text/css">
     	#img-fluid{
-    		max-width: 350px;
+    		width: 350px;
     		height: 350px;
-    	}    
+    	}   
     	html{
     		scroll-behavior: smooth;
     	}
@@ -90,10 +90,6 @@
         
           <div class="row align-items-center">
             <div class="col-6">
-              <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
             </div>
             
             <div class="col-6">
@@ -103,25 +99,30 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
-                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
+                
+                <c:if test="${empty vo }">
+                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                 
-                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-                  <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">장바구니&nbsp;&nbsp;</span></a>
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 </c:if>
                  
-                
-                <!--              
-                <a href="#" class="d-flex align-items-center">
-                  <span class="icon-phone mr-2"></span>
-                  <span class="d-none d-md-inline-block">회원가입</span>
-                </a> --> 
+                 <!-- 로그인 되어있을 때 -->
+                  <c:if test="${!empty vo }">
+    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>
                  
               </div>
             </div>
@@ -219,11 +220,11 @@
           <!-- @@ 이미지 들어가는 곳 @@ -->
           <c:forEach var="child" items = "${child}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="Product.do?command=ProdDetail&pseq=${child.prod_no}" class="d-block figure">
+            <a href="Product.do?command=ProdDetail&pseq=${child.prod_no}&catdno=${child.prod_catd}" class="d-block figure">
             <%-- <%=request.getContextPath()%> --%>
               <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${child.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${child.prod_no}">${child.prod_name}</a></h3>
+            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${child.prod_no}&catdno=${child.prod_catd}">${child.prod_name}</a></h3>
             <span class="text-muted">${child.prod_brand}</span><br>
             <span class = "mb-0"><b><fmt:formatNumber value="${child.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
           	<br><br>

@@ -45,7 +45,7 @@ RECORE-CHECKOUT
 
 <link rel="stylesheet" href="https://assets.kolonmall.com/_ui/css/kop/desktop/Order-a59824e1c6.css"/>
 
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
 	<%@ include file = "/head.jsp" %>
@@ -66,9 +66,21 @@ RECORE-CHECKOUT
     .way-info {
 	float: left;
 	width: 300px
-}
+	}
+	
     
     </style>
+    
+    <script type="text/javascript">
+    
+  /*   $(document).ready(function(){
+    	if($("#agreeV2").is(":checked")){
+    		window.onload = "location.href = ''";
+    	}
+    	} */
+    
+    </script>
+    
     
 </head>
 
@@ -219,7 +231,7 @@ RECORE-CHECKOUT
 							id="customerEmailArea"><%=acc.getAcc_email() %></span>
 					</dd>
 					<dt class="mb-22">
-						받는분<em class="required" aria-required="true">필수</em>
+						받는분<em class = "required" aria-required="true">필수</em>
 					</dt>
 					<dd class="mb-22">
 						<div class="col-2">
@@ -330,12 +342,15 @@ RECORE-CHECKOUT
 					<!-- 배송시 요청사항 -->
 					<dd>
 						<div class="row">
-							<span class="select col-2"><select name="deliveryMemo"><option
-										value="">배송시 요청사항을 선택해 주세요</option>
+							<span class="select col-2">
+							<select name="deliveryMemo">
+									<option	value="">배송시 요청사항을 선택해 주세요</option>
 									<option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
 									<option value="빠른 배송 부탁드립니다">빠른 배송 부탁드립니다</option>
 									<option value="배송 전 연락바랍니다">배송 전 연락바랍니다</option>
-									<option value="txtbox">직접입력</option></select></span>
+									<option value="txtbox">직접입력</option>
+							</select>
+							</span>
 						</div>
 					</dd>
 				</dl>
@@ -462,7 +477,7 @@ RECORE-CHECKOUT
 		
 		
 		<!-- 오른쪽에 뜨는 결제 정보 폼 -->
-		<div style="min-height: 771.063px;">
+		<div style="min-height: 771.063px;" id = "paymentform">
 			<div class="react-sticky" style="transform: translateZ(0px);">
 				<article class="sticky-menu" style = "position: relative; bottom: 800px;">
 					<div class="sticky-bill" >
@@ -510,19 +525,20 @@ RECORE-CHECKOUT
 								제8조 제2항)
 							</p>
 							<p class="">주문제작상품의 경우, 교환/반품이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.</p>
-							<span class="checkbox"><input name="agree" type="checkbox"
-								id="agreeV2" value=""><i></i></span><label for="agreeV2">동의합니다.</label>
+							<span class="checkbox">
+							<input name="agree" type="checkbox"
+								id="agreeV2" value="" required oninvalid="this.setCustomValidity('동의란을 체크하세요.')">
+								<i></i></span>
+								<label for="agreeV2">동의합니다.</label>
+							<div class="buttons end-row">
+							
+							<input type="submit" value = "결제하기" class="ladda-button btn btn-order btn-big"
+							id="checkout" data-style="zoom-in">
+							<div class="ladda-progress" style="width: 0px;"></div>
+					</div>
 						</div>
 					</form>
-					<div class="buttons end-row">
-						<button type="button" class="ladda-button btn btn-order btn-big"
-							id="checkoutFormSubmitBtnV2" data-style="zoom-in"
-							data-ga-event-category="CHECKOUT" data-ga-event-action="BUTTON"
-							data-ga-event-label="결제하기">
-							<span class="ladda-label">결제하기</span><span class="ladda-spinner"></span>
-							<div class="ladda-progress" style="width: 0px;"></div>
-						</button>
-					</div>
+					
 				</article>
 			</div>
 		</div>

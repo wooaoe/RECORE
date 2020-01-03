@@ -45,8 +45,28 @@
 		font-family: 'Noto Sans Kannada', sans-serif;
 	    font-size: 18px; 
 	}
-
+	html{
+		scroll-behavior: smooth;
+	}
+	#img-fluid{
+    	max-width: 350px;
+    	height: 250px;
+    }   
 </style>
+
+<script type="text/javascript">
+
+	$(function(){
+		var color = $("#selcolor option:selected").val();
+		var size = $("#selsize option:selected").val();
+		
+		alert(color);
+		alert(size);
+	});
+	
+
+</script>
+
 </head>
 
 <body id="body">
@@ -54,6 +74,8 @@
 	<%@ include file="/footerPdetail.jsp"%>
 
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -62,6 +84,7 @@
 		  pvo.getProd_catd() == 12){ %>
 	<% url = "ChildSelectAll"; %>
 	<% } %>
+	
 	
 
 	<!--상품 상세 페이지 -->
@@ -153,7 +176,8 @@
 						<br>
 						<div class="product-size">
 							<span>색상:</span> 
-							<select class="form-control">
+							<select class="form-control" id = "selcolor">
+								<option>선택</option>
 								<c:forEach var = "color" items = "${povo}">
 								<option>${color.prod_color}</option>
 								</c:forEach>
@@ -165,7 +189,7 @@
 						<!-- @@사이즈@@ -->
 						<div class="product-size">
 							<span>사이즈:</span> 
-							<select class="form-control">
+							<select class="form-control" id = "selsize">
 								<c:forEach var = "size" items = "${povo}">
 								<option>${size.prod_size}</option>
 								</c:forEach>
@@ -212,7 +236,7 @@
 						<!-- 최상위 폴더 / 해당파일이 존재하는 폴더 / 해당파일 -->
 						<br>
 						<div class = "color-swatches">
-							<span>총 금액 :</span><span style = "margin-left: 5px;"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
+							<span>총 금액 :</span><span id = "price" style = "margin-left: 5px;"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원
 						</span>		
 						</div>
@@ -374,16 +398,16 @@
 							<!-- 세일 여부 -->
 							<!-- <span class="bage">Sale</span> -->
 							<!-- Bag이면 가방이랑 연관된 상품, ACC면 악세사리랑 연관된 상품이 뜨도록 어떻게??? -->
-								<img class="img-responsive"
+								<img class="img-responsive" id = "img-fluid"
 									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${sub.prod_no}/f_img.png"
 									alt="product-img" />
 							<div class="preview-meta">
 								<ul>
 									<!--@@ 이미지 마우스오버할 때 검색/관심상품/장바구니 추가할 수 있게 @@ -->
-									<li><span data-toggle="modal" data-target="#product-modal">
-											<i class="tf-ion-ios-search"></i>
+									<%-- <li><span data-toggle="modal" data-target="#product-modal">
+											<i class="tf-ion-ios-search" id = "search&${i}" ></i>
 										</span>
-									</li>
+									</li> --%>
 									<!-- @@ 관심상품 @@ -->
 									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
 									<!-- @@ 장바구니 @@ -->
@@ -394,7 +418,8 @@
 						<!-- @@ 상품 이름, 가격 @@ -->
 						<div class="product-content">
 							<h4>
-								<a href="<%-- Product.do?command=${pvo.prod_comm} --%>#"
+								<a href="Product.do?command=ProdDetail&pseq=${toplist.get(i).getProd_no()}
+								&catdno=${toplist.get(i).getProd_catd()}"
 								style = "overflow:hidden; word-wrap:break-word;">${sub.prod_name}</a>
 							</h4>
 							<p class="price"><fmt:formatNumber value="${sub.prod_price}" groupingUsed="true">
@@ -407,17 +432,22 @@
 			  </c:when>
 			 </c:choose>
 			</c:forEach>
-			
-			
+		
 			
 			</div> 
 		</div>
 	</section>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-
-
-
-	<!-- Modal -->
+	<%-- <!-- Modal -->
 	<div class="modal product-modal fade" id="product-modal">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-label="Close">
@@ -429,21 +459,18 @@
 				<div class="modal-body" style = "padding-top: 25px; padding-bottom: 25px;">
 					<div class="row">
 					<!-- @@ 해당 상품 사진 @@ -->
-					<c:set var = "i" value = "0"></c:set>
-					<c:forEach var = "modal" items = "${plist}">
-					<c:choose>
-					<c:when test="${modal.prod_catd eq pvo.prod_catd && i < 2}">
+					
 						<div class="col-md-8" >
 							<div class="modal-image">
 								<img  class="img-responsive"
-									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${modal.prod_no}/f_img.png" /> 
+									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prodno}/f_img.png" /> 
 							</div>
 						</div>
 						
 						<!-- @@ 상품 이름, 가격, 상세 내용 들어가는 곳 @@ -->
 						<div class="col-md-3" style = "padding: 0px; margin-left: 15px;">
 							<div class="product-short-details">
-								<h2 class="product-title">${modal.prod_name}</h2>
+								<h2 class="product-title">---</h2>
 								<p class="product-price"><fmt:formatNumber value="${modal.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원</p>
 								<p class="product-short-description">${modal.prod_note}</p>
@@ -453,16 +480,13 @@
 									class="btn btn-transparent">상세페이지</a>
 							</div>
 						</div>
-					<c:set var = "i" value = "${i+1}"></c:set>	
-					</c:when>
-					</c:choose>
-					</c:forEach>
 					
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
+	<%-- <%@ include file = "/modal.jsp" %> --%>
 	
 	<!-- @@ 화살표 누르면 상단으로 @@ -->
 	

@@ -59,6 +59,43 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
+	public List<Vo_Product> P_topSelectOne(int catdno) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Vo_Product> toplist = new ArrayList<Vo_Product>();
+
+		String sql = "SELECT * FROM PRODUCT WHERE CATD_NO = ? AND ROWNUM <= 4 ORDER BY PROD_NO DESC";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, catdno);
+			System.out.println("query 준비 : " + sql);
+			rs = pstm.executeQuery();
+			System.out.println("query 실행 : " + sql);
+
+			while (rs.next()) {
+
+				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
+
+				toplist.add(tmp);
+				System.out.println("toplist : " + toplist);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs, pstm, con);
+		}
+
+		return toplist;
+	}
+
+	@Override
 	public List<Vo_Prod_option> option_selectAll() {
 
 		Connection con = getConnection();
@@ -112,7 +149,7 @@ public class ProductDaoImp implements ProductDao {
 			rs = pstm.executeQuery();
 
 			System.out.println("parent 쿼리 실행 : " + sql);
-			
+
 			while (rs.next()) {
 				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
@@ -170,7 +207,6 @@ public class ProductDaoImp implements ProductDao {
 
 		return childlist;
 	}
-
 
 	@Override
 	public List<Vo_Category_Detail> CD_selectAll(int catdid) {
@@ -385,56 +421,56 @@ public class ProductDaoImp implements ProductDao {
 		return false;
 	}
 
-	  @Override
-	   public boolean P_insertCart(int acc_no, int prod_id) {
-	      Connection con = getConnection();
-	      PreparedStatement pstmt = null;
-	      int res = 0;
-	      String sql = "INSERT INTO CART VALUES(?,?,?)";
-	      
-	      try {
-	         pstmt = con.prepareStatement(sql);
-	         pstmt.setInt(1, acc_no);
-	         pstmt.setInt(2, prod_id);
-	         pstmt.setInt(3, 1); //wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
-	         res = pstmt.executeUpdate();
-	         
-	         if(res>0) {
-	            commit(con);
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         close(pstmt,con);
-	      }
-	      
-	      return (res>0)?true:false;
-	   }
+	@Override
+	public boolean P_insertCart(int acc_no, int prod_id) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		int res = 0;
+		String sql = "INSERT INTO CART VALUES(?,?,?)";
 
-	   @Override
-	   public boolean P_insertWish(int acc_no, int prod_no) {
-	      Connection con = getConnection();
-	      PreparedStatement pstmt = null;
-	      int res = 0;
-	      String sql = "INSERT INTO WISH VALUES(?,?)";
-	      
-	      try {
-	         pstmt = con.prepareStatement(sql);
-	         pstmt.setInt(1, acc_no);
-	         pstmt.setInt(2, prod_no);
-	         res = pstmt.executeUpdate();
-	         
-	         if(res>0) {
-	            commit(con);
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         close(pstmt,con);
-	      }
-	      
-	      return (res>0)?true:false;
-	   }
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, acc_no);
+			pstmt.setInt(2, prod_id);
+			pstmt.setInt(3, 1); // wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
+			res = pstmt.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, con);
+		}
+
+		return (res > 0) ? true : false;
+	}
+
+	@Override
+	public boolean P_insertWish(int acc_no, int prod_no) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		int res = 0;
+		String sql = "INSERT INTO WISH VALUES(?,?)";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, acc_no);
+			pstmt.setInt(2, prod_no);
+			res = pstmt.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt, con);
+		}
+
+		return (res > 0) ? true : false;
+	}
 
 	@Override
 	public boolean P_update(Vo_Product pvo) {

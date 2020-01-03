@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
+    
+    <% Vo_Account vo = (Vo_Account)session.getAttribute("vo"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,28 +50,35 @@
             <div class="col-6" >
               <div class="d-flex ml-auto" style = "font-size: 9pt; position:relative; left:360px; top:10px; ">
               
-             <!--   <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a> 
-              	</form> -->
-                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                 <span class="d-none d-md-inline-block" style="color:black;">로그인&nbsp;&nbsp;</span>
+             <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+                	<!-- <input type="text" name="query" placeholder="Search" />
+              		<a href="#search"> &nbsp; Search</a>  -->
+              	</form> 
+                
+                <!-- 로그인 안되어있을 때 -->
+                <c:if test="${empty vo }">
+                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                 <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지 &nbsp;&nbsp;</span></a>
-                  <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/Mypage_Cart.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 </c:if>
                  
-                
-                <!--              
-                <a href="#" class="d-flex align-items-center">
-                  <span class="icon-phone mr-2"></span>
-                  <span class="d-none d-md-inline-block">회원가입</span>
-                </a> --> 
+                 <!-- 로그인 되어있을 때 -->
+                  <c:if test="${!empty vo }">
+    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>
                  
               </div>
             </div>

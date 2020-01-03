@@ -85,7 +85,10 @@ public class Product_Controller extends HttpServlet {
 
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
 			System.out.println("pseq : " + pseq);
-
+			
+			int catdno = Integer.parseInt(request.getParameter("catdno"));
+			System.out.println("catdno : " + catdno);
+			
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			System.out.println("pvo catdno : " + pvo.getProd_catd());
@@ -100,6 +103,10 @@ public class Product_Controller extends HttpServlet {
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
 			request.setAttribute("plist", plist);
+			
+			List<Vo_Product> toplist = dao.P_topSelectOne(catdno);
+			request.setAttribute("toplist", toplist);
+			System.out.println("toplist의 인덱스 값 : " + toplist.get(0).getProd_no());
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
 

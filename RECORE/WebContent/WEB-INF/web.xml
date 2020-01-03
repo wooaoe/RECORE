@@ -18,6 +18,16 @@
 		<servlet-name>Product</servlet-name>
 		<url-pattern>/Product.do</url-pattern>
 	</servlet-mapping>  
+	
+	<servlet>
+    <servlet-name>QnaController</servlet-name>
+    <servlet-class>com.mvc.controller.Community_QnA_Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QnaController</servlet-name>
+    <url-pattern>/RECOREMain/qna.do</url-pattern>
+  </servlet-mapping>
+	
   
   
 </web-app>

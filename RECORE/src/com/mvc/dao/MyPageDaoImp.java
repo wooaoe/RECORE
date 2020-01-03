@@ -43,7 +43,7 @@ public class MyPageDaoImp implements MyPageDao{
 //      String sql_acc = "SELECT * FROM ACCOUNT WHERE ACC_NO=?"; //session에 있어서 필요없음
       String sql_cart = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
       String sql_fun = "SELECT * FROM F_PM WHERE ACC_NO=?";
-      String sql_order = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) WHERE ACC_NO=?";
+      String sql_order = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=? ORDER BY ORDER_NO ASC";
       String sql_qna = "SELECT * FROM QNA WHERE ACC_NO=?";
       String sql_wish = "SELECT * FROM WISH JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
       
@@ -93,14 +93,16 @@ public class MyPageDaoImp implements MyPageDao{
          rs = pstmt.executeQuery();
          
          while(rs.next()) {
-            vo_order_option = new Vo_Order(rs.getInt(13),rs.getInt(1),rs.getInt(9),
-                                 rs.getInt(10),rs.getString(11),
-                                 rs.getString(12));
+            vo_order_option = new Vo_Order(rs.getInt(1),rs.getInt(2),
+                            rs.getString(20),rs.getString(14),
+                            rs.getString(15),rs.getInt(10),
+                                 rs.getInt(11),rs.getString(12),
+                                 rs.getString(13));
             list_order_option.add(vo_order_option);
             
-            vo_order = new Vo_Order_Num(rs.getInt(2),rs.getInt(3),
-                                 rs.getString(4),rs.getString(5),
-                                 rs.getString(6),rs.getDate(7),rs.getInt(8),
+            vo_order = new Vo_Order_Num(rs.getInt(3),rs.getInt(4),
+                                 rs.getString(5),rs.getString(6),
+                                 rs.getString(7),rs.getDate(8),rs.getInt(9),
                                  list_order_option);
             list_order.add(vo_order);
          }

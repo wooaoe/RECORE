@@ -81,14 +81,24 @@
 <body id="main"> 
 <%
 	List list_order = (List)request.getAttribute("list_order");
-	int count = 0;
-	/* for(int i=0;i<list_order.size();i++){
+	int count1 = 0;
+	int count2 = 0;
+	int count3 = 0;
+	int count4 = 0;
+	for(int i=0;i<list_order.size();i++){
 		Vo_Order_Num vo = (Vo_Order_Num)list_order.get(i);
 		Vo_Order tmp = vo.getOlist().get(i);
 		if(tmp.getOrder_status().equals("입금완료")){
-			count++;
+			count1++;
+		}else if(tmp.getOrder_status().equals("배송준비중")){
+			count2++;
+		}else if(tmp.getOrder_status().equals("배송중")){
+			count3++;
+		}else if(tmp.getOrder_status().equals("배송완료")){
+			count4++;
 		}
-	} */
+		
+	}
 %>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
@@ -114,25 +124,25 @@
 							<li class="testwRap1" style="background: rgb(249, 249, 249);">
 	               				<strong style="color: rgb(53, 53, 53);">입금완료</strong>
 	               				<a href="입금전링크@@@" class="count testCount1" style="color: rgb(0, 0, 0);">
-	                				<span id="xans_myshop_orderstate_shppied_before_count"><%=count %></span>
+	                				<span id="xans_myshop_orderstate_shppied_before_count"><%=count1%></span>
 	               				</a>
 	           				</li>
 	           				<li class="testwRap2" style="background: rgb(249, 249, 249);">
 	                			<strong style="color: rgb(53, 53, 53);">배송준비중</strong>
 	                			<a href="배송준비중 링크@@" class="count testCount2" style="color: rgb(0, 0, 0);">
-	                				<span id="xans_myshop_orderstate_shppied_standby_count">0</span>
+	                				<span id="xans_myshop_orderstate_shppied_standby_count"><%=count2%></span>
 	                			</a>
 	          				</li>
 	           				<li class="testwRap3" style="background: rgb(249, 249, 249);">
 	                			<strong style="color: rgb(53, 53, 53);">배송중</strong>
 	                			<a href="배송중 링크@@@" class="count testCount3" style="color: rgb(0, 0, 0);">
-	                				<span id="xans_myshop_orderstate_shppied_begin_count">0</span>
+	                				<span id="xans_myshop_orderstate_shppied_begin_count"><%=count3%></span>
 	                			</a>
 	            			</li>
 	            			<li class="testwRap4" style="background: rgb(249, 249, 249);">
 	                			<strong style="color: rgb(53, 53, 53);">배송완료</strong>
 	               				<a href="배송완료@@@" class="count testCount4" style="color: rgb(0, 0, 0);">
-	               					<span id="xans_myshop_orderstate_shppied_complate_count">0</span>
+	               					<span id="xans_myshop_orderstate_shppied_complate_count"><%=count4%></span>
 	               				</a>
 	           				</li>
 	        			</ul>

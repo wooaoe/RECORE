@@ -1,6 +1,7 @@
 package com.mvc.controller;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import com.mvc.vo.Vo_Account;
 public class Mypage_Controller extends HttpServlet {
    private static final long serialVersionUID = 1L;
 
-   
     public Mypage_Controller() {
     }
 

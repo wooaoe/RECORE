@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/aos.css">
 
     <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREMypage/cssMain/styleMy.css">
-    
 
 <style type="text/css">
   
@@ -69,6 +68,10 @@
   	text-align: center;
   }
   
+  .ec-base-table .message {
+    border: 0px;
+  }
+  
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
   a:hover {
@@ -77,7 +80,6 @@
   }
   
   </style>
-
 
 </head>
 
@@ -100,7 +102,7 @@
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorytab ec-base-tab ">
 					<ul class="menu">
 						<li class="selected">
-							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">주문내역조회 (0)</a>
+							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">주문내역조회 (${list_order.size()})</a>
 						</li>
 				        <li class="">
 				       		<a href="/myshop/order/list.html?mode=cs&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">취소/반품/교환 내역 (0)</a>
@@ -141,7 +143,11 @@
 					        
 					        <!-- 달력 선택 -->
 					        <input id="history_start_date" name="history_start_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-09-19" type="text">
-					        <button type="button" class="ui-datepicker-trigger"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text">
+					        <button type="button" class="ui-datepicker-trigger" id="datepicker"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text">
+					        <script type="text/javascript">
+    							$("#datepicker").datepicker();
+					        </script>
+					        <!-- <button type="button" class="ui-datepicker-trigger"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text"> -->
 					        <button type="button" class="ui-datepicker-trigger">
 					        <img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button>        
 					        <input alt="조회" id="order_search_btn" type="image" src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/btn_search.gif">    
@@ -203,15 +209,15 @@
 				                </td>
 				                <td class="thumb">
 				                	<a href="/product/detail.html">
-				                	<img src="//img.echosting.cafe24.com/thumb/img_product_small.gif" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a>
+				                	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${order.olist[count].prod_no}/f_img.png" alt=""></a>
 			                	</td>
 				                <td class="product left top">
 				                    <strong class="name"></strong>
-				                    <div class="option">상품정보@@</div>
+				                    <div class="option"><strong>${order.olist[count].prod_name }</strong></div>
 				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
 				                    	<!-- <li class=""><strong></strong> (개)</li> -->
 									</ul>
-									<p class="gBlank5">무이자할부 상품</p>
+									<p class="gBlank5 displayone">COLOR : ${order.olist[count].prod_color}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIZE : ${order.olist[count].prod_size}</p>
 				                </td>
 				                <td>${order.olist[count].order_amount}개</td>
 				                <!-- <td>1개</td> -->
@@ -231,6 +237,7 @@
 				                	<a href="cancel.html" class="btnNormal">취소신청</a>
 				                    <a href="exchange.html" class="btnNormal">교환신청</a>
 				                    <a href="return.html" class="btnNormal">반품신청</a>
+				                    <a href="return.html" class="btnNormal">리뷰작성</a>
 				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
 				                    <p class="displaynone">-</p>
 				                </td>

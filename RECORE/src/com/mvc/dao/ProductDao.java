@@ -14,6 +14,8 @@ public interface ProductDao {
 
 	public List<Vo_Product> P_selectAll(); // 상품 리스트 전체 조회
 	
+	public List<Vo_Product> P_topSelectOne(int catdno);
+	
 	public List<Vo_Product> Parent_selectAll(int catdid);
 	
 	public List<Vo_Product> Child_selectAll(int pseq); // 옷 전체 조회

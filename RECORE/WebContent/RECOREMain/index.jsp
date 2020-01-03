@@ -3,6 +3,11 @@
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
+    
+    <% Vo_Account vo = (Vo_Account)session.getAttribute("vo"); %>
+	
     
 <!DOCTYPE html>
 <html lang="en">
@@ -39,14 +44,6 @@
         
           <div class="row align-items-center">
             <div class="col-6">
-            
-            <!--
-              <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a>
-            -->
-            
             </div>
             <div class="col-6">
               <div class="d-flex ml-auto" >
@@ -54,11 +51,13 @@
                 	<!-- <input type="text" name="query" placeholder="Search" />
               		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
+              	
+              	<!-- 로그인 안되어있을 때 -->
+              	<c:if test="${empty vo }">
                 <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                 
-                 <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
@@ -66,13 +65,19 @@
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
                   <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                 </c:if>
                  
-                
-                <!--              
-                <a href="#" class="d-flex align-items-center">
-                  <span class="icon-phone mr-2"></span>
-                  <span class="d-none d-md-inline-block">회원가입</span>
-                </a> --> 
+                 <!-- 로그인 안되어있을 때 -->
+                  <c:if test="${!empty vo }">
+    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+    			</c:if>
+                 
+                 
                  
               </div>
             </div>
@@ -122,16 +127,16 @@
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
+                    <li  class="has-children"><a href="../issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="exhibition.html">Exhibition</a></li>
+                        <li><a href="../issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="../issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
                     <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Review</a></li>
+                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
+                        <li><a href="qna.do?command=review_list">Review</a></li>
                       </ul>
                     </li>
 <!--
@@ -592,6 +597,14 @@
       </div>
     </div>
 
+
+	 <!-- 상단으로 올라가기 -->
+          <div style = "position: fixed; bottom: 30px; right: 30px;">
+			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
+		  </div>
+
+
+	<!-- footer -->
     <footer class="site-footer border-top">
       <div class="container">
         <div class="row">
@@ -619,15 +632,7 @@
             </div>
           </div>
           
-          <!-- 상단으로 올라가기 -->
-          <div style = "position: fixed; bottom: 30px; right: 30px;">
-			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
-		  </div>
-          
-          <!-- footer -->
           <div class="col-lg-4">
-           
-
             <div class="mb-5">
               <h3 class="footer-heading mb-4">Recent News</h3>
               <div class="block-25">
@@ -711,7 +716,7 @@
           <div class="col-md-12">
             <p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | RECORE
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>

@@ -111,14 +111,14 @@ public class JDBCTemplate {
 	   /*
 	       @ 기능 : properties 파일 경로 구하는 메서드
 	   */
-	   public static String properties() {
+	   public static String properties(String queryname) {
 	      String filePath = "";
 	      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	      if (classLoader == null) {
 	         classLoader = ClassLoader.getSystemClassLoader();
 	      }
-	      
-	      URL url2 = classLoader.getResource("/common/query.properties");
+
+	      URL url2 = classLoader.getResource("/common/" + queryname);
 	      
 	      if (url2 == null) {
 	         System.out.println("query.properties 파일 찾기 실패");

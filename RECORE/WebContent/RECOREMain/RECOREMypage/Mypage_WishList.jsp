@@ -224,7 +224,7 @@
 					                <td class="price right"><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원</td>
 					                <td class="button">
 					                    <a href="#none" onclick="NewWishlist.actionOrder('order', 0)" class="btnSubmit ">주문하기</a>
-					                    <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a>
+					                    <!-- <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a> -->
 					                    <!-- <a href="mypage.do?command=insertcart&prod_id=수정@@@@@@@@" class="btnNormal ">장바구니담기</a> -->
 					                    <!-- <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a> -->
 					                    <a href="mypage.do?command=deletewishone&prod_no=${wish.prod_no}" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
