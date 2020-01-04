@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8");%>
+<%@ page import="com.mvc.vo.Vo_QnA" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,11 +75,11 @@
   a:visited { color: black; text-decoration: none;}
   </style>
 
-
-
 </head>
 <body id="main">
-	
+<%
+	Vo_Account acc = (Vo_Account)session.getAttribute("vo");
+%>
 	<!-- header -->
 	<%@ include file="/header.jsp" %>
 	
@@ -87,7 +93,7 @@
 				    <span>현재 위치</span>
 				    <ol>
 				    	<li><a href="/">홈</a></li>
-				        <li><a href="/myshop/index.html">마이쇼핑</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
 				        <li title="현재 위치"><strong>게시물 관리</strong></li>
 				    </ol>
 				 </div>
@@ -107,7 +113,7 @@
 					</div>
 					<div class="xans-element- xans-myshop xans-myshop-boardlist ec-base-table typeList gBorder gBlank10">
 						<table border="1" summary="">
-							<caption>게시물 관리 목록</caption>
+							<%-- <caption>게시물 관리 목록</caption> --%>
 	       				 	<colgroup class="xans-element- xans-board xans-board-listheader-1002 xans-board-listheader xans-board-1002 ">
 	       				 		<col style="width:70px;">
 								<col style="width:135px;">
@@ -127,25 +133,41 @@
 					            </tr>
 					        </thead>
 							<tbody class=" center">
-								<tr class="xans-record-">
+							<c:if test="${null eq list_qna}">
+								<tr><td colspan="6"><p class="message">게시물이 없습니다.</p></td></tr>
+							</c:if>
+							<c:if test="${null ne list_qna}">
+							<c:forEach var="qna" items="${list_qna}">
+								<!-- <tr class="xans-record-">
 									<td>2</td>
 					                <td><a href="/board/상품문의/6/" class="txtEm">상품문의</a></td>
 					                <td class="left subject">&nbsp;&nbsp;&nbsp;<img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_re.gif" alt="답변" class="ec-common-rwd-image"> <img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_lock.gif" alt="비밀글" class="ec-common-rwd-image"> <a href="/board/product/read.html?no=263&amp;board_no=6">문의합니다</a> </td>
 					                <td></td>
 					                <td><span class="txtNum">2019-12-30</span></td>
 					                <td><span class="txtNum">2</span></td>
-	            				</tr>
+	            				</tr> -->
 								<tr class="xans-record-">
-									<td>1</td>
-					                <td><a href="/board/상품문의/6/" class="txtEm">상품문의</a></td>
-					                <td class="left subject"><img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_lock.gif" alt="비밀글" class="ec-common-rwd-image"> <a href="/board/product/read.html?no=261&amp;board_no=6">문의합니다</a> </td>
-					                <td>박****</td>
-					                <td><span class="txtNum">2019-12-30</span></td>
-					                <td><span class="txtNum">4</span></td>
+									<td>${qna.qna_no}</td>
+					                <td>
+					                	<a href="/board/상품문의/6/" class="txtEm">
+					                		<c:if test="${14 eq qna.catd_no}">배송문의</c:if>
+					                		<c:if test="${15 eq qna.catd_no}">취소/교환/환불문의</c:if>
+					                		<c:if test="${16 eq qna.catd_no}">상품문의</c:if>
+					                	</a>
+					                </td>
+					                <td class="left subject">
+					                	<img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_lock.gif" alt="비밀글" class="ec-common-rwd-image"> 
+					                	<a href="/board/product/read.html?no=261&amp;board_no=6">${qna.qna_title}</a> 
+					                </td>
+					                <td><%=acc.getAcc_name()%></td>
+					                <td><span class="txtNum">${qna.qna_regdate}</span></td>
+					                <td><span class="txtNum">${qna.qna_view_count}</span></td>
 					            </tr>
+				            </c:forEach>
+					        </c:if>
 							</tbody>
 						</table>
-						<p class="message displaynone">게시물이 없습니다.</p>
+						<!-- <p class="message displaynone">게시물이 없습니다.</p> -->
 					</div>
 				</div>
 	
@@ -173,8 +195,8 @@
 										<option value="subject">제목</option>
 										<option value="content">내용</option>
 										<option value="writer_name">글쓴이</option>
-										<option value="member_id">아이디</option>
-										<option value="nick_name">별명</option>
+										<!-- <option value="member_id">아이디</option>
+										<option value="nick_name">별명</option> -->
 									</select> 
 									<input id="search" name="search" fw-filter="" fw-label="" fw-msg="" class="inputTypeText" placeholder="" value="" type="text"> 
 									<a href="#none" class="btnEmFix" onclick="BOARD.form_submit('boardSearchForm');">찾기</a>

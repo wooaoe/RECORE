@@ -44,7 +44,7 @@ public class MyPageDaoImp implements MyPageDao{
       String sql_cart = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
       String sql_fun = "SELECT * FROM F_PM WHERE ACC_NO=?";
       String sql_order = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=? ORDER BY ORDER_NO ASC";
-      String sql_qna = "SELECT * FROM QNA WHERE ACC_NO=?";
+      String sql_qna = "SELECT * FROM QNA JOIN ACCOUNT USING(ACC_NO) WHERE ACC_NO=?";
       String sql_wish = "SELECT * FROM WISH JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
       
       System.out.println("쿼리준비");
@@ -112,22 +112,26 @@ public class MyPageDaoImp implements MyPageDao{
          e.printStackTrace();
       }
       
-//      try {
-//         pstmt = con.prepareStatement(sql_qna);
-//         pstmt.setInt(1, accseq);
-//         rs = pstmt.executeQuery();
-//         
-//         while(rs.next()) {
-//            vo_qna = new Vo_QnA(
-//                     rs.getInt(1),rs.getInt(2),rs.getString(6),rs.getDate(9)
-//                     );
-//            list_qna.add(vo_qna);
-//         }
-//         map.put("list_qna", list_qna);
-//         
-//      } catch (SQLException e) {
-//         e.printStackTrace();
-//      }
+      try {
+         pstmt = con.prepareStatement(sql_qna);
+         pstmt.setInt(1, accseq);
+         rs = pstmt.executeQuery();
+         
+         while(rs.next()) {
+            vo_qna = new Vo_QnA(rs.getInt(2),rs.getInt(3),
+            					rs.getInt(4),rs.getInt(1),
+            					rs.getString(5),rs.getString(6),
+            					rs.getString(7),rs.getInt(8),
+            					rs.getDate(9),rs.getString(10),
+            					rs.getInt(11),rs.getInt(12),
+            					rs.getString(13),100); // 마지막 상품번호 수정필요?@@@@@@@@@
+            list_qna.add(vo_qna);
+         }
+         map.put("list_qna", list_qna);
+         
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
       
       try {
          pstmt = con.prepareStatement(sql_wish);

@@ -49,8 +49,8 @@ public class Mypage_Controller extends HttpServlet {
       
       if(command.equals("orderlist")) {
          System.out.println(map.get("list_order"));
-         List test = (List)map.get("list_order");
-         if(test.isEmpty()) {
+         List list = (List)map.get("list_order");
+         if(list.isEmpty()) {
             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
          }else {
             request.setAttribute("list_order", map.get("list_order"));
@@ -58,8 +58,8 @@ public class Mypage_Controller extends HttpServlet {
          }
          
       }else if(command.equals("main")){
-         List test = (List)map.get("list_order");
-         System.out.println("main에 넘어갈 사이즈"+test.size());
+         List list = (List)map.get("list_order");
+         System.out.println("main에 넘어갈 사이즈"+list.size());
          request.setAttribute("list_order", map.get("list_order"));
          dispatch("./RECOREMain/RECOREMypage/Mypage_Main.jsp", request, response);
          
@@ -68,8 +68,8 @@ public class Mypage_Controller extends HttpServlet {
          
       }else if(command.equals("wishlist")) {
          System.out.println(map.get("list_wish"));
-         List test = (List)map.get("list_wish");
-         if(test.isEmpty()) {
+         List list = (List)map.get("list_wish");
+         if(list.isEmpty()) {
             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_WishList.jsp");
          }else {
             request.setAttribute("list_wish", map.get("list_wish"));
@@ -115,18 +115,27 @@ public class Mypage_Controller extends HttpServlet {
       }else if(command.equals("mileage")) {
          request.setAttribute("acc_point", vo.getAcc_point());
          request.setAttribute("list_order", map.get("list_order"));
-         List test = (List)map.get("list_order");
-         System.out.println(test.size());
+         List list = (List)map.get("list_order");
+         System.out.println(list.size());
          dispatch("./RECOREMain/RECOREMypage/Mypage_Mileage2.jsp", request, response);
          
-      }else if(command.equals("board")) {
-         dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp", request, response);
+      }else if(command.equals("boardlist")) {
+    	 System.out.println("command : " + command);
+    	 List list = (List)map.get("list_qna");
+    	 
+    	 if(list.isEmpty()) {
+    		 response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp");
+    	 }else {
+    		 request.setAttribute("list_qna", map.get("list_qna"));
+//    		 System.out.println("서블릿에서 listqna : " + map.get("list_qna"));
+    		 dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp", request, response);
+    	 }
          
       }else if(command.equals("cartlist")) {
          System.out.println("command : " + command);
-         List test = (List)map.get("list_cart");
+         List list = (List)map.get("list_cart");
          
-         if(test.isEmpty()) {
+         if(list.isEmpty()) {
             response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_Cart.jsp");
 //            dispatch("./RECOREMain/RECOREMypage/Mypage_Cart.jsp", request, response);
          }else {

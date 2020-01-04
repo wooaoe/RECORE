@@ -195,8 +195,8 @@
 		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=mileage">고객님이 보유하고 계신<br> 마일리지를 보여드립니다.</a></p>
 		        		</li>
 		        		<li class="shopMain board">
-		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=board"><strong>Board</strong><br><span>게시물 관리</span></a></h3>
-		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=board">고객님께서 작성하신 게시물을<br> 관리하는 공간입니다.</a></p>
+		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=boardlist"><strong>Board</strong><br><span>게시물 관리</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=boardlist">고객님께서 작성하신 게시물을<br> 관리하는 공간입니다.</a></p>
 		        		</li>
 		    		</ul>
 				</div>

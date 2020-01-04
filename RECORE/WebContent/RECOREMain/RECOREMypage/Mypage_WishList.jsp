@@ -120,6 +120,15 @@
 	<div id="wrap">
 	    <div id="container">
 	        <div id="content" style="margin-top: 130px;">
+	        	
+	        	<!-- <div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="/">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>관심상품</strong></li>
+				    </ol>
+				</div> -->
 	        
 				<div class="titleArea">
 				    <h2>관심상품</h2>

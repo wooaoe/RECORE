@@ -94,6 +94,16 @@
 	<div id="wrap">
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
+	        	
+	        	<!-- <div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="/">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>주문조회</strong></li>
+				    </ol>
+				</div> -->
+	        	
 				<div class="titleArea">
 				    <h2>주문조회</h2>
 				</div>

@@ -74,6 +74,16 @@
 
 	<div id="wrap">
 	    <div id="container">
+	    
+    		<!-- <div class="path">
+			    <span>현재 위치</span>
+			    <ol>
+			    	<li><a href="/">홈</a></li>
+			        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+			        <li title="현재 위치"><strong>펀딩내역 조회</strong></li>
+			    </ol>
+			</div> -->
+			
 	        <div id="content" style="margin-top: 100px;">
 				<div class="titleArea">
 				    <h2>펀딩조회</h2>
@@ -273,7 +283,8 @@
 					</a>
 				</div>
 			</div>
-	        
+        </div>
+	</div>
 	       <hr class="layout">
 	        
 	       <!-- footer -->
