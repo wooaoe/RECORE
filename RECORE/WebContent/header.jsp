@@ -114,7 +114,7 @@
                         <li><a href="issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style = "color:black;">Community</a>
+                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style = "color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
                         <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
                         <li><a href="qna.do?command=review_list">Review</a></li>

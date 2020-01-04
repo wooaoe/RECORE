@@ -173,16 +173,16 @@
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
+                    <li  class="has-children"><a href="issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="exhibition.html">Exhibition</a></li>
+                        <li><a href="issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Review</a></li>
+                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
+                        <li><a href="qna.do?command=review_list">Review</a></li>
                       </ul>
                     </li>
 <!--
