@@ -1,6 +1,7 @@
 package com.mvc.vo;
 
 public class Vo_Order {
+	
    private int prod_no; // 상품 번호
    private int prod_id; // 상품 아이디
    private String prod_name; //상품명
@@ -20,6 +21,7 @@ public class Vo_Order {
    public Vo_Order(int prod_no, int prod_id, String prod_name, String prod_color, String prod_size, int order_amount,
          int order_price, String order_tno, String order_status) {
       super();
+      
       this.prod_no = prod_no;
       this.prod_id = prod_id;
       this.prod_name = prod_name;

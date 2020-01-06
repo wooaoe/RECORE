@@ -25,6 +25,28 @@
     	html{
     		scroll-behavior: smooth;
     	}
+    	.prodButtonWhite{
+			background-color: white; 
+			border:1px solid ;
+			border-radius: 50%; 
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;"
+		}
+		.prodButton{
+			background-color: #a0d9d9; 
+			border:2px solid ; 
+			border-radius: 50%;  
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;
+		}
     </style>
     
   </head>
@@ -101,8 +123,6 @@
       </div>
       
       
-      
-      
       <div class="site-navbar">
         <div class="container py-1">
           <div class="row align-items-center">
@@ -124,35 +144,35 @@
                     </li>
                     <li class="has-children">
                     
-                      <a href= "Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
+                      <a href= "Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
-								<li><a href = "Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
-								<li><a href = "Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6">Life</a>
+                        <li><a href="Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
-								<li><a href = "Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
+								<li><a href = "Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
+                    <li  class="has-children"><a href="issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="exhibition.html">Exhibition</a></li>
+                        <li><a href="issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Review</a></li>
+                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
+                        <li><a href="qna.do?command=review_list">Review</a></li>
                       </ul>
                     </li>
 <!--
@@ -185,23 +205,61 @@
 
     <div class="site-section">
       <div class="container">
+       
         <div class="row">
           
           <!-- @@ 이미지 들어가는 곳 @@ -->
-          <c:forEach var="prod" items = "${plist}">
+          <c:forEach begin = "${(page-1)*9}" end = "${((page-1)*9)+8}" var = "i">
+          <c:choose>
+          <c:when test="${i >= plist.size()}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}&catdno=${prod.prod_catd}" class="d-block figure">
-            <%-- <%=request.getContextPath()%> --%>
-              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
+            <a href="" class="d-block figure">
+              <img id = "img-fluid" src="" alt="Image" class="img-fluid"> 
             </a>
-            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}&catdno=${prod.prod_catd}">${prod.prod_name}</a></h3>
-            <span class="text-muted">${prod.prod_brand}</span><br>
-            <span class = "mb-0"><b><fmt:formatNumber value="${prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+            <h3 class="mb-0"><a href=""></a></h3>
+            <span class="text-muted"></span><br>
+            <span class = "mb-0"><b></b></span>
           	<br><br>
           </div>
+          </c:when>
+		  <c:otherwise>      
+          <div class="col-lg-4 col-md-6 mb-4 project-entry">
+            <a href="Product.do?command=ProdDetail&pseq=${plist.get(i).getProd_no()}&catdno=${plist.get(i).getProd_catd()}" class="d-block figure">
+            <%-- <%=request.getContextPath()%> --%>
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${plist.get(i).getProd_no()}/f_img.png" alt="Image" class="img-fluid"> 
+            </a>
+            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${plist.get(i).getProd_no()}&catdno=${plist.get(i).getProd_catd()}">${plist.get(i).getProd_name()}</a></h3>
+            <span class="text-muted">${plist.get(i).getProd_brand()}</span><br>
+            <span class = "mb-0"><b><fmt:formatNumber value="${plist.get(i).getProd_price()}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+          	<br><br>
+          </div>
+          </c:otherwise>    
+          </c:choose>
           </c:forEach>
          
         </div>
+        
+        <div class="row" style="text-align: center;">
+        	
+        	<div class="" style="width:100%; margin-top:20px; text-align :center; padding-left: 44%;">
+        		
+        		<c:choose>
+        			<c:when test="${page eq 1 }">
+		        		<div class="prodButtonWhite">1</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=2'">2</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=3'">3</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=4'">4</div>
+        			</c:when>
+        			<c:otherwise>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=${page-1 }'">${page-1 }</div>
+        				<div class="prodButtonWhite" onclick="location.href='Product.do?command=ProdSelectAll&pageno=${page }'">${page }</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=${page+1 }'">${page+1}</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ProdSelectAll&pageno=${page+2 }'">${page+2}</div>
+        			</c:otherwise>
+        		</c:choose>
+        	</div>
+        </div>
+     
       </div>
     </div>
 

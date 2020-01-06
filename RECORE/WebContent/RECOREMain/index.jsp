@@ -41,7 +41,6 @@
         <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
         <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
         
-        
           <div class="row align-items-center">
             <div class="col-6">
             </div>
@@ -67,7 +66,7 @@
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  </c:if>
                  
-                 <!-- 로그인 안되어있을 때 -->
+                 <!-- 로그인 되어있을 때 -->
                   <c:if test="${!empty vo }">
     				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
@@ -108,21 +107,21 @@
                     </li>
                     <li class="has-children">
                     
-                      <a href= "../Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
+                      <a href= "../Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9">Bottom</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6">Life</a>
+                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
+                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
+								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
@@ -133,7 +132,7 @@
                         <li><a href="../issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
                         <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
                         <li><a href="qna.do?command=review_list">Review</a></li>

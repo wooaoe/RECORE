@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mvc.dao.AccountDao;
 import com.mvc.dao.AccountDaoImp;
+import com.mvc.dao.OrderDao;
+import com.mvc.dao.OrderDaoImp;
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order;
+import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 
@@ -35,41 +38,73 @@ public class Product_Controller extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		ProductDao dao = new ProductDaoImp();
+		OrderDao order = new OrderDaoImp();
+		AccountDaoImp account = new AccountDaoImp();
 
 		String command = request.getParameter("command");
 
 		System.out.println("[command] : " + command);
-
+		
 		if (command.equals("ProdSelectAll")) {
 
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
 			request.setAttribute("plist", plist);
+			
+			int page = Integer.parseInt(request.getParameter("pageno"));
+			System.out.println("pageno : " + page);
+			request.setAttribute("page", page);
+			
 						
 			dispatch("./RECOREMain/RECOREProduct/Prod_All.jsp", request, response);
+			
 
 		} else if (command.equals("ParentSelectAll")) {
 			
 			int catdid = Integer.parseInt(request.getParameter("catdid"));
 			System.out.println("catdid : " + catdid);
 			
+			int page = Integer.parseInt(request.getParameter("pageno"));
+			System.out.println("pageno : " + page);
+			request.setAttribute("page", page);
+			
 			List<Vo_Product> parent = dao.Parent_selectAll(catdid);
 			System.out.println("parent selectAll" + parent);
 			request.setAttribute("parent", parent);
 			
-			Vo_Category_Detail cdvo = dao.CD_selectAll2(catdid);
-			request.setAttribute("cdvo", cdvo);
+			/*
+			 * Vo_Category_Detail cdvo = dao.CD_selectAll2(catdid);
+			 * request.setAttribute("cdvo", cdvo);
+			 */
 			
 			List<Vo_Category_Detail> cdlist = dao.CD_selectAll(catdid);
 			request.setAttribute("cdlist", cdlist);
 			 
 			//페이지 하나에서 시퀀스 넘버로 구분 
 			dispatch("./RECOREMain/RECOREProduct/Parent.jsp", request, response);
+			
 
-		} else if (command.equals("ChildSelectAll")) {
+		}else if(command.equals("ProdPrepage")) {
+			
+			
+			
+			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+			
+		}else if(command.equals("ProdNextpage")) {
+			
+			
+			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+		}
+		
+		
+		else if (command.equals("ChildSelectAll")) {
 			
 			int catdno = Integer.parseInt(request.getParameter("catdno"));
 			System.out.println(catdno);
+			
+			int page = Integer.parseInt(request.getParameter("pageno"));
+			System.out.println("pageno : " + page);
+			request.setAttribute("page", page);
 			
 			List<Vo_Product> child = dao.Child_selectAll(catdno);
 			System.out.println(child);
@@ -99,6 +134,7 @@ public class Product_Controller extends HttpServlet {
 			/* List<Vo_Prod_option> povo = dao.po_selectOne(pvo); */
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
@@ -109,6 +145,7 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("toplist의 인덱스 값 : " + toplist.get(0).getProd_no());
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+			
 
 		} else if (command.equals("Order")) {
 
@@ -121,9 +158,9 @@ public class Product_Controller extends HttpServlet {
 			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
 			request.setAttribute("cdvo", cdvo);
 
-			/* List<Vo_Prod_option> povo = dao.po_selectOne(pvo); */
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
 			List<Vo_Product> plist = dao.P_selectAll();
 			System.out.println(plist);
@@ -131,10 +168,11 @@ public class Product_Controller extends HttpServlet {
 			
 			List<Vo_Prod_option> polist = dao.option_selectAll();
 			System.out.println("polist : " + polist);
+			System.out.println("polist prodid : " + polist.get(0).getProd_id());
 			request.setAttribute("polist", polist);
 			
-		    AccountDaoImp dao2 = new AccountDaoImp();
-		    Vo_Account acc = dao2.A_selectAccount("user1", "user1");
+			
+		    Vo_Account acc = account.A_selectAccount("user1", "user1");
 		    HttpSession session = request.getSession();
 		    session.setAttribute("acc", acc);
 			
@@ -143,25 +181,7 @@ public class Product_Controller extends HttpServlet {
 
 	}
 	
-//	int pseq = Integer.parseInt(request.getParameter("pseq"));
-//	System.out.println("pseq : " + pseq);
-//
-//	Vo_Prod_option povo = new Vo_Prod_option();
-//	request.setAttribute("povo", povo);
-//	
-//	Vo_Product prod = new Vo_Product();
-//	request.setAttribute("prod", prod);
-//	
-//	
-//	boolean order = dao.O_insert(povo, prod);
-//
-//	if (order) {
-//		response.sendRedirect("./RECOREMain/RECOREProduct/Prod_Checkout.jsp");
-//	} else {
-//		dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
-//	}
-//	
-	
+
 
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response) {

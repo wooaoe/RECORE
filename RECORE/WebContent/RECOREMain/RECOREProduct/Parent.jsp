@@ -19,9 +19,6 @@
   		 kinds = "LIFE";
   	 }
   	%>
-  	
-  	
-  
     
 <!DOCTYPE html>
 <html>
@@ -39,6 +36,31 @@
     	html{
     		scroll-behavior: smooth;
     	} 
+    	.prodButtonWhite{
+			background-color: white; 
+			border:1px solid ;
+			border-radius: 50%; 
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;
+			cursor: pointer;
+		}
+		.prodButton{
+			background-color: #a0d9d9; 
+			border:2px solid ; 
+			border-radius: 50%;  
+			border-color:#a0d9d9; 
+			width: 30px; 
+			height: 30px; 
+			text-align: center;
+			float: left; 
+			margin-right: 10px;
+			cursor: pointer;
+		}
+    	
     </style>
     
   </head>
@@ -140,7 +162,7 @@
                       <a href= "Product.do?command=ProdSelectAll" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="Product.do?command=ChildSelectAll&catdno=6">Bag/Acc</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=4">Clothing</a>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=7">Outer</a></li>                        	
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=8">Top</a></li>                        	
@@ -148,7 +170,7 @@
                         	</ul>
                         </li>
                         <li><a href="Product.do?command=ChildSelectAll&catdno=10">Wallet</a></li>
-                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6">Life</a>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=11">Supply</a></li>                        	
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=12">Home</a></li>                        	
@@ -156,16 +178,16 @@
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Issue</a>
+                    <li  class="has-children"><a href="issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="exhibition.html">Exhibition</a></li>
+                        <li><a href="issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="news.html" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="#">QnA</a></li>
-                        <li><a href="#">Review</a></li>
+                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
+                        <li><a href="qna.do?command=review_list">Review</a></li>
                       </ul>
                     </li>
 <!--
@@ -200,22 +222,55 @@
       <div class="container">
         <div class="row">
           
-          <!-- @@ 이미지 들어가는 곳 @@ -->
-          
-          <c:forEach var = "par" items = "${parent}">
+           <!-- @@ 이미지 들어가는 곳 @@ -->
+          <c:forEach begin = "${(page-1)*9}" end = "${((page-1)*9)+8}" var = "i">
+          <c:choose>
+          <c:when test="${i >= parent.size()}">
           <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="Product.do?command=ProdDetail&pseq=${par.prod_no}&catdno=${par.prod_catd}" class="d-block figure">
-            <%-- <%=request.getContextPath()%> --%>
-              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${par.prod_no}/f_img.png" alt="Image" class="img-fluid"> 
+            <a href="" class="d-block figure">
             </a>
-            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${par.prod_no}&catdno=${par.prod_catd}">${par.prod_name}</a></h3>
-            <span class="text-muted">${par.prod_brand}</span><br>
-            <span class = "mb-0"><b><fmt:formatNumber value="${par.prod_price}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+            <h3 class="mb-0"><a href=""></a></h3>
+            <span class="text-muted"></span><br>
+            <span class = "mb-0"><b></b></span>
           	<br><br>
           </div>
+          </c:when>
+		  <c:otherwise>      
+          <div class="col-lg-4 col-md-6 mb-4 project-entry">
+            <a href="Product.do?command=ProdDetail&pseq=${parent.get(i).getProd_no()}&catdno=${parent.get(i).getProd_catd()}" class="d-block figure">
+            <%-- <%=request.getContextPath()%> --%>
+              <img id = "img-fluid" src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${parent.get(i).getProd_no()}/f_img.png" alt="Image" class="img-fluid"> 
+            </a>
+            <h3 class="mb-0"><a href="Product.do?command=ProdDetail&pseq=${parent.get(i).getProd_no()}&catdno=${parent.get(i).getProd_catd()}">${parent.get(i).getProd_name()}</a></h3>
+            <span class="text-muted">${parent.get(i).getProd_brand()}</span><br>
+            <span class = "mb-0"><b><fmt:formatNumber value="${parent.get(i).getProd_price()}" groupingUsed="true"></fmt:formatNumber>원</b></span>
+          	<br><br>
+          </div>
+          </c:otherwise>    
+          </c:choose>
           </c:forEach>
          
-		  	         
+        </div>
+        
+        <div class="row" style="text-align: center;">
+        	
+        	<div class="" style="width:100%; margin-top:20px; text-align :center; padding-left: 44%;">
+        		
+        		<c:choose>
+        			<c:when test="${page eq 1}">
+		        		<div class="prodButtonWhite">1</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ParentSelectAll&catdid=${cdlist.get(i).getCatd_id()}&pageno=2'">2</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ParentSelectAll&catdid=${cdlist.get(i).getCatd_id()}&pageno=3'">3</div>
+        			</c:when>
+        			<c:otherwise>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ParentSelectAll&catdid=${cdlist.get(i).getCatd_id()}&pageno=${page-1 }'">${page-1 }</div>
+        				<div class="prodButtonWhite" onclick="location.href='Product.do?command=ParentSelectAll&catdid=${cdlist.get(i).getCatd_id()}&pageno=${page }'">${page }</div>
+		        		<div class="prodButton" onclick="location.href='Product.do?command=ParentSelectAll&catdid=${cdlist.get(i).getCatd_id()}&pageno=${page+1 }'">${page+1}</div>
+        			</c:otherwise>
+        			
+        		</c:choose>
+        	</div>
+        </div>
          
         </div>
       </div>
