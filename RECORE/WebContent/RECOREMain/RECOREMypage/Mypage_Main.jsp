@@ -116,7 +116,7 @@
 				<div class="xans-element- xans-myshop xans-myshop-orderstate ">
 				
 					<div class="title">
-						<h3>나의 주문처리 현황 <span class="desc">(최근 <em>3개월</em> 기준)</span></h3>
+						<h3>나의 주문처리 현황 <!-- <span class="desc">(최근 <em>3개월</em> 기준)</span> --></h3>
 	  				</div>
 	  				
 					<div class="state">
@@ -175,28 +175,28 @@
 				<div id="myshopMain" class="xans-element- xans-myshop xans-myshop-main">
 					<ul>
 						<li class="shopMain order">
-		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=orderlist"><strong>Order</strong><br><span>주문내역 조회</span></a></h3>
-		           			<p><a href="<%=request.getContextPath()%>/mypage.do?command=orderlist">고객님께서 주문하신 상품의<br> 주문내역을 확인하실 수 있습니다.</a></p>
+		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1"><strong>Order</strong><br><span>주문내역 조회</span></a></h3>
+		           			<p><a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">고객님께서 주문하신 상품의<br> 주문내역을 확인하실 수 있습니다.</a></p>
 		        		</li>
 		        		<li class="shopMain profile">
 		            		<h3><a href="회원정보 링크@@@"><strong>Profile</strong><br><span>회원 정보</span></a></h3>
 		            		<p><a href="회원정보 링크@@@">회원이신 고객님의 개인정보를<br> 관리하는 공간입니다.</a></p>
 		        		</li>
 		        		<li class="shopMain board">
-		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=fundinglist"><strong>Funding</strong><br><span>펀딩내역 조회</span></a></h3>
-		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=fundinglist">고객님께서 후원하신 펀딩의<br> 펀딩내역을 확인하실 수 있습니다.</a></p>
+		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=fundinglist&pageno=1"><strong>Funding</strong><br><span>펀딩내역 조회</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=fundinglist&pageno=1">고객님께서 후원하신 펀딩의<br> 펀딩내역을 확인하실 수 있습니다.</a></p>
 		        		</li>
 		       			<li class="shopMain wishlist">
-		            		<h3><a href="<%=request.getContextPath()%>/mypage.do?command=wishlist"><strong>Wishlist</strong><br><span>관심 상품</span></a></h3>
-		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=wishlist">관심상품으로 등록하신<br> 상품의 목록을 보여드립니다.</a></p>
+		            		<h3><a href="<%=request.getContextPath()%>/mypage.do?command=wishlist&pageno=1"><strong>Wishlist</strong><br><span>관심 상품</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=wishlist&pageno=1">관심상품으로 등록하신<br> 상품의 목록을 보여드립니다.</a></p>
 		        		</li>
 		        		<li class="shopMain coupon ">
-		            		<h3><a href="<%=request.getContextPath()%>/mypage.do?command=mileage"><strong>Mileage</strong><br><span>마일리지</span></a></h3>
-		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=mileage">고객님이 보유하고 계신<br> 마일리지를 보여드립니다.</a></p>
+		            		<h3><a href="<%=request.getContextPath()%>/mypage.do?command=mileage&pageno=1"><strong>Mileage</strong><br><span>마일리지</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=mileage&pageno=1">고객님이 보유하고 계신<br> 마일리지를 보여드립니다.</a></p>
 		        		</li>
 		        		<li class="shopMain board">
-		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=board"><strong>Board</strong><br><span>게시물 관리</span></a></h3>
-		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=board">고객님께서 작성하신 게시물을<br> 관리하는 공간입니다.</a></p>
+		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=boardlist&pageno=1"><strong>Board</strong><br><span>게시물 관리</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/mypage.do?command=boardlist&pageno=1">고객님께서 작성하신 게시물을<br> 관리하는 공간입니다.</a></p>
 		        		</li>
 		    		</ul>
 				</div>

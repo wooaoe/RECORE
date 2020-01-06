@@ -87,6 +87,7 @@
   [class^='btnSubmit'], a[class^='btnSubmit'] {
   	color: white;
   }
+  
   </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -281,14 +282,14 @@
 											<input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}">
 										</td>
 					                    <td class="thumb gClearLine">
-					                    	<a href="/product/detail.html?product_no=261&amp;cate_no=91">
+					                    	<a href="Product.do?command=ProdDetail&pseq=${cart.prod_no}&catdno=${cart.catd_no}">
 					                    	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${cart.prod_no}/f_img.png">
 				                    		<!-- <img src="//dalisalda.com/web/product/tiny/20191206/90446b2ad04fff657071104925ed4b7b.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="[웬즈데이블루]아보카도 타조알 비누 퓨어"> -->
 					                    	</a>
 					                    </td>
 					                    <td class="left gClearLine">
 		                        			<strong class="name">
-			                        			<a href="/product/웬즈데이블루아보카도-타조알-비누-퓨어/261/category/91/" class="ec-product-name">
+			                        			<a href="Product.do?command=ProdDetail&pseq=${cart.prod_no}&catdno=${cart.catd_no}" class="ec-product-name">
 			                        				<strong>[${cart.prod_brand}]</strong><br>${cart.prod_name}
 			                        			</a>
 		                        			</strong>    <span class="displaynone engName">(영문명 : )</span>
@@ -337,12 +338,9 @@
 											<strong><span id="sum_price_front0"><fmt:formatNumber value="${cart.prod_price * cart.cart_amount}" groupingUsed="true"></fmt:formatNumber></span>원</strong><div class="displaynone"></div>
 										</td>
 					                    <td class="button">
-					                        <a href="javascript:;" class="btnSubmit " onclick="Basket.orderBasketItem(0);">주문하기</a>
-					                        <a href="javascript:;" class="btnSubmit displaynone" onclick="Basket.orderBasketItem(0);">정기배송 신청</a>
-					                        <!-- <a href="javascript:;" class="btnNormal" onclick="BasketNew.moveWish(0);">관심상품등록</a> -->
+					                        <a href="Product.do?command=Order&pseq=${cart.prod_no}" class="btnSubmit ">주문하기</a>
 					                        <a href="mypage.do?command=insertwish&prod_no=${cart.prod_no}" class="btnNormal">관심상품등록</a>
 					                        <a href="mypage.do?command=deletecartone&prod_id=${cart.prod_id}" class="btnNormal"><i class="icoDelete"></i> 삭제</a>
-					                        <!-- <a href="javascript:;" class="btnNormal" onclick="Basket.deleteBasketItem(0);"><i class="icoDelete"></i> 삭제</a> -->
 					                    </td>
 		                			</tr>
 		                			</c:forEach>
@@ -371,7 +369,7 @@
 						<span class="gRight">
 				            <a href="#none" onclick="Basket.orderStorePickupSelectBasket(this)" class="btnNormal displaynone" link-order="/order/orderform.html?basket_type=all_buy" link-login="/member/login.html">스토어픽업 상품 선택</a>
 				            <a href="mypage.do?command=deletecartall" class="btnNormal" onclick="Basket.emptyBasket()">장바구니비우기</a>
-				            <a href="#none" class="btnNormal" onclick="Basket.estimatePrint(this)" link="/estimate/userform.html">견적서출력</a>
+				            <!-- <a href="#none" class="btnNormal" onclick="Basket.estimatePrint(this)" link="/estimate/userform.html">견적서출력</a> -->
 				        </span>
 					</div>
 					<!-- 총 주문금액 : 국내배송상품 -->
@@ -442,7 +440,7 @@
 						<span class="gRight">
 						
 						<!-- 쇼핑계속하기 누르면 상품 전체 페이지 뜨도록 -->
-	            			<a href="../product_all.html" class="btnNormalFix sizeM">쇼핑계속하기</a>
+	            			<a href="<%=request.getContextPath()%>/Product.do?command=ProdSelectAll" class="btnNormalFix sizeM">쇼핑계속하기</a>
 	        			</span>
 					</div>
 				</div>

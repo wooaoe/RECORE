@@ -2,6 +2,7 @@ package com.mvc.dao;
 
 import java.util.Map;
 import com.mvc.vo.Vo_Order;
+import com.mvc.vo.Vo_QnA;
 
 public interface MyPageDao {
 
@@ -18,6 +19,11 @@ public interface MyPageDao {
    public boolean My_deleteCart_One(int accseq, int prod_no); //장바구니 하나 삭제시
    
    public boolean My_deleteCart_All(int accseq); //장바구니 전체 삭제시
-
+   
+   public Vo_QnA My_selectBoardOne(int qna_no); //board 하나 select
+   
+   public boolean My_updateBoard(int accseq, int qna_no); //board 수정
+   
+   public boolean My_deleteBoard(int accseq, int qna_no); //board 삭제
    
 }

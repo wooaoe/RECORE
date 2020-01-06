@@ -18,6 +18,9 @@ import com.mvc.dao.AccountDaoImp;
 import com.mvc.dao.MyPageDaoImp;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
+import com.mvc.vo.Vo_Mypage_Paging;
+import com.mvc.vo.Vo_Product;
+import com.mvc.vo.Vo_QnA;
 
 @WebServlet("/mypage.do")
 public class Mypage_Controller extends HttpServlet {
@@ -32,10 +35,12 @@ public class Mypage_Controller extends HttpServlet {
       
       String command = request.getParameter("command");
       //임의로 로그인 세션 set
-      AccountDaoImp dao = new AccountDaoImp();
-      Vo_Account vo = dao.A_selectAccount("user1", "user1");
+//      AccountDaoImp dao = new AccountDaoImp();
+//      Vo_Account vo = dao.A_selectAccount("user1", "user1");
+      //로그인 객체 가져오기
       HttpSession session = request.getSession();
-      session.setAttribute("vo", vo);
+      Vo_Account vo = (Vo_Account)session.getAttribute("vo");
+//      session.setAttribute("vo", vo);
       
       //map 가져오기
       MyPageDaoImp mdao = new MyPageDaoImp();
@@ -47,31 +52,66 @@ public class Mypage_Controller extends HttpServlet {
       
       if(command.equals("orderlist")) {
          System.out.println(map.get("list_order"));
-         List test = (List)map.get("list_order");
-         if(test.isEmpty()) {
+         List list = (List)map.get("list_order");
+         System.out.println("orderlist 사이즈가??" + list.size());
+         int pageNo = Integer.parseInt(request.getParameter("pageno"));
+         System.out.println("pageNo : " + pageNo);
+         
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         paging.setPageNo(pageNo);
+         paging.setTotalCount(list.size());
+         System.out.println("paging vo의 startpage : " + paging.getStartPage());
+         System.out.println("paging vo의 endpage : " + paging.getEndPage());
+         
+         if(list.isEmpty()) {
             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
          }else {
             request.setAttribute("list_order", map.get("list_order"));
+            request.setAttribute("page", paging);
             dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
          }
          
       }else if(command.equals("main")){
-         List test = (List)map.get("list_order");
-         System.out.println("main에 넘어갈 사이즈"+test.size());
+         List list = (List)map.get("list_order");
+         System.out.println("main에 넘어갈 사이즈"+list.size());
          request.setAttribute("list_order", map.get("list_order"));
          dispatch("./RECOREMain/RECOREMypage/Mypage_Main.jsp", request, response);
          
       }else if(command.equals("fundinglist")) {
-         dispatch("./RECOREMain/RECOREMypage/Mypage_FundingList.jsp", request, response);
+    	  System.out.println(map.get("list_fun_d"));
+          List list = (List)map.get("list_fun_d");
+          int pageNo = Integer.parseInt(request.getParameter("pageno"));
+          System.out.println("pageNo : " + pageNo);
+          
+          Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+          paging.setPageNo(pageNo);
+          paging.setTotalCount(list.size());
+          
+          if(list.isEmpty()) {
+             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_FundingList.jsp");
+          }else {
+             request.setAttribute("list_fun", map.get("list_fun"));
+             request.setAttribute("list_fun_d", map.get("list_fun_d"));
+             request.setAttribute("page", paging);
+             dispatch("./RECOREMain/RECOREMypage/Mypage_FundingList.jsp", request, response);
+          }
          
       }else if(command.equals("wishlist")) {
          System.out.println(map.get("list_wish"));
-         List test = (List)map.get("list_wish");
-         if(test.isEmpty()) {
+         List list = (List)map.get("list_wish");
+         int pageNo = Integer.parseInt(request.getParameter("pageno"));
+         System.out.println("pageNo : " + pageNo);
+         
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         paging.setPageNo(pageNo);
+         paging.setTotalCount(list.size());
+         
+         if(list.isEmpty()) {
             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_WishList.jsp");
          }else {
             request.setAttribute("list_wish", map.get("list_wish"));
             System.out.println("서블릿 map의 wish : " + map.get("list_wish"));
+            request.setAttribute("page", paging);
             dispatch("./RECOREMain/RECOREMypage/Mypage_WishList.jsp", request, response);
          }
          
@@ -113,18 +153,69 @@ public class Mypage_Controller extends HttpServlet {
       }else if(command.equals("mileage")) {
          request.setAttribute("acc_point", vo.getAcc_point());
          request.setAttribute("list_order", map.get("list_order"));
-         List test = (List)map.get("list_order");
-         System.out.println(test.size());
+         List list = (List)map.get("list_order");
+         
+         int pageNo = Integer.parseInt(request.getParameter("pageno"));
+         System.out.println("pageNo : " + pageNo);
+         
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         paging.setPageNo(pageNo);
+         paging.setTotalCount(list.size());
+         
+         request.setAttribute("page", paging);
+         
+         System.out.println(list.size());
          dispatch("./RECOREMain/RECOREMypage/Mypage_Mileage2.jsp", request, response);
          
-      }else if(command.equals("board")) {
-         dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp", request, response);
+      }else if(command.equals("boardlist")) {
+    	 System.out.println("command : " + command);
+    	 List list = (List)map.get("list_qna");
+         int pageNo = Integer.parseInt(request.getParameter("pageno"));
+         System.out.println("pageNo : " + pageNo);
          
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         paging.setPageNo(pageNo);
+         paging.setTotalCount(list.size());
+    	 
+    	 if(list.isEmpty()) {
+    		 response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp");
+    	 }else {
+    		 request.setAttribute("list_qna", map.get("list_qna"));
+             request.setAttribute("page", paging);
+//    		 System.out.println("서블릿에서 listqna : " + map.get("list_qna"));
+    		 dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp", request, response);
+    	 }
+         
+      }else if(command.equals("boarddetail")) {
+    	  int qna_no = Integer.parseInt(request.getParameter("qnano"));
+    	  Vo_QnA vo_qna = mdao.My_selectBoardOne(qna_no);
+    	  request.setAttribute("vo_qna", vo_qna);
+    	  
+    	  Vo_Product vo_prod = pdao.P_selectOne(vo_qna.getQna_prod_no());
+    	  request.setAttribute("vo_prod", vo_prod);
+    	  request.setAttribute("catd", vo_prod.getProd_catd());
+    	  
+    	  dispatch("./RECOREMain/RECOREMypage/Mypage_Board_Detail.jsp", request, response);
+    	  
+      }else if(command.equals("deleteboard")) {
+    	  boolean result = Boolean.valueOf(request.getParameter("result"));
+    	  int qna_no = Integer.parseInt(request.getParameter("qnano"));
+    	  if(result) {
+    		  boolean res = mdao.My_deleteBoard(vo.getAcc_no(), qna_no);
+    		  if(res) {
+    	            jsResponse("삭제 성공", "mypage.do?command=boardlist&pageno=1", response);
+    	         }else {
+    	            jsResponse("삭제 실패", "mypage.do?command=boarddetail&qnano="+qna_no, response);
+    	         }
+    	  }else {
+    		  dispatch("mypage.do?command=boarddetail&qnano="+qna_no, request, response);
+    	  }
+    	  
       }else if(command.equals("cartlist")) {
          System.out.println("command : " + command);
-         List test = (List)map.get("list_cart");
+         List list = (List)map.get("list_cart");
          
-         if(test.isEmpty()) {
+         if(list.isEmpty()) {
             response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_Cart.jsp");
 //            dispatch("./RECOREMain/RECOREMypage/Mypage_Cart.jsp", request, response);
          }else {
@@ -215,7 +306,7 @@ public class Mypage_Controller extends HttpServlet {
       PrintWriter out = response.getWriter();
       out.print(s);
    }
-
+   
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       doGet(request, response);
    }
