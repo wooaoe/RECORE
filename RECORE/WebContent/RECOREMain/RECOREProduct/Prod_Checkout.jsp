@@ -9,6 +9,8 @@
 	<%@ page import = "com.mvc.vo.Vo_Prod_option" %>
 	<%@ page import = "com.mvc.vo.Vo_Product" %>
 	<%@ page import = "com.mvc.vo.Vo_Account" %>
+	<%@ page import = "com.mvc.vo.Vo_Order_Num" %>
+	<%@ page import = "com.mvc.vo.Vo_Order" %>
 	<%@ page import = "java.util.List" %>
 	<%@ page import = "java.util.ArrayList" %>
 	
@@ -79,27 +81,33 @@ RECORE-CHECKOUT
     	}
     	} */
     
-    </script>
-    
-    
+    </script>    
 </head>
 
 
 <body class = "series-site V2 layout-width-1000">
 
-	<% List<Vo_Prod_option> polist = (List)request.getAttribute("polist");%>
-	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); 
-		int price = 0;
-		for(int i = 0; i < polist.size(); i++){
+	<% List<Vo_Prod_option> polist = (List)request.getAttribute("polist"); %>
+	<% List<Vo_Order_Num> orderlist = (List)request.getAttribute("orderlist"); %>
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo");%> 
+	<%!	int price;
+		int amount;
+		String color;
+		String size;
+	%>
+	<%	for(int i = 0; i < polist.size(); i++){
 		 if(polist.get(i).getProd_no() == pvo.getProd_no()){
-			price = polist.get(i).getProd_stock() * pvo.getProd_price(); 
-		 }else{ 
-		} 	
+			price =  polist.get(i).getProd_stock() * pvo.getProd_price(); 
+			amount = polist.get(i).getProd_stock();
+			color = polist.get(i).getProd_color();
+			size = polist.get(i).getProd_size();
+		 }
 	   }
 	%>
 	
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
 	<% String[] arr = acc.getAcc_phone().split("-"); %>
+
 
 <!-- header -->
 	<%@ include file="/header.jsp" %>
@@ -151,29 +159,19 @@ RECORE-CHECKOUT
 								
 								<ul class="meta" style = "position: relative; top: 20px;">
 									<li><em>수량</em>
-									<% for(int i = 0; i < polist.size(); i++){ %>
-									<% if(pvo.getProd_no() == polist.get(i).getProd_no()) { %>
-										<span><%=polist.get(i).getProd_stock()%></span></li>
-									<li><em>옵션</em>&nbsp;<span><%=polist.get(i).getProd_color() %>,
-									<%=polist.get(i).getProd_size()%></span></li>
-									<% } else { %>
-									<% } %>
-									<% } %>
+									<span><%=amount%></span></li>
+									<li><em>옵션</em>&nbsp;<span><%=color%>, <%=size%></span></li>
+									
 								</ul>
 								<div class="options"></div>
 								</td>
 							<td class="price">
-							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
+							<fmt:formatNumber value="<%=price%>" groupingUsed="true">
 							</fmt:formatNumber>원
 							</td>
 							<!-- @@ 상품 수량 @@ -->
 							<td class="range">
-							<% for(int i = 0; i < polist.size(); i++){ %>
-									<% if(pvo.getProd_no() == polist.get(i).getProd_no()) { %>
-										<%=polist.get(i).getProd_stock()%>
-									<% } else { %>
-									<% } %>
-									<% } %>
+								<%=amount%>
 							</td>
 							<td class="delivery division" rowspan="1"><div>택배배송</div>
 								<div class="cost">배송비 무료</div></td>

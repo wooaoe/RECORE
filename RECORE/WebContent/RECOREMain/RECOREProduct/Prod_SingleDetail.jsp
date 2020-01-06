@@ -57,14 +57,43 @@
 <script type="text/javascript">
 
 	$(function(){
-		var color = $("#selcolor option:selected").val();
-		var size = $("#selsize option:selected").val();
+		$("#minus").click(function(e){
+			var stat = $('#number').val();
+			console.log('stat');
+			var num = parseInt(stat,10);
+			num--;
+			
+			if(num<0){
+			alert('최소 1개 이상 선택해주세요.');
+			num = 1;
+			}
+			$('#number').val(num);
+			
+		});
 		
-		alert(color);
-		alert(size);
-	});
+		$("#plus").click(function(e){
+			var stat = $('#number').val();
+			var num = parseInt(stat,10);
+			num++;
+			
+			if(num>5){
+			alert('최대 5개 이상 구매하실 수 없습니다.');
+			num=5;
+			}
+			$('#number').val(num);
+			
+		});
+		
+		});
 	
-
+		
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 </head>
@@ -177,9 +206,9 @@
 						<div class="product-size">
 							<span>색상:</span> 
 							<select class="form-control" id = "selcolor">
-								<option>선택</option>
+								<option value = "" selected = "selected">선택</option>
 								<c:forEach var = "color" items = "${povo}">
-								<option>${color.prod_color}</option>
+								<option value = "optionc">${color.prod_color}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -190,22 +219,31 @@
 						<div class="product-size">
 							<span>사이즈:</span> 
 							<select class="form-control" id = "selsize">
+								<option value = "" selected = "selected">선택</option>
 								<c:forEach var = "size" items = "${povo}">
-								<option>${size.prod_size}</option>
+								<option value = "options">${size.prod_size}</option>
 								</c:forEach>
 							</select>
 						</div>
-
+						<script type="text/javascript">
+							$(document).ready(function(){
+								
+								
+								
+							});
+						
+						
+						
+						</script>
 
 						<!-- @@상품 수량@@ -->
 						<div class="product-quantity">
 							<span>수량:</span>
 							<div class="product-quantity-slider">
 								<div class="input-group bootstrap-touchspin">
-								
 									<span class="input-group-btn">
 										<button id="minus" class="btn btn-default bootstrap-touchspin-down"
-											type="button" onclick="change(-1)"> -
+											type="button"> -
 										</button>
 									</span> 
 									
@@ -213,9 +251,10 @@
 										style="display: none;">
 									</span> 
 									
-									<input id="product-quantity"
-										type="text" value="0" name="product-quantity"
+									<input id="number"
+										type="text" value="1" name="product-quantity"
 										class="form-control" style="display: block;"> 
+										
 									<span class="input-group-addon bootstrap-touchspin-postfix"
 										style="display: none;">
 									</span> 
@@ -223,7 +262,7 @@
 									<span class="input-group-btn">
 										<button id="plus"
 											class="btn btn-default bootstrap-touchspin-up" type="button"
-											onclick="change(1)"> +
+										> +
 										</button>
 									</span>
 									
@@ -235,11 +274,14 @@
 
 						<!-- 최상위 폴더 / 해당파일이 존재하는 폴더 / 해당파일 -->
 						<br>
-						<div class = "color-swatches">
-							<span>총 금액 :</span><span id = "price" style = "margin-left: 5px;"><fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
+						<div class = "color-swatches" id = "total" style = "display:none;">
+							<span>총 금액 :</span>
+							<span id = "price" style = "margin-left: 5px;">
+							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원
 						</span>		
 						</div>
+						
 						<br><br>
 						<a href="../RECOREMypage/Mypage_Cart.jsp"
 							class="btn btn-main mt-20">장바구니</a>&nbsp;&nbsp;
@@ -247,6 +289,7 @@
 						class="btn btn-main mt-20">바로 구매</a>&nbsp;&nbsp; 
 						<a href="../RECOREMypage/Mypage_WishList.jsp" 
 						class="btn btn-main mt-20">관심상품</a>
+					
 					</div>
 				</div>
 			</div>
@@ -438,55 +481,6 @@
 		</div>
 	</section>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	<%-- <!-- Modal -->
-	<div class="modal product-modal fade" id="product-modal">
-		<button type="button" class="close" data-dismiss="modal"
-			aria-label="Close">
-			<i class="tf-ion-close"></i>
-		</button>
-		<div class="modal-dialog " role="document">
-			<!-- @@ modal 폼 사이즈와 위치 조절 @@ -->
-			<div class="modal-content" style = "position: relative; width: 650px; right: 90px;">
-				<div class="modal-body" style = "padding-top: 25px; padding-bottom: 25px;">
-					<div class="row">
-					<!-- @@ 해당 상품 사진 @@ -->
-					
-						<div class="col-md-8" >
-							<div class="modal-image">
-								<img  class="img-responsive"
-									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prodno}/f_img.png" /> 
-							</div>
-						</div>
-						
-						<!-- @@ 상품 이름, 가격, 상세 내용 들어가는 곳 @@ -->
-						<div class="col-md-3" style = "padding: 0px; margin-left: 15px;">
-							<div class="product-short-details">
-								<h2 class="product-title">---</h2>
-								<p class="product-price"><fmt:formatNumber value="${modal.prod_price}" groupingUsed="true">
-							</fmt:formatNumber>원</p>
-								<p class="product-short-description">${modal.prod_note}</p>
-								<a href="" class="btn btn-main" style = "display: flex; height: 6vh;
-								justify-content: center; align-items: center;">장바구니</a> 
-								<a href="Product.do?command=ProdDetail&pseq=${modal.prod_no}"
-									class="btn btn-transparent">상세페이지</a>
-							</div>
-						</div>
-					
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --%>
-	<%-- <%@ include file = "/modal.jsp" %> --%>
 	
 	<!-- @@ 화살표 누르면 상단으로 @@ -->
 	
