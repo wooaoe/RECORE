@@ -183,7 +183,7 @@
                       <a href= "Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
                         <li><a href="Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
+                        <li class = "has-children"><a href="Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
                         	<ul class = "dropdown arrow-down">
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
 								<li><a href = "Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	

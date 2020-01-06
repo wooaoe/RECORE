@@ -54,47 +54,59 @@
     }   
 </style>
 
-<script type="text/javascript">
-
-	$(function(){
-		$("#minus").click(function(e){
-			var stat = $('#number').val();
-			console.log('stat');
-			var num = parseInt(stat,10);
-			num--;
-			
-			if(num<0){
-			alert('최소 1개 이상 선택해주세요.');
-			num = 1;
-			}
-			$('#number').val(num);
-			
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+		$("#minus").click(function(){
+		var stat = $("#number").val();
+		var num = parseInt(stat, 10);
+		num--;
+											
+		if(num < 0){
+												
+		alert("최소 1개 이상 선택해주세요.");
+		num = 1;
+		}
+		$("#number").val(num);
+											
+		var amount = parseInt($("#number").val());
+		var price = ${pvo.prod_price};
+		var total = amount * price;
+		$("#price").val(total);
+											
 		});
 		
-		$("#plus").click(function(e){
-			var stat = $('#number').val();
-			var num = parseInt(stat,10);
-			num++;
-			
-			if(num>5){
-			alert('최대 5개 이상 구매하실 수 없습니다.');
-			num=5;
-			}
-			$('#number').val(num);
-			
+		$("#plus").click(function(){
+											
+		var stat = $("#number").val();
+		var num = parseInt(stat, 10);
+		num++;
+											
+		if(num > 10){
+		alert("최대 10개 이상 구매하실 수 없습니다.");
+		num = 1;
+		}
+		$("#number").val(num);
+											
+		var amount = parseInt($("#number").val());
+		var price = ${pvo.prod_price};
+		var total = amount * price;
+		$("#price").val(total);
+		});
+										
 		});
 		
-		});
-	
 		
+		function selectNum(){
+			
+			var selcolor = document.getElementById("selcolor");
+			var colortext = selcolor.options[document.getElementById("selcolor").selectedIndex].text;
+			var selsize = document.getElementById("selsize");
+			var sizetext = selsize.options[document.getElementById("selsize").selectedIndex].text;
+		}
 	
-	
-	
-	
-	
-	
-	
-</script>
+							
+	</script>
 
 </head>
 
@@ -113,7 +125,7 @@
 		  pvo.getProd_catd() == 12){ %>
 	<% url = "ChildSelectAll"; %>
 	<% } %>
-	
+	<%String url = "Product.do?command=Order&pseq=";%>
 	
 
 	<!--상품 상세 페이지 -->
@@ -203,38 +215,35 @@
 						<br> -->
 						
 						<br>
+						
+						<!-- @@ 상품 옵션 값 보내주기 @@ -->
+						<form action = "Product.do" method = "get" id = "form">
+						<input type = "hidden" name = "command" value = "Order"/> 
+						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/> 
+						
 						<div class="product-size">
 							<span>색상:</span> 
-							<select class="form-control" id = "selcolor">
-								<option value = "" selected = "selected">선택</option>
+							<select class="form-control" id = "selcolor" name = "color" onchange="selectNum();">
+								<option value = "choice">선택</option>
 								<c:forEach var = "color" items = "${povo}">
-								<option value = "optionc">${color.prod_color}</option>
+								<option value = "${color.prod_color}">${color.prod_color}</option>
 								</c:forEach>
 							</select>
 						</div>
-						
-						
 
 						<!-- @@사이즈@@ -->
 						<div class="product-size">
 							<span>사이즈:</span> 
-							<select class="form-control" id = "selsize">
-								<option value = "" selected = "selected">선택</option>
+							<select class="form-control" id = "selsize" name = "size" onchange="selectNum();">
+								<option value = "choice">선택</option>
+								
 								<c:forEach var = "size" items = "${povo}">
-								<option value = "options">${size.prod_size}</option>
+								<option value = "${size.prod_size}">${size.prod_size}</option>
 								</c:forEach>
+								
 							</select>
 						</div>
-						<script type="text/javascript">
-							$(document).ready(function(){
-								
-								
-								
-							});
 						
-						
-						
-						</script>
 
 						<!-- @@상품 수량@@ -->
 						<div class="product-quantity">
@@ -252,7 +261,7 @@
 									</span> 
 									
 									<input id="number"
-										type="text" value="1" name="product-quantity"
+										type="text" value="0" name="product-quantity"
 										class="form-control" style="display: block;"> 
 										
 									<span class="input-group-addon bootstrap-touchspin-postfix"
@@ -261,8 +270,8 @@
 									
 									<span class="input-group-btn">
 										<button id="plus"
-											class="btn btn-default bootstrap-touchspin-up" type="button"
-										> +
+											class="btn btn-default bootstrap-touchspin-up" 
+											type="button"> +
 										</button>
 									</span>
 									
@@ -274,25 +283,25 @@
 
 						<!-- 최상위 폴더 / 해당파일이 존재하는 폴더 / 해당파일 -->
 						<br>
-						<div class = "color-swatches" id = "total" style = "display:none;">
+						<div class = "color-swatches" id = "total">
 							<span>총 금액 :</span>
-							<span id = "price" style = "margin-left: 5px;">
-							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
-							</fmt:formatNumber>원
-						</span>		
+							<input id = "price" type = "text" value = "" name = "total" 
+							style="background-color:transparent; border:0 solid black;"/>
+							<span>원</span>
+							
 						</div>
 						
 						<br><br>
 						<a href="../RECOREMypage/Mypage_Cart.jsp"
 							class="btn btn-main mt-20">장바구니</a>&nbsp;&nbsp;
-						<a href="Product.do?command=Order&pseq=${pvo.prod_no}" 
-						class="btn btn-main mt-20">바로 구매</a>&nbsp;&nbsp; 
+						<input type = "submit" value = "바로구매" class = "btn btn-main mt-20"/>&nbsp;&nbsp; 
 						<a href="../RECOREMypage/Mypage_WishList.jsp" 
 						class="btn btn-main mt-20">관심상품</a>
-					
+						</form>
 					</div>
 				</div>
 			</div>
+			
 
 
 			<!-- @@ Detail / Q&A / Review @@ -->

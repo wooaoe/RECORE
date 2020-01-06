@@ -72,11 +72,6 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("parent selectAll" + parent);
 			request.setAttribute("parent", parent);
 			
-			/*
-			 * Vo_Category_Detail cdvo = dao.CD_selectAll2(catdid);
-			 * request.setAttribute("cdvo", cdvo);
-			 */
-			
 			List<Vo_Category_Detail> cdlist = dao.CD_selectAll(catdid);
 			request.setAttribute("cdlist", cdlist);
 			 
@@ -131,7 +126,6 @@ public class Product_Controller extends HttpServlet {
 			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
 			request.setAttribute("cdvo", cdvo);
 
-			/* List<Vo_Prod_option> povo = dao.po_selectOne(pvo); */
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
 			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
@@ -154,29 +148,27 @@ public class Product_Controller extends HttpServlet {
 
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
-
-			Vo_Category_Detail cdvo = dao.CD_selectOne(pvo);
-			request.setAttribute("cdvo", cdvo);
-
-			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
-			request.setAttribute("povo", povo);
-			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
-			
-			List<Vo_Product> plist = dao.P_selectAll();
-			System.out.println(plist);
-			request.setAttribute("plist", plist);
-			
-			List<Vo_Prod_option> polist = dao.option_selectAll();
-			System.out.println("polist : " + polist);
-			System.out.println("polist prodid : " + polist.get(0).getProd_id());
-			request.setAttribute("polist", polist);
-			
 			
 		    Vo_Account acc = account.A_selectAccount("user1", "user1");
 		    HttpSession session = request.getSession();
 		    session.setAttribute("acc", acc);
 			
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout.jsp", request, response);
+			
+		} else if(command.equals("Checkout")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			Vo_Account acc = account.A_selectAccount("user1", "user1");
+		    HttpSession session = request.getSession();
+		    session.setAttribute("acc", acc);
+		    
+			
+			dispatch("./RECOREMain/RECOREProduct/Payment_page.jsp", request, response);
 		}
 
 	}

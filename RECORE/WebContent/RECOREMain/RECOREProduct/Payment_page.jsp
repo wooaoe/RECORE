@@ -3,12 +3,15 @@
     
     <%request.setCharacterEncoding("UTF-8");%>
 	<%response.setContentType("text/html; charset=UTF-8");%>
+	<%@ page import = "com.mvc.vo.Vo_Account" %>
+    
+    <% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
     
     <%
-    String name = (String)request.getAttribute("name");
-    String email = (String)request.getAttribute("email");
-    String phone = (String)request.getAttribute("phone");
-    String address = (String)request.getAttribute("address");
+    String name = acc.getAcc_name();
+    String email = acc.getAcc_email();
+    String phone = acc.getAcc_phone();
+    String address = acc.getAcc_addr();
     int totalPrice = (int)request.getAttribute("totalPrice");    
 	%>
 	

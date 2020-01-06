@@ -90,7 +90,7 @@ RECORE-CHECKOUT
 	<% List<Vo_Prod_option> polist = (List)request.getAttribute("polist"); %>
 	<% List<Vo_Order_Num> orderlist = (List)request.getAttribute("orderlist"); %>
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo");%> 
-	<%!	int price;
+	<%-- <%!	int price;
 		int amount;
 		String color;
 		String size;
@@ -103,10 +103,14 @@ RECORE-CHECKOUT
 			size = polist.get(i).getProd_size();
 		 }
 	   }
-	%>
+	%> --%>
 	
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
 	<% String[] arr = acc.getAcc_phone().split("-"); %>
+	<% String[] color = request.getParameterValues("color");  %>
+	<% String[] size = request.getParameterValues("size"); %>
+	<% int amount = Integer.parseInt(request.getParameter("product-quantity")); %>
+	<% int totalPrice = Integer.parseInt(request.getParameter("total")); %>
 
 
 <!-- header -->
@@ -160,13 +164,20 @@ RECORE-CHECKOUT
 								<ul class="meta" style = "position: relative; top: 20px;">
 									<li><em>수량</em>
 									<span><%=amount%></span></li>
-									<li><em>옵션</em>&nbsp;<span><%=color%>, <%=size%></span></li>
+									<li><em>옵션</em>&nbsp;
 									
+									<span>
+									<% for(String c : color){
+										out.println(c);
+									}%>, <% for(String s : size){
+										out.println(s);
+									}%></span></li>
+									 
 								</ul>
 								<div class="options"></div>
 								</td>
 							<td class="price">
-							<fmt:formatNumber value="<%=price%>" groupingUsed="true">
+							<fmt:formatNumber value="<%=totalPrice%>" groupingUsed="true">
 							</fmt:formatNumber>원
 							</td>
 							<!-- @@ 상품 수량 @@ -->
@@ -188,7 +199,7 @@ RECORE-CHECKOUT
 					<c:set var = "sum" value = "${pvo.prod_price}"></c:set>
 						<strong>주문상품금액</strong>
 						<span>
-						<fmt:formatNumber value="<%=price%>" 
+						<fmt:formatNumber value="<%=totalPrice%>" 
 						groupingUsed="true"></fmt:formatNumber>원
 						</span>
 					</div>
@@ -209,7 +220,7 @@ RECORE-CHECKOUT
 				</div>
 				<div class="total">
 					<div>
-						<strong>총 주문금액</strong><span id="totalBasePriceV2"><em><fmt:formatNumber value="<%=price%>" 
+						<strong>총 주문금액</strong><span id="totalBasePriceV2"><em><fmt:formatNumber value="<%=totalPrice%>" 
 						groupingUsed="true"></fmt:formatNumber></em>원</span>
 					</div>
 				</div>
@@ -475,26 +486,22 @@ RECORE-CHECKOUT
 		
 		
 		<!-- 오른쪽에 뜨는 결제 정보 폼 -->
+		
 		<div style="min-height: 771.063px;" id = "paymentform">
 			<div class="react-sticky" style="transform: translateZ(0px);">
 				<article class="sticky-menu" style = "position: relative; bottom: 800px;">
+					<form action = "Product.do" method = "get">
 					<div class="sticky-bill" >
+					
 						<h1>결제정보</h1>
 						<div class="default-pay">
 							<div>
-								<strong>주문상품금액</strong><span><fmt:formatNumber value="<%=price%>" 
+								<strong>주문상품금액</strong><span><fmt:formatNumber value="<%=totalPrice%>" 
 						groupingUsed="true"></fmt:formatNumber><em>원</em></span>
 							</div>
 						</div>
 						<div class="sale-pay">
 						
-						<!-- 프로모션과 쿠폰 할인금액 제외 -->
-							<!-- <div>
-								<strong>총 프로모션 할인금액</strong><span>- 0<em>원</em></span>
-							</div>
-							<div>
-								<strong>총 쿠폰 할인금액</strong><span>- 0<em>원</em></span>
-							</div> -->
 							<div>
 								<strong>총 보유금 사용</strong><span>- 0<em>원</em></span>
 							</div>
@@ -506,16 +513,16 @@ RECORE-CHECKOUT
 						</div>
 						<div class="total">
 							<div>
-								<strong>총 결제예정금액</strong><span data-total-price="<fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber>"><em><fmt:formatNumber value="<%=price%>" 
-						groupingUsed="true"></fmt:formatNumber></em>원</span>
+								<strong>총 결제예정금액</strong><span>
+						<fmt:formatNumber value="<%=totalPrice%>" 
+						groupingUsed="true"></fmt:formatNumber>원</span>
 							</div>
 						</div>
 					</div>
 					
-					
 					<!-- 주문 동의 -->
-					<form>
+					<input type = "hidden" name = "command" value = "Checkout"/>
+					<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
 						<div class="order-agree">
 							<h5>주문동의</h5>
 							<p>
@@ -524,7 +531,7 @@ RECORE-CHECKOUT
 							</p>
 							<p class="">주문제작상품의 경우, 교환/반품이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.</p>
 							<span class="checkbox">
-							<input name="agree" type="checkbox"
+							<input type="checkbox"
 								id="agreeV2" value="" required oninvalid="this.setCustomValidity('동의란을 체크하세요.')">
 								<i></i></span>
 								<label for="agreeV2">동의합니다.</label>
