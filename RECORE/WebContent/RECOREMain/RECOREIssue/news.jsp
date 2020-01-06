@@ -206,16 +206,20 @@
           <div class="col-12 text-center">
             <span class="sub-title">뉴스</span>
             <h2 class="font-weight-bold text-black mb-5">News</h2>
-            <span class="" onclick="location.href='issue.do?command=insertpage&iss_catd_no=4'"
-			style="background-color:#a0d9d9;
-			width: 70px; 
-			height: 30px;
-			font-size:13px; 
-			text-align: center;
-			float: right; 
-			padding-top: 3px;
-			margin-bottom: 15px;
-			color:white;">글쓰기</span>
+            
+            <c:if test=""></c:if>
+	            <span class="" onclick="location.href='issue.do?command=insertpage&iss_catd_no=4'"
+				style="background-color:#a0d9d9;
+				width: 70px; 
+				height: 30px;
+				font-size:13px; 
+				text-align: center;
+				float: right; 
+				padding-top: 3px;
+				margin-bottom: 15px;
+				color:white;">글쓰기</span>
+			
+			
           </div>
         </div>
         
