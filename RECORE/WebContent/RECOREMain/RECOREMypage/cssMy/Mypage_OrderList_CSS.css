@@ -736,9 +736,9 @@ ol {
 }
 
 .ec-base-paginate li a.this {
-    padding-bottom: 6px;
+   /*  padding-bottom: 6px;
     border-bottom: 3px solid #495164;
-    color: #495164;
+    color: #495164; */
 }
 
 .ec-base-paginate li a {

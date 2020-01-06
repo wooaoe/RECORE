@@ -193,8 +193,14 @@
 					<ol>
 						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
 							<li class="xans-record-">
-								<a href="javascript:pageMove(${i})" class="this">${i}</a>
-								<%-- <a href="" class="this" onclick="pageMove(${i})">${i}</a> --%>
+								<c:choose>
+								<c:when test="${page.pageNo eq i}">
+									<a href="javascript:pageMove(${i})" class="" style="padding-bottom: 6px; border-bottom: 3px solid #495164; color: #495164;">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:pageMove(${i})" class="">${i}</a>
+								</c:otherwise>
+								</c:choose>
 							</li>
 						</c:forEach>
 				    </ol>

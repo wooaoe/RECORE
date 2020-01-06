@@ -80,6 +80,22 @@
   	color: white;
   }
   
+  .ec-base-paginate li a.this {
+    padding-bottom: 0px;
+    border-bottom: 0px;
+    color: #939393;
+  }
+  
+  .ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+  }
+  
   </style>
 </head>
 <body id="main">
