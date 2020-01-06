@@ -33,6 +33,12 @@ public class OrderController extends HttpServlet {
 		String command = request.getParameter("command");
 		System.out.printf("{%s}", command);
 		
+		if(command.equals("checkoutbtn")) {
+			
+			
+			
+		}
+		
 		
 		
 		
