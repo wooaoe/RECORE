@@ -74,6 +74,12 @@
   }
   </style>
 
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=mileage&pageno="+pageNo;
+	}
+</script>
 
 </head>
 <body id="main">
@@ -159,13 +165,15 @@
 									<p class="message ">적립금 내역이 없습니다.</p>
 								</c:if>
 								<c:if test="${null ne list_order}">
-								<c:forEach var="order" items="${list_order}">
+								<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
+								<c:if test="${order.order_point ne 0}">
 									<tr class="">
 										<td>${order.order_date}</td>
 				                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
 				                        <td>${order.order_no}</td>
 				                        <td class="left" id="left">사용</td>
 				                    </tr>
+				                </c:if>
 				                </c:forEach>
 								</c:if>
 								</tbody>
@@ -176,19 +184,24 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-historypaging ec-base-paginate">
-					<a href="/myshop/mileage/historyList.html?page=1" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="/myshop/mileage/historyList.html?page=1">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-"><a href="?page=1" class="this">1</a></li>
-	            	</ol>
-					<a href="/myshop/mileage/historyList.html?page=1">
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<a href="javascript:pageMove(${i})" class="this">${i}</a>
+								<%-- <a href="" class="this" onclick="pageMove(${i})">${i}</a> --%>
+							</li>
+						</c:forEach>
+				    </ol>
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="/myshop/mileage/historyList.html?page=1" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

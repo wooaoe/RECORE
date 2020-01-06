@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8");%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,11 +58,21 @@
   	top: 50%;
   }
   
- 
+  thead{
+  	text-align: center;
+  }
+  
+  a:link { color: black; text-decoration: none;}
+  a:visited { color: black; text-decoration: none;}
   
   </style>
 
-
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=fundinglist&pageno="+pageNo;
+	}
+</script>
 
 </head>
 
@@ -93,7 +105,7 @@
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorytab ec-base-tab ">
 					<ul class="menu">
 						<li class="selected">
-							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">펀딩내역조회 (0)</a>
+							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">펀딩내역조회 (${list_fun_d.size()})</a>
 						</li>
 				    <!--     <li class="">
 				       		<a href="/myshop/order/list.html?mode=cs&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">취소/반품/교환 내역 (0)</a>
@@ -114,13 +126,8 @@
 					        <div class="stateSelect ">
 					            <select id="order_status" name="order_status" class="fSelect">
 									<option value="all">전체 펀딩상태</option>
-									<option value="shipped_before">입금전</option>
-									<option value="shipped_standby">배송준비중</option>
-									<option value="shipped_begin">배송중</option>
-									<option value="shipped_complate">배송완료</option>
-									<option value="order_cancel">취소</option>
-									<option value="order_exchange">교환</option>
-									<option value="order_return">반품</option>
+									<option value="shipped_before">펀딩성공</option>
+									<option value="shipped_standby">펀딩실패</option>
 								</select>        
 							</div>
 							<!-- 기간 선택 -->
@@ -156,7 +163,7 @@
 				    </div>
 				    
 					<table border="1" summary="">
-						<caption>펀딩 참여 정보</caption>
+						<!-- <caption>펀딩 참여 정보</caption> -->
 				        <colgroup>
 							<col style="width:135px;">
 							<col style="width:93px;">
@@ -164,121 +171,89 @@
 							<col style="width:61px;">
 							<col style="width:111px;">
 							<col style="width:111px;">
-							<col style="width:111px;">
+							<!-- <col style="width:111px;"> -->
 						</colgroup>
 						<thead>
 							<tr>
-								<th scope="col">참여일자<br>[참여번호]</th>
+								<!-- <th scope="col">참여일자<br>[참여번호]</th> -->
+								<th scope="col">참여번호</th>
 				                <th scope="col">이미지</th>
-				                <th scope="col">상품정보</th>
+				                <th scope="col">펀딩정보</th>
 				                <th scope="col">수량</th>
-				                <th scope="col">상품구매금액</th>
-				                <th scope="col">주문처리상태</th>
-				                <th scope="col">취소/교환/반품</th>
+				                <th scope="col">펀딩참여금액</th>
+				                <th scope="col">펀딩성공여부</th>
+				                <!-- <th scope="col">취소/교환/반품</th> -->
 				            </tr>
 			            </thead>
-						<tbody class="center displaynone">
+						<tbody class="center">
+						<c:if test="${null eq list_fun_d}">
+							<tr><td colspan="6"><p class="message" style="border:0px;">펀딩 내역이 없습니다.</p></td></tr>
+						</c:if>
+						<c:if test="${null ne list_fun_d}">
+						<c:set var="count" value="0"></c:set>
+						<c:forEach var="fun" items="${list_fun_d}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
-								<td class="number displaynone">
-				                	<p></p>
-						            <p><a href="detail.html" class="line">[]</a></p>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">펀딩취소</a>
-				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
-				                    <a href="return.html" class="btnNormal displaynone">반품신청</a>
+								<td class="number">
+				                	<!-- <p></p> -->
+						            <p><a href="펀딩상세로 연결@@@@@@" class="line">[${fun.fpm_no}]</a></p>
+				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">펀딩취소</a> --> 
 				                </td>
 				                <td class="thumb">
 				                	<a href="/product/detail.html">
 				                	<img src="//img.echosting.cafe24.com/thumb/img_product_small.gif" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a>
 			                	</td>
 				                <td class="product left top">
-				                    <strong class="name"></strong>
-				                    <div class="option displaynone"></div>
-				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
+				                    <!-- <strong class="name">제목</strong> -->
+				                    <strong class="name"><br>
+				                    	<c:if test="${list_fun_d[count].fund_no eq list_fun[count].fund_no}">
+				                    		<a href="펀딩상세로 연결@@@@@@">${list_fun[count].fund_title}</a>
+				                    	</c:if>
+				                    </strong>
+				                    <!-- <div class="option"></div> -->
+				                    <!-- <ul class="xans-element- xans-myshop xans-myshop-optionset option">
 				                    	<li class=""><strong></strong> (개)</li>
-									</ul>
-									<p class="gBlank5 displaynone">무이자할부 상품</p>
+									</ul> -->
 				                </td>
-				                <td></td>
-				                <td class="right">
-									<strong></strong><div class="displaynone"></div>
-								</td>
-				                <td class="state">
-				                    <p class="txtEm"></p>
-				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
-				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
-				                </td>
-				                <td>
-				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
-				                    <p class="displaynone">-</p>
-				                </td>
-				            </tr>
-							<tr class="">
-								<td class="number displaynone">
-				                    <p></p>
-                                    <p><a href="detail.html" class="line">[]</a></p>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">펀딩취소</a>
-				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
-				                    <a href="return.html" class="btnNormal displaynone">반품신청</a>
-				                </td>
-				                <td class="thumb">
-				                	<a href="/product/detail.html">
-				                	<img src="//img.echosting.cafe24.com/thumb/img_product_small.gif" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="">
-				                	</a>
-			                	</td>
-				                <td class="product left top">
-				                    <strong class="name"></strong>
-				                    <div class="option displaynone"></div>
-				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
-										<li class=""><strong></strong> (개)</li>
-									</ul>
-									<p class="gBlank5 displaynone">무이자할부 상품</p>
-				                </td>
-				                <td></td>
+				                <td>1개</td>
 				                <td class="right">
 									<strong></strong>
-									<div class="displaynone"></div>
+									<fmt:formatNumber value="${fun.fpm_price}" groupingUsed="true"></fmt:formatNumber>원
 								</td>
-				                <td class="state">
-				                    <p class="txtEm"></p>
-				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
-				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
-				                </td>
 				                <td>
-				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
-				                    <p class="displaynone">-</p>
+				                    <!-- <p class=""><a href="#none" class="btnNormal" onclick="">상세정보</a></p> -->
+				                    <c:if test="${list_fun_d[count].fund_no eq list_fun[count].fund_no}">
+				                    	<c:if test="${list_fun[count].fund_sof eq 'F'}">실패</c:if>
+				                    	<c:if test="${list_fun[count].fund_sof eq 'S'}">성공</c:if>
+				                    </c:if>
 				                </td>
+				                <c:set var="count" value="${count+1}"></c:set>
 				            </tr>
+				        </c:forEach>
+				        </c:if>
 						</tbody>
 					</table>
-					<p class="message ">펀딩 내역이 없습니다.</p>
+					<!-- <p class="message ">펀딩 내역이 없습니다.</p> -->
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-">
-							<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="this">1</a>
-						</li>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<a href="javascript:pageMove(${i})" class="this">${i}</a>
+								<%-- <a href="" class="this" onclick="pageMove(${i})">${i}</a> --%>
+							</li>
+						</c:forEach>
 				    </ol>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

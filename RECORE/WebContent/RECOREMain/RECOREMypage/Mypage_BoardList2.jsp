@@ -75,6 +75,13 @@
   a:visited { color: black; text-decoration: none;}
   </style>
 
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=boardlist&pageno="+pageNo;
+	}
+</script>
+
 </head>
 <body id="main">
 <%
@@ -134,10 +141,10 @@
 					        </thead>
 							<tbody class=" center">
 							<c:if test="${null eq list_qna}">
-								<tr><td colspan="6"><p class="message">게시물이 없습니다.</p></td></tr>
+								<tr><td colspan="6"><p class="message" style="border:0px">게시물이 없습니다.</p></td></tr>
 							</c:if>
 							<c:if test="${null ne list_qna}">
-							<c:forEach var="qna" items="${list_qna}">
+							<c:forEach var="qna" items="${list_qna}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 								<!-- <tr class="xans-record-">
 									<td>2</td>
 					                <td><a href="/board/상품문의/6/" class="txtEm">상품문의</a></td>
@@ -157,7 +164,7 @@
 					                </td>
 					                <td class="left subject">
 					                	<img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_lock.gif" alt="비밀글" class="ec-common-rwd-image"> 
-					                	<a href="/board/product/read.html?no=261&amp;board_no=6">${qna.qna_title}</a> 
+					                	<a href="mypage.do?command=boarddetail&qnano=${qna.qna_no}">${qna.qna_title}</a> 
 					                </td>
 					                <td><%=acc.getAcc_name()%></td>
 					                <td><span class="txtNum">${qna.qna_regdate}</span></td>
@@ -172,14 +179,25 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-boardlistpaging ec-base-paginate">
-					<a href="?page=1">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
+						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
+					</a>
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-"><a href="?page=1" class="this">1</a></li>
-	            	</ol>
-					<a href="?page=1">
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<a href="javascript:pageMove(${i})" class="this">${i}</a>
+								<%-- <a href="" class="this" onclick="pageMove(${i})">${i}</a> --%>
+							</li>
+						</c:forEach>
+				    </ol>
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
+					</a>
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
+						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>
 	

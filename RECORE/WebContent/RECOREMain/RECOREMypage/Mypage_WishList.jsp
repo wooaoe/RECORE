@@ -104,6 +104,11 @@
 		location.href="mypage.do?command=deletecheckedwish&arr_chk="+Arr_prod_no;
 		console.log(Arr_prod_id);
 	}
+	
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=wishlist&pageno="+pageNo;
+	}
 </script>
 </head>
 
@@ -170,15 +175,15 @@
 			            	</c:if>
 			            	<!-- @@@@@wish 리스트 반복문@@@@@ -->
 			            	<c:if test="${null ne list_wish}"> 
-			            	<c:forEach var="wish" items="${list_wish}" varStatus="status">
+			            	<c:forEach var="wish" items="${list_wish}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 				            	<tr class="xans-record-">
 									<td id="chktd"><!-- wish_idx[] 원래 input name-->
 										<!-- <input name="chk" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox"> -->
 										<input type="checkbox" id="wish_idx_${status.index}" name="chk" value="${wish.prod_no}">
 									</td>
 					                <td class="thumb">
-					                	<a href="상품1경로@@@@@@@@@">
-					                		<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${wish.prod_no}/f_img.png">
+					                	<a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${wish.prod_no}&catdno=${wish.catd_no}">
+					                		<img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${wish.prod_no}/f_img.png">
 					                		<!-- <img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt=""> -->
 					                	</a>
 				                	</td>
@@ -186,7 +191,7 @@
 					                    <strong class="name">
 					                    <!-- <a href="상품1경로@@@@@" class="ec-product-name">[프레시버블]<br>유기농 소프넛(솝베리) 친환경 살림 세트 500g</a> -->
 					                    <%-- <a href="상품1경로@@@@@" class="ec-product-name"><%=vo_wish.get(0).getProd_name() %></a> --%>
-					                    	<a href="상품1경로@@@@@" class="ec-product-name"><strong>[${wish.prod_brand}]</strong><br>${wish.prod_name}</a>
+					                    	<a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${wish.prod_no}&catdno=${wish.catd_no}" class="ec-product-name"><strong>[${wish.prod_brand}]</strong><br>${wish.prod_name}</a>
 					                    </strong>
 					                    <ul class="xans-element- xans-myshop xans-myshop-optionall option">
 					                    	<li class="xans-record-">
@@ -232,7 +237,7 @@
 					                <%-- <td class="price right"><%=vo_wish2.get(0).getProd_price() %>원</td> --%>
 					                <td class="price right"><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원</td>
 					                <td class="button">
-					                    <a href="#none" onclick="NewWishlist.actionOrder('order', 0)" class="btnSubmit ">주문하기</a>
+					                    <a href="Product.do?command=Order&pseq=${wish.prod_no}" class="btnSubmit ">주문하기</a>
 					                    <!-- <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a> -->
 					                    <!-- <a href="mypage.do?command=insertcart&prod_id=수정@@@@@@@@" class="btnNormal ">장바구니담기</a> -->
 					                    <!-- <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a> -->
@@ -262,31 +267,34 @@
 					<span class="gLeft">
 				        <strong class="text">선택상품을</strong>
 				        <a href="#none" class="btnEm" onclick="deleteChecked();"><i class="icoDelete"></i> 삭제하기</a>
-				        <a href="#none" class="btnNormal" onclick="NewWishlist.basket();">장바구니 담기</a>
+				        <!-- <a href="#none" class="btnNormal" onclick="NewWishlist.basket();">장바구니 담기</a> -->
 				    </span>
 					<span class="gRight">
-				        <a href="#none" class="btnSubmitFix sizeM" onclick="NewWishlist.orderAll();">전체상품주문</a>
+				        <a href="#none" class="btnSubmitFix sizeM">전체상품주문</a>
 				        <!-- <a href="#none" class="btnEmFix sizeM" onclick="NewWishlist.deleteAll();">관심상품 비우기</a> -->
 				        <a href="mypage.do?command=deletewishall" class="btnEmFix sizeM">관심상품 비우기</a>
 				    </span>
 				</div>
 				
 				<div class="xans-element- xans-myshop xans-myshop-wishlistpaging ec-base-paginate">
-					<a href="#none" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="#none">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-">
-							<a href="?page=1" class="this">1</a>
-						</li>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<a href="javascript:pageMove(${i})" class="this">${i}</a>
+								<%-- <a href="" class="this" onclick="pageMove(${i})">${i}</a> --%>
+							</li>
+						</c:forEach>
 				    </ol>
-					<a href="#none">
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="#none" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

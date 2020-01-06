@@ -13,6 +13,7 @@ import java.util.Map;
 import static common.JDBCTemplate.*;
 
 import com.mvc.vo.Vo_Cart;
+import com.mvc.vo.Vo_Funding;
 import com.mvc.vo.Vo_Funding_detail;
 import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
@@ -28,13 +29,15 @@ public class MyPageDaoImp implements MyPageDao{
       ResultSet rs = null;
       Map<String,Object> map = new HashMap<String,Object>();
       List<Vo_Cart> list_cart = new ArrayList<Vo_Cart>();
-      List<Vo_Funding_detail> list_fun = new ArrayList<Vo_Funding_detail>();
+      List<Vo_Funding> list_fun = new ArrayList<Vo_Funding>();
+      List<Vo_Funding_detail> list_fun_d = new ArrayList<Vo_Funding_detail>();
       List<Vo_Order_Num> list_order = new ArrayList<Vo_Order_Num>();
       List<Vo_Order> list_order_option = new ArrayList<Vo_Order>();
       List<Vo_QnA> list_qna = new ArrayList<Vo_QnA>();
       List<Vo_Wish> list_wish = new ArrayList<Vo_Wish>();
       Vo_Cart vo_cart = null;
-      Vo_Funding_detail vo_fun = null;
+      Vo_Funding vo_fun = null;
+      Vo_Funding_detail vo_fun_d = null;
       Vo_Order vo_order_option = null;
       Vo_Order_Num vo_order = null;
       Vo_QnA vo_qna = null;
@@ -42,9 +45,9 @@ public class MyPageDaoImp implements MyPageDao{
       
 //      String sql_acc = "SELECT * FROM ACCOUNT WHERE ACC_NO=?"; //session에 있어서 필요없음
       String sql_cart = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
-      String sql_fun = "SELECT * FROM F_PM WHERE ACC_NO=?";
+      String sql_fun = "SELECT * FROM FUNDING JOIN F_PM USING(FUND_NO) WHERE ACC_NO=?";
       String sql_order = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=? ORDER BY ORDER_NO ASC";
-      String sql_qna = "SELECT * FROM QNA JOIN ACCOUNT USING(ACC_NO) WHERE ACC_NO=?";
+      String sql_qna = "SELECT * FROM QNA JOIN ACCOUNT USING(ACC_NO) WHERE ACC_NO=? ORDER BY QNA_NO DESC";
       String sql_wish = "SELECT * FROM WISH JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=?";
       
       System.out.println("쿼리준비");
@@ -56,10 +59,11 @@ public class MyPageDaoImp implements MyPageDao{
          rs = pstmt.executeQuery();
          System.out.println("cart 쿼리실행");
          while(rs.next()) {
-            vo_cart = new Vo_Cart(rs.getInt(3),rs.getInt(2), rs.getInt(1),
-                  rs.getString(9),rs.getString(12),
-                  rs.getString(11),rs.getInt(13),
-                  rs.getInt(4));
+            vo_cart = new Vo_Cart(rs.getInt(3),rs.getInt(2), 
+            					rs.getInt(1),rs.getInt(8),
+            					rs.getString(9),rs.getString(12),
+            					rs.getString(11),rs.getInt(13),
+            					rs.getInt(4));
             list_cart.add(vo_cart);
          }
          map.put("list_cart", list_cart);
@@ -74,14 +78,23 @@ public class MyPageDaoImp implements MyPageDao{
          rs = pstmt.executeQuery();
          
          while(rs.next()) {
-            vo_fun  = new Vo_Funding_detail(
-                  rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4),
-                  rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),
-                  rs.getString(9)
-                  );
+        	vo_fun = new Vo_Funding(rs.getInt(1),rs.getString(2),
+        							rs.getString(3),rs.getString(4),
+        							rs.getString(5),rs.getInt(6),
+        							rs.getInt(7),rs.getDate(8),
+        							rs.getDate(9),rs.getString(10)
+        							);
+            vo_fun_d  = new Vo_Funding_detail(rs.getInt(11),rs.getInt(1),
+            								rs.getInt(12),rs.getInt(13),
+            								rs.getString(14),rs.getString(15),
+            								rs.getString(16),rs.getString(17),
+            								rs.getString(18)
+            								);
             list_fun.add(vo_fun);
+            list_fun_d.add(vo_fun_d);
          }
          map.put("list_fun", list_fun);
+         map.put("list_fun_d", list_fun_d);
          
       } catch (SQLException e) {
          e.printStackTrace();
@@ -94,15 +107,15 @@ public class MyPageDaoImp implements MyPageDao{
          
          while(rs.next()) {
             vo_order_option = new Vo_Order(rs.getInt(1),rs.getInt(2),
-                            rs.getString(20),rs.getString(14),
-                            rs.getString(15),rs.getInt(10),
-                                 rs.getInt(11),rs.getString(12),
-                                 rs.getString(13));
+                            			rs.getString(20),rs.getString(14),
+                            			rs.getString(15),rs.getInt(10),
+                            			rs.getInt(11),rs.getString(12),
+                            			rs.getString(13));
             list_order_option.add(vo_order_option);
             
             vo_order = new Vo_Order_Num(rs.getInt(3),rs.getInt(4),
-                                 rs.getString(5),rs.getString(6),
-                                 rs.getString(7),rs.getDate(8),rs.getInt(9),
+            							rs.getString(5),rs.getString(6),
+            							rs.getString(7),rs.getDate(8),rs.getInt(9),
                                  list_order_option);
             list_order.add(vo_order);
          }
@@ -139,7 +152,10 @@ public class MyPageDaoImp implements MyPageDao{
          rs = pstmt.executeQuery();
          
          while(rs.next()) {
-            vo_wish = new Vo_Wish(rs.getInt(1),rs.getInt(2),rs.getString(4),rs.getString(7),rs.getString(6),rs.getInt(8));
+            vo_wish = new Vo_Wish(rs.getInt(1),rs.getInt(2),
+            					rs.getInt(3),rs.getString(4),
+            					rs.getString(7),rs.getString(6),
+            					rs.getInt(8));
             list_wish.add(vo_wish);
          }
          
@@ -282,5 +298,63 @@ public class MyPageDaoImp implements MyPageDao{
       
       return (res>0)?true:false;
    }
+
+	@Override
+	public Vo_QnA My_selectBoardOne(int qna_no) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Vo_QnA vo_qna = null;
+		String sql = "SELECT * FROM QNA JOIN PROD_OPTION ON(QNA_SEQ_NO=PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE QNA_NO=?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, qna_no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo_qna = new Vo_QnA(rs.getInt(2),rs.getInt(3),
+									rs.getInt(4),rs.getInt(5),
+									rs.getString(19),rs.getString(7),
+									rs.getString(8),rs.getInt(9),
+									rs.getDate(10),rs.getString(11),
+									rs.getInt(12),rs.getInt(13),
+									"user1",rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs,pstmt,con);
+		}
+		
+		return vo_qna;
+	}
+	
+	@Override
+	public boolean My_updateBoard(int accseq, int qna_no) {
+		return false;
+	}
+	
+	@Override
+	public boolean My_deleteBoard(int accseq, int qna_no) { //어짜피 본인 계정의 마이페이지에서 삭제하는거라 accseq는 사용안함
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		int res = 0;
+		String sql = "DELETE FROM QNA WHERE QNA_NO=?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, qna_no);
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt,con);
+		}
+		return (res>0)?true:false;
+	}
 
 }
