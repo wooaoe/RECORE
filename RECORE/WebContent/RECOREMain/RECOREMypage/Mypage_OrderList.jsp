@@ -71,6 +71,25 @@
   .ec-base-table .message {
     border: 0px;
   }
+  .ec-base-paginate li a:hover {
+    text-decoration: none;
+    background: #f0f2f2;
+  }
+  .ec-base-paginate li a.this {
+  	padding-bottom: 9px;
+    border-bottom: 0px;
+    color: #939393;
+  }
+  
+  .ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+  }
   
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
@@ -81,6 +100,12 @@
   
   </style>
 
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=orderlist&pageno="+pageNo;
+	}
+</script>
 </head>
 
 <body id="main">
@@ -94,6 +119,16 @@
 	<div id="wrap">
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
+	        	
+	        	<!-- <div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="/">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>주문조회</strong></li>
+				    </ol>
+				</div> -->
+	        	
 				<div class="titleArea">
 				    <h2>주문조회</h2>
 				</div>
@@ -197,7 +232,7 @@
 						</c:if>
 						<c:if test="${null ne list_order}">
 						<c:set var="count" value="0"></c:set>
-						<c:forEach var="order" items="${list_order}">
+						<c:forEach var="order" items="${list_order}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
 								<td class="number ">
 				                	<br><p>${order.order_date}
@@ -251,21 +286,30 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-">
-							<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="this">1</a>
-						</li>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<c:choose>
+								<c:when test="${page.pageNo eq i}">
+									<a href="javascript:pageMove(${i})" class="" style="padding-bottom: 6px; border-bottom: 3px solid #495164; color: #495164;">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:pageMove(${i})" class="">${i}</a>
+								</c:otherwise>
+								</c:choose>
+							</li>
+						</c:forEach>
 				    </ol>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

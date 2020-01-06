@@ -74,6 +74,12 @@
   }
   </style>
 
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=mileage&pageno="+pageNo;
+	}
+</script>
 
 </head>
 <body id="main">
@@ -94,6 +100,15 @@
 	<div id="wrap">
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
+	        	
+	        	<!-- <div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="/">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>적립금</strong></li>
+				    </ol>
+				</div> -->
 	
 				<div class="xans-element- xans-myshop xans-myshop-mileagehistorypackage ">
 					<div class="xans-element- xans-myshop xans-myshop-head titleArea ">
@@ -150,13 +165,15 @@
 									<p class="message ">적립금 내역이 없습니다.</p>
 								</c:if>
 								<c:if test="${null ne list_order}">
-								<c:forEach var="order" items="${list_order}">
+								<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
+								<c:if test="${order.order_point ne 0}">
 									<tr class="">
 										<td>${order.order_date}</td>
 				                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
 				                        <td>${order.order_no}</td>
 				                        <td class="left" id="left">사용</td>
 				                    </tr>
+				                </c:if>
 				                </c:forEach>
 								</c:if>
 								</tbody>
@@ -167,19 +184,30 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-historypaging ec-base-paginate">
-					<a href="/myshop/mileage/historyList.html?page=1" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="/myshop/mileage/historyList.html?page=1">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-"><a href="?page=1" class="this">1</a></li>
-	            	</ol>
-					<a href="/myshop/mileage/historyList.html?page=1">
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<c:choose>
+								<c:when test="${page.pageNo eq i}">
+									<a href="javascript:pageMove(${i})" class="" style="padding-bottom: 6px; border-bottom: 3px solid #495164; color: #495164;">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:pageMove(${i})" class="">${i}</a>
+								</c:otherwise>
+								</c:choose>
+							</li>
+						</c:forEach>
+				    </ol>
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="/myshop/mileage/historyList.html?page=1" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

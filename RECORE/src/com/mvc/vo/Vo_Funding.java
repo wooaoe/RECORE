@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Vo_Funding {
 
 	private int fund_no; //펀딩 번호
-	private int fund_catd_no; //카테고리 번호
+//	private int fund_catd_no; //카테고리 번호
 	private String fund_front_img; //펀딩 대표 이미지
 	private String fund_title; //제목
 	private String fund_creater; //작성자
@@ -22,12 +22,10 @@ public class Vo_Funding {
 
 	}
 
-	public Vo_Funding(int fund_no, int fund_catd_no, String fund_front_img, String fund_title, String fund_creater,
-			String fund_content, int fund_con_count, int fund_target_price, Date fund_regdate, Date fund_deadline,
-			String fund_sof) {
+	public Vo_Funding(int fund_no, String fund_front_img, String fund_title, String fund_creater, String fund_content,
+			int fund_con_count, int fund_target_price, Date fund_regdate, Date fund_deadline, String fund_sof) {
 		super();
 		this.fund_no = fund_no;
-		this.fund_catd_no = fund_catd_no;
 		this.fund_front_img = fund_front_img;
 		this.fund_title = fund_title;
 		this.fund_creater = fund_creater;
@@ -45,14 +43,6 @@ public class Vo_Funding {
 
 	public void setFund_no(int fund_no) {
 		this.fund_no = fund_no;
-	}
-
-	public int getFund_catd_no() {
-		return fund_catd_no;
-	}
-
-	public void setFund_catd_no(int fund_catd_no) {
-		this.fund_catd_no = fund_catd_no;
 	}
 
 	public String getFund_front_img() {
@@ -129,11 +119,10 @@ public class Vo_Funding {
 
 	@Override
 	public String toString() {
-		return "Vo_Funding [fund_no=" + fund_no + ", fund_catd_no=" + fund_catd_no + ", fund_front_img="
-				+ fund_front_img + ", fund_title=" + fund_title + ", fund_creater=" + fund_creater + ", fund_content="
-				+ fund_content + ", fund_con_count=" + fund_con_count + ", fund_target_price=" + fund_target_price
-				+ ", fund_regdate=" + fund_regdate + ", fund_deadline=" + fund_deadline + ", fund_sof=" + fund_sof
-				+ "]";
+		return "Vo_Funding [fund_no=" + fund_no + ", fund_front_img=" + fund_front_img + ", fund_title=" + fund_title
+				+ ", fund_creater=" + fund_creater + ", fund_content=" + fund_content + ", fund_con_count="
+				+ fund_con_count + ", fund_target_price=" + fund_target_price + ", fund_regdate=" + fund_regdate
+				+ ", fund_deadline=" + fund_deadline + ", fund_sof=" + fund_sof + "]";
 	}
 
 }
