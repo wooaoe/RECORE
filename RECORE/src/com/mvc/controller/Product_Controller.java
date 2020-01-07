@@ -149,6 +149,9 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
+			
+			
+			
 		    Vo_Account acc = account.A_selectAccount("user1", "user1");
 		    HttpSession session = request.getSession();
 		    session.setAttribute("acc", acc);
@@ -169,6 +172,20 @@ public class Product_Controller extends HttpServlet {
 		    
 			
 			dispatch("./RECOREMain/RECOREProduct/Payment_page.jsp", request, response);
+			
+		} else if(command.equals("complete")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			Vo_Account acc = account.A_selectAccount("user1", "user1");
+		    HttpSession session = request.getSession();
+		    session.setAttribute("acc", acc);
+			
+			dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
 		}
 
 	}

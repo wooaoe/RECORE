@@ -11,8 +11,7 @@
 	<%@ page import = "com.mvc.vo.Vo_Account" %>
 	<%@ page import = "com.mvc.vo.Vo_Order_Num" %>
 	<%@ page import = "com.mvc.vo.Vo_Order" %>
-	<%@ page import = "java.util.List" %>
-	<%@ page import = "java.util.ArrayList" %>
+	
 	
 <!DOCTYPE html>
 <html>
@@ -47,8 +46,12 @@ RECORE-CHECKOUT
 
 <link rel="stylesheet" href="https://assets.kolonmall.com/_ui/css/kop/desktop/Order-a59824e1c6.css"/>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
 
+	<!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 	<%@ include file = "/head.jsp" %>
     
@@ -73,37 +76,13 @@ RECORE-CHECKOUT
     
     </style>
     
-    <script type="text/javascript">
-    
-  /*   $(document).ready(function(){
-    	if($("#agreeV2").is(":checked")){
-    		window.onload = "location.href = ''";
-    	}
-    	} */
-    
-    </script>    
 </head>
 
 
 <body class = "series-site V2 layout-width-1000">
 
-	<% List<Vo_Prod_option> polist = (List)request.getAttribute("polist"); %>
-	<% List<Vo_Order_Num> orderlist = (List)request.getAttribute("orderlist"); %>
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo");%> 
-	<%-- <%!	int price;
-		int amount;
-		String color;
-		String size;
-	%>
-	<%	for(int i = 0; i < polist.size(); i++){
-		 if(polist.get(i).getProd_no() == pvo.getProd_no()){
-			price =  polist.get(i).getProd_stock() * pvo.getProd_price(); 
-			amount = polist.get(i).getProd_stock();
-			color = polist.get(i).getProd_color();
-			size = polist.get(i).getProd_size();
-		 }
-	   }
-	%> --%>
+	
 	
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
 	<% String[] arr = acc.getAcc_phone().split("-"); %>
@@ -111,7 +90,75 @@ RECORE-CHECKOUT
 	<% String[] size = request.getParameterValues("size"); %>
 	<% int amount = Integer.parseInt(request.getParameter("product-quantity")); %>
 	<% int totalPrice = Integer.parseInt(request.getParameter("total")); %>
+	<%
+    String name = acc.getAcc_name();
+    String email = acc.getAcc_email();
+    String phone = acc.getAcc_phone();
+    String address = acc.getAcc_addr();
+    %>
+    
+	<script type="text/javascript">
+    function payment(){
+	
+		var IMP = window.IMP; // 생략해도 괜찮습니다.
+		IMP.init("imp92732234"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+        var msg;
+        
+        IMP.request_pay({
+            pg : 'kakaopay',
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + new Date().getTime(),
+            name : 'KH Books 도서 결제',
+            amount : <%=totalPrice%>
+            buyer_email : '<%=email%>',
+            buyer_name : '<%=name%>',
+            buyer_tel : '<%=phone%>',
+            buyer_addr : '<%=address%>',
+            buyer_postcode : '123-456',
+            // 'http://www.iamport.kr/mobile/landing'; 
+            
+        }, function(rsp) {
+            if ( rsp.success ) {
+                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                jQuery.ajax({
+                    url: "https://www.myservice.com/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        imp_uid : rsp.imp_uid
+                        //기타 필요한 데이터가 있으면 추가 전달
+                    }
+                }).done(function(data) {
+                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                    if ( everythings_fine ) {
+                        msg = '결제가 완료되었습니다.';
+                        msg += '\n고유ID : ' + rsp.imp_uid;
+                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                        msg += '\결제 금액 : ' + rsp.paid_amount;
+                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                        
+                        alert(msg);
+                        
+                    } else {
+                        //[3] 아직 제대로 결제가 되지 않았습니다.
+                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                    }
+                });
+                //성공시 이동할 페이지
+                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
+            } else {
+                msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                //실패시 이동할 페이지
+                 location.href="<%=request.getContextPath()%>/order/payFail";
+                alert(msg);
+            }
+        }
+	}
+        });
+   
 
+</script>  
 
 <!-- header -->
 	<%@ include file="/header.jsp" %>
@@ -176,6 +223,9 @@ RECORE-CHECKOUT
 								</ul>
 								<div class="options"></div>
 								</td>
+							<script type="text/javascript">
+							
+							</script>
 							<td class="price">
 							<fmt:formatNumber value="<%=totalPrice%>" groupingUsed="true">
 							</fmt:formatNumber>원
@@ -490,7 +540,8 @@ RECORE-CHECKOUT
 		<div style="min-height: 771.063px;" id = "paymentform">
 			<div class="react-sticky" style="transform: translateZ(0px);">
 				<article class="sticky-menu" style = "position: relative; bottom: 800px;">
-					<form action = "Product.do" method = "get">
+					
+					
 					<div class="sticky-bill" >
 					
 						<h1>결제정보</h1>
@@ -521,8 +572,7 @@ RECORE-CHECKOUT
 					</div>
 					
 					<!-- 주문 동의 -->
-					<input type = "hidden" name = "command" value = "Checkout"/>
-					<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
+					
 						<div class="order-agree">
 							<h5>주문동의</h5>
 							<p>
@@ -537,12 +587,12 @@ RECORE-CHECKOUT
 								<label for="agreeV2">동의합니다.</label>
 							<div class="buttons end-row">
 							
-							<input type="submit" value = "결제하기" class="ladda-button btn btn-order btn-big"
-							id="checkout" data-style="zoom-in">
+							<button type="button" value = "" class="ladda-button btn btn-order btn-big"
+							id="checkout" data-style="zoom-in" onclick = "payment();">결제하기</button>
 							<div class="ladda-progress" style="width: 0px;"></div>
 					</div>
 						</div>
-					</form>
+					
 					
 				</article>
 			</div>

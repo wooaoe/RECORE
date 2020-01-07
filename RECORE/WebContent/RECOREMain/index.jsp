@@ -53,16 +53,16 @@
               	
               	<!-- 로그인 안되어있을 때 -->
               	<c:if test="${empty vo }">
-                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                <a href="../Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="../Account_Controller.do?command=signuppage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+                  <a href="../Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                   <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-                  <a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
+                  <a href="../Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
                  </c:if>
                  
@@ -75,8 +75,6 @@
     				<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
                     <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
     			</c:if>
-                 
-                 
                  
               </div>
             </div>

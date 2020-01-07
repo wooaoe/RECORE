@@ -125,7 +125,6 @@
 		  pvo.getProd_catd() == 12){ %>
 	<% url = "ChildSelectAll"; %>
 	<% } %>
-	<%String url = "Product.do?command=Order&pseq=";%>
 	
 
 	<!--상품 상세 페이지 -->
@@ -217,9 +216,12 @@
 						<br>
 						
 						<!-- @@ 상품 옵션 값 보내주기 @@ -->
-						<form action = "Product.do" method = "get" id = "form">
-						<input type = "hidden" name = "command" value = "Order"/> 
-						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/> 
+						
+						
+						<form action = "" method = "get" id = "form">
+						
+						<input type = "hidden" name = "command" value = "" id = "val"/> 
+						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
 						
 						<div class="product-size">
 							<span>색상:</span> 
@@ -291,13 +293,21 @@
 							
 						</div>
 						
+						
 						<br><br>
-						<a href="../RECOREMypage/Mypage_Cart.jsp"
-							class="btn btn-main mt-20">장바구니</a>&nbsp;&nbsp;
-						<input type = "submit" value = "바로구매" class = "btn btn-main mt-20"/>&nbsp;&nbsp; 
-						<a href="../RECOREMypage/Mypage_WishList.jsp" 
-						class="btn btn-main mt-20">관심상품</a>
+						<input type = "submit" value = "장바구니" id = "cart" 
+						onclick="javascript: form.action='mypage.do'; document.getElementById('val').value='cartlist';"
+							class="btn btn-main mt-20">&nbsp;&nbsp;
+							
+						<input type = "submit" value = "바로구매" id = "pay" 
+						onclick="javascript: form.action='Product.do'; document.getElementById('val').value='Order';"
+						class = "btn btn-main mt-20" />&nbsp;&nbsp; 
+						
+						<input type = "submit" value = "관심상품" id = "wish"
+						onclick="javascript: form.action='mypage.do'; document.getElementById('val').value='wishlist';"
+						class="btn btn-main mt-20">
 						</form>
+						
 					</div>
 				</div>
 			</div>

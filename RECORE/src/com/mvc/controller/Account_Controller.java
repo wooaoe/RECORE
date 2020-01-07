@@ -95,7 +95,26 @@ public class Account_Controller extends HttpServlet {
 			} else {
 
 			}
-		}
+		}else if(command.equals("loginpage")) {
+	        
+			response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Login.jsp");
+			
+	      } else if(command.equals("signuppage")) {
+	    	  
+	         response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Signup.jsp");
+	         
+	      }else if(command.equals("editpage")) {
+	    	  
+	         HttpSession session = request.getSession();
+	         Vo_Account vo = (Vo_Account) session.getAttribute("vo");
+	         
+	         if(vo!=null) {
+	            response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Edit.jsp");
+	         }else {
+	            response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Login.jsp");
+	         }
+	         
+	      }
 
 	}
 

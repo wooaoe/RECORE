@@ -12,7 +12,7 @@
     String email = acc.getAcc_email();
     String phone = acc.getAcc_phone();
     String address = acc.getAcc_addr();
-    int totalPrice = (int)request.getAttribute("totalPrice");    
+    int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 	%>
 	
 <!DOCTYPE html>
@@ -21,8 +21,10 @@
 <meta charset="UTF-8">
 <title>RECORE - ORDER</title>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 </head>
 <body>
@@ -30,8 +32,9 @@
 <script type="text/javascript">
 
 $(function(){
-        var IMP = window.IMP; // 생략가능
-        IMP.init('imp97802022'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	
+		var IMP = window.IMP; // 생략해도 괜찮습니다.
+		IMP.init("imp92732234"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
         var msg;
         
         IMP.request_pay({
@@ -39,19 +42,19 @@ $(function(){
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
             name : 'KH Books 도서 결제',
-            amount : <%=totalPrice%>,
+            amount : <%=totalPrice%>
             buyer_email : '<%=email%>',
             buyer_name : '<%=name%>',
             buyer_tel : '<%=phone%>',
             buyer_addr : '<%=address%>',
             buyer_postcode : '123-456',
-            //m_redirect_url : 'http://www.naver.com'
+            // 'http://www.iamport.kr/mobile/landing'; 
             
         }, function(rsp) {
             if ( rsp.success ) {
                 //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                 jQuery.ajax({
-                    url: "/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
+                    url: "https://www.myservice.com/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -75,24 +78,22 @@ $(function(){
                     }
                 });
                 //성공시 이동할 페이지
-                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+ msg;
+                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
                 //실패시 이동할 페이지
-                location.href="<%=request.getContextPath()%>/order/payFail";
+                 location.href="<%=request.getContextPath()%>/order/payFail";
                 alert(msg);
             }
+        }
+}
         });
         
-    });
+   
 
 </script>
-	<table>
-		<tr>
-			<td id = "ordercomplete">결제가 완료되었습니다.</td>
-		</tr>
-	</table>
+	
 
 
 </body>
