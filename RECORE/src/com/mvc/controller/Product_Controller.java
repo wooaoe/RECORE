@@ -149,9 +149,6 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
-			
-			
-			
 		    Vo_Account acc = account.A_selectAccount("user1", "user1");
 		    HttpSession session = request.getSession();
 		    session.setAttribute("acc", acc);

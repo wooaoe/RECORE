@@ -1094,7 +1094,7 @@ html {
 										<th scope="row">주소 <img src="//img.echosting.cafe24.com/skin/base/common/ico_required_blue.gif" class="displaynone" alt="필수" />
 										</th>
 										<td>
-										<input type="hidden" id="confmKey" name="confmKey" value=""  >
+										<input type="hidden" id="confmKey" name="confmKey" value="">
 										<input type="text" id="zipNo" name="zipNo" fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg="" class="inputTypeText" placeholder="우편번호" readonly="readonly"
 											maxlength="14" value="" type="text" /> 
 										<a onclick="goPopup();" class="btnNormal" id="postBtn">주소검색</a><br/> 

@@ -153,12 +153,28 @@ RECORE-CHECKOUT
                  location.href="<%=request.getContextPath()%>/order/payFail";
                 alert(msg);
             }
-        }
-	}
+        
+	
         });
    
+</script>
 
-</script>  
+<script language="javascript">
+function goPopup(){
+	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
+    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
+    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+}
+/** API 서비스 제공항목 확대 (2017.02) **/
+function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+					, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+	document.form.roadAddrPart1.value = roadAddrPart1;
+	document.form.addrDetail.value = addrDetail;
+	document.form.zipNo.value = zipNo;
+}
+</script>
 
 <!-- header -->
 	<%@ include file="/header.jsp" %>
@@ -301,36 +317,46 @@ RECORE-CHECKOUT
 					<dt></dt>
 					<dd class="min-height-auto">
 						<div class="col-2 col-3 radio-wrap">
-							<span class="radio"><input name="deliveryType"
-								type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;<label
-								for="user_sameV2">주문고객과 동일</label></span><span class="radio"><input
-								name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp;<label
-								for="new_addrV2">새로 입력</label></span><span class="radio"><input
-								name="deliveryType" type="radio" id="cvs_addrV2" value="CVSNET">
+							<span class="radio">
+							<input name="deliveryType"
+								type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
+								<label for="user_sameV2">주문고객과 동일</label></span>
+								<span class="radio">
+								<input name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp;
+								<label for="new_addrV2">새로 입력</label></span><span class="radio">
+								<input name="deliveryType" type="radio" id="cvs_addrV2" value="CVSNET">
 								</span>
 							<button type="button" class="btn btn-line btn-small" style = "background-color:#A0D9D9; color: white">
-							나의 	배송지</button>
+							나의 	배송지
+							</button>
 						</div>
 					</dd>
 					
+					<form id = "form" name = "form">
 					<div style= "display: block;">
 						<dt>
 							우편번호<em class="required" aria-required="true">필수</em>
 						</dt>
 						<dd>
+						
 							<div class="row">
 								<div class="col-2">
-									<input name="postalCode" type="text" id="postalCode"
-										readonly="" value="">
+								<input type="hidden" id="confmKey" name="confmKey" value="">
+									<input type="text" id="zipNo" name="zipNo" fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg="" class="inputTypeText" placeholder="우편번호" readonly="readonly"
+											maxlength="14" value="" type="text" /> 
 								</div>
 								<div class="col-3">
-									<button type="button" class="btn btn-line btn-small" style = "background-color:#A0D9D9; color: white;">
+									<button type="button" class="btn btn-line btn-small" 
+									style = "background-color:#A0D9D9; color: white;" onclick = "goPopup();">
 									우편번호찾기</button>
 								</div>
 							</div>
+							<div class = "row">
+							<input type="text" id="roadAddrPart1" name="roadAddrPart1" 
+							class="inputTypeText" placeholder="도로명주소" readonly="readonly" value="" />
+							</div>
 							<div class="row">
-								<input name="line1" type="text" class="full"
-									placeholder="상세주소를 입력하세요." readonly="" value="">
+								<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" value="" />
 							</div>
 						</dd>
 					</div>
@@ -340,10 +366,11 @@ RECORE-CHECKOUT
 						</dt>
 						<dd>
 							<div class="row">
-								ddddddddd
+							
 							</div>
 						</dd>
 					</div>
+					</form>
 					
 					<!-- 휴대폰/전화번호/배송메모 입력받는 폼 -->
 					<dt>
@@ -351,15 +378,18 @@ RECORE-CHECKOUT
 					</dt>
 					<dd>
 						<div class="col-phone">
-							<input type="hidden" name="cellPhone"><select
-								name="cellPhone1"><option value="010">010</option>
+							<input type="hidden" name="cellPhone">
+							<select	name="cellPhone1">
+								<option value="010">010</option>
 								<option value="011">011</option>
 								<option value="016">016</option>
 								<option value="017">017</option>
 								<option value="018">018</option>
-								<option value="019">019</option></select><input name="cellPhone2"
-								type="tel" maxlength="4" value="<%= arr[1]%>"><input
-								name="cellPhone3" type="tel" maxlength="4" value="<%=arr[2]%>">
+								<option value="019">019</option>
+							</select>
+							<input name="cellPhone2"
+								type="tel" maxlength="4" value="<%= arr[1]%>">
+							<input name="cellPhone3" type="tel" maxlength="4" value="<%=arr[2]%>">
 						</div>
 					</dd>
 					<dt>전화번호</dt>

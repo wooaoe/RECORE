@@ -62,12 +62,10 @@
   
   <%@ include file = "/header.jsp" %>
     
-    
-    
     <div id="wrap">
     
     <div id="container">
-        <div id="content" style="margin-top: 100px;">
+    <div id="content" style="margin-top: 100px;">
             
 	<div class="path">
     <span>현재 위치</span>
@@ -77,11 +75,6 @@
         <li title="현재 위치"><strong>주문완료</strong></li>
     </ol>
     </div>
-    <!-- ul class="cart-step">
-			<span>장바구니</span>
-			<span class="active">주문서작성</span>
-			<span class="last">주문완료</span>
-		</ul> -->
 
 	<div class="titleArea">
     <h2>주문완료</h2>
@@ -92,34 +85,11 @@
 	<input id="bank_url_hidden" name="bank_url_hidden" value="" type="hidden">
 	<div class="xans-element- xans-order xans-order-result xans-record-">
 	
-	<!-- Google Tag Manager | 누구나데이터 | 2019.12 -->
-	<script>
-    var totalOrderValue = '15,000'.replace(',','');
-    var totalShipFee = '2,500'.replace(',','');
-    var totalDiscountValue = '2,500'.replace(',','');
-    var prdList = [];
-
-    dataLayer.push({
-      'event': 'purchase',
-      'ecommerce': {
-        'purchase': {
-          'actionField': {
-            'id': '20200105-0000241',
-            'affiliation': 'dalisalda.com',
-            'revenue': totalOrderValue,
-            'tax':totalDiscountValue,
-            'shipping': totalShipFee
-          },
-          'products': prdList
-        }
-      }
-    });
-    </script>
 	
 	<div class="orderInfo" style = "width: 70%;">
         <p>
          <strong>고객님의 주문이 완료 되었습니다.</strong>
-            	주문내역 및 배송에 관한 안내는 <a href="/myshop/order/list.html">주문조회</a> 를 통하여 확인 가능합니다.
+            	주문내역 및 배송에 관한 안내는 <a href="mypage.do?command=orderlist">주문조회</a> 를 통하여 확인 가능합니다.
         </p>
         <ul>
 			<li>주문번호 : <strong>20200105-0000241</strong>
@@ -137,11 +107,12 @@
         <div class="ec-base-table">
             <table border="1" summary="">
 				<caption>결제정보</caption>
-				            <colgroup>
+				<colgroup>
 				<col style="width:140px;">
 				<col style="width:auto;">
 				</colgroup>
 		<tbody>
+		
 		<tr>
 		<th scope="row">최종결제금액</th>
            <td>
@@ -156,14 +127,14 @@
              
             </td>
         </tr>
-</tbody>
-</table>
-</div>
+	</tbody>
+	</table>
+	</div>
     </div>
     
     
     
-<div class="orderListArea">
+	<div class="orderListArea">
         <div class="title">
             <h3>주문 상품 정보</h3>
         </div>
@@ -192,75 +163,74 @@
           </tr>
           
           
-<tfoot class="right"><tr>
-<td colspan="7">
-<span class="gLeft">[기본배송]</span> 상품구매금액 <strong>15,000
-<span class="displaynone"> (0)</span></strong><span class="displaynone"></span>
- + 배송비 0 <span class="displaynone"> - 상품할인금액 0</span> = 합계 : <strong class="txtEm gIndent10">
- <span class="txt18">17,500</span>원</strong> <span class="displaynone"></span>
-</td>
+		<tfoot class="right"><tr>
+			<td colspan="7">
+				<span class="gLeft">[기본배송]</span> 상품구매금액 <strong>15,000
+				<span class="displaynone"> (0)</span></strong><span class="displaynone"></span>
+				 + 배송비 0 <span class="displaynone"> - 상품할인금액 0</span> = 합계 : <strong class="txtEm gIndent10">
+		 		<span class="txt18">17,500</span>원</strong> <span class="displaynone"></span>
+			</td>
 
-	</tr></tfoot><tbody class="xans-element- xans-order xans-order-normalresultlist center">
-	<tr class="xans-record-">
-<!-- Google Tag Manager | 누구나데이터 | 2019.12 -->
-<script>
-                            prdList.push({
-                                'name': '[아르지탈] 민트 치약'.replace(/<[^>]*>?/gm, ''),
-                                'id': '?product_no=303&cate_no=91'.replace(/^.*product_no[=]([^\s\"\&\']+).*$/, "$1"),
-                                'quantity': '1',
-                                'price': '15,000'.replace(',',''),
-								'category': '?product_no=303&cate_no=91'.replace(/^.*cate_no[=]([^\s\"\&\']+).*$/, "$1")
-                            });
-</script><!-- End Google Tag Manager --><td class="thumb"><a href="/product/detail.html?product_no=303&amp;cate_no=91"><img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
-                        <td class="left">
-                            <strong class="name"><a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약</a></strong>
-                            <div class="option "></div>
-                            <p class="gBlank5 displaynone">무이자할부 상품</p>
-                        </td>
-                        <td class="right">
-                            <!-- <div class="">
-                                <strong>15,000원</strong>
-                                <div class="displaynone"></div>
-                            </div> -->
-                            <div class="displaynone">
-                                <strong>15,000원</strong>
-                                <div class="displaynone"></div>
-                            </div>
-                        </td>
-                        <td>1</td>
-                        <td><span class="txtInfo">-</span></td>
-                        <td><div class="txtInfo">기본배송</div></td>
-                        <td class="right">
-<strong>15,000원</strong><div class="displaynone"></div>
-</td>
-                    </tr>
-					<tr class="xans-record-">
+		</tr>
+		</tfoot>
+		
+		<tbody class="xans-element- xans-order xans-order-normalresultlist center">
+			<tr class="xans-record-">
+			<td class="thumb">
+				<a href="/product/detail.html?product_no=303&amp;cate_no=91">
+				<img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="">
+				</a></td>
+            <td class="left">
+            <strong class="name"><a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약</a></strong>
+            <div class="option "></div>
+              <p class="gBlank5 displaynone">무이자할부 상품</p>
+            </td>
+            <td class="right">
+              <div class="displaynone">
+              <strong>15,000원</strong>
+              <div class="displaynone">
+              </div>
+              </div>
+           	</td>
+            <td>1</td>
+            <td><span class="txtInfo">-</span></td>
+            <td><div class="txtInfo">기본배송</div></td>
+            <td class="right">
+			<strong>15,000원</strong>
+			
+			<div class="displaynone"></div>
+			</td>
+            </tr>
+			<tr class="xans-record-">
 					
-                        <td class="thumb">
-                        <a href="/product/detail.html?product_no=303&amp;cate_no=91">
-                        <img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" 
-                        onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
-                        <td class="left">
-                            <strong class="name"><a href="/product/아르지탈-민트-치약/303/category/91/" 
-                            class="ec-product-name">[아르지탈] 민트 치약</a></strong>
-                            <div class="option "></div>
-                            <p class="gBlank5 displaynone">무이자할부 상품</p>
-                        </td>
+             <td class="thumb">
+                 <a href="/product/detail.html?product_no=303&amp;cate_no=91">
+                 <img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" 
+                   onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
+                 <td class="left">
+                 <strong class="name">
+                 <a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약
+                 </a>
+                 </strong>
+            <div class="option "></div>
+               <p class="gBlank5 displaynone">무이자할부 상품</p>
+             </td>
                         
-                        <td class="right">
-                            <div class="">
-                                <strong>0원</strong>
-                                <div class="displaynone"></div>
-                            </div>
-                        </td>
-                        <td>1</td>
-                        <td><span class="txtInfo">-</span></td>
-                        <td><div class="txtInfo">기본배송</div></td>
+             <td class="right">
+               <div class="">
+               <strong>0원</strong>
+               <div class="displaynone">
+               </div>
+               </div>
+             </td>
+             <td>1</td>
+             <td><span class="txtInfo">-</span></td>
+             <td><div class="txtInfo">기본배송</div></td>
                         <td class="right">
                         
-					<strong>0원</strong><div class="displaynone"></div>
-					</td>
-                    </tr>
+			 <strong>0원</strong><div class="displaynone"></div>
+			 </td>
+             </tr>
 			</tbody>
 			</table>
 			</div>
@@ -271,23 +241,24 @@
     </div>  
     
     
-<div class="totalArea">
+	<div class="totalArea">
         <div class="ec-base-table typeList gBorder total">
             <table border="1" summary="">
-<caption>결제금액</caption>
-            <colgroup>
-<col style="width:33.33%; height: 33.33%">
-<col style="width:33.33%" class="">
-<col style="width:33.33%">
-</colgroup>
+	<caption>결제금액</caption>
+	<colgroup>
+	<col style="width:33.33%; height: 33.33%">
+	<col style="width:33.33%" class="">
+	<col style="width:33.33%">
+	</colgroup>
 	<thead>
+	
 	<tr>
 		<th scope="col" style = "text-align:center;">
 			<strong >총 주문 금액</strong> 
 		</th>
 	    <th scope="col" class="" style = "text-align:center;">
 			<strong class="">적립금 사용</strong>
-			<strong class="displaynone"> 
+			<strong class="displaynone"></strong>
 		</th>
 	    <th scope="col" style = "text-align:center;"><strong style = "text-align:center;">총 결제금액</strong></th>
 	</tr>
@@ -331,37 +302,38 @@
 </tbody>
 </table>
 </div>
-            <div class="ec-base-table gMerge displaynone">
-                <table border="1" summary="">
-<caption>부가결제 내역</caption>
-                <colgroup>
-<col style="width:140px">
-<col style="width:auto">
-</colgroup>
+            
+      <div class="ec-base-table gMerge displaynone">
+         <table border="1" summary="">
+		<caption>부가결제 내역</caption>
+		<colgroup>
+		<col style="width:140px">
+		<col style="width:auto">
+		</colgroup>
 
-<div class="orderArea">
+	<div class="orderArea">
         <div class="title">
             <h3>배송지정보</h3>
         </div>
         <div class="ec-base-table">
-            <table border="1" summary="">
-<caption>배송지 정보</caption>
-            <colgroup>
-<col style="width:140px;">
-<col style="width:auto;">
-</colgroup>
-<tbody>
+        <table border="1" summary="">
+		<caption>배송지 정보</caption>
+		<colgroup>
+		<col style="width:140px;">
+		<col style="width:auto;">
+		</colgroup>
+		<tbody>
 
-<th scope="row">받으시는분</th>
+	<th scope="row">받으시는분</th>
                     <td><span>최승혜</span></td>
                 </tr>
 
-<tr class="">
-<th scope="row">우편번호</th>
+	<tr class="">
+	<th scope="row">우편번호</th>
                     <td><span>08740</span></td>
                 </tr>
-<tr class="">
-<th scope="row">주소</th>
+	<tr class="">
+	<th scope="row">주소</th>
                     <td><span>서울특별시 관악구 남부순환로233길 29-3 (봉천동) 샤인빌 304호</span></td>
                 </tr>
 
@@ -413,7 +385,10 @@
         <a href="#none" class="close" onclick="OrderLayer.offDiv('order_layer_detail');"><img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
     </div>
 
-
+</table>
+</div>
+</div>
+</div>
 </div>
 </form>
 
