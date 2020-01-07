@@ -22,5 +22,7 @@ public List<Vo_Funding> F_selectAll(); // 상품 리스트 전체 조회
 
 	public boolean F_expire(Vo_Funding sof); // 펀딩 성공/실패 여부 판단
 
+	public boolean F_delete(int fseq);
+
 
 }

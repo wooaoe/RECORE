@@ -16,9 +16,18 @@
     <title>RECORE &mdash; RECORE</title>
     <%@ include file = "/head.jsp" %>
     
+    <style type="text/css">
+    	
+    	html{
+    		scroll-behavior:smooth;
+    	}
+    	
+    </style>
+    
   </head>
   
   <body id="body">
+  
   
   <div class="site-wrap">
 
@@ -38,7 +47,7 @@
        
         <!--@@ 로고 위치 @@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
         <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
         
           <div class="row align-items-center">
@@ -53,10 +62,10 @@
               	
               	<!-- 로그인 안되어있을 때 -->
               	<c:if test="${empty vo }">
-                <a href="RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                <a href="<%=request.getContextPath()%>/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                  <a href="RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
                   <a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
@@ -68,7 +77,7 @@
                  
                  <!-- 로그인 되어있을 때 -->
                   <c:if test="${!empty vo }">
-    				<a href="../Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<a href="<%=request.getContextPath()%>/Account_Controller.do?command=logout" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
     				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
@@ -99,43 +108,43 @@
 
                   <ul class="site-menu js-clone-nav d-none d-lg-block">
                     <li class="has-children">
-                      <a href="index.html" style="color:black;">Funding</a>
+                      <a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1" style="color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">조회</a></li>
-                        <li><a href="#">등록</a></li>
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1">조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=createfundingpage">등록</a></li>
                       </ul>
                     </li>
                     <li class="has-children">
                     
-                      <a href= "../Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
+                      <a href= "<%=request.getContextPath()%>/Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
                         <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
                         	</ul>
                         </li>
-                        <li><a href="../Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
-                        <li class = "has-children"><a href="../Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
                         	<ul class = "dropdown arrow-down">
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
-								<li><a href = "../Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
                         	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="../issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
+                    <li  class="has-children"><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="../issue.do?command=selectAllNews&pageno=1">News</a></li>
-                        <li><a href="../issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="has-children"><a href="qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
+                    <li  class="has-children"><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
                     	<ul class="dropdown arrow-top">
-                        <li><a href="qna.do?command=qna_list&catd=all">QnA</a></li>
-                        <li><a href="qna.do?command=review_list">Review</a></li>
+                        <li><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all">QnA</a></li>
+                        <li><a href="<%=request.getContextPath()%>/qna.do?command=review_list">Review</a></li>
                       </ul>
                     </li>
 <!--
@@ -163,78 +172,78 @@
           </ol>
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img00.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>DOKGO SUJI</h1>
+   				         <span class="sub-text">FUNDING</span>
+   				         <h1 style="font-size: 2.5rem;">${flist.get(0).fund_title }</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div> 
             </div>
             <div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/img01.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img01.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>NAMGUNG SUNGIL</h1>
+   				         <span class="sub-text">EXHIBITION</span>
+   				         <h1 style="font-size: 2.5rem;">${elist.get(0).iss_title }</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div>
      	        </div>
             <div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>SUNWO SEUNGHYE</h1>
+   				         <span class="sub-text">NEWS</span>
+   				         <h1 style="font-size: 2.5rem;">${nlist.get(0).iss_title }</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div> 
            		</div>
            		<div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img03.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>HWANGBO DOYOUNG</h1>
+   				         <span class="sub-text">FUNDING</span>
+   				         <h1 style="font-size: 2.5rem;">${flist.get(1).fund_title }</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div> 
            		</div>
            		<div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img04.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>JAEKAL HEEJIN</h1>
+   				         <span class="sub-text">EXHIBITION</span>
+   				         <h1 style="font-size: 2.5rem;">${elist.get(1).iss_title }</h1>
   				        </div>
    				     </div>
  				     </div>
  				   </div> 
            		</div>
            		<div class="carousel-item">
-                <div class="site-blocks-cover overlay" style="background-image: url(images/img02.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+                <div class="site-blocks-cover overlay" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg/img05.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       				<br><br>
       				<div class="container">
       				  <div class="row align-items-center text-center justify-content-center">
   				        <div class="col-md-8">
-   				         <span class="sub-text">RECORE</span>
-   				         <h1>PANG DONGHYUN</h1>
+   				         <span class="sub-text">NEWS</span>
+   				         <h1 style="font-size: 2.5rem;">${nlist.get(1).iss_title }</h1>
   				        </div>
    				     </div>
  				     </div>
@@ -250,64 +259,6 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
- 
-<!-- 
-    <div class="site-blocks-cover overlay" style="background-image: url(images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
-      <div class="container">
-        <div class="row align-items-center text-center justify-content-center">
-          <div class="col-md-8">
-            <span class="sub-text">Interior Design Company</span>
-            <h1>Experience Interior Design</h1>
-          </div>
-        </div>
-      </div>
-    </div>  
---> 
- 
-    
-<!--
-
-    <div class="site-block-1">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <a href="#" class="site-block-feature d-flex p-4 rounded mb-4">
-              <div class="mr-3">
-                <span class="icon flaticon-window font-weight-light h2"></span>
-              </div>
-              <div class="text">
-                <h3>Interior Architecture</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-            </a>   
-          </div>
-          <div class="col-lg-4">
-            <a href="#" class="site-block-feature d-flex p-4 rounded mb-4">
-              <div class="mr-3">
-                <span class="icon flaticon-measuring font-weight-light h2"></span>
-              </div>
-              <div class="text">
-                <h3>Interior Design</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4">
-            <a href="#" class="site-block-feature d-flex p-4 rounded mb-4">
-              <div class="mr-3">
-                <span class="icon flaticon-interior-design font-weight-light h2"></span>
-              </div>
-              <div class="text">
-                <h3>Furniture</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
--->
 
 
 
@@ -332,115 +283,25 @@
       
       <div class="container">
         <div class="row">
-        
-		  <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/fundimg/fundimg1.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">funding 1</a></h3>
-            <span class="text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin..</span><br>
-          </div>
-
-
-		  <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/fundimg/fundimg2.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">funding 2</a></h3>
-            <span class="text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin..</span><br>
-          </div>
-
-		  <div class="col-lg-4 col-md-6 mb-4 project-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/fundimg/fundimg3.png" alt="Image" class="img-fluid">
-            </a>
-            <h3 class="mb-0"><a href="#">funding 3</a></h3>
-            <span class="text-muted"> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin..</span><br>
-          </div>
-
+        	
+        	<c:forEach begin="0" end="2" var="i">
+        	
+        		 <div class="col-lg-4 col-md-6 mb-4 project-entry">
+		            <a href="<%=request.getContextPath() %>/funding.do?command=selectOneFunding&pageno=${page }&fund_no=${funding_list.get(vo).fund_no}" class="d-block figure">
+		              <img src="<%=request.getContextPath() %>/RECOREMain/RECOREFunding/images/${flist.get(i).fund_no }/f_img.png" alt="Image" class="img-fluid">
+		            </a>
+		            <h3 class="mb-0"><a href="#">${flist.get(i).fund_title }</a></h3>
+		            <span class="text-muted">${flist.get(i).fund_creator }</span><br>
+		          </div>
+        	
+        	
+        	</c:forEach>
         </div>
-        
-        <!-- <div class="row mt-5 text-center">
-          <div class="col-12">
-            <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
-          </div>
-        </div> -->
         
       </div>
     </div>
 
-    
-<!--
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="img-border">
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </div>
-          </div>
-          <div class="col-lg-5 ml-auto">
-            <span class="sub-title">Why Us</span>
-            <h2 class="font-weight-bold text-black mb-5">Why Us</h2>
-            <div class="accordion" id="accordionExample">
-              
-              <h2 class="mb-0 border rounded mb-2">
-                <button class="btn " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  1. What Should I Do If My Interior Broken?
-                </button>
-              </h2>
-
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet, <a href="#">Cnsectetur adipisicing</a> elit. Eos quos incidunt, perspiciatis, ad saepe, magnam error adipisci vitae ut provident alias! Odio debitis error ipsum molestiae voluptas accusantium quibusdam animi, soluta explicabo asperiores aliquid, modi natus suscipit deleniti. Corrupti, autem.</p>
-                </div>
-              </div>
-            
-              <h2 class="mb-0 border rounded mb-2">
-                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  2. What Is Your Location?
-                </button>
-              </h2>
-             
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat voluptate animi hic quasi sequi odio, vitae dolorum soluta sapiente debitis ad similique tempore, aliquam quae nam deserunt dicta ullam perspiciatis minima, quam. Quis repellat corporis aperiam, veritatis nemo iure inventore.</p>
-                </div>
-              </div>
-           
-              <h2 class="mb-0 border rounded mb-2">
-                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  3. Robus Building
-                </button>
-              </h2>
-              
-              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum et dolorum libero consequuntur facere molestias beatae quod labore quidem ad quasi eius pariatur quae nam quo soluta optio dicta, doloribus ullam fugit nulla! Itaque necessitatibus eum sed quam eos id!</p>
-                </div>
-              </div>
-
-              <h2 class="mb-0 border rounded mb-2">
-                <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  4. What Is Your Main Services?
-                </button>
-              </h2>
-
-              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                <div class="card-body">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos quos incidunt, perspiciatis, ad saepe, magnam error adipisci vitae ut provident alias! Odio debitis error ipsum molestiae voluptas accusantium quibusdam animi, soluta explicabo asperiores aliquid, modi natus suscipit deleniti. Corrupti, autem.</p>
-                </div>
-              </div>
-             
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
- -->
-    
+   
     <div class="container site-section block-13 testimonial-wrap">
 
       <div class="row">
@@ -452,105 +313,19 @@
 
       <div class="nonloop-block-13 owl-carousel">
         
-        <div class="" style="padding:10px;">
-          <img src="images/exhibition_img/main_img1.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;">
-          <h5 class="mb-0" style="margin-left: 30px;">Exhibition 1</h5>
-        </div>
-      
-        <div class="" style="padding:10px;">
-          <img src="images/exhibition_img/main_img2.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;">
-          <h5 class="mb-0" style="margin-left: 30px;">Exhibition 2</h5>
-        </div>
+        <c:forEach begin="0" end="4" var="i" >
         
-        <div class="" style="padding:10px;">
-          <img src="images/exhibition_img/main_img3.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;">
-          <h5 class="mb-0" style="margin-left: 30px;">Exhibition 3</h5>
-        </div>
+	        <div class="" style="padding:10px;" onclick="location.href='<%=request.getContextPath() %>/issue.do?command=selectOneExhibition&pageno=1&iss_no=${elist.get(i).iss_no}'">
+		          <img src="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${elist.get(i).iss_no }/f_img.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;" >
+		          <h5 class="mb-0" style="margin-left: 30px;">${elist.get(i).iss_title }</h5>
+	        </div>
         
-        <div class="" style="padding:10px;">
-          <img src="images/exhibition_img/main_img4.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;">
-          <h5 class="mb-0" style="margin-left: 30px;">Exhibition 4</h5>
-        </div>
         
-        <div class="" style="padding:10px;">
-          <img src="images/exhibition_img/main_img5.png" alt="Image" style="margin:0 auto 30px auto;margin-left: 30px;">
-          <h5 class="mb-0" style="margin-left: 30px;">Exhibition 5</h5>
-        </div>
+        </c:forEach>
         
-      </div>
-      
-      <!-- <div class="row mt-5 text-center">
-          <div class="col-12">
-            <p><a href="#" class="btn btn-primary btn-lg rounded-0">View All Posts</a></p>
-          </div>
-        </div> -->
-      
-      
+      </div>      
     </div>
 
-
-
-
-<!-- 
-    <div class="site-section site-block-3 bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 mb-5 mb-lg-0">
-            <div class="img-border">
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="row row-items">
-              <div class="col-6">
-                <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
-                  <span class="align-self-center w-100">
-                    <span class="d-block mb-3">
-                      <span class="flaticon-step-ladder display-3"></span>
-                    </span>
-                    <h3>Pool Decor</h3>
-                  </span>
-                </a>
-              </div>
-              <div class="col-6">
-                <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
-                  <span class="align-self-center w-100">
-                    <span class="d-block mb-3">
-                      <span class="flaticon-sit-down display-3"></span>
-                    </span>
-                    <h3>Seat Decor</h3>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <div class="row row-items last">
-              <div class="col-6">
-                <a href="#" class="d-flex text-center feature active p-4 mb-4 bg-white">
-                  <span class="align-self-center w-100">
-                    <span class="d-block mb-3">
-                      <span class="flaticon-turned-off display-3"></span>
-                    </span>
-                    <h3>Intuitive Idea</h3>
-                  </span>
-                </a>
-              </div>
-              <div class="col-6">
-                <a href="#" class="d-flex text-center active feature active p-4 mb-4 bg-white">
-                  <span class="align-self-center w-100">
-                    <span class="d-block mb-3">
-                      <span class="flaticon-window display-3"></span>
-                    </span>
-                    <h3>Decorations</h3>
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
- -->
 
 
     <div class="site-section">
@@ -562,30 +337,20 @@
           </div>
         </div>
         <div class="row mb-5">
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="text-muted d-block mb-2">23, January 2019</span>
-            <h3><a href="#">Architecture is ready to take the world to the next level </a></h3>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="text-muted d-block mb-2">23, January 2019</span>
-            <h3><a href="#">Architecture is ready to take the world to the next level </a></h3>
-          </div>
-          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
-            <a href="#" class="d-block figure">
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="text-muted d-block mb-2">23, January 2019</span>
-            <h3><a href="#">Architecture is ready to take the world to the next level </a></h3>
-          </div>
-
-        </div>
         
+        	<c:forEach begin="0" end="2" var="i">
+        	
+	          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 post-entry">
+	            <a href="<%=request.getContextPath() %>/issue.do?command=selectOneNews&pageno=1&iss_no=${nlist.get(i).iss_no}" class="d-block figure">
+	              <img src="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/images/${nlist.get(i).iss_no }/th_img.png" alt="Image" class="img-fluid">
+	            </a>
+	            <span class="text-muted d-block mb-2">${nlist.get(i).iss_title }</span>
+	            <h5 style="font-size: 13px"><a href="<%=request.getContextPath() %>/issue.do?command=selectOneNews&pageno=1&iss_no=${nlist.get(i).iss_no}">${nlist.get(i).iss_writer } </a></h5>
+	          </div>        	
+        	
+        	</c:forEach>
+        
+ 
         <!-- 포스트 전체보기 -->
         <!-- <div class="row mt-5 text-center">
           <div class="col-12">
@@ -599,7 +364,7 @@
 
 	 <!-- 상단으로 올라가기 -->
           <div style = "position: fixed; bottom: 30px; right: 30px;">
-			<a href = "#body"><img src = "../images/up-arrow.png" /></a>
+			<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
 		  </div>
 
 
@@ -725,19 +490,19 @@
     </footer>
   </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/aos.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-3.3.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery-ui.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/popper.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/owl.carousel.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.stellar.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.countdown.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/jquery.magnific-popup.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/bootstrap-datepicker.min.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/aos.js"></script>
 
-  <script src="js/main.js"></script>
+  <script src="<%=request.getContextPath()%>/RECOREMain/js/main.js"></script>
     
   </body>
 </html>

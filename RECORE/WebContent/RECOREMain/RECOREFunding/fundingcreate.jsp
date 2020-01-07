@@ -307,9 +307,7 @@ padding-top: 50px;
     <div class="site-section">
 
 <p style="font-size:48px; text-align:center;">펀딩 등록하기</p>
-<br>
-<br>
-<br>
+
   <div class="page-wrapper bg-dark p-t-100 p-b-50">
         <div class="wrapper wrapper--w900">
 		<div class="card card-6" >
@@ -318,13 +316,13 @@ padding-top: 50px;
                 </div>
                 <div class="card-body"style="border:0px;" >
 
-                    <form action="funding1.jsp" method="post" id="frm" enctype="multipart/form-data">
+                    <form action="issue.do?command=insertFunding" method="post" id="frm" enctype="multipart/form-data">
 
                         <div class="form-row" style="border:0px;">
                             <div class="name">펀딩 제목</div>
                             <div class="value">
                             <div class="input-group">
-                                <input class="input--style-6" id="title" type="text" name="title">
+                                <input class="input--style-6" id="title" type="text" name="fund_title">
                                 </div>
                             </div>
                         </div>
@@ -332,7 +330,7 @@ padding-top: 50px;
                             <div class="name">작성자</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-6" id="creator" type="text" name="creator" >
+                                    <input class="input--style-6" id="creator" type="text" name="fund_creator" >
                                 </div>
                             </div>
                         </div>
@@ -340,7 +338,7 @@ padding-top: 50px;
                             <div class="name">목표 금액</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-6" id="target_price" type="number" name="target_price" >
+                                    <input class="input--style-6" id="target_price" type="number" name="fund_target_price" >
                                 </div>
                             </div>
                         </div>
@@ -348,7 +346,7 @@ padding-top: 50px;
                             <div class="name">펀딩   마감 기한</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-6" id="deadline" type="date" name="deadline" >   
+                                    <input class="input--style-6" id="deadline" type="date" name="fund_deadline" >   
                                 </div>
                             </div>
                         </div>
@@ -356,7 +354,7 @@ padding-top: 50px;
                             <div class="name">본문 내용 이미지 업로드</div>
                             <div class="value">
                                 <div class="input">
-                                     <input type="file" class="file" id="file" name="file" accept="image/*" data-max-size="5000" />
+                                     <input type="file" name=fund_content accept=".png">
                                
 
 
@@ -368,8 +366,8 @@ padding-top: 50px;
                             <div class="name">썸네일 이미지 업로드</div>
                             <div class="value">
                                 <div class="input">
-                                    <input class="input-file" type="file" name="file2" id="file2">
-                               <input type="file" class="file2" accept="image/*" data-max-size="5000" />
+                                  
+                               <input type="file" name=fund_front_img accept=".png">
                                <label class="label--file" for="file"> </label>
 
                                
@@ -380,28 +378,7 @@ padding-top: 50px;
                         <br><br>
                         <input type="submit" id="savebutton" value="펀딩 등록하기" class="btn btn--radius-2 btn--blue-2" >           
                     </form>
-                    <script>
-                      function test2(){
-        var form = $("form")[0];        
-        var formData = new FormData(form);
-
-        $.ajax({
-            cache : false,
-            url : "${pageContext.request.contextPath}/funding1.jsp", 
-            processData: false,
-            contentType: false,
-            type : 'POST', 
-            data : formData, 
-            success : function(data) {
-                var jsonObj = JSON.parse(data);
-            }, // success 
-    
-            error : function(xhr, status) {
-                alert(xhr + " : " + status);
-            }
-        }); // $.ajax */    }
-</script>
-                    
+           
                 </div>
                 <div class="card-footer">
                

@@ -44,6 +44,10 @@ public interface ProductDao {
 
 	public boolean P_delete(int aseq); // 상품 삭제
 
+	public int P_getSeqCurrval(); //현재 시퀀스 번호 가져오기
+	
+	public boolean POinsert(int pseq, Vo_Prod_option povo);
+
 	
 
 

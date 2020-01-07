@@ -16,3 +16,8 @@ SELECT * FROM PRODUCT WHERE PROD_NO IN(100,105,110,116,147,149,161,162,200,202,1
 
 SELECT * FROM PRODUCT WHERE CATD_NO = 7 PROD_NO DESC;
 SELECT * FROM PROD_OPTION WHERE  PROD_NO DESC;
+
+
+select * from product order by prod_no desc;
+
+select * from user_sequences;
