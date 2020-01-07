@@ -105,6 +105,14 @@
 		alert(pageNo);
 		location.href = "mypage.do?command=orderlist&pageno="+pageNo;
 	}
+	
+	function updateStatus(status,order_no,prod_id){
+		alert(status);
+		alert(order_no);
+		alert(prod_id);
+		location.href = "mypage.do?command=updateorder&orderno="+order_no+"&prodid="+prod_id+"&status="+status;
+	}
+
 </script>
 </head>
 
@@ -232,23 +240,24 @@
 						</c:if>
 						<c:if test="${null ne list_order}">
 						<c:set var="count" value="0"></c:set>
+						<%-- <c:forEach var="order" items="${list_order}" varStatus="status"> --%>
 						<c:forEach var="order" items="${list_order}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
 								<td class="number ">
 				                	<br><p>${order.order_date}
-						            <br><a href="detail.html" class="line">[${order.order_no}]</a></p>
+						            <br><a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}" class="line">[${order.order_no}]</a></p>
 				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
 				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
 				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
 				                    <a href="return.html" class="btnNormal displaynone">반품신청</a> -->
 				                </td>
 				                <td class="thumb">
-				                	<a href="/product/detail.html">
+				                	<a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}">
 				                	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${order.olist[count].prod_no}/f_img.png" alt=""></a>
 			                	</td>
 				                <td class="product left top">
 				                    <strong class="name"></strong>
-				                    <div class="option"><strong>${order.olist[count].prod_name }</strong></div>
+				                    <div class="option"><strong>${order.olist[count].prod_name}</strong></div>
 				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
 				                    	<!-- <li class=""><strong></strong> (개)</li> -->
 									</ul>
@@ -260,21 +269,20 @@
 									<strong></strong><div class=""><fmt:formatNumber value="${order.olist[count].order_price}" groupingUsed="true"></fmt:formatNumber>원</div>
 								</td>
 				                <td class="state">
-				                    <p class="txtEm"></p>
-				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class=""><a href="#none" class="line" onclick="">[${order.olist[count].order_status}]</a></p>
-				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
+				                    <p class="txtEm">${order.order_no} / ${order.olist[count].prod_id} / ${order.olist[count].order_status}</p>
+				                    <p class=""><a href="javascript:test(${order.olist[count].order_status})" class="line">[${order.olist[count].order_status}]</a></p>
 				                </td>
 				                <td>
-				                	<a href="cancel.html" class="btnNormal">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal">교환신청</a>
-				                    <a href="return.html" class="btnNormal">반품신청</a>
-				                    <a href="return.html" class="btnNormal">리뷰작성</a>
-				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
-				                    <p class="displaynone">-</p>
+				                	<c:if test="${order.olist[count].order_status eq '입금완료' or order.olist[count].order_status eq '배송준비중'}">
+				                		<a href="javascript:updateStatus('취소',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">취소신청</a>
+				                	</c:if>
+				                	<c:if test="${order.olist[count].order_status eq '배송중' or order.olist[count].order_status eq '배송완료'}">
+					                    <a href="javascript:updateStatus('교환',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">교환신청</a>
+					                    <a href="javascript:updateStatus('반품',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">반품신청</a>
+				                    </c:if>
+				                    <c:if test="${order.olist[count].order_status eq '배송완료'}">
+				                    	<a href="return.html" class="btnNormal">리뷰작성</a>
+				                    </c:if>
 				                </td>
 				            </tr>
 				            <c:set var="count" value="${count+1}"></c:set>

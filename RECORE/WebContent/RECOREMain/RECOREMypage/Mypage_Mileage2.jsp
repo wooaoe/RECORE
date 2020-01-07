@@ -165,16 +165,16 @@
 									<p class="message ">적립금 내역이 없습니다.</p>
 								</c:if>
 								<c:if test="${null ne list_order}">
-								<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 								<c:if test="${order.order_point ne 0}">
+								<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 									<tr class="">
 										<td>${order.order_date}</td>
 				                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
 				                        <td>${order.order_no}</td>
 				                        <td class="left" id="left">사용</td>
 				                    </tr>
-				                </c:if>
 				                </c:forEach>
+				                </c:if>
 								</c:if>
 								</tbody>
 							</table>

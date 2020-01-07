@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8");%>
+<%@ page import="com.mvc.vo.Vo_Account" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>Mypage_OrderList_Detail</title>
 	
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -99,6 +103,10 @@
   </style>
 </head>
 <body id="main">
+<%
+	Vo_Account acc = (Vo_Account)session.getAttribute("vo");
+%>
+
 		<!-- header -->
 	<%@ include file="/header.jsp" %>
 	
@@ -111,7 +119,7 @@
 	    			<span>현재 위치</span>
 	    			<ol>
 	    				<li><a href="/">홈</a></li>
-	        			<li><a href="/myshop/index.html">마이쇼핑</a></li>
+	        			<li><a href="mypage.do?command=main">마이쇼핑</a></li>
 	        			<li title="현재 위치"><strong>주문상세조회</strong></li>
 	    			</ol>
 	    		</div>
@@ -121,7 +129,7 @@
 				</div>
 	
 				<form id="detailForm" name="detailForm" action="/exec/front/MyShop/OrderCancel/" method="POST" enctype="multipart/form-data">
-					<input id="order_id" name="order_id" fw-filter="isFill" fw-label="주문번호" fw-msg="" value="20200105-0000311" type="hidden">
+					<!-- <input id="order_id" name="order_id" fw-filter="isFill" fw-label="주문번호" fw-msg="" value="20200105-0000311" type="hidden"> -->
 					<div class="xans-element- xans-myshop xans-myshop-orderhistorydetail xans-record-">
 						<div class="orderArea">
 	        				<div class="title">
@@ -138,21 +146,19 @@
 									<tbody>
 										<tr>
 											<th scope="row">주문번호</th>
-						                    <td>20200105-0000311</td>
+						                    <td>${vo_order.order_no}</td>
 						                </tr>
 										<tr>
 											<th scope="row">주문일자</th>
-						                    <td>2020-01-05 22:16:01</td>
+						                    <td>${vo_order.order_date}</td>
 					                	</tr>
 										<tr>
 											<th scope="row">주문자</th>
-						                    <td><span>박수지</span></td>
+						                    <td><span><%=acc.getAcc_name()%></span></td>
 						                </tr>
 										<tr>
 											<th scope="row">주문처리상태</th>
-						                    <td>
-										                        배송전                        <button type="submit" class="btnNormal displaynone">주문취소</button>
-					                    	</td>
+						                    <td>${vo_olist.order_status}</td>
 						                </tr>
 									</tbody>
 								</table>
@@ -174,31 +180,30 @@
 											<th scope="row">총 주문금액</th>
 	                   						<td>
 	                        					<span class="gSpace20">
-	                            					<strong class="txt14">3,500</strong>원                            <span class="displaynone"></span>
+	                            					<strong class="txt14"><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong>원
 	                        					</span>
-	                        					<a href="#none" onclick="OrderLayer.onDiv('order_layer_detail', event);" class="btnNormal">내역보기</a>
                     						</td>
 	                					</tr>
                 					</tbody>
 									<tbody class="">
 										<tr class="sum">
 											<th scope="row">총 할인금액</th>
-						                    <td><strong class="txt14">2,600</strong>원</td>
+						                    <td><strong class="txt14"><fmt:formatNumber value="${vo_order.order_point}" groupingUsed="true"></fmt:formatNumber></strong>원</td>
 						                </tr>
-										<tr class="">
+										<!-- <tr class="">
 											<th scope="row">쿠폰할인</th>
 						                    <td>
 					                        	<span class="gSpace20">2,500원</span>
 						                        <a href="#none" class="eUsedCouponDetail btnNormal">내역보기</a>
 						                    </td>
-					                	</tr>
-										<tr class="">
+					                	</tr> -->
+										<!-- <tr class="">
 											<th scope="row">추가할인금액</th>
 						                    <td>
 						                        <span class="gSpace20">100원</span>
 						                        <a href="#none" class="btnNormal" onclick="OrderLayer.onDiv('order_layer_addsale', event);">내역보기</a>
 						                    </td>
-						                </tr>
+						                </tr> -->
 									</tbody>
 								</table>
 							</div>
@@ -214,7 +219,7 @@
 											<th scope="row">총 결제금액</th>
 	                    					<td>
 						                        <span class="txtEm">
-						                            <strong class="txt18">900</strong>원                            <span class="displaynone"></span>
+						                            <strong class="txt18"><fmt:formatNumber value="${(vo_olist.order_amount * vo_olist.order_price) - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber></strong>원 
 						                        </span>
 						                    </td>
 						                </tr>
@@ -223,8 +228,7 @@
 	                    					<td>
 						                        <strong><span>카드 결제</span></strong>
 						                        <p>
-						                            <span>명세서에 나이스 올더게이트(으)로 표기됩니다</span> <a target="_blank" href="" class="btnNormal displaynone">인터넷뱅킹 바로가기</a>
-						                            <a target="_blank" href="" class="btnNormal displaynone" id="">결제사이트 바로가기</a>
+						                            <span>명세서에 나이스 올더게이트(으)로 표기됩니다</span>
 						                        </p>
 	                    					</td>
 	                					</tr>
@@ -263,47 +267,36 @@
 									<tfoot class="right">
 										<tr>
 											<td colspan="7">
-											<span class="gLeft">[기본배송]</span> 상품구매금액 <strong>1,000</strong><span class="displaynone"> + 부가세 0</span> + 배송비 2,500 + 지역별배송비 0<span class="displaynone"> - 상품할인금액 100</span> = 합계 :  <strong class="txtEm gIndent10"><span class="txt18">3,500원</span></strong> <span class="displaynone"></span>
+											<span class="gLeft">[기본배송]</span> 상품구매금액 <strong><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong> + 배송비 0 - 상품할인금액 <fmt:formatNumber value="${vo_order.order_point}" groupingUsed="true"></fmt:formatNumber> = 합계 :  <strong class="txtEm gIndent10"><span class="txt18"><fmt:formatNumber value="${(vo_olist.order_amount * vo_olist.order_price) - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber>원</span></strong>
 											</td>
 	                    				</tr>
                     				</tfoot>
                     				<tbody class="xans-element- xans-myshop xans-myshop-orderhistorydetailbasic center">
                     					<tr class="xans-record-">
 											<td class="thumb">
-												<a href="/product/detail.html?product_no=274&amp;cate_no=45">
-												<img src="//dalisalda.com/web/product/tiny/20191206/889890962e963b68f5167ecba5cae375.jpg" alt="" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';">
+												<a href="Product.do?command=ProdDetail&pseq=${vo_olist.prod_no}&catdno=${vo_prod.prod_catd}">
+												<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${vo_prod.prod_no}/f_img.png" alt="">
 												</a>
 											</td>
 	                        				<td class="left">
 	                            				<strong class="name">
-	                            				<a href="/product/네니아귤은껍질까지-100ml/274/category/45/" class="ec-product-name">[네니아]<br>귤은껍질까지 100ml</a>
+	                            				<a href="Product.do?command=ProdDetail&pseq=${vo_olist.prod_no}&catdno=${vo_prod.prod_catd}" class="ec-product-name">[${vo_prod.prod_brand}]<br>${vo_prod.prod_name}</a>
 	                            				</strong>
 	                            				<div class="option "></div>
 	                        				</td>
-	                        				<td>1</td>
+	                        				<td>${vo_olist.order_amount}</td> <!-- 수량@@@@ -->
 	                        				<td class="right">
 					                            <div class="">
-					                                <strong>1,000원</strong>
-					                                <div class="displaynone"></div>
-					                            </div>
-					                            <div class="displaynone">
-					                                <strong>900원</strong>
-					                                <div class="displaynone"></div>
+					                                <strong><fmt:formatNumber value="${vo_prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원</strong>
 					                            </div>
 	                        				</td>
 	                        				<td>
-	                        					<div class="txtInfo">기본배송<div class="displaynone">(해외배송가능)</div></div>
+	                        					<div class="txtInfo">기본배송</div>
 	                        				</td>
 					                        <td class="state">
-					                            <p class="txtEm">배송준비중</p>
-					                            <p class="displaynone"><a href="#" target="_self"></a></p>
-					                            <p class="displaynone"><a href="#none" class="line" onclick="">[]</a></p>
-					                            <a href="#none" class="btnNormal displaynone" onclick="OrderHistory.withdraw('C','20200105-0000311|274|000A|5283','', 'F')">취소철회</a>
-					                            <a href="#none" class="btnNormal displaynone" onclick="OrderHistory.withdraw('E','20200105-0000311|274|000A|5283','', 'F')">교환철회</a>
-					                            <a href="#none" class="btnNormal displaynone" onclick="OrderHistory.withdraw('R','20200105-0000311|274|000A|5283','', 'F')">반품철회</a>
+					                            <p class="txtEm">${vo_olist.order_status}</p>
 					                        </td>
 					                        <td>
-					                            <p class="displaynone"><a href="#none" class="btnNormal" onclick="OrderLayer.getDetailInfo('?product_no=274&amp;order_id=20200105-0000311&amp;ord_item_code=20200105-0000311-01');">상세정보</a></p>
 					                            <p class="">-</p>
 					                        </td>
 					                    </tr>
@@ -323,33 +316,17 @@
 										<col style="width:auto">
 									</colgroup>
 									<tbody>
-										<tr class="displaynone">
-											<th scope="row">수령지</th>
-	                    					<td>
-						                        <strong></strong>
-						                        <ul class="list">
-													<li>- 주소 : </li>
-						                            <li>- 전화번호 : </li>
-						                            <li>- 영업시간 : </li>
-						                            <li>- 수령 가능일 : </li>
-						                            <li>- 수령지 안내 : </li>
-						                        </ul>
-												<div class="map displaynone">
-	                            					<p>* 약도</p>
-                                                </div>
-	                    					</td>
-	                					</tr>
 										<tr>
 											<th scope="row">받으시는분</th>
-						                    <td><span>박수지</span></td>
+						                    <td><span><%=acc.getAcc_name()%></span></td>
 						                </tr>
 										<tr class="">
 											<th scope="row">우편번호</th>
-					                    	<td><span>11815</span></td>
+					                    	<td><span>${vo_order.order_zipcode}</span></td>
 						                </tr>
 										<tr class="">
 											<th scope="row">주소</th>
-						                    <td><span>경기도 의정부시 용민로 441 (민락동) 엘에이치브라운빌리지 1404동 1704호</span></td>
+						                    <td><span>${vo_order.order_addr}&nbsp;${vo_order.order_addr2}</span></td>
 						                </tr>
 										<tr>
 											<th scope="row">일반전화</th>
@@ -357,7 +334,7 @@
 					                	</tr>
 										<tr>
 											<th scope="row">휴대전화</th>
-					                    	<td><span>010-7428-7272</span></td>
+					                    	<td><span><%=acc.getAcc_phone()%></span></td>
 					                	</tr>
 										<tr>
 											<th scope="row">배송메시지</th>
@@ -369,7 +346,7 @@
 					    </div>
 						<div class="ec-base-button">
 					        <span class="gRight">
-					            <a href="/myshop/order/list.html?page=1" class="btnSubmitFix sizeM">주문목록보기</a>
+					            <a href="mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeM">주문목록보기</a>
 					        </span>
 					    </div>
 					</div>

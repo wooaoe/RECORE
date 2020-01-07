@@ -114,6 +114,11 @@
 		alert(res);
 		location.href="mypage.do?command=deleteboard&qnano="+qna_no+"&result="+res;
 	}
+	
+	function boardUpdate(qna_no){
+		alert(qna_no);
+		location.href="mypage.do?command=updateboard&qnano="+qna_no;
+	}
 </script>
 </head>
 <body id="main">
@@ -133,7 +138,7 @@
 	            			<span>현재 위치</span>
 	            				<ol>
 									<li><a href="/">홈</a></li>
-	                				<li><a href="../../mypage.do?command=boardlist&pageno=1">게시판</a></li>
+	                				<li><a href="<%=request.getContextPath()%>/mypage.do?command=boardlist&pageno=1">게시판</a></li>
 	                				<li title="현재 위치"><strong>상품문의</strong></li>
 	            				</ol>
 						</div>
@@ -142,6 +147,7 @@
 	            			<p>RECORE-상품문의</p>
 	        			</div>
 					</div>
+					<c:if test="${vo_qna.catd_no eq 16}">
 					<div class="xans-element- xans-board xans-board-product-4 xans-board-product xans-board-4 ec-base-box typeProduct ">
 						<p class="thumbnail">
 							<a href="Product.do?command=ProdDetail&pseq=${vo_qna.qna_prod_no}&catdno=${catd}">
@@ -149,11 +155,12 @@
 							</a>
 						</p>
 						<div class="information">
-	                        <h3><a href="/product/아르지탈-민트-치약/303/">[${vo_prod.prod_brand}] ${vo_prod.prod_name}</a></h3>
+	                        <h3><a href="Product.do?command=ProdDetail&pseq=${vo_qna.qna_prod_no}&catdno=${catd}">[${vo_prod.prod_brand}] ${vo_prod.prod_name}</a></h3>
 	            			<p class="price"><fmt:formatNumber value="${vo_prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원 <span id="sPrdTaxText"></span></p>
 	            			<p class="button"><a href="Product.do?command=ProdDetail&pseq=${vo_qna.qna_prod_no}&catdno=${catd}" class="btnEm" title="새창으로 이동">상품 상세보기</a></p>
 	        			</div>
 					</div>
+					</c:if>
 					<form id="BoardDelForm" name="" action="/exec/front/Board/del/6" method="post" target="_self" enctype="multipart/form-data">
 						<input id="no" name="no" value="261" type="hidden">
 						<input id="bulletin_no" name="bulletin_no" value="214" type="hidden">
@@ -214,17 +221,11 @@
 							</div>
 							<div class="ec-base-button ">
 		            			<span class="gLeft">
-			                		<span class="displaynone">
-					                    <a href="#none" onclick="" class="btnNormalFix sizeS admin displaynone"></a>
-					                    <a href="#none" onclick="" class="btnNormalFix sizeS admin displaynone"></a>
-					                    <a href="#none" onclick="" class="btnNormalFix sizeS ">스팸신고</a>
-					                    <a href="#none" onclick="" class="btnNormalFix sizeS ">스팸해제</a>
-			                		</span>
 			                		<a href="mypage.do?command=boardlist&pageno=1" class="btnNormalFix sizeS">목록</a>
-		            			</span>
+		        	   			</span>
 					            <span class="gRight">
 					                <a href="#none" onclick="deleteBoard(${vo_qna.qna_no});" class="btnNormalFix sizeS ">삭제</a>
-					                <a href="" class="btnEmFix sizeS ">수정</a>
+					                <a href="javascript:boardUpdate(${vo_qna.qna_no})" class="btnEmFix sizeS ">수정</a>
 					            </span>
 	        				</div>
 						</div>
