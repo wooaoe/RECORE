@@ -31,10 +31,10 @@ RECORE-CHECKOUT
 <meta content="9e69513f-3466-4c49-a861-ec68fe0777c8" name="csrf-token">
 <meta name="google-site-verification" content="BR5o5r7ViKMPI6vloq9TUj0OAZkmujygD-KXjxO2ABY" />
 
-    <!-- <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/>
+    <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/>
     <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-32-707cb76054.png" sizes="32x32">
     <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-128-d1761d33cd.png" sizes="128x128">
-    <link rel="apple-touch-icon-precomposed" href=""> -->
+    <link rel="apple-touch-icon-precomposed" href="">
 
 
 <link rel="stylesheet" href="https://assets.kolonmall.com/_ui/css/kop/common-f380db13f2.css"/>
@@ -65,15 +65,11 @@ RECORE-CHECKOUT
     	overflow: hidden;
     	padding-left: 50px;
     	padding-right: 50px;
-    
     }
-    
     .way-info {
 	float: left;
 	width: 300px
 	}
-	
-    
     </style>
     
 </head>
@@ -98,77 +94,34 @@ RECORE-CHECKOUT
     %>
     
 	<script type="text/javascript">
-    function payment(){
-	
-		var IMP = window.IMP; // 생략해도 괜찮습니다.
-		IMP.init("imp92732234"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
-        var msg;
-        
-        IMP.request_pay({
-            pg : 'kakaopay',
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + new Date().getTime(),
-            name : 'KH Books 도서 결제',
-            amount : <%=totalPrice%>
-            buyer_email : '<%=email%>',
-            buyer_name : '<%=name%>',
-            buyer_tel : '<%=phone%>',
-            buyer_addr : '<%=address%>',
-            buyer_postcode : '123-456',
-            // 'http://www.iamport.kr/mobile/landing'; 
-            
-        }, function(rsp) {
-            if ( rsp.success ) {
-                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-                jQuery.ajax({
-                    url: "https://www.myservice.com/payments/complete", //cross-domain error가 발생하지 않도록 주의해주세요
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        imp_uid : rsp.imp_uid
-                        //기타 필요한 데이터가 있으면 추가 전달
-                    }
-                }).done(function(data) {
-                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-                    if ( everythings_fine ) {
-                        msg = '결제가 완료되었습니다.';
-                        msg += '\n고유ID : ' + rsp.imp_uid;
-                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                        msg += '\결제 금액 : ' + rsp.paid_amount;
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
-                        
-                        alert(msg);
-                        
-                    } else {
-                        //[3] 아직 제대로 결제가 되지 않았습니다.
-                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-                    }
-                });
-                //성공시 이동할 페이지
-                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
-            } else {
-                msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-                //실패시 이동할 페이지
-                 location.href="<%=request.getContextPath()%>/order/payFail";
-                alert(msg);
-            }
-        
-	
-        });
-   
-</script>
+    
+	function payment(){
+		
+		var popup1 = (document.body.offsetWidth / 2) - (400 / 2);
+		//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
-<script language="javascript">
+		var popup2= (document.body.offsetHeight / 2) - (800 / 2);
+		//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+
+		window.open("RECOREMain/RECOREProduct/kakaopay.jsp",  "popupNo2", "status=no, height=800, width=400, left='+ popup1 + ', top='+ popup2'");
+
+	}
+   
+	</script>
+
+<script type="text/javascript">
 function goPopup(){
-	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
-    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
-    //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
+	
+	var popupX = (document.body.offsetWidth / 2) - (570 / 2);
+	var popupY= (document.body.offsetHeight / 2) - (420 / 2);
+	
+    var pop = window.open("RECOREMain/RECOREAccount/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes, left='+ popupX + ', top='+ popupY'");
+	
 }
+
 /** API 서비스 제공항목 확대 (2017.02) **/
-function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
-					, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
+function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+		, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
 	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
 	document.form.roadAddrPart1.value = roadAddrPart1;
 	document.form.addrDetail.value = addrDetail;
@@ -211,7 +164,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 					<!-- 장바구니에 담았던 상품 정보 들어감 -->
 					<tbody>
 						<tr>
-							<td class="thumb" style = ""><a href="product_detail_test.html"><img
+							<td class="thumb" style = ""><a href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}"><img
 									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png"
 									alt=""></a></td>
 									
@@ -221,7 +174,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 									${pvo.prod_brand}&nbsp;
 								</h4>
 								<p style = "width: 600px; position: relative; top: 20px;">
-									<a href="/Product/RYBAW19152KHX">${pvo.prod_name}</a>
+									<a href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}">${pvo.prod_name}</a>
 								</p>
 								
 								<ul class="meta" style = "position: relative; top: 20px;">
@@ -295,7 +248,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 		
 		
 		<!-- 주문자 정보 입력 -->
-		<form>
+		<form id = "form" name = "form" >
+		
 			<div class="order-write">
 				<h5>주문고객 / 배송지 정보</h5>
 				<dl class="order-form">
@@ -318,32 +272,69 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 					<dd class="min-height-auto">
 						<div class="col-2 col-3 radio-wrap">
 							<span class="radio">
+							
 							<input name="deliveryType"
 								type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
+								
 								<label for="user_sameV2">주문고객과 동일</label></span>
+								
 								<span class="radio">
 								<input name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp;
-								<label for="new_addrV2">새로 입력</label></span><span class="radio">
+								
+								<label for="new_addrV2">새로 입력</label></span>
+								
+								<script type="text/javascript">
+								
+								$(document).ready(function(){
+										$("#new_addrV2").click(function(){
+											
+											goPopup();
+											
+										});
+										$("#user_sameV2").click(function(){
+											
+											$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
+											$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
+											$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
+										
+										});
+											
+									});
+								</script>
+								<span class="radio">
 								<input name="deliveryType" type="radio" id="cvs_addrV2" value="CVSNET">
 								</span>
-							<button type="button" class="btn btn-line btn-small" style = "background-color:#A0D9D9; color: white">
+							
+							<button type="button" class="btn btn-line btn-small" id = "delivery" style = "background-color:#A0D9D9; color: white">
 							나의 	배송지
 							</button>
+							<script type="text/javascript">
+							
+							$("#delivery").click(function(){
+								
+								var popupX = (document.body.offsetWidth / 2) - (800 / 2);
+								//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+
+								var popupY= (document.body.offsetHeight / 2) - (430 / 2);
+								//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+
+								window.open("RECOREMain/RECOREProduct/DeliveryPopup.jsp",  "popupNo1", "status=no, height=430, width=800, left='+ popupX + ', top='+ popupY'");
+							
+							}); 
+							
+							</script>
 						</div>
 					</dd>
-					
-					<form id = "form" name = "form">
+
 					<div style= "display: block;">
 						<dt>
 							우편번호<em class="required" aria-required="true">필수</em>
 						</dt>
 						<dd>
-						
 							<div class="row">
 								<div class="col-2">
 								<input type="hidden" id="confmKey" name="confmKey" value="">
-									<input type="text" id="zipNo" name="zipNo" fw-filter="isLengthRange[1][14]" fw-label="우편번호1" fw-msg="" class="inputTypeText" placeholder="우편번호" readonly="readonly"
-											maxlength="14" value="" type="text" /> 
+									<input type="text" id="zipNo" name="zipNo" placeholder = "우편번호"/> 
 								</div>
 								<div class="col-3">
 									<button type="button" class="btn btn-line btn-small" 
@@ -358,7 +349,9 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 							<div class="row">
 								<input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소" value="" />
 							</div>
+						
 						</dd>
+						
 					</div>
 					<div class="addr-cvs" style="display: none;">
 						<dt>
@@ -370,7 +363,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 							</div>
 						</dd>
 					</div>
-					</form>
+					
 					
 					<!-- 휴대폰/전화번호/배송메모 입력받는 폼 -->
 					<dt>
@@ -483,23 +476,39 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 				<div class="way">
 					<h5>결제수단선택</h5>
 					<ul id="paymentMethodListAreaV2">
-						<!-- <li><input type="radio" id="cardV2" name="paymentMethod"
-							value="CARDNICEPAY"><label for="cardV2" class="card">신용카드</label></li>
-						<li><input type="radio" id="naverV2" name="paymentMethod"
-							value="NAVERPAY"><label for="naverV2" class="naver">네이버페이</label></li> -->
+						
 						<li><input type="radio" id="kakaoV2" name="paymentMethod"
 							value="KAKAOPAY"><label for="kakaoV2" class="kakao">카카오페이</label></li>
-						<!-- <li><input type="radio" id="smileV2" name="paymentMethod"
-							value="SMILEPAY"><label for="smileV2" class="smile">스마일페이</label></li>
-						<li><input type="radio" id="paycoV2" name="paymentMethod"
-							value="PAYCO"><label for="paycoV2" class="payco">페이코</label></li>
-						<li><input type="radio" id="bankV2" name="paymentMethod"
-							value="BANDTRANSFERLGUPLUS"><label for="bankV2"
-							class="bank">실시간 계좌이체</label></li> -->
+						
 					</ul>
-					<span class="checkbox keep-payment"><input
-						name="keepPayment" type="checkbox" id="keepPayment" value=""><i></i></span><label
-						for="keepPayment">지금 선택한 결제수단을 다음에도 사용</label>
+					<span class="checkbox keep-payment">
+					<input name="keepPayment" type="checkbox" id="keepPayment" value="">
+					<i></i></span>
+					<label for="keepPayment">지금 선택한 결제수단을 다음에도 사용</label>
+				</div>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						
+						$("#kakaoV2").click(function(){
+							if($("#info").css("display") == "none"){
+								$("#info").show(); 
+							}else {
+								$("#info").hide();
+							}
+
+						});
+					});
+				
+				</script>
+				
+				<div class="kakao"  id = "info" style="display: none;">
+				<h5>카카오페이 안내</h5>
+				<ul class="bul-list">
+				<li>카카오페이 결제 시 공인인증서 없이 30만원 이상 결제 가능합니다.</li>
+				<li>카카오톡 안에서 개인카드(신용/체크)를 등록하여 다양한 곳에서 결제 시 간단하게 비밀번호만으로<br>
+				결제할 수 있는 모바일 결제서비스입니다.</li>
+				<li>본인명의 핸드폰에서 본인명의 카드로만 등록 후 사용 가능합니다.</li>
+				</ul>
 				</div>
 				
 		
@@ -508,7 +517,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 				<div class="way-info01">
 					<br><br>
 					<div class="card01" style="display: block;">
-						<br><br>
+						<br><br><br><br>
 						<h5 style = "text-align: center;">신용카드 이용안내</h5>
 						<br>
 						<dl>
@@ -557,16 +566,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 		</form>
 		
 		
-		<div class="cart-info">
-			<div class="col">
-			
-		<%-- 	<%@ include file="/RECOREMain/RECOREProduct/footer.jsp" %>  --%>
-          </div>
-		</div> 
-		
-		
 		<!-- 오른쪽에 뜨는 결제 정보 폼 -->
-		
+		<form id = "form" name = "form">
 		<div style="min-height: 771.063px;" id = "paymentform">
 			<div class="react-sticky" style="transform: translateZ(0px);">
 				<article class="sticky-menu" style = "position: relative; bottom: 800px;">
@@ -594,8 +595,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 						</div>
 						<div class="total">
 							<div>
-								<strong>총 결제예정금액</strong><span>
-						<fmt:formatNumber value="<%=totalPrice%>" 
+								<strong>총 결제예정금액</strong>
+								<span name = "totalPrice"><fmt:formatNumber value="<%=totalPrice%>" 
 						groupingUsed="true"></fmt:formatNumber>원</span>
 							</div>
 						</div>
@@ -611,8 +612,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 							</p>
 							<p class="">주문제작상품의 경우, 교환/반품이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.</p>
 							<span class="checkbox">
-							<input type="checkbox"
-								id="agreeV2" value="" required oninvalid="this.setCustomValidity('동의란을 체크하세요.')">
+							
+							<input type="checkbox" id="agreeV2" value="" required oninvalid="this.setCustomValidity('동의란을 체크하세요.')">
 								<i></i></span>
 								<label for="agreeV2">동의합니다.</label>
 							<div class="buttons end-row">
@@ -627,6 +628,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,roadAddrPart2,engAddr, jibunAdd
 				</article>
 			</div>
 		</div>
+		</form>
 	</article>
 </section>
 

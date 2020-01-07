@@ -203,6 +203,7 @@
 				<div class="col-md-7" style="position: relative; left: 50px;">
 					<div class="single-product-details">
 						<h2 style = "margin-top: 0px;">${pvo.prod_name}</h2>
+						
 						<p class="product-price">
 							<fmt:formatNumber value="${pvo.prod_price}" groupingUsed="true">
 							</fmt:formatNumber>원
@@ -216,7 +217,6 @@
 						<br>
 						
 						<!-- @@ 상품 옵션 값 보내주기 @@ -->
-						
 						
 						<form action = "" method = "get" id = "form">
 						

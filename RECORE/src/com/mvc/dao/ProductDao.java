@@ -2,6 +2,7 @@ package com.mvc.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
@@ -31,6 +32,8 @@ public interface ProductDao {
 	public Vo_Category_Detail CD_selectOne(Vo_Product pvo); //카테고리 선택 조회
 	
 	public ArrayList<Vo_Prod_option> po_selectOne(Vo_Product pvo); //상품 옵션 선택 조회
+	
+	public Map choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo);
 
 	public boolean P_insert(Vo_Product pvo); // 상품 등록
 	

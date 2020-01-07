@@ -1,6 +1,7 @@
 package com.mvc.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -8,13 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
-import com.mvc.vo.Vo_Wish;
 
 public class ProductDaoImp implements ProductDao {
 
@@ -83,12 +84,12 @@ public class ProductDaoImp implements ProductDao {
 
 				toplist.add(tmp);
 				System.out.println("toplist : " + toplist);
-				
+
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rs, pstm, con);
 		}
 
