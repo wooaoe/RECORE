@@ -387,6 +387,51 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
+	public Map<String, String> choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, String> choice = new HashMap<>();
+		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
+
+		String sql = "SELECT * FROM PROD_OPTION WHERE PROD_NO = ?";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pvo.getProd_no());
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Vo_Prod_option tmp = new Vo_Prod_option(
+						rs.getInt(1), 
+						rs.getInt(2), 
+						rs.getString(3), 
+						rs.getString(4),
+						rs.getInt(5));
+				
+				polist.add(tmp);
+			}
+
+			for (int i = 0; i < polist.size(); i++) {
+
+				choice.put(polist.get(i).getProd_color(), polist.get(i).getProd_size());
+			}
+			System.out.println("productimp choice map 값 : " + choice);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			
+		}finally {
+			
+			close(rs, pstm, con);
+		}
+
+		return choice;
+	}
+
+	@Override
 	public boolean P_insert(Vo_Product pvo) {
 
 		/*
