@@ -27,7 +27,7 @@ public interface ProductDao {
 	
 	public List<Vo_Category_Detail> CD_selectAll(int catid); //카테고리 아이디 받아서 Clothing, Life 구분하기 
 	
-	public List<Vo_Cart> Cart_selectAll(Vo_Prod_option povo);
+	public List<Vo_Cart> Cart_selectAll(); //카트 전체 주문시 
 	
 	public Vo_Category_Detail CD_selectAll2(int catdno); //카테고리 번호 받아서 Bag,Wallet,outer 등 구분하기 
 	

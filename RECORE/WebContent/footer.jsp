@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+     <!-- 상단으로 올라가기 -->
+          <div style = "position: fixed; bottom: 70px; right: 50px;">
+			<a href = "#body"><img src = "<%=request.getContextPath()%>/images/chevron3.png" /></a>
+		  </div>
+    
     			<!-- footer 라인 -->
 		 <footer class="site-footer border-top">
       <div class="container">

@@ -124,8 +124,7 @@
               <div class="d-flex ml-auto">
               
                <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<!-- <input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>  -->
+              
               	</form>
                 
                 <c:if test="${empty vo }">
@@ -224,19 +223,18 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/backimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath()%>/RECOREMain/images/Pbackimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
          <div class="col-md-10">
-         <!-- <span class="sub-text">Our Awesome</span> --> 
-         	<br><br><br><br>
+         	<br><br><br><br><br><br><br>
          	<h1>${cdvo2.catd_name}</h1>
          	<h5><span class="sub-text">&nbsp;Your beautiful Life</span></h5>
           </div>
         </div> 
       </div>
     </div>  
-    
+    <br><br>
     
 
     <div class="site-section">
@@ -297,11 +295,6 @@
       </div>
     </div>
 
-
-	 <!-- 상단으로 올라가기 -->
-    <div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
-	</div>
 
     <%@ include file="/footer.jsp" %>
     

@@ -276,10 +276,7 @@
       </div>
     </div>
 
-	 <!-- 상단으로 올라가기 -->
-    <div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
-	</div>
+	
 
     <%@ include file="/footer.jsp" %>
     

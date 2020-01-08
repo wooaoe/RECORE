@@ -24,9 +24,13 @@
     	
     </style>
     
+    <!-- @@ RECORE favicon @@  -->
+    <link rel="icon" href="<%=request.getContextPath()%>/images/recorefavi.png">
+    
   </head>
   
   <body id="body">
+  
   
   
   <div class="site-wrap">
@@ -70,9 +74,10 @@
                   <br>
                   <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
                   <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
-                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                  <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+                  <a href = "<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/>
+                  </a>
                  </c:if>
                  
                  <!-- 로그인 되어있을 때 -->
@@ -358,8 +363,8 @@
 
 
 	 <!-- 상단으로 올라가기 -->
-          <div style = "position: fixed; bottom: 30px; right: 30px;">
-			<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
+          <div style = "position: fixed; bottom: 70px; right: 50px;">
+			<a href = "#body"><img src = "<%=request.getContextPath()%>/images/chevron3.png" /></a>
 		  </div>
 
 

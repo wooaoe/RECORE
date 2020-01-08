@@ -8,10 +8,10 @@
 <%@ page import = "java.util.List" %>
 <%@ page import = "com.mvc.vo.Vo_Product" %>
 <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+<%@ page import = "com.mvc.vo.Vo_Account" %>
 
 <!DOCTYPE html>
 <html class="no-js">
-<!--<![endif]-->
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -115,10 +115,12 @@
 
 	<%@ include file="/footerPdetail.jsp"%>
 
+	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -142,7 +144,7 @@
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
     			    	<li class="active"><a
-							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}">${cdvo.catd_name}</a></li>
+							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}&pageno=1">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
@@ -313,16 +315,23 @@
 							
 							function insertCart(){
 								
-								
-								for(var i = 0; i < <%=povo.size()%>; i++){
+								 for(var i = 0; i < <%=povo.size()%>; i++){
 									var prod_id = ${povo.get(i).getProd_id()};
 								}
-								var prod_amount = $("#number").val();
-								
-								location.href = "Product.do?command=cartlist&prod_id=" + prod_id 
-										+ "&prod_amount=" + prod_amount;
-								
+								var prod_amount = $("#number").val(); 
+								var acc_no = <%=acc.getAcc_no()%>
+								var prod_no = ${pvo.prod_no};
+								location.href = "Product.do?command=insertCart&prod_id=" + prod_id 
+									+ "&prod_amount=" + prod_amount + "&acc_no=" + acc_no + "&pseq=" + prod_no;
 							}
+							function insertWish(){
+								
+								var prod_no = ${pvo.prod_no};
+								
+								location.href = "Product.do?command=insertWish&pseq=" + prod_no;
+								
+								
+							} 
 						
 						</script>
 					</div>
@@ -518,12 +527,7 @@
 	</section>
 	
 	
-	<!-- @@ 화살표 누르면 상단으로 @@ -->
 	
-	<div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
-	</div>
-
 	<!-- footer -->
 	<%@ include file="/footer.jsp"%>
 

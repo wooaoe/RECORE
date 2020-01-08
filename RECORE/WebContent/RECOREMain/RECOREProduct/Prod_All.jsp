@@ -77,18 +77,12 @@
         
           <div class="row align-items-center">
             <div class="col-6">
-              <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a>
-              <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
             </div>
             
             <div class="col-6">
               <div class="d-flex ml-auto">
               
                <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<!-- <input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
                
                <!-- 로그인 안되어있을 때 -->
@@ -127,7 +121,6 @@
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <!-- <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
@@ -193,7 +186,7 @@
         <div class="row align-items-center">
          <div class="col-md-10">
          <!-- <span class="sub-text">Our Awesome</span> --> 
-         	<br><br><br><br>
+         	<br><br><br><br><br><br><br>
          	<h1>ALL</h1>
          	<h5><span class="sub-text">Your beautiful Life</span></h5>
           </div>
@@ -263,12 +256,7 @@
       </div>
     </div>
 
-	 <!-- 상단으로 올라가기 -->
-    <div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
-	</div>
-
-
+	
 
     <%@ include file="/footer.jsp" %>
     

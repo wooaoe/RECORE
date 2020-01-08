@@ -246,7 +246,7 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public List<Vo_Cart> Cart_selectAll(Vo_Prod_option povo) {
+	public List<Vo_Cart> Cart_selectAll() {
 		
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
@@ -254,12 +254,11 @@ public class ProductDaoImp implements ProductDao {
 		List<Vo_Cart> mycart = new ArrayList<>();
 		Vo_Cart tmp = new Vo_Cart();
 		
-		String sql = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE PROD_ID = ?";
+		String sql = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO)";
 		
 		try {
 			
 			pstm = con.prepareStatement(sql);
-			pstm.setInt(1, povo.getProd_id());
 			rs = pstm.executeQuery();
 			
 			while(rs.next()){

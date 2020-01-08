@@ -174,18 +174,43 @@ public class Product_Controller extends HttpServlet {
 
 		} else if (command.equals("insertCart")) {
 
-
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			int amount = Integer.parseInt(request.getParameter("prod_amount"));
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+
+			System.out.println("pseq : " + pseq);
+
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
 
 			boolean cart = dao.P_insertCart(acc.getAcc_no(), prod_id, amount);
 
 			if (cart) {
-				dispatch("./RECOREMain/RECOREPMypage/Mypage_Cart.jsp", request, response);
+				dispatch("./RECOREMain/RECOREMypage/Mypage_Cart.jsp", request, response);
 			} else {
-				dispatch("./RECOREMain/RECOREProduct/Prod_SingleDetail.jsp", request, response);
+				jsResponse("동일한 상품이 존재합니다.",
+						"Product.do?command=ProdDetail&pseq=" + pvo.getProd_no() + "&catdno=" + pvo.getProd_catd(),
+						response);
+			}
+			
+
+		} else if (command.equals("insertWish")) {
+
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+
+			boolean wish = dao.P_insertWish(acc.getAcc_no(), pvo.getProd_no());
+
+			if (wish) {
+				dispatch("./RECOREMain/RECOREMypage/Mypage_WishList.jsp", request, response);
+			} else {
+				jsResponse("동일한 상품이 존재합니다.", "Product.do?command=ProdDetail&pseq=" + pvo.getProd_no() + "&catdno=" + pvo.getProd_catd(), response);
 			}
 
+			
 		} else if (command.equals("insertpage")) { // 상품등록페이지로 이동 from 김성일
 
 			response.sendRedirect("./RECOREMain/RECOREProduct/Prod_insertpage.jsp");
@@ -322,13 +347,11 @@ public class Product_Controller extends HttpServlet {
 			}
 
 			for (int i = 0; i < plist.size(); i++) {
-
 				dao.POinsert(pvo.getProd_no(), plist.get(i));
-
 			}
-
 			jsResponse("상품등록에 성공 하였습니다.", "Product.do?command=ProdSelectAll&pageno=1", response);
 
+		
 		} else if (command.equals("cartOrder")) { // 전체상품 주문시
 
 			String tmp = request.getParameter("Arr_order");
@@ -337,38 +360,39 @@ public class Product_Controller extends HttpServlet {
 			String[] arr_order = tmp.split(",");
 			System.out.println("컨트롤러의 arr_order[0] : " + arr_order[0]);
 			System.out.println("컨트롤러의 arr_order[1] : " + arr_order[1]);
-			
+
 			String tmp2[] = tmp.split(",");
-			String prod_id[] = new String[tmp2.length/2];
-			String prod_amount[] = new String[tmp2.length/2];
+			String id[] = new String[tmp2.length / 2];
+			String amount[] = new String[tmp2.length / 2];
 
-			int j=0;
-		      for(int i=0;i<prod_id.length;i++) {
-		            if(j==0) {
-		               prod_id[i] = tmp2[j];
-		            }
-		            if(j%2==0){
-		               prod_id[i] = tmp2[j];
-		            }
-		            j+=2;
-		      }
-		      
-		      int k=1;
-		      for(int i=0;i<prod_amount.length;i++) {
-		         if(k%2==1) {
-		            prod_amount[i]=tmp2[k];
-		         }
-		         k+=2;
-		      }
+			int j = 0;
+			for (int i = 0; i < id.length; i++) {
+				if (j == 0) {
+					id[i] = tmp2[j];
+				}
+				if (j % 2 == 0) {
+					id[i] = tmp2[j];
+				}
+				j += 2;
+			}
+
+			int k = 1;
+			for (int i = 0; i < amount.length; i++) {
+				if (k % 2 == 1) {
+					amount[i] = tmp2[k];
+				}
+				k += 2;
+			}
+
+			for (int i = 0; i < id.length; i++) {
+				System.out.println("prod_id[" + i + "] : " + id[i]);
+			}
+			for (int i = 0; i < amount.length; i++) {
+				System.out.println("prod_amount[" + i + "] : " + amount[i]);
+			}
 			
-		      for(int i=0;i<prod_id.length;i++) {
-		          System.out.println("prod_id["+i+"] : " + prod_id[i]);
-		       }
-		       for(int i=0;i<prod_amount.length;i++) {
-		          System.out.println("prod_amount["+i+"] : " + prod_amount[i]);
-		       }  
-
-
+			
+			
 			
 		}
 	}
