@@ -224,7 +224,6 @@
 						
 						<input type = "hidden" name = "command" value = "Order" id = "val"/> 
 						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}" id = "val2"/>
-						<input type = "hidden" name = "prod_id" value= "${pvo.prod_id }">
 						
 						<div class="product-size">
 							<span>색상:</span> 
@@ -313,18 +312,19 @@
 					 	<script type="text/javascript">
 							
 							function insertCart(){
-								form2.action = "Product.do";
-								document.getElementById("val").value = "insertcart";
-								document.getElementById("val2").setAttribute("name", "prod_id");
-								for(var i = 0; i < ${povo.size()}; i++){
-								document.getElementById("val2").value = ${povo.get(i).getProd_id()};
+								
+								
+								for(var i = 0; i < <%=povo.size()%>; i++){
+									var prod_id = ${povo.get(i).getProd_id()};
 								}
+								var prod_amount = $("#number").val();
+								
+								location.href = "Product.do?command=cartlist&prod_id=" + prod_id 
+										+ "&prod_amount=" + prod_amount;
 								
 							}
 						
 						</script>
-						
-						
 					</div>
 				</div>
 			</div>
