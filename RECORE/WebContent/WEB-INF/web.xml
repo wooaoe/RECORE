@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>RECORE_05</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>Product</servlet-name>
+  	<servlet-class>com.mvc.controller.Product_Controller</servlet-class>
+  </servlet>
+	<servlet-mapping>
+		<servlet-name>Product</servlet-name>
+		<url-pattern>/Product.do</url-pattern>
+	</servlet-mapping>  
+	
+	<servlet>
+    <servlet-name>QnaController</servlet-name>
+    <servlet-class>com.mvc.controller.Community_QnA_Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>QnaController</servlet-name>
+    <url-pattern>/qna.do</url-pattern>
+  </servlet-mapping>
+	<servlet>
+		<servlet-name>ManagerController</servlet-name>
+		<servlet-class>com.mvc.controller.Community_Manager_Controller</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManagerController</servlet-name>
+		<url-pattern>/manager.do</url-pattern>
+	</servlet-mapping>	
+  
+  
+</web-app>
