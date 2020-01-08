@@ -44,13 +44,11 @@
 			
 			var count = 1;
 			
-			<% int opcount = 1;	%>
 
 			
 			$("#plusOp").click(function(){
 
 				count++;
-				<% opcount++; %>
 				
 				var form_row = $("<div class='form-row'>").html(
 						"<div class='name' style='font-size: 15px; color: gray;'>옵션"+count+"</div>"
@@ -69,7 +67,9 @@
 
 				$(".card-body").append(form_row);
 				
+				console.log(count);
 				
+				$("#opcount").attr("value",count);
 				
 			});
 				
@@ -200,7 +200,7 @@
    							 padding: 0 7px; margin-top: 20px;">+</button>
                             
                         </div>
-                        <input type="hidden" name="opcount" value="<%=opcount %>">
+                        <input id="opcount" type="hidden" name="opcount" value="1">
                         <div class="form-row">
                             <div class="name" style="font-size: 15px; color: gray;">옵션1</div>
                             <div class="value">

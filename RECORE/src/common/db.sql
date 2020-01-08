@@ -21,3 +21,5 @@ SELECT * FROM PROD_OPTION WHERE  PROD_NO DESC;
 select * from product order by prod_no desc;
 
 select * from user_sequences;
+
+select * from prod_option;
