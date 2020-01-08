@@ -4,6 +4,7 @@
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
+<%@ page import="com.mvc.vo.Vo_Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -205,6 +206,15 @@
       <div class="container">
       	<div class="row">
           <div class="col-12 text-center">
+          
+<%
+	
+				if(session.getAttribute("vo") != null){
+					Vo_Account vo_a = (Vo_Account)session.getAttribute("vo");
+
+					if(vo_a.getAcc_m_c().equals("M")){		
+%>
+          
             <span class="" onclick="location.href='issue.do?command=insertpage&iss_catd_no=5'"
 			style="background-color:#a0d9d9;
 			width: 70px; 
@@ -215,6 +225,13 @@
 			padding-top: 3px;
 			margin-bottom: 15px;
 			color:white;">글쓰기</span>
+			
+<%
+					}
+				}
+
+%>			
+			
           </div>
         </div>
       

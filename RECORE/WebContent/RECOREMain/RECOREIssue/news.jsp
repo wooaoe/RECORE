@@ -3,7 +3,7 @@
     
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
-
+<%@ page import="com.mvc.vo.Vo_Account" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -54,6 +54,8 @@
 		}
 	
 	</style>
+	
+
     
   </head>
   <body id="body">
@@ -206,16 +208,30 @@
           <div class="col-12 text-center">
             <span class="sub-title">뉴스</span>
             <h2 class="font-weight-bold text-black mb-5">News</h2>
-            <span class="" onclick="location.href='issue.do?command=insertpage&iss_catd_no=4'"
-			style="background-color:#a0d9d9;
-			width: 70px; 
-			height: 30px;
-			font-size:13px; 
-			text-align: center;
-			float: right; 
-			padding-top: 3px;
-			margin-bottom: 15px;
-			color:white;">글쓰기</span>
+            		
+					
+<%
+	
+				if(session.getAttribute("vo") != null){
+					Vo_Account vo_a = (Vo_Account)session.getAttribute("vo");
+
+					if(vo_a.getAcc_m_c().equals("M")){		
+%>	
+		            <span class="" onclick="location.href='issue.do?command=insertpage&iss_catd_no=4'"
+					style="background-color:#a0d9d9;
+					width: 70px; 
+					height: 30px;
+					font-size:13px; 
+					text-align: center;
+					float: right; 
+					padding-top: 3px;
+					margin-bottom: 15px;
+					color:white;">글쓰기</span>
+<%					
+					}
+				}			
+%>		
+			
           </div>
         </div>
         
