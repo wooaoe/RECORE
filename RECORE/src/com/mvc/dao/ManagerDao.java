@@ -2,7 +2,12 @@ package com.mvc.dao;
 
 import java.util.List;
 
+import com.mvc.vo.Vo_Account;
+import com.mvc.vo.Vo_Issue;
 import com.mvc.vo.Vo_Manager_Payment;
+import com.mvc.vo.Vo_Manager_ProdOption;
+import com.mvc.vo.Vo_QnA;
+import com.mvc.vo.Vo_QnA_Paging;
 
 public interface ManagerDao {
 
@@ -16,5 +21,10 @@ public interface ManagerDao {
 
 	public boolean M_delete(int mseq); // 삭제
 	
-
+	/*재고 관리 상품 전체 조회*/
+	public List<Vo_Manager_ProdOption> P_selectAll(Vo_QnA_Paging paging, String category, String searchsubject, String keyword);
+	
+	/*재고 관리 상품 전체 Row Count*/
+	public int P_selectAllCount(String category, String searchsubject, String keyword);
+	
 }

@@ -40,7 +40,7 @@
 	<meta name="browsermode" content="application">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/Delivery.css">
 	
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 	$(window).load(function() {
 
 		  var strWidth;
@@ -82,7 +82,7 @@
 		}); 
 	
 	
-	</script> -->
+	</script>
 	
 </head>
 
@@ -190,10 +190,10 @@
         </tr>
 		</tbody>
 		
-</table>
-</div>
-</div>
-</div>
+	</table>
+	</div>
+	</div>
+	</div>
 	<div class="ec-base-button">
         <a href="#none" onclick="myshopAddr.deleteAddress(); return false;"
 					class="btnNormal sizeS ">선택 주소록 삭제</a>

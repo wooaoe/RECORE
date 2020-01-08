@@ -85,7 +85,7 @@
         
         <!-- @@@로고 위치 @@@-->
         <br>
-        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
         <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
         
           <div class="row align-items-center">

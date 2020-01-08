@@ -1,39 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <%response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <%@ page import="java.io.File" %>
 <%@ page import="java.net.*" %>
+
+<%-- keyword --%>
+<% String key = request.getParameter("keyword"); %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RECORE - QNA</title>
+<%-- css --%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qna_search_board.css">
+<%--script --%>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript">
-
-$(function(){
-	$(".selectBtn").click(function(){
-		var imgSrc = $(this).parent().parent().children().find("img").attr("src");
-		var sPrdName = $(this).parent().parent().children().eq(1).text();
-		$(opener.document).find("#iPrdImg").attr("src",imgSrc);
-		$(opener.document).find("#qna_front_img").attr("value", imgSrc);
-		$(opener.document).find("#sPrdName").html(sPrdName); 
-		$(opener.document).find("#iPrdView").removeClass("displaynone"); 
-		window.close();
-		
-	})
-})
-</script>
-<% String key = request.getParameter("keyword"); %>
-<%System.out.println("*** key: "+ key); %>
+<script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/js/qna_searchboardlist.js"></script>
 </head>
 <body id="popup">
-	<div
-		class="xans-element- xans-search xans-search-frompackage ec-base-layer ">
+	<div class="xans-element- xans-search xans-search-frompackage ec-base-layer ">
 		<div class="header">
 			<h1>상품검색</h1>
 		</div>
@@ -46,7 +34,6 @@ $(function(){
 						<span><label>제품명</label> </span>
 						<input id="keyword" name="keyword" class="inputTypeText" placeholder="" size="15" value="<%=key %>" type="text" style="margin-left: 15px;">
 						<button type="submit"class="btnSubmit" style="height: 28px;">검색하기</button>
-						
 					</fieldset>
 					<div class="resultArea">
 						<p class="total">
@@ -78,37 +65,35 @@ $(function(){
 							</tr>	
 						</c:when>
 						<c:otherwise>
-						<c:forEach var="list" items="${list }">
-							<tr>
-						<c:set var="img" value="${list.prod_no }/${list.prod_front_img }.png" />
-							<% 
-							String test= (String)pageContext.getAttribute("img");
-							
-							String img = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+request.getContextPath()+"/RECOREMain/RECOREProduct/product/"+(String)pageContext.getAttribute("img");
-							URL url = new URL(img);
-							System.out.println(img);
-							URLConnection con = url.openConnection();
-							HttpURLConnection exitCode = (HttpURLConnection)con;
-
-							/* 
-							exitCode.getResponseCode() == 200 : 파일존재
-							exitCode.getResponseCode() == 404 : 파일 존재하지 않음.  
-							*/
-							if(exitCode.getResponseCode() == 200){
-							%> 
-								<td class="thumb" style="border-right: 1px solid #dfdfdf;">
-								<img style="width: 80px; height: 80px;" src="RECOREProduct/product/${list.prod_no }/${list.prod_front_img }.png">
-								</td>
-							<%	}else{%>
-							
-								<td class="thumb" style="border-right: 1px solid #dfdfdf;">&nbsp;</td>
-							<%} %>
-							<td class="sPrdName" style="border-right: 1px solid #dfdfdf;">${list.prod_name }</td>
-							<td style="border-right: 1px solid #dfdfdf;"><button class="btnNormal selectBtn" onclick="" value="bt">선택</button></td>
-							
-							</tr>
-							
-						</c:forEach>
+							<c:forEach var="list" items="${list }">
+								<tr>
+							<c:set var="img" value="${list.prod_no }/${list.prod_front_img }.png" />
+								<% 
+								String test= (String)pageContext.getAttribute("img");
+								
+								String img = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+request.getContextPath()+"/RECOREMain/RECOREProduct/product/"+(String)pageContext.getAttribute("img");
+								URL url = new URL(img);
+								System.out.println(img);
+								URLConnection con = url.openConnection();
+								HttpURLConnection exitCode = (HttpURLConnection)con;
+	
+								/* 
+								exitCode.getResponseCode() == 200 : 파일존재
+								exitCode.getResponseCode() == 404 : 파일 존재하지 않음.  
+								*/
+								if(exitCode.getResponseCode() == 200){
+								%> 
+									<td class="thumb" style="border-right: 1px solid #dfdfdf;">
+									<img style="width: 80px; height: 80px;" src="RECOREMain/RECOREProduct/product/${list.prod_no }/${list.prod_front_img }.png">
+									</td>
+								<%	}else{%>
+								
+									<td class="thumb" style="border-right: 1px solid #dfdfdf;">&nbsp;</td>
+								<%} %>
+								<td class="sPrdName" style="border-right: 1px solid #dfdfdf;">${list.prod_name }</td>
+								<td style="border-right: 1px solid #dfdfdf;"><button class="btnNormal selectBtn" onclick="" value="bt">선택</button></td>
+								</tr>
+							</c:forEach>
 						</c:otherwise>
 						</c:choose>
 					</tbody>
@@ -117,6 +102,7 @@ $(function(){
 
 		</div>
 	</div>
+	<%-- paging --%>
 	<jsp:include page="/RECOREMain/RECORECommunity/qna_manager/qna/qna_searchboardlistpaging.jsp">
 	<jsp:param value="${paging.page}" name="page"/>
 	<jsp:param value="${paging.beginPage}" name="beginPage"/>

@@ -31,9 +31,9 @@ RECORE-CHECKOUT
 <meta content="9e69513f-3466-4c49-a861-ec68fe0777c8" name="csrf-token">
 <meta name="google-site-verification" content="BR5o5r7ViKMPI6vloq9TUj0OAZkmujygD-KXjxO2ABY" />
 
-    <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/>
-    <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-32-707cb76054.png" sizes="32x32">
-    <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-128-d1761d33cd.png" sizes="128x128">
+    <!-- <link rel="shortcut icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-ada37e71c5.ico"/> -->
+   <!--  <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-32-707cb76054.png" sizes="32x32">
+    <link rel="icon" href="https://assets.kolonmall.com/_ui/img/favicon/series/favicon-128-d1761d33cd.png" sizes="128x128"> -->
     <link rel="apple-touch-icon-precomposed" href="">
 
 
@@ -52,6 +52,7 @@ RECORE-CHECKOUT
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
   <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 
 	<%@ include file = "/head.jsp" %>
     
@@ -86,24 +87,27 @@ RECORE-CHECKOUT
 	<% String[] size = request.getParameterValues("size"); %>
 	<% int amount = Integer.parseInt(request.getParameter("product-quantity")); %>
 	<% int totalPrice = Integer.parseInt(request.getParameter("total")); %>
-	<%
-    String name = acc.getAcc_name();
-    String email = acc.getAcc_email();
-    String phone = acc.getAcc_phone();
-    String address = acc.getAcc_addr();
-    %>
     
 	<script type="text/javascript">
     
 	function payment(){
 		
-		var popup1 = (document.body.offsetWidth / 2) - (400 / 2);
+		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
+			alert("동의란을 체크하세요.");
+		}else{
+			
+		      
+		var popup1 = (document.body.offsetWidth / 2) - (434.4 / 2);
 		//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
-		var popup2= (document.body.offsetHeight / 2) - (800 / 2);
+		var popup2= (document.body.offsetHeight / 2) - (569.6 / 2);
 		//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 
-		window.open("RECOREMain/RECOREProduct/kakaopay.jsp",  "popupNo2", "status=no, height=800, width=400, left='+ popup1 + ', top='+ popup2'");
+		window.open("RECOREMain/RECOREProduct/kakaopay.jsp",  
+				"popupNo2", "status=no, height=569.6, width=434.4" + ", left=" + popup1 + ",  top=" + popup2);
+		}
+
+				
 
 	}
    
@@ -115,7 +119,7 @@ function goPopup(){
 	var popupX = (document.body.offsetWidth / 2) - (570 / 2);
 	var popupY= (document.body.offsetHeight / 2) - (420 / 2);
 	
-    var pop = window.open("RECOREMain/RECOREAccount/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes, left='+ popupX + ', top='+ popupY'");
+    var pop = window.open("RECOREMain/RECOREAccount/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
 	
 }
 
@@ -315,10 +319,10 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 								var popupX = (document.body.offsetWidth / 2) - (800 / 2);
 								//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
-								var popupY= (document.body.offsetHeight / 2) - (430 / 2);
+								var popupY= (document.body.offsetHeight / 2) - (400 / 2);
 								//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 
-								window.open("RECOREMain/RECOREProduct/DeliveryPopup.jsp",  "popupNo1", "status=no, height=430, width=800, left='+ popupX + ', top='+ popupY'");
+								window.open("RECOREMain/RECOREProduct/DeliveryPopup.jsp",  "popupNo1", "status=no, height=400, width=800," + "left=" + popupX + ", top=" + popupY);
 							
 							}); 
 							
@@ -613,7 +617,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 							<p class="">주문제작상품의 경우, 교환/반품이 불가능 하다는 내용을 확인하였으며 이에 동의합니다.</p>
 							<span class="checkbox">
 							
-							<input type="checkbox" id="agreeV2" value="" required oninvalid="this.setCustomValidity('동의란을 체크하세요.')">
+							<input type="checkbox" id="agreeV2" value="" required="required">
 								<i></i></span>
 								<label for="agreeV2">동의합니다.</label>
 							<div class="buttons end-row">
@@ -621,6 +625,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 							<button type="button" value = "" class="ladda-button btn btn-order btn-big"
 							id="checkout" data-style="zoom-in" onclick = "payment();">결제하기</button>
 							<div class="ladda-progress" style="width: 0px;"></div>
+							
 					</div>
 						</div>
 					

@@ -358,8 +358,8 @@
 <div class="ec-base-button">
         
         <span class="gRight">
-            <a href="<%=request.getContextPath()%>/RECOREMain/index.jsp" class="btnNormalFix sizeL">쇼핑계속하기</a>
-            <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist" class="btnSubmitFix sizeL">주문확인하기</a>
+            <a href="<%=request.getContextPath()%>/RECOREMain/index.html" class="btnNormalFix sizeL">쇼핑계속하기</a>
+            <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeL">주문확인하기</a>
         </span>
     </div>
     

@@ -71,6 +71,25 @@
   .ec-base-table .message {
     border: 0px;
   }
+  .ec-base-paginate li a:hover {
+    text-decoration: none;
+    background: #f0f2f2;
+  }
+  .ec-base-paginate li a.this {
+  	padding-bottom: 9px;
+    border-bottom: 0px;
+    color: #939393;
+  }
+  
+  .ec-base-paginate li a {
+    display: block;
+    width: 33px;
+    padding: 9px 0;
+    font-weight: bold;
+    color: #939393;
+    line-height: 14px;
+    background: #fff;
+  }
   
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
@@ -81,6 +100,20 @@
   
   </style>
 
+<script type="text/javascript">
+	function pageMove(pageNo){
+		alert(pageNo);
+		location.href = "mypage.do?command=orderlist&pageno="+pageNo;
+	}
+	
+	/* function updateStatus(status,order_no,prod_id){
+		alert(status);
+		alert(order_no);
+		alert(prod_id);
+		location.href = "mypage.do?command=updateorder&orderno="+order_no+"&prodid="+prod_id+"&status="+status;
+	} */
+
+</script>
 </head>
 
 <body id="main">
@@ -94,6 +127,16 @@
 	<div id="wrap">
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
+	        	
+	        	<!-- <div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="/">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>주문조회</strong></li>
+				    </ol>
+				</div> -->
+	        	
 				<div class="titleArea">
 				    <h2>주문조회</h2>
 				</div>
@@ -106,9 +149,6 @@
 						</li>
 				        <li class="">
 				       		<a href="/myshop/order/list.html?mode=cs&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">취소/반품/교환 내역 (0)</a>
-				        </li>
-				        <li class="displaynone">
-				        	<a href="/myshop/order/list_old.html?mode=old&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">이전 주문내역 (0)</a>
 				        </li>
 				    </ul>
 				</div>
@@ -187,8 +227,9 @@
 				                <th scope="col">상품정보</th>
 				                <th scope="col">수량</th>
 				                <th scope="col">상품구매금액</th>
-				                <th scope="col">주문처리상태</th>
-				                <th scope="col">취소/교환/반품</th>
+				                <th scope="col">사용 적립금</th>
+				                <!-- <th scope="col">주문처리상태</th>
+				                <th scope="col">취소/교환/반품</th> -->
 				            </tr>
 			            </thead>
 						<tbody class="center">
@@ -197,52 +238,69 @@
 						</c:if>
 						<c:if test="${null ne list_order}">
 						<c:set var="count" value="0"></c:set>
-						<c:forEach var="order" items="${list_order}">
+						<%-- <c:forEach var="order" items="${list_order}" varStatus="status"> --%>
+						<c:forEach var="order" items="${list_order}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
 								<td class="number ">
 				                	<br><p>${order.order_date}
-						            <br><a href="detail.html" class="line">[${order.order_no}]</a></p>
+						            <br><a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}" class="line">[${order.order_no}]</a></p>
 				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
 				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
 				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
 				                    <a href="return.html" class="btnNormal displaynone">반품신청</a> -->
 				                </td>
 				                <td class="thumb">
-				                	<a href="/product/detail.html">
+				                	<a href="mypage.do?command=orderdetail&order_no=${order.order_no}">
+				                	<%-- <a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}"> --%>
 				                	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${order.olist[count].prod_no}/f_img.png" alt=""></a>
 			                	</td>
 				                <td class="product left top">
 				                    <strong class="name"></strong>
-				                    <div class="option"><strong>${order.olist[count].prod_name }</strong></div>
+				                    <div class="option">
+				                    	<a href="mypage.do?command=orderdetail&order_no=${order.order_no}">
+				                    	<%-- <a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}"> --%>
+				                    		<strong>${order.olist[count].prod_name}&nbsp;&nbsp;<c:if test="${order.olist.size() ne 1}"><strong>외</strong>&nbsp;${order.olist.size() - 1}개</c:if></strong>
+				                    	</a>
+				                    </div>
 				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
 				                    	<!-- <li class=""><strong></strong> (개)</li> -->
 									</ul>
 									<p class="gBlank5 displayone">COLOR : ${order.olist[count].prod_color}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIZE : ${order.olist[count].prod_size}</p>
 				                </td>
-				                <td>${order.olist[count].order_amount}개</td>
+				                <td>${order.olist.size()}개</td>
 				                <!-- <td>1개</td> -->
+				                <!-- 주문당 총 금액 구하기 -->
+				                <c:set var="sum" value="0"></c:set>
+				                <c:forEach var="tmp" items="${order.olist}">
+				                	<c:set var="sum" value="${sum + tmp.order_price}"></c:set>
+				                </c:forEach>
 				                <td class="right">
-									<strong></strong><div class=""><fmt:formatNumber value="${order.olist[count].order_price}" groupingUsed="true"></fmt:formatNumber>원</div>
+									<div class="">
+										<fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber>원
+										<%-- <fmt:formatNumber value="${order.olist[count].order_price}" groupingUsed="true"></fmt:formatNumber>원 --%>
+									</div>
 								</td>
-				                <td class="state">
-				                    <p class="txtEm"></p>
-				                    <p class="displaynone"><a href="" target=""></a></p>
-				                    <p class=""><a href="#none" class="line" onclick="">[${order.olist[count].order_status}]</a></p>
-				                    <a href="/board/product/write.html" class="btnSubmit displaynone">구매후기</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">취소철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">교환철회</a>
-				                    <a href="#none" class="btnNormal displaynone" onclick="">반품철회</a>
+								<td class="state">
+				                    <p class=""><a href="" class="line"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber>원</a></p>
+				                </td>
+				                <%-- <td class="state">
+				                    <p class="txtEm">${order.order_no} / ${order.olist[count].prod_id} / ${order.olist[count].order_status}</p>
+				                    <p class=""><a href="javascript:test(${order.olist[count].order_status})" class="line">[${order.olist[count].order_status}]</a></p>
 				                </td>
 				                <td>
-				                	<a href="cancel.html" class="btnNormal">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal">교환신청</a>
-				                    <a href="return.html" class="btnNormal">반품신청</a>
-				                    <a href="return.html" class="btnNormal">리뷰작성</a>
-				                    <p class="displaynone"><a href="#none" class="btnNormal" onclick="">상세정보</a></p>
-				                    <p class="displaynone">-</p>
-				                </td>
+				                	<c:if test="${order.olist[count].order_status eq '입금완료' or order.olist[count].order_status eq '배송준비중'}">
+				                		<a href="javascript:updateStatus('취소',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">취소신청</a>
+				                	</c:if>
+				                	<c:if test="${order.olist[count].order_status eq '배송중' or order.olist[count].order_status eq '배송완료'}">
+					                    <a href="javascript:updateStatus('교환',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">교환신청</a>
+					                    <a href="javascript:updateStatus('반품',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">반품신청</a>
+				                    </c:if>
+				                    <c:if test="${order.olist[count].order_status eq '배송완료'}">
+				                    	<a href="return.html" class="btnNormal">리뷰작성</a>
+				                    </c:if>
+				                </td> --%>
 				            </tr>
-				            <c:set var="count" value="${count+1}"></c:set>
+				            <%-- <c:set var="count" value="${count+1}"></c:set> --%>
 				        </c:forEach>
 				        </c:if>
 						</tbody>
@@ -251,21 +309,30 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="first">
+					<a href="javascript:pageMove(${page.firstPageNo})" class="first">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_first.gif" alt="첫 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.prevPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_prev.gif" alt="이전 페이지">
 					</a>
 					<ol>
-						<li class="xans-record-">
-							<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="this">1</a>
-						</li>
+						<c:forEach var="i" begin="${page.startPage}" end="${page.endPage}">
+							<li class="xans-record-">
+								<c:choose>
+								<c:when test="${page.pageNo eq i}">
+									<a href="javascript:pageMove(${i})" class="" style="padding-bottom: 6px; border-bottom: 3px solid #495164; color: #495164;">${i}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:pageMove(${i})" class="">${i}</a>
+								</c:otherwise>
+								</c:choose>
+							</li>
+						</c:forEach>
 				    </ol>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">
+					<a href="javascript:pageMove(${page.nextPageNo})">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_next.gif" alt="다음 페이지">
 					</a>
-					<a href="?page=1&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018" class="last">
+					<a href="javascript:pageMove(${page.lastPageNo})" class="last">
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>

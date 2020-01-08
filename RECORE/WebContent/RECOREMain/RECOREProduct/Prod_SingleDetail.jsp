@@ -7,6 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import = "java.util.List" %>
 <%@ page import = "com.mvc.vo.Vo_Product" %>
+<%@ page import = "com.mvc.vo.Vo_Prod_option" %>
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -117,6 +118,7 @@
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
+	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -135,7 +137,7 @@
 				
 					<ol class="breadcrumb">
 						<li><a
-							href="<%=request.getContextPath()%>/RECOREMain/index.jsp">Home</a></li>
+							href="<%=request.getContextPath()%>/RECOREMain/index.html">Home</a></li>
 						<li><a href="Product.do?command=ProdSelectAll">Product</a></li>
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
@@ -218,10 +220,11 @@
 						
 						<!-- @@ 상품 옵션 값 보내주기 @@ -->
 						
-						<form action = "" method = "get" id = "form">
+						<form action = "" method = "get" id = "form" name = "form">
 						
-						<input type = "hidden" name = "command" value = "" id = "val"/> 
-						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
+						<input type = "hidden" name = "command" value = "Order" id = "val"/> 
+						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}" id = "val2"/>
+						<input type = "hidden" name = "prod_id" value= "${pvo.prod_id }">
 						
 						<div class="product-size">
 							<span>색상:</span> 
@@ -292,21 +295,35 @@
 							<span>원</span>
 							
 						</div>
-						
+						<!-- javascript: form.action = 'Product.do'; document.getElementId('val').value = 'Order'; -->
 						
 						<br><br>
-						<input type = "submit" value = "장바구니" id = "cart" 
-						onclick="javascript: form.action='mypage.do'; document.getElementById('val').value='cartlist';"
-							class="btn btn-main mt-20">&nbsp;&nbsp;
-							
 						<input type = "submit" value = "바로구매" id = "pay" 
-						onclick="javascript: form.action='Product.do'; document.getElementById('val').value='Order';"
 						class = "btn btn-main mt-20" />&nbsp;&nbsp; 
 						
-						<input type = "submit" value = "관심상품" id = "wish"
-						onclick="javascript: form.action='mypage.do'; document.getElementById('val').value='wishlist';"
+						<input type = "button" value = "장바구니" id = "cart" 
+						onclick="insertCart();"
+							class="btn btn-main mt-20">&nbsp;&nbsp;
+						
+						<input type = "button" value = "관심상품" id = "wish"
+						onclick="insertWish();"
 						class="btn btn-main mt-20">
 						</form>
+						
+					 	<script type="text/javascript">
+							
+							function insertCart(){
+								form2.action = "Product.do";
+								document.getElementById("val").value = "insertcart";
+								document.getElementById("val2").setAttribute("name", "prod_id");
+								for(var i = 0; i < ${povo.size()}; i++){
+								document.getElementById("val2").value = ${povo.get(i).getProd_id()};
+								}
+								
+							}
+						
+						</script>
+						
 						
 					</div>
 				</div>

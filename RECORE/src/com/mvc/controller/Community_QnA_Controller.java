@@ -32,8 +32,7 @@ public class Community_QnA_Controller extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -53,9 +52,7 @@ public class Community_QnA_Controller extends HttpServlet {
 			 * 작성자: 주희진
 			 * Date: 2019. 12. 30.
 			 */
-			String uu = request.getSession().getServletContext().getRealPath("/");
 
-			System.out.println(uu);
 			
 			/* QnA list catd(카테고리),searchsubject(검색조건),keyword(키워드) 값 Load*/
 			String catd = null;
@@ -413,11 +410,12 @@ public class Community_QnA_Controller extends HttpServlet {
 			 */
 			
 			/* QnA list catd(카테고리),searchsubject(검색조건),keyword(키워드) 값 Load*/
-			//String catd = (String)request.getParameter("catd");
+			String catd = (String)request.getParameter("catd");
 			String searchsubject = (String)request.getParameter("searchsubject");
 			String keyword = (String)request.getParameter("keyword");
-			//System.out.println("searchsubject" + searchsubject);
-			//System.out.println("keyword"+keyword);
+			System.out.println("catd" + catd);
+			System.out.println("searchsubject" + searchsubject);
+			System.out.println("keyword"+keyword);
 			
 			/*Page Code*/
 			int page = 1;
@@ -428,25 +426,26 @@ public class Community_QnA_Controller extends HttpServlet {
 			paging.setPage(page);
 
 			/* QnA list Total Row Load */
-			int totalCount = dao.Cr_selectAllCount();
+			int totalCount = dao.Cr_selectAllCount(catd, searchsubject, keyword);
 			paging.setTotalCount(totalCount);
 
 			/* QnA list Load & RequestSet */
-			List<Vo_Review> list = dao.Cr_selectAll(paging);
+			List<Vo_Review> list = dao.Cr_selectAll(paging, catd, searchsubject, keyword);
 			request.setAttribute("list", list);
 			request.setAttribute("paging", paging);
-			//request.setAttribute("catd", catd);
+			request.setAttribute("catd", catd);
 			request.setAttribute("searchsubject", searchsubject);
 			request.setAttribute("keyword", keyword);
 			
 			
-			//System.out.println("_____________________catd" + catd);
+			System.out.println("_____________________catd" + catd);
 			System.out.println("list:...."+ list.size());
 			System.out.println("totalCount:...."+ totalCount);
 			/*Session Load & Set*/
 			HttpSession httpSession = request.getSession(true);
 
 			/*[테스트용] 로그인된 Account정보 세션 바인딩*/
+			System.out.println("테스트용 vo 호출합니다.");
 			Vo_Account vo = dao.getAccount(1);
 			httpSession.setAttribute("sessionVo", vo);
 			

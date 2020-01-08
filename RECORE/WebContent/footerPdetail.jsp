@@ -12,13 +12,7 @@
 		bottom:10px; "
 			
 		}
-	
-	
-	
 	</style>
-	
-	
-	
   </head>
  
   <body>
@@ -33,7 +27,7 @@
           </div>
        
           <div class="col-lg-4" style = "text-align: center; position:relative; bottom: 16px;">
-           	<a href = "<%=request.getContextPath()%>/RECOREMain/index.jsp">
+           	<a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
            	<img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a>
           </div>
           

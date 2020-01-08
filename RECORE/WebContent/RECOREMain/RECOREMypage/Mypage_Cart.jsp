@@ -87,6 +87,7 @@
   [class^='btnSubmit'], a[class^='btnSubmit'] {
   	color: white;
   }
+  
   </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -99,17 +100,6 @@
 				}
 			}
 		});
-		
-		/* $("#deleteChk").click(function(){
-			alert("선택삭제 클릭?");
-			alert($("#basket_chk_id_0").val());
-			var Arr_prod_id = new Array();
-			if($("#basket_chk_id_0").is(":checked")){
-				Arr_prod_id.push($("#basket_chk_id_0").val());
-
-			}
-			console.log(Arr_prod_id);
-		}); */
 		
 	});
 	
@@ -154,17 +144,15 @@
 		console.log(Arr_prod_id);
 	}
 	
-	/* function deleteChecked(index,lastindex){
-		alert("체크 삭제 들어왔니?");
-		var Arr_prod_id = new Array();
-		Arr_prod_id.push(document.getElementById("basket_chk_id_"+index).value);
-		for(var i=0;i<=lastindex;i++){
-			Arr_prod_id[i] = document.getElementById("basket_chk_id_"+index).value;
-			Arr_prod_id.push(document.getElementById("basket_chk_id_"+index).value);
-		} 
-		alert(Arr_prod_id);
-		console.log(Arr_prod_id);
-	} */
+	function orderAll(){
+		alert("전체 주문?");
+		var Arr_order = new Array();
+		for(var i=0;i<$('#chktd input').length;i++){
+			Arr_order.push([$("#basket_chk_id_"+i).val(),$("#quantity_id_"+i).val()]);
+		}
+		location.href="Product.do?command=cartOrder&Arr_order="+Arr_order;
+
+	}
 	
 </script>
 </head>
@@ -194,8 +182,6 @@
 	                			<ul class="mileage">
 									<li><a href="/myshop/mileage/historyList.html">가용적립금 : <strong><fmt:formatNumber value="<%=vo_acc.getAcc_point() %>" groupingUsed="true"></fmt:formatNumber>원</strong></a></li>
 	                    			<li class="displaynone"><a href="/myshop/deposits/historyList.html">예치금 : <strong></strong></a></li>
-	                    			<!-- 쿠폰 없음@@@@@@@@@@@@@@@ -->
-	                    			<!-- <li><a href="/myshop/coupon/coupon.html">쿠폰 : <strong>3개</strong></a></li> -->
 	                			</ul>
 							</div>
 	        			</div>
@@ -205,14 +191,7 @@
 							<li class="selected "><a href="/order/basket.html">국내배송상품 (${list_cart.size()})</a></li>
 	       	 			</ul>
 					</div>
-					<!-- @@@@@장바구니가 비었을 때@@@@@ -->
-					<%-- <c:if test="${null eq list_cart}">
-						<div class="xans-element- xans-order xans-order-empty ">
-							<p>장바구니가 비어 있습니다.</p>
-						</div>
-					</c:if> --%>
-					<!-- @@@@장바구니에 상품이 있을 때@@@@@ -->
-					<%-- <c:if test="${null ne list_cart}">  --%>
+					
 						<div class="orderListArea ec-base-table typeList gBorder">
 		        			<%-- <div class="xans-element- xans-order xans-order-normtitle title "><h3>일반상품 (${list_cart.size()})</h3>
 							</div> --%>
@@ -274,21 +253,18 @@
 	                				<c:forEach var="cart" items="${list_cart}" varStatus="status">
 	                				<tr class="xans-record-">
 										<td id="chktd">
-											<!-- <input type="checkbox" id="basket_chk_id_0" name="chk"> -->
-											<%-- <input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}" onclick="deleteChecked(${status.index});"> --%>
 											<%-- <input type="checkbox" id="basket_chk_id_0" name="chk" value="${cart.prod_id}"> --%>
 											<%-- <input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}"> --%>
 											<input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}">
 										</td>
 					                    <td class="thumb gClearLine">
-					                    	<a href="/product/detail.html?product_no=261&amp;cate_no=91">
+					                    	<a href="Product.do?command=ProdDetail&pseq=${cart.prod_no}&catdno=${cart.catd_no}">
 					                    	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${cart.prod_no}/f_img.png">
-				                    		<!-- <img src="//dalisalda.com/web/product/tiny/20191206/90446b2ad04fff657071104925ed4b7b.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="[웬즈데이블루]아보카도 타조알 비누 퓨어"> -->
 					                    	</a>
 					                    </td>
 					                    <td class="left gClearLine">
 		                        			<strong class="name">
-			                        			<a href="/product/웬즈데이블루아보카도-타조알-비누-퓨어/261/category/91/" class="ec-product-name">
+			                        			<a href="Product.do?command=ProdDetail&pseq=${cart.prod_no}&catdno=${cart.catd_no}" class="ec-product-name">
 			                        				<strong>[${cart.prod_brand}]</strong><br>${cart.prod_name}
 			                        			</a>
 		                        			</strong>    <span class="displaynone engName">(영문명 : )</span>
@@ -300,10 +276,6 @@
 												<fmt:formatNumber value="${cart.prod_price}" groupingUsed="true"></fmt:formatNumber>
 												
 											</div>
-											<!-- 할인가격@@@@@@@@@@@ -->
-		                        			<!-- <div id="product_sale_price_div0" class="displaynone">
-												<strong><span id="product_sale_price_front0">17,000</span>원</strong><p class="displaynone"></p>
-											</div> -->
 		                    			</td>
 					                    <td>
 					                        <span class="">
@@ -312,19 +284,16 @@
 					                            <%-- <input id="quantity_id_0" name="quantity_name_0" size="2" value="${cart.cart_amount}" type="text"> --%>
 					                            <input id="quantity_id_${status.index}" name="quantity_name_0" size="2" value="${cart.cart_amount}" type="text">
 					                            <!-- 수량 증가 버튼 -->
-					                            <!-- <a href="javascript:;" onclick="Basket.addQuantityShortcut('quantity_id_0', 0);"> -->
 					                            <!-- <a href="#" onclick="amountUp();"> -->
 					                            <a href="#" onclick="amountUp(${status.index});">
 					                            	<img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_up.gif" alt="수량증가" class="up">
 					                            </a>
 					                            <!-- 수량 감소 버튼 -->
-					                            <!-- <a href="javascript:;" onclick="Basket.outQuantityShortcut('quantity_id_0', 0);"> -->
 					                            <!-- <a href="#" onclick="amountDown();"> -->
 					                            <a href="#" onclick="amountDown(${status.index});">
 					                            	<img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_down.gif" alt="수량감소" class="down">
 					                            </a>
 					                            </span>
-					                            <!-- <a href="javascript:;" class="btnNormal gBlank5" onclick="Basket.modifyQuantity()">변경</a> -->
 					                            <a href="#" class="btnNormal gBlank5" onclick="modifyAmount(${status.index},${cart.prod_id})">변경</a>
 					                        </span>
 					                        <span class="displaynone">1</span>
@@ -337,12 +306,9 @@
 											<strong><span id="sum_price_front0"><fmt:formatNumber value="${cart.prod_price * cart.cart_amount}" groupingUsed="true"></fmt:formatNumber></span>원</strong><div class="displaynone"></div>
 										</td>
 					                    <td class="button">
-					                        <a href="javascript:;" class="btnSubmit " onclick="Basket.orderBasketItem(0);">주문하기</a>
-					                        <a href="javascript:;" class="btnSubmit displaynone" onclick="Basket.orderBasketItem(0);">정기배송 신청</a>
-					                        <!-- <a href="javascript:;" class="btnNormal" onclick="BasketNew.moveWish(0);">관심상품등록</a> -->
+					                        <a href="Product.do?command=Order&pseq=${cart.prod_no}" class="btnSubmit ">주문하기</a>
 					                        <a href="mypage.do?command=insertwish&prod_no=${cart.prod_no}" class="btnNormal">관심상품등록</a>
 					                        <a href="mypage.do?command=deletecartone&prod_id=${cart.prod_id}" class="btnNormal"><i class="icoDelete"></i> 삭제</a>
-					                        <!-- <a href="javascript:;" class="btnNormal" onclick="Basket.deleteBasketItem(0);"><i class="icoDelete"></i> 삭제</a> -->
 					                    </td>
 		                			</tr>
 		                			</c:forEach>
@@ -363,15 +329,9 @@
 						<span class="gLeft">
 				            <strong class="text">선택상품을</strong>
 				            <a href="#none" class="btnEm" onclick="deleteChecked();"><i class="icoDelete"></i> 삭제하기</a>
-				            <!-- <a href="#none" class="btnEm" id="deleteChk"><i class="icoDelete"></i> 삭제하기</a> -->
-				            <a href="#none" onclick="Basket.addWishList()" class="btnNormal displaynone">관심상품등록</a>
-				            <!--a href="#none" onclick="Basket.moveOversea()" class="btnNormal ">해외배송상품 장바구니로 이동</a-->
-				            <a href="#none" onclick="Basket.hopeProduct('park21yc'); return false;" class="btnNormal displaynone">상품조르기</a>
 				        </span>
 						<span class="gRight">
-				            <a href="#none" onclick="Basket.orderStorePickupSelectBasket(this)" class="btnNormal displaynone" link-order="/order/orderform.html?basket_type=all_buy" link-login="/member/login.html">스토어픽업 상품 선택</a>
-				            <a href="mypage.do?command=deletecartall" class="btnNormal" onclick="Basket.emptyBasket()">장바구니비우기</a>
-				            <a href="#none" class="btnNormal" onclick="Basket.estimatePrint(this)" link="/estimate/userform.html">견적서출력</a>
+				            <a href="mypage.do?command=deletecartall" class="btnNormal">장바구니비우기</a>
 				        </span>
 					</div>
 					<!-- 총 주문금액 : 국내배송상품 -->
@@ -388,11 +348,7 @@
 							<thead>
 								<tr>
 									<th scope="col"><strong>총 상품금액</strong></th>
-				                    <th scope="col" class="displaynone"><strong>총 부가세</strong></th>
 				                    <th scope="col"><strong>총 배송비</strong></th>
-				                    <th scope="col" id="total_benefit_price_title_area" class="displaynone">
-										<strong>총 할인금액</strong> <a href="#none" class="btnNormal" onclick="OrderLayer.onDiv('order_layer_benefit', event);">내역보기</a>
-									</th>
 				                    <th scope="col"><strong>결제예정금액</strong></th>
 			                	</tr>
 		                	</thead>
@@ -411,13 +367,6 @@
 	                    			<td>
 	                        			<div class="box shipping txt16">
 	                            			<strong class="txt23">+ </strong><strong><span id="total_delv_price_front" class="txt23">0</span>원</strong> <span class="txt14 displaynone"></span>
-	                            			<div class="shippingArea displaynone">(<span></span>
-	                                			<div class="shippingFee">
-	                                    			<a href="#none" class="btnNormal" id="">자세히</a>)
-	                                    			<div class="ec-base-tooltip" style="display: none;">
-	                                    			</div>
-	                                			</div>
-	                            			</div>
 	                        			</div>
 	                    			</td>
 	                    			<td id="total_benefit_price_area" class="displaynone">
@@ -435,14 +384,13 @@
 						</table>
 					</div>
 					
-					<%-- </c:if> --%>
 					<div class="xans-element- xans-order xans-order-totalorder ec-base-button justify">
-						<a href="#none" onclick="Basket.orderAll(this)" link-order="/order/orderform.html?basket_type=all_buy" link-login="/member/login.html" class="btnSubmitFix sizeM  ">전체상품주문</a>
-						<a href="#none" onclick="Basket.orderSelectBasket(this)" link-order="/order/orderform.html?basket_type=all_buy" link-login="/member/login.html" class="btnEmFix sizeM ">선택상품주문</a>
+						<a href="#" class="btnSubmitFix sizeM " onclick="orderAll();">전체상품주문</a>
+						<a href="#" class="btnEmFix sizeM " onclick="orderSelect();">선택상품주문</a>
 						<span class="gRight">
 						
-						<!-- 쇼핑계속하기 누르면 상품 전체 페이지 뜨도록 -->
-	            			<a href="../product_all.html" class="btnNormalFix sizeM">쇼핑계속하기</a>
+							<!-- 쇼핑계속하기 누르면 상품 전체 페이지 뜨도록 -->
+	            			<a href="<%=request.getContextPath()%>/Product.do?command=ProdSelectAll" class="btnNormalFix sizeM">쇼핑계속하기</a>
 	        			</span>
 					</div>
 				</div>

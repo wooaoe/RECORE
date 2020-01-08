@@ -1,40 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.mvc.vo.Vo_Account" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <%response.setContentType("text/html; charset=UTF-8");%>
-<%-- Login Session Get --%>
+
+<%-- UserSession --%>
 <%Vo_Account sessionVo = (Vo_Account)session.getAttribute("sessionVo");%>
-<%-- vo.getAcc_id(); System.out.println("현재 로그인된 Acoount 정보:"+vo); --%>
-<%-- Attribute 정보 : parent / vo --%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RECORE - QNA</title>
 
-<%-- # 현재 페이지  CSS / 순서 변경 금지 --%>
+<%-- css --%>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qna.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qnaanswer.css">
-
-<%-- # HEAD CSS / 순서 변경 금지 --%>
- <jsp:include page="/head.jsp"></jsp:include> 
+<jsp:include page="/head.jsp"></jsp:include> 
  
-<%-- # Smart Editor JS / 순서 변경 금지 --%>
+<%-- SmartEditor --%>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js "></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
  
 </head>
-
 <body>
-	<%-- header code 추가 --%>
 	<header>
 		<jsp:include page="/header.jsp"></jsp:include>
 	</header>
-	<%-- section code 추가 --%>
 	<section style="margin: 100px 0 100px 0px;">
 		<section class="section-container">
 			<div class="row" style="width:100%;">
@@ -43,17 +36,15 @@
 					<%-- Page title --%>
 					<div class="xans-element- xans-board xans-board-title-4 xans-board-title xans-board-4 reviewTitlee ">
 						<h2>
-							<span>답변수정</span>
+							<span>문의답변</span>
 						</h2>
 					</div>
 					<%-- Write Form --%>
 					<form id="boardWriteForm" action="qna.do" method="post">
-						<%-- command * parentboardno 전송 값 --%>
 						<input type="hidden" name="command" value="qna_answerwrite"> 
 						<input type="hidden" name="qna_pno" value="${parent.qna_no }">
 						<input type="hidden" name="writer" value="${sessionVo.acc_no }">
 						<input type="hidden" name="title" value="${parent.qna_title }">
-
 						<div class="xans-element- xans-board xans-board-write-4 xans-board-write xans-board-4">
 							<div class="ec-base-table typeWrite ">
 								<table summary="">
@@ -100,15 +91,9 @@
 			</div>
 		</section>
 	</section>
-
-		<jsp:include page="/footer.jsp"></jsp:include>
-
-
-
-
+	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>
-
 
 <%-- Smart Editor --%>
 <script type="text/javascript">
@@ -132,13 +117,11 @@ nhn.husky.EZCreator.createInIFrame({
 	
 });
 
-//저장버튼 클릭시 form 전송
+<%-- submit --%>
 $(function(){
 	$("#save").click(function(){
 	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	    $("#boardWriteForm").submit();
 	});  
 })
-
-
 </script>

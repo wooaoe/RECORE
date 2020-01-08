@@ -6,14 +6,7 @@
 	<%@ page import = "com.mvc.vo.Vo_Account" %>
     
     <% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
-    
-    <%
-    String name = acc.getAcc_name();
-    String email = acc.getAcc_email();
-    String phone = acc.getAcc_phone();
-    String address = acc.getAcc_addr();
-    int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
-	%>
+    <% int total = 40000; %>
 	
 <!DOCTYPE html>
 <html>
@@ -42,11 +35,11 @@ $(function(){
             pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
             name : 'KH Books 도서 결제',
-            amount : <%=totalPrice%>
-            buyer_email : '<%=email%>',
-            buyer_name : '<%=name%>',
-            buyer_tel : '<%=phone%>',
-            buyer_addr : '<%=address%>',
+            amount : <%=total%>
+            buyer_email : '<%=acc.getAcc_email()%>',
+            buyer_name : '<%=acc.getAcc_name()%>',
+            buyer_tel : '<%=acc.getAcc_phone()%>',
+            buyer_addr : '<%=acc.getAcc_addr()%>',
             buyer_postcode : '123-456',
             // 'http://www.iamport.kr/mobile/landing'; 
             
@@ -78,16 +71,16 @@ $(function(){
                     }
                 });
                 //성공시 이동할 페이지
-                location.href='<%=request.getContextPath()%>/order/paySuccess?msg='+msg;
+                location.href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/afterOrder_page.jsp";
             } else {
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
                 //실패시 이동할 페이지
-                 location.href="<%=request.getContextPath()%>/order/payFail";
+                 location.href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/afterOrder_page.jsp";
                 alert(msg);
             }
         }
-}
+
         });
         
    

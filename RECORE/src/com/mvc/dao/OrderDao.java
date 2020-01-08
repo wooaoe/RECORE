@@ -9,9 +9,7 @@ import com.mvc.vo.Vo_Product;
 
 public interface OrderDao {
 
-	public List<Vo_Order_Num> O_selectAll(); // 장바구니 연동해서 전체 상품 가져오기
-	
-//	public Vo_OrderTDD Or_selectAll();
+//	public List<Vo_Order_Num> O_selectAll(); // 장바구니 연동해서 전체 상품 가져오기
 	
 	public Vo_Order O_selectOne(int oseq); // 선택 상품 결제시
 
