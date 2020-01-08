@@ -18,11 +18,14 @@ import com.mvc.dao.AccountDaoImp;
 import com.mvc.dao.MyPageDaoImp;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
+import com.mvc.vo.Vo_Funding;
+import com.mvc.vo.Vo_Funding_detail;
 import com.mvc.vo.Vo_Mypage_Paging;
 import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Product;
 import com.mvc.vo.Vo_QnA;
+import com.mvc.vo.Vo_Review;
 
 @WebServlet("/mypage.do")
 public class Mypage_Controller extends HttpServlet {
@@ -55,7 +58,7 @@ public class Mypage_Controller extends HttpServlet {
       
       if(command.equals("main")){ //main
     	  List list = (List)map.get("list_order");
-    	  System.out.println("main에 넘어갈 사이즈"+list.size());
+    	  System.out.println("main에 넘어갈 사이즈 : "+list.size());
     	  request.setAttribute("list_order", map.get("list_order"));
     	  dispatch("./RECOREMain/RECOREMypage/Mypage_Main.jsp", request, response);
     	  
@@ -66,20 +69,19 @@ public class Mypage_Controller extends HttpServlet {
          int pageNo = Integer.parseInt(request.getParameter("pageno"));
          System.out.println("pageNo : " + pageNo);
          
-         System.out.println("인덱스5 상품명뭐야 : " + list.get(1) +"\n");
-         
-         Vo_Order_Num tmp = null;
-         int total = 0;
          Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
          paging.setPageNo(pageNo);
+         paging.setTotalCount(list.size());
          
-         for(int i=0;i<list.size();i++) {
-        	 tmp = (Vo_Order_Num)list.get(i);
-        	 total += tmp.getOlist().size();
-         }
-         System.out.println("order 전체 사이즈??? : " + total);
-         paging.setTotalCount(total);
-//         paging.setTotalCount(list.size());
+//         Vo_Order_Num tmp = null;
+//         int total = 0;
+         
+//         for(int i=0;i<list.size();i++) {
+//        	 tmp = (Vo_Order_Num)list.get(i);
+//        	 total += tmp.getOlist().size();
+//         }
+//         System.out.println("order 전체 사이즈??? : " + total);
+//         paging.setTotalCount(total);
          System.out.println("paging vo의 startpage : " + paging.getStartPage());
          System.out.println("paging vo의 endpage : " + paging.getEndPage());
          
@@ -93,30 +95,35 @@ public class Mypage_Controller extends HttpServlet {
          
       }else if(command.equals("orderdetail")) { //주문내역 상세조회
     	  int order_no = Integer.parseInt(request.getParameter("order_no"));
-    	  int olist_prod_no = Integer.parseInt(request.getParameter("olist_no"));
     	  List list = (List)map.get("list_order");
     	  Vo_Order_Num vo_order = null;
-    	  Vo_Order vo_olist = null;
-    	  Vo_Product vo_prod = pdao.P_selectOne(olist_prod_no);
-    	  
+
     	  for(int i=0;i<list.size();i++) {
     		  Vo_Order_Num tmp = (Vo_Order_Num)list.get(i);
-//    		  Vo_Product ptmp = (Vo_Product)plist.get(i); //상품 이미지 가져오기
-//    		  System.out.println("ptmp 가져오니? : " + ptmp);
-    		  if(order_no == tmp.getOrder_no()) { //list_order에서 parameter로 가져온order_no랑 같은 vo를 vo_order에 담아준다
+    		  if(tmp.getOrder_no() == order_no) {
     			  vo_order = tmp;
-    			  if(olist_prod_no == tmp.getOlist().get(i).getProd_no()) { //list_order에서 parameter로 가져온 prod_no랑 같은 vo를 vo_olist에 담아준다
-    				  vo_olist = tmp.getOlist().get(i);
-    			  }
     		  }
-    		  	
-//			  if(ptmp.getProd_no() == olist_prod_no) { vo_prod = ptmp; }
-				
     	  }
-    	  System.out.println("서블릿 vo_prod : " + vo_prod);
-    	  request.setAttribute("vo_prod", vo_prod);
+    	  List olist = vo_order.getOlist();
+    	  
+//    	  int[] idArr = new int[olist.size()]; // 리뷰작성했는지 확인
+//    	  for(int i=0;i<olist.size();i++) {
+//    		  Vo_Order tmp2 = (Vo_Order)olist.get(i);
+//    		  idArr[i] = tmp2.getProd_id();
+//    	  }
+//    	  
+//    	  int[] resArr = new int[idArr.length];
+//    	  for(int i=0;i<idArr.length;i++) {
+//    		  resArr[i] = mdao.My_checkReview(order_no, idArr[i]);
+//    	  }
+//    	  
+//    	  System.out.println("가져온 상품 아이디 첫번째 : " + idArr[0]);
+//    	  System.out.println("db에서 가져온 결과 첫번째 상품 : " + resArr[0]);
+//    	  
+//    	  request.setAttribute("reviewcheck", resArr);
     	  request.setAttribute("vo_order", vo_order);
-    	  request.setAttribute("vo_olist", vo_olist);
+    	  request.setAttribute("vo_olist", olist);
+    	  
     	  dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList_Detail.jsp", request, response);
     	  
       }else if(command.equals("updateorder")) { //주문상태 수정
@@ -133,6 +140,30 @@ public class Mypage_Controller extends HttpServlet {
               jsResponse("변경 실패", "mypage.do?command=orderlist&pageno=1", response);
           }
     	  
+      }else if(command.equals("reviewform")) { //리뷰등록 폼
+    	  int order_no = Integer.parseInt(request.getParameter("orderno"));
+    	  int prod_id = Integer.parseInt(request.getParameter("prodid"));
+    	  
+    	  request.setAttribute("order_no", order_no);
+    	  request.setAttribute("prod_id", prod_id);
+    	  dispatch("./RECOREMain/RECOREMypage/Mypage_ReviewForm.jsp", request, response);
+    	  
+      }else if(command.equals("insertreview")) { //리뷰 db에 추가
+    	  int order_no = Integer.parseInt(request.getParameter("orderno"));
+    	  int prod_id = Integer.parseInt(request.getParameter("prodid"));
+    	  String title = request.getParameter("title");
+    	  String content = request.getParameter("content");
+    	  int rating = Integer.parseInt(request.getParameter("rating"));
+    	  
+    	  boolean res = mdao.My_insertReview(order_no, prod_id, title, content, rating);
+    	  
+    	  if(res) {
+    		  mdao.My_updateIsReview(order_no, prod_id);
+              jsResponse("등록 성공", "mypage.do?command=orderdetail&order_no="+order_no, response);
+           }else {
+              jsResponse("등록 실패", "mypage.do?command=reviewform&orderno="+order_no+"&prodid="+prod_id, response);
+           }
+    	  
       }else if(command.equals("fundinglist")) { //펀딩내역 조회
     	  System.out.println(map.get("list_fun_d"));
           List list = (List)map.get("list_fun_d");
@@ -142,6 +173,9 @@ public class Mypage_Controller extends HttpServlet {
           Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
           paging.setPageNo(pageNo);
           paging.setTotalCount(list.size());
+          
+          Vo_Funding_detail test = (Vo_Funding_detail)list.get(0);
+          System.out.println("fund_no????? : " + test.getFund_no());
           
           if(list.isEmpty()) {
              response.sendRedirect("RECOREMain/RECOREMypage/Mypage_FundingList.jsp");

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_QnA;
+import com.mvc.vo.Vo_Review;
 
 public interface MyPageDao {
 
@@ -32,5 +33,9 @@ public interface MyPageDao {
    public boolean My_updateBoard_Viewcount(int qna_no); //조회수 수정
    
    public boolean My_deleteBoard(int accseq, int qna_no); //board 삭제
+   
+   public boolean My_insertReview(int order_no, int prod_id, String title, String content, int rating); //리뷰 등록
+   
+   public void My_updateIsReview(int order_no, int prod_id); //리뷰 존재 여부 확인
    
 }

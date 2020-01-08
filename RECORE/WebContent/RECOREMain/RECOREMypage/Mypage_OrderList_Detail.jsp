@@ -84,6 +84,32 @@
   	color: white;
   }
   
+  [class^='btnNormal'], a[class^='btnNormal'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #222;
+    background-color: #fff;
+  }
+  a[class^='btnNormal']:hover {
+  	color: #F56D3E;
+  }
+  a:hover {
+    color: #F56D3E;
+    text-decoration: underline;
+  }
   .ec-base-paginate li a.this {
     padding-bottom: 0px;
     border-bottom: 0px;
@@ -101,6 +127,14 @@
   }
   
   </style>
+<script type="text/javascript">
+	function updateStatus(status,order_no,prod_id){
+		alert(status);
+		alert(order_no);
+		alert(prod_id);
+		location.href = "mypage.do?command=updateorder&orderno="+order_no+"&prodid="+prod_id+"&status="+status;
+	}
+</script>
 </head>
 <body id="main">
 <%
@@ -156,10 +190,10 @@
 											<th scope="row">주문자</th>
 						                    <td><span><%=acc.getAcc_name()%></span></td>
 						                </tr>
-										<tr>
+										<%-- <tr>
 											<th scope="row">주문처리상태</th>
 						                    <td>${vo_olist.order_status}</td>
-						                </tr>
+						                </tr> --%>
 									</tbody>
 								</table>
 							</div>
@@ -179,8 +213,13 @@
 										<tr class="sum">
 											<th scope="row">총 주문금액</th>
 	                   						<td>
+	                   						<c:set var="sum" value="0"></c:set>
+	                   						<c:forEach var="tmp" items="${vo_olist}">
+	                   							<c:set var="sum" value="${sum + (tmp.order_price * tmp.order_amount)}"></c:set>
+	                   						</c:forEach>
 	                        					<span class="gSpace20">
-	                            					<strong class="txt14"><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong>원
+	                            					<strong class="txt14"><fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber></strong>원
+	                            					<%-- <strong class="txt14"><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong>원 --%>
 	                        					</span>
                     						</td>
 	                					</tr>
@@ -219,7 +258,7 @@
 											<th scope="row">총 결제금액</th>
 	                    					<td>
 						                        <span class="txtEm">
-						                            <strong class="txt18"><fmt:formatNumber value="${(vo_olist.order_amount * vo_olist.order_price) - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber></strong>원 
+						                            <strong class="txt18"><fmt:formatNumber value="${sum - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber></strong>원
 						                        </span>
 						                    </td>
 						                </tr>
@@ -267,39 +306,51 @@
 									<tfoot class="right">
 										<tr>
 											<td colspan="7">
-											<span class="gLeft">[기본배송]</span> 상품구매금액 <strong><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong> + 배송비 0 - 상품할인금액 <fmt:formatNumber value="${vo_order.order_point}" groupingUsed="true"></fmt:formatNumber> = 합계 :  <strong class="txtEm gIndent10"><span class="txt18"><fmt:formatNumber value="${(vo_olist.order_amount * vo_olist.order_price) - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber>원</span></strong>
+											<span class="gLeft">[기본배송]</span> 상품구매금액 <strong><fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber></strong> + 배송비 0 - 상품할인금액 <fmt:formatNumber value="${vo_order.order_point}" groupingUsed="true"></fmt:formatNumber> = 합계 :  <strong class="txtEm gIndent10"><span class="txt18"><fmt:formatNumber value="${sum - vo_order.order_point}" groupingUsed="true"></fmt:formatNumber>원</span></strong>
 											</td>
 	                    				</tr>
                     				</tfoot>
                     				<tbody class="xans-element- xans-myshop xans-myshop-orderhistorydetailbasic center">
+                    				<c:forEach var="olist" items="${vo_olist}">
                     					<tr class="xans-record-">
 											<td class="thumb">
-												<a href="Product.do?command=ProdDetail&pseq=${vo_olist.prod_no}&catdno=${vo_prod.prod_catd}">
-												<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${vo_prod.prod_no}/f_img.png" alt="">
+												<a href="Product.do?command=ProdDetail&pseq=${olist.prod_no}&catdno=${olist.catd_no}">
+												<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${olist.prod_no}/f_img.png" alt="">
 												</a>
 											</td>
 	                        				<td class="left">
 	                            				<strong class="name">
-	                            				<a href="Product.do?command=ProdDetail&pseq=${vo_olist.prod_no}&catdno=${vo_prod.prod_catd}" class="ec-product-name">[${vo_prod.prod_brand}]<br>${vo_prod.prod_name}</a>
+	                            				<a href="Product.do?command=ProdDetail&pseq=${olist.prod_no}&catdno=${olist.catd_no}" class="ec-product-name">[${olist.prod_brand}]<br>${olist.prod_name}</a>
 	                            				</strong>
 	                            				<div class="option "></div>
 	                        				</td>
-	                        				<td>${vo_olist.order_amount}</td> <!-- 수량@@@@ -->
+	                        				<td>${olist.order_amount}</td> <!-- 수량@@@@ -->
 	                        				<td class="right">
 					                            <div class="">
-					                                <strong><fmt:formatNumber value="${vo_prod.prod_price}" groupingUsed="true"></fmt:formatNumber>원</strong>
+					                                <strong><fmt:formatNumber value="${olist.order_price}" groupingUsed="true"></fmt:formatNumber>원</strong>
 					                            </div>
 	                        				</td>
 	                        				<td>
 	                        					<div class="txtInfo">기본배송</div>
 	                        				</td>
 					                        <td class="state">
-					                            <p class="txtEm">${vo_olist.order_status}</p>
+					                            <p class="txtEm">${olist.order_status}</p>
 					                        </td>
 					                        <td>
-					                            <p class="">-</p>
+					                            <!-- <p class="">-</p> -->
+							                	<c:if test="${olist.order_status eq '입금완료' or olist.order_status eq '배송준비중'}">
+							                		<a href="javascript:updateStatus('취소',${vo_order.order_no},${olist.prod_id})" class="btnNormal">취소신청</a>
+							                	</c:if>
+							                	<c:if test="${olist.order_status eq '배송중' or olist.order_status eq '배송완료'}">
+								                    <a href="javascript:updateStatus('교환',${vo_order.order_no},${olist.prod_id})" class="btnNormal">교환신청</a>
+								                    <a href="javascript:updateStatus('반품',${vo_order.order_no},${olist.prod_id})" class="btnNormal">반품신청</a>
+							                    </c:if>
+							                    <c:if test="${olist.order_status eq '배송완료' and olist.order_isreview ne 'Y'}">
+							                    	<a href="mypage.do?command=reviewform&orderno=${vo_order.order_no}&prodid=${olist.prod_id}" class="btnNormal">리뷰작성</a>
+							                    </c:if>
 					                        </td>
 					                    </tr>
+					                    </c:forEach>
 									</tbody>
 								</table>
 							</div>

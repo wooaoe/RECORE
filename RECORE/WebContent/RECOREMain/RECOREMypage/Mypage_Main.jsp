@@ -81,22 +81,36 @@
 <body id="main"> 
 <%
 	List list_order = (List)request.getAttribute("list_order");
-	int count1 = 0;
-	int count2 = 0;
-	int count3 = 0;
-	int count4 = 0;
+	int count1 = 0; //입금완료
+	int count2 = 0; //배송준비중
+	int count3 = 0; //배송중
+	int count4 = 0; //배송완료
+	int count5 = 0; //취소
+	int count6 = 0; //교환
+	int count7 = 0; //반품
 	for(int i=0;i<list_order.size();i++){
 		Vo_Order_Num vo = (Vo_Order_Num)list_order.get(i);
-		Vo_Order tmp = vo.getOlist().get(i);
-		if(tmp.getOrder_status().equals("입금완료")){
-			count1++;
-		}else if(tmp.getOrder_status().equals("배송준비중")){
-			count2++;
-		}else if(tmp.getOrder_status().equals("배송중")){
-			count3++;
-		}else if(tmp.getOrder_status().equals("배송완료")){
-			count4++;
+		List tmp_list = vo.getOlist();
+		
+		for(int j=0;j<tmp_list.size();j++){
+			Vo_Order tmp_vo = vo.getOlist().get(j);
+			if(tmp_vo.getOrder_status().equals("입금완료")){
+				count1++;
+			}else if(tmp_vo.getOrder_status().equals("배송준비중")){
+				count2++;
+			}else if(tmp_vo.getOrder_status().equals("배송중")){
+				count3++;
+			}else if(tmp_vo.getOrder_status().equals("배송완료")){
+				count4++;
+			}else if(tmp_vo.getOrder_status().equals("취소")){
+				count5++;
+			}else if(tmp_vo.getOrder_status().equals("교환")){
+				count6++;
+			}else if(tmp_vo.getOrder_status().equals("반품")){
+				count7++;
+			}
 		}
+		
 		
 	}
 %>
@@ -151,21 +165,21 @@
 	                			<span class="icoDot"></span>
 	                			<strong>취소 : </strong>
 	                			<a href="취소연결@@@" class="count">
-	                				<span id="xans_myshop_orderstate_order_cancel_count">0</span>
+	                				<span id="xans_myshop_orderstate_order_cancel_count"><%=count5%></span>
 	                			</a>
 	            			</li>
 	           				<li>
 	                			<span class="icoDot"></span>
 	              				<strong>교환 : </strong>
 	                			<a href="교환 연결@@@" class="count">
-	                				<span id="xans_myshop_orderstate_order_exchange_count">0</span>
+	                				<span id="xans_myshop_orderstate_order_exchange_count"><%=count6%></span>
 	                			</a>
 	            			</li>
 	           				<li>
 	             			   <span class="icoDot"></span>
 	             			   <strong>반품 : </strong>
 	           				   <a href="반품연결@@@" class="count">
-	           				 	  <span id="xans_myshop_orderstate_order_return_count">0</span>
+	           				 	  <span id="xans_myshop_orderstate_order_return_count"><%=count7%></span>
 	           				   </a>
 	           				</li>
 	        			</ul>

@@ -18,6 +18,7 @@ import com.mvc.vo.Vo_Funding_detail;
 import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_QnA;
+import com.mvc.vo.Vo_Review;
 import com.mvc.vo.Vo_Wish;
 
 public class MyPageDaoImp implements MyPageDao{
@@ -200,7 +201,7 @@ public class MyPageDaoImp implements MyPageDao{
 		Vo_Order vo_order_option = null;
 	    List<Vo_Order> list_order_option = new ArrayList<Vo_Order>();
 	    
-	    String sql_olist = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=? AND ORDER_NO=? ORDER BY ORDER_NO ASC";
+	    String sql_olist = "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ACC_NO=? AND ORDER_NO=? ORDER BY ORDER_NO, PROD_ID";
 	    
 	    try {
 			pstmt = con.prepareStatement(sql_olist);
@@ -210,10 +211,11 @@ public class MyPageDaoImp implements MyPageDao{
 			
 			while(rs.next()) {
 				vo_order_option = new Vo_Order(rs.getInt(1),rs.getInt(2),
-											rs.getString(20),rs.getString(14),
-											rs.getString(15),rs.getInt(10),
+											rs.getInt(18),rs.getString(22),
+											rs.getString(21),rs.getString(15),
+											rs.getString(16),rs.getInt(10),
 											rs.getInt(11),rs.getString(12),
-											rs.getString(13));
+											rs.getString(13),rs.getString(14));
 				
 				list_order_option.add(vo_order_option);
 			}
@@ -485,5 +487,59 @@ public class MyPageDaoImp implements MyPageDao{
 		return (res>0)?true:false;
 	}
 
+
+	@Override
+	public boolean My_insertReview(int order_no, int prod_id, String title, String content, int rating) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		int res = 0;
+		String sql = "INSERT INTO REVIEW (ORDER_NO,PROD_ID,REVIEW_TITLE,REVIEW_CONTENT,REVIEW_RATING,REVIEW_REGDATE) VALUES(?,?,?,?,?,SYSDATE)";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, order_no);
+			pstmt.setInt(2, prod_id);
+			pstmt.setString(3, title);
+			pstmt.setString(4, content);
+			pstmt.setInt(5, rating);
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt,con);
+		}
+		
+		return (res>0)?true:false;
+	}
+
+	@Override
+	public void My_updateIsReview(int order_no, int prod_id) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		int res = 0;
+		String sql = "UPDATE PROD_ORDER SET ORDER_ISREVIEW=? WHERE ORDER_NO=? AND PROD_ID=?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "Y");
+			pstmt.setInt(2, order_no);
+			pstmt.setInt(3, prod_id);
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt,con);
+		}
+		
+//		return (res>0)?true:false;
+	}
 
 }

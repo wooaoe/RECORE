@@ -200,7 +200,7 @@
 				                </td>
 				                <td class="thumb">
 				                	<a href="/product/detail.html">
-				                	<img src="//img.echosting.cafe24.com/thumb/img_product_small.gif" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a>
+				                	<img src="<%=request.getContextPath()%>/RECOREMain/RECOREFunding/images/${fun.fund_no}/f_img.png"></a>
 			                	</td>
 				                <td class="product left top">
 				                    <!-- <strong class="name">제목</strong> -->

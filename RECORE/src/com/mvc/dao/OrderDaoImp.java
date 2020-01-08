@@ -37,19 +37,19 @@ public class OrderDaoImp implements OrderDao {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				Vo_Order tmp = new Vo_Order(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getString(20),
-						rs.getString(14), 
-						rs.getString(15), 
-						rs.getInt(6), 
-						rs.getInt(7),
-						rs.getString(8), 
-						rs.getString(9));
-
-				order.add(tmp);
-				System.out.println("orderlist join value : " + order);
+//				Vo_Order tmp = new Vo_Order(
+//						rs.getInt(1), 
+//						rs.getInt(2), 
+//						rs.getString(20),
+//						rs.getString(14), 
+//						rs.getString(15), 
+//						rs.getInt(6), 
+//						rs.getInt(7),
+//						rs.getString(8), 
+//						rs.getString(9));
+//
+//				order.add(tmp);
+//				System.out.println("orderlist join value : " + order);
 			}
 
 		} catch (SQLException e1) {
