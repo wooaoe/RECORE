@@ -17,6 +17,7 @@ import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
+import com.mvc.vo.Vo_Review;
 
 public class ProductDaoImp implements ProductDao {
 
@@ -27,8 +28,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> plist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -41,9 +40,20 @@ public class ProductDaoImp implements ProductDao {
 
 			while (rs.next()) {
 
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13));
+				Vo_Product tmp = new Vo_Product(
+						rs.getInt(1), 
+						rs.getInt(2), 
+						rs.getString(3), 
+						rs.getString(4),
+						rs.getString(5), 
+						rs.getString(6), 
+						rs.getInt(7), 
+						rs.getString(8), 
+						rs.getInt(9), 
+						rs.getString(10),
+						rs.getDouble(11), 
+						rs.getDate(12), 
+						rs.getString(13));
 
 				plist.add(tmp);
 				System.out.println("product All : " + plist);
@@ -79,9 +89,20 @@ public class ProductDaoImp implements ProductDao {
 
 			while (rs.next()) {
 
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13));
+				Vo_Product tmp = new Vo_Product(
+						rs.getInt(1), 
+						rs.getInt(2), 
+						rs.getString(3), 
+						rs.getString(4),
+						rs.getString(5), 
+						rs.getString(6), 
+						rs.getInt(7), 
+						rs.getString(8), 
+						rs.getInt(9), 
+						rs.getString(10),
+						rs.getDouble(11), 
+						rs.getDate(12), 
+						rs.getString(13));
 
 				toplist.add(tmp);
 				System.out.println("toplist : " + toplist);
@@ -98,37 +119,68 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public List<Vo_Prod_option> option_selectAll() {
+	public Map option_selectAll(int []castprod_id) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
+		List<Vo_Product> plist = new ArrayList<Vo_Product>();
+		Map map = new HashMap();
+		Vo_Prod_option povo = null;
+		Vo_Product pvo = null;
 
-		String sql = "SELECT * FROM PROD_OPTION";
+		String sql = "SELECT * FROM PROD_OPTION JOIN PRODUCT USING(PROD_NO) WHERE PROD_ID = ?";
 
 		try {
+
 			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
+			for (int i = 0; i < castprod_id.length; i++) {
+				pstm.setInt(1, castprod_id[i]);
+				rs = pstm.executeQuery();
 
-			System.out.println("옵션 query 실행 : " + sql);
+				while (rs.next()) {
+					povo = new Vo_Prod_option(
+							rs.getInt(1), 
+							rs.getInt(2), 
+							rs.getString(3), 
+							rs.getString(4),
+							rs.getInt(5));
 
-			while (rs.next()) {
-				Vo_Prod_option opt = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getInt(5));
+					polist.add(povo);
+					
+					pvo = new Vo_Product(
+							rs.getInt(1), 
+							rs.getInt(6), 
+							rs.getString(7), 
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10),
+							rs.getInt(11),
+							rs.getString(12),
+							rs.getInt(13),
+							rs.getString(14),
+							rs.getDouble(15),
+							rs.getDate(16),
+							rs.getString(17)
+							);
+					
+					plist.add(pvo);		
+				}
+				System.out.println("imp polist : " + polist);
+				System.out.println("imp plist : " + plist);
 
-				polist.add(opt);
-
-				System.out.println("상품 옵션 리스트 값 : " + polist);
 			}
-
+			map.put("polist", polist);
+			map.put("plist", plist);
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rs, pstm, con);
 		}
 
-		return polist;
+		return map;
 	}
 
 	@Override
@@ -138,8 +190,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> prntlist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -153,9 +203,20 @@ public class ProductDaoImp implements ProductDao {
 			System.out.println("parent 쿼리 실행 : " + sql);
 
 			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
-						rs.getDouble(11), rs.getDate(12), rs.getString(13));
+				Vo_Product tmp = new Vo_Product(
+						rs.getInt(1), 
+						rs.getInt(2), 
+						rs.getString(3), 
+						rs.getString(4),
+						rs.getString(5), 
+						rs.getString(6), 
+						rs.getInt(7), 
+						rs.getString(8), 
+						rs.getInt(9), 
+						rs.getString(10),
+						rs.getDouble(11), 
+						rs.getDate(12), 
+						rs.getString(13));
 
 				prntlist.add(tmp);
 				System.out.println("parent 쿼리 실행 값 : " + prntlist);
@@ -178,8 +239,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> childlist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -247,36 +306,37 @@ public class ProductDaoImp implements ProductDao {
 
 	@Override
 	public List<Vo_Cart> Cart_selectAll() {
-		
+
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Cart> mycart = new ArrayList<>();
 		Vo_Cart tmp = new Vo_Cart();
-		
+
 		String sql = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO)";
-		
+
 		try {
-			
+
 			pstm = con.prepareStatement(sql);
 			rs = pstm.executeQuery();
-			
-			while(rs.next()){
-				
-				
+
+			while (rs.next()) {
+				tmp = new Vo_Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5),
+						rs.getString(6), rs.getString(7), rs.getInt(8), rs.getInt(9));
+
+				mycart.add(tmp);
+				System.out.println("imp의 mycart : " + mycart);
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(rs, pstm, con);
 		}
-		
-		
-		return null;
+
+		return mycart;
 	}
-	
-	
+
 	@Override
 	public Vo_Category_Detail CD_selectAll2(int catdno) {
 
@@ -461,6 +521,19 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
+	public List<Vo_Review> Review_selectOne(Vo_Product pvo) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Vo_Review> rev = new ArrayList<>();
+
+		String sql = "";
+
+		return null;
+	}
+
+	@Override
 	public boolean P_insert(Vo_Product pvo) {
 
 		// insert 메소드 만들거임 from 김성일
@@ -535,7 +608,7 @@ public class ProductDaoImp implements ProductDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acc_no);
 			pstmt.setInt(2, prod_id);
-			pstmt.setInt(3, 1); // wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
+			pstmt.setInt(3, amount); // wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
 			res = pstmt.executeUpdate();
 
 			if (res > 0) {

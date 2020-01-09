@@ -17,11 +17,9 @@
     <%@ include file = "/head.jsp" %>
     
     <style type="text/css">
-    	
     	html{
     		scroll-behavior:smooth;
     	}
-    	
     </style>
     
     <!-- @@ RECORE favicon @@  -->
@@ -42,7 +40,7 @@
         </div>
       </div>
       <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
+    </div> 
     
     
     <div class="site-navbar-wrap" style="background-color: white;">
@@ -58,37 +56,33 @@
             <div class="col-6">
             </div>
             <div class="col-6">
-              <div class="d-flex ml-auto" >
+              <div class="d-flex ml-auto" style = "position:relative; left: 100px;" >
                <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
-                	<!-- <input type="text" name="query" placeholder="Search" />
-              		<a href="#search"> &nbsp; Search</a>  -->
               	</form>
               	
-              	<!-- 로그인 안되어있을 때 -->
-              	<c:if test="${empty vo }">
-                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+              	<!-- 로그인 안되어있을 때  -->
+                <c:if test="${empty vo }">
+                <a href="Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <a href="Account_Controller.do?command=signuppage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
-                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <a href="Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
-                  <a href = "<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp">
-                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/>
-                  </a>
+                 <a href = "Account_Controller.do?command=loginpage">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/></a>
                  </c:if>
                  
                  <!-- 로그인 되어있을 때 -->
                   <c:if test="${!empty vo }">
-    				<a href="<%=request.getContextPath()%>/Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<a href="Account_Controller.do?command=logout" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
     				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
-    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;</span></a>
-    				<a href="<%=request.getContextPath()%>/mypage.do?command=cartlist" class="d-flex align-items-center">
-                    <span class="d-none d-md-inline-block" style="color:black;">장바구니</span></a>
-    			</c:if>
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;</span></a>
+    				<a href = "<%=request.getContextPath()%>/mypage.do?command=cartlist">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/></a>
+    			  </c:if>
                  
                  
                  
@@ -104,14 +98,13 @@
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <!-- <h1 class="mb-0 site-logo"><a href="index.html">Interior</a></h1> -->
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
 
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1; left: 110px;">
                     <li class="has-children">
                       <a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1" style="color:black;">Funding</a>
                       <ul class="dropdown arrow-top">

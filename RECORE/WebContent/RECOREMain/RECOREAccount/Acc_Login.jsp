@@ -36,7 +36,7 @@ body .container .half.bg img {
 	<div id="header">
 		<section class="menu">
 			<nav class="navtest">
-				<a href="../index.jsp"><img src="Accimages/logo.png" /></a>
+				<a href="../index.html"><img src="Accimages/logo.png" /></a>
 			</nav>
 		</section>
 	</div>

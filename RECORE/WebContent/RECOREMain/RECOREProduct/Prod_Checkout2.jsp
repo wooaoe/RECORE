@@ -51,8 +51,14 @@
 <link rel="stylesheet"
 	href="https://assets.kolonmall.com/_ui/css/kop/desktop/Order-a59824e1c6.css" />
 
- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
 
+<!-- jQuery -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 
 <%@ include file="/head.jsp"%>
@@ -74,14 +80,14 @@
 }
 </style>
 
+</head>
+
+
+<body class="series-site V2 layout-width-1000">
+
 	<% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%>
 	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
 	<% String[] arr = acc.getAcc_phone().split("-");%>
-	<% String[] color = request.getParameterValues("color");%>
-	<% String[] size = request.getParameterValues("size");%>
-	<% int amount = Integer.parseInt(request.getParameter("product-quantity"));	%>
-	<% int totalPrice = Integer.parseInt(request.getParameter("total"));%>
-	
 
 	<script type="text/javascript">
     
@@ -92,17 +98,14 @@
 		}else if($("#kakaoV2").prop("checked")==false){
 			alert("결제수단을 체크해주세요.");
 		}else{
-			
-			var winHeight = document.body.clientHeight;	// 현재창의 높이
-			var winWidth = document.body.clientWidth;	// 현재창의 너비
-			var winX = window.screenLeft;	// 현재창의 x좌표
-			var winY = window.screenTop;	// 현재창의 y좌표
-			var width = 434;
-			var height = 569;
+			var popup1 = (document.body.offsetWidth / 2) - (434.4 / 2);
+			//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
-			var popX = winX + (winWidth - 434)/2;
-			var popY = winY + (winHeight - 569)/2;
-				window.open("RECOREMain/RECOREProduct/kakaopay.jsp","poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+			var popup2= (document.body.offsetHeight / 2);
+			//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+
+			window.open("RECOREMain/RECOREProduct/kakaopay.jsp",  
+					"popupNo2", "status=no, height=569.6, width=434.4" + ", left=" + popup1 + ",  top=" + popup2);
 		}
 	}
 	function goPopup(){
@@ -111,6 +114,7 @@
 		var popupY= (document.body.offsetHeight / 2);
 		
 	    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
+		
 	}
 	
 	/** API 서비스 제공항목 확대 (2017.02) **/
@@ -123,60 +127,6 @@
 	}
    
 	</script>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-			
-			$("#allDepositCheckboxV2").change(function(){
-				var usingpoint = <%=totalPrice - acc.getAcc_point()%>;
-				var point = $("#point").val();
-				var point2 = <%=acc.getAcc_point()%>;
-				var originprice = <%=totalPrice%>;
-									
-				var numformat = "<fmt:formatNumber>${pvo.prod_price}</fmt:formatNumber>원";	
-				var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
-				var res = "<fmt:formatNumber><%=totalPrice - acc.getAcc_point()%></fmt:formatNumber>원";
-									
-				if($("#allDepositCheckboxV2").is(":checked") == true){
-					if(originprice < point){
-						$("#allDepositCheckboxV2").prop("checked", false);
-							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else if(origin < 50000){
-						$("#allDepositCheckboxV2").prop("checked", false);
-						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else{
-						$("#point2").html(numformat_point);
-						$("#totalPrice").html(res);
-						$("#point").val("0");
-					}
-				}else{
-					$("#totalPrice").html(numformat);
-					$("#point2").empty();
-					$("#point").val(point2);
-				}
-			});
-		});
-	</script>
-	
-	<script type="text/javascript">
-								
-		$(document).ready(function(){
-			$("#new_addrV2").click(function(){
-				goPopup();
-		});
-		$("#user_sameV2").click(function(){
-			$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
-			$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
-			$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
-			});
-		});
-	</script>
-
-</head>
-
-
-<body class="series-site V2 layout-width-1000">
-
 
 	<!-- header -->
 	<%@ include file="/header.jsp"%>
@@ -190,8 +140,12 @@
 				<span class="last">주문완료</span>
 			</ul>
 			<div>
+			<c:set var="count" value="0"></c:set>
+			<c:forEach var = "prod" items = "${polist}" varStatus = "status">
+			<c:set var="count" value="${polist.size()}"></c:set>
+			</c:forEach>
 				<div class="order-lists">
-					<p class="all-select">주문상품(1)</p>
+					<p class="all-select">주문상품(${count})</p>
 					<table class="table table-order-desktop">
 						<colgroup>
 							<col width="100px">
@@ -212,46 +166,41 @@
 
 						<!-- 장바구니에 담았던 상품 정보 들어감 -->
 						<tbody>
+						<c:forEach var = "prod" items = "${plist}" varStatus = "status">
 							<tr>
-								<td class="thumb" style=""><a
-									href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}"><img
-										src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png"
+								<td class="thumb" style="">
+								 <a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}&catdno=${prod.prod_catd}"><img
+										src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${prod.prod_no}/f_img.png"
 										alt=""></a></td>
 
 								<td class="product text-left">
 									<!-- @@ 상품 브랜드 @@ -->
 									<h4 style="position: relative; top: 20px;">
-										${pvo.prod_brand}&nbsp;</h4>
+										${prod.prod_brand}&nbsp;</h4>
 									<p style="width: 600px; position: relative; top: 20px;">
-										<a
-											href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}">${pvo.prod_name}</a>
+										<a href="Product.do?command=ProdDetail&pseq=${prod.prod_no}&catdno=${prod.prod_catd}">${prod.prod_name}</a>
 									</p>
 
 									<ul class="meta" style="position: relative; top: 20px;">
-										<li><em>수량</em> <span><%=amount%></span></li>
+										<li><em>수량</em> <span>${prod_amount[status.index]}</span></li>
 										<li><em>옵션</em>&nbsp; 
 										<span> 
-										<% for (String c : color) {
-										 	out.println(c);
-										 	}
-										 %>, 
-										 <%	for (String s : size) {
-										 	out.println(s);
-										 	}
-										 %>
+											${polist.get(status.index).getProd_color()}, &nbsp;${polist.get(status.index).getProd_size()}
 										 </span>
 										 </li>
 									</ul>
 									<div class="options"></div>
 								</td>
 								
-								<td class="price"><fmt:formatNumber><%=totalPrice%>
-									</fmt:formatNumber>원</td>
+								<td class="price">
+								<fmt:formatNumber>${prod.prod_price * prod_amount[status.index]}
+								</fmt:formatNumber>원</td>
 								<!-- @@ 상품 수량 @@ -->
-								<td class="range"><%=amount%></td>
+								<td class="range">${prod_amount[status.index]}</td>
 								<td class="delivery division" rowspan="1"><div>택배배송</div>
 									<div class="cost">배송비 무료</div></td>
 							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -261,9 +210,13 @@
 				<div class="billing-v2">
 					<div class="default-pay">
 						<div>
-							<c:set var="sum" value="${pvo.prod_price}"></c:set>
-							<strong>주문상품금액</strong>
-							<span><fmt:formatNumber><%=totalPrice%></fmt:formatNumber>원
+							<c:set var="sum" value="0"></c:set>
+							<c:forEach var = "prod" items = "${plist}" varStatus = "status">
+							<c:set var="sum" value="${sum + prod.prod_price * prod_amount[status.index]}"></c:set>
+							</c:forEach>
+							<strong>주문상품금액</strong> 
+							<span> 
+								<fmt:formatNumber>${sum}</fmt:formatNumber>원
 							</span>
 						</div>
 					</div>
@@ -283,9 +236,8 @@
 					</div>
 					<div class="total">
 						<div>
-							<strong>총 주문금액</strong>
-							<span id="totalBasePriceV2">
-							<em><fmt:formatNumber><%=totalPrice%>
+							<strong>총 주문금액</strong><span id="totalBasePriceV2">
+							<em><fmt:formatNumber>${sum}
 							</fmt:formatNumber></em>원</span>
 						</div>
 					</div>
@@ -306,7 +258,7 @@
 								id="customerEmailArea"><%=acc.getAcc_email()%></span>
 						</dd>
 						<dt class="mb-22">
-							받는분<em class="required" aria-required="true">필수</em>
+							받는분<em class="required" aria-required="true" required = "required">필수</em>
 						</dt>
 						<dd class="mb-22">
 							<div class="col-2">
@@ -325,7 +277,24 @@
 									<label for="new_addrV2">새로 입력</label>
 								</span>
 
+								<script type="text/javascript">
 								
+								$(document).ready(function(){
+										$("#new_addrV2").click(function(){
+											
+											goPopup();
+											
+										});
+										$("#user_sameV2").click(function(){
+											
+											$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
+											$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
+											$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
+										
+										});
+											
+									});
+								</script>
 								<span class="radio"> <input name="deliveryType"
 									type="radio" id="cvs_addrV2" value="CVSNET">
 								</span>
@@ -448,7 +417,6 @@
 			<form>
 				<div class="order-write sale-select">
 					<br>
-					<!-- 예치금 -->
 					<dt>적립금</dt>
 					<div>
 						<input type="text" value = "<%=acc.getAcc_point()%>" id = "point" style="text-align: right;" />원&nbsp;&nbsp;&nbsp;&nbsp;
@@ -457,8 +425,44 @@
 						</span>
 						<label for="allDepositCheckboxV2">모두사용</label>
 					</div>
-					
+					<c:set var = "pointusing" value = "<%=acc.getAcc_point()%>"></c:set>
+				
 			</form>
+			
+			<script type="text/javascript">
+			$(document).ready(function(){
+			
+			$("#allDepositCheckboxV2").change(function(){
+		
+				var point = $("#point").val();
+				var point2 = <%=acc.getAcc_point()%>;
+				var originprice = ${sum};
+									
+				var numformat = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";	
+				var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
+				var res = "<fmt:formatNumber>${sum - pointusing}</fmt:formatNumber>원";
+									
+				if($("#allDepositCheckboxV2").is(":checked") == true){
+					if(originprice < point){
+						$("#allDepositCheckboxV2").prop("checked", false);
+							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+					}else if(origin < 50000){
+						$("#allDepositCheckboxV2").prop("checked", false);
+						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+					}else{
+						$("#point2").html(numformat_point);
+						$("#totalPrice").html(res);
+						$("#point").val("0");
+					}
+				}else{
+					$("#totalPrice").html(numformat);
+					$("#point2").empty();
+					$("#point").val(point2);
+				}
+			});
+		});
+	</script>
+			
 
 
 			<!-- 결제수단 선택 폼 -->
@@ -480,6 +484,7 @@
 					</div>
 					<script type="text/javascript">
 					$(document).ready(function(){
+						
 						$("#kakaoV2").click(function(){
 							if($("#info").css("display") == "none"){
 								$("#info").show(); 
@@ -558,7 +563,6 @@
 						</div>
 					</div>
 				</div>
-				
 			</form>
 
 
@@ -577,15 +581,14 @@
 									<div>
 										<strong>주문상품금액</strong>
 										<span>
-										<fmt:formatNumber><%=totalPrice%>
-										</fmt:formatNumber><em>원</em></span>
+										<fmt:formatNumber>${sum}
+										</fmt:formatNumber></span>
 									</div>
 								</div>
 								<div class="sale-pay">
 
 									<div>
-										<strong>총 보유금 사용</strong>
-										<span id = "point2"></span>
+										<strong>총 보유금 사용</strong><span id = "point2"></span>
 									</div>
 								</div>
 								<div class="delivery-cost">
@@ -595,15 +598,13 @@
 								</div>
 								<div class="total">
 									<div>
-										<strong>총 결제예정금액</strong> 
+										<strong>예정금액</strong> 
 										<span id="totalPrice">
-										<fmt:formatNumber><%=totalPrice%></fmt:formatNumber>원
-										</span>
+										<fmt:formatNumber>${sum}
+										</fmt:formatNumber>원</span>
 									</div>
 								</div>
 							</div>
-							
-							
 
 							<!-- 주문 동의 -->
 

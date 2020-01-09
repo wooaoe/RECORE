@@ -31,12 +31,17 @@
 
 
 	<!-- insert 폼 css 적용 -->
-	
     
     <link href="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/css/main.css" rel="stylesheet" media="all">
+	<style type="text/css">
+		html{
+    		scroll-behavior: smooth;
+    	}
+	</style>
+
 
   </head>
-  <body>
+  <body id = "body" >
   
   
 	<!-- header -->

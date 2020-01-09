@@ -15,6 +15,7 @@
 <meta charset="UTF-8">
 <title>RECORE - PAYMENT</title>
 <meta charset="utf-8">
+    
     <%@ include file = "/head.jsp" %>
     
     <style type="text/css">
@@ -53,7 +54,7 @@
     </style>
     
     <link rel="stylesheet" type="text/css" 
-    href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/afterOder_page.css"/>
+    href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/cssOrder/afterOder_page.css"/>
     
     
   </head>
@@ -70,7 +71,7 @@
 	<div class="path">
     <span>현재 위치</span>
      <ol>
-     	<li><a href="<%=request.getContextPath()%>/RECOREMain/index.jsp">홈</a></li>
+     	<li><a href="<%=request.getContextPath()%>/RECOREMain/index.html">홈</a></li>
         <li>주문서 작성</li>
         <li title="현재 위치"><strong>주문완료</strong></li>
     </ol>
@@ -89,7 +90,7 @@
 	<div class="orderInfo" style = "width: 70%;">
         <p>
          <strong>고객님의 주문이 완료 되었습니다.</strong>
-            	주문내역 및 배송에 관한 안내는 <a href="mypage.do?command=orderlist">주문조회</a> 를 통하여 확인 가능합니다.
+            	주문내역 및 배송에 관한 안내는 <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">주문조회</a> 를 통하여 확인 가능합니다.
         </p>
         <ul>
 			<li>주문번호 : <strong>20200105-0000241</strong>
@@ -311,52 +312,54 @@
 		<col style="width:auto">
 		</colgroup>
 
-	<div class="orderArea">
+		<div class="orderArea">
         <div class="title">
             <h3>배송지정보</h3>
         </div>
         <div class="ec-base-table">
+      
         <table border="1" summary="">
+		
 		<caption>배송지 정보</caption>
 		<colgroup>
 		<col style="width:140px;">
 		<col style="width:auto;">
 		</colgroup>
+
 		<tbody>
+		<th scope="row">받으시는분</th>
+	      <td><span>최승혜</span></td>
+	    </tr>
+	
+		<tr class="">
+		<th scope="row">우편번호</th>
+	      <td><span>08740</span></td>
+	    </tr>
+		<tr class="">
+		<th scope="row">주소</th>
+          <td><span>서울특별시 관악구 남부순환로233길 29-3 (봉천동) 샤인빌 304호</span></td>
+         </tr>
 
-	<th scope="row">받으시는분</th>
-                    <td><span>최승혜</span></td>
-                </tr>
-
-	<tr class="">
-	<th scope="row">우편번호</th>
-                    <td><span>08740</span></td>
-                </tr>
-	<tr class="">
-	<th scope="row">주소</th>
-                    <td><span>서울특별시 관악구 남부순환로233길 29-3 (봉천동) 샤인빌 304호</span></td>
-                </tr>
-
-<tr>
-<th scope="row">일반전화</th>
-                    <td></td>
-                </tr>
-<tr>
-<th scope="row">휴대전화</th>
-                    <td><span>010-6473-3048</span></td>
-                </tr>
-<tr>
-<th scope="row">배송메시지</th>
-                    <td></td>
-                </tr>
-
-</tbody>
-</table>
-</div>
-    </div>
-
-<div class="ec-base-button">
-        
+		<tr>
+		<th scope="row">일반전화</th>
+		<td></td>
+		</tr>
+		<tr>
+		<th scope="row">휴대전화</th>
+		<td><span>010-6473-3048</span></td>
+		</tr>
+		<tr>
+		<th scope="row">배송메시지</th>
+		<td></td>
+	    </tr>
+		</tbody>
+	</table>
+	
+	</div>
+	</div>
+	
+	<div class="ec-base-button">
+	        
         <span class="gRight">
             <a href="<%=request.getContextPath()%>/RECOREMain/index.html" class="btnNormalFix sizeL">쇼핑계속하기</a>
             <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeL">주문확인하기</a>
@@ -365,43 +368,37 @@
     
 
     
-<div id="order_layer_detail" class="totalDetail ec-base-layer">
-        <div class="header">
-            <h3>총 주문금액 상세내역</h3>
-        </div>
-        <div class="content">
-            <p>17,500원</p>
-            <ul class="ec-base-desc typeDot gLarge rightDD">
-<li>
-<strong class="term">상품금액</strong><span class="desc">15,000원</span>
-</li>
- 
-                <li>
-<strong class="term">배송비</strong><span class="desc">2,500원</span>
-</li>
-   
-            </ul>
-</div>
-        <a href="#none" class="close" onclick="OrderLayer.offDiv('order_layer_detail');"><img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
-    </div>
+		<div id="order_layer_detail" class="totalDetail ec-base-layer">
+	        <div class="header">
+	            <h3>총 주문금액 상세내역</h3>
+	        </div>
+	        <div class="content">
+	            <p>17,500원</p>
+	            <ul class="ec-base-desc typeDot gLarge rightDD">
+					<li>
+						<strong class="term">상품금액</strong><span class="desc">15,000원</span>
+					</li>
+	 
+	                <li>
+						<strong class="term">배송비</strong><span class="desc">2,500원</span>
+					</li>
+	            </ul>
+			</div>
+	        <a href="#none" class="close" onclick="OrderLayer.offDiv('order_layer_detail');">
+	        <img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
+	    </div>
 
-</table>
-</div>
-</div>
-</div>
-</div>
-</form>
-
-
-
-
-
-</div></div>
-    
-	 <!-- 상단으로 올라가기 -->
-    <div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
+	</table>
 	</div>
+	</div>
+	</div>
+	</div>
+	</form>
+
+	</div>
+	</div>
+    
+	
 
     <%@ include file="/footer.jsp" %>
     
