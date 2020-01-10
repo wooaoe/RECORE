@@ -295,7 +295,7 @@
 							<span>총 금액 :</span>
 							<input id = "price" type = "text" value = "" name = "total" 
 							style="background-color:transparent; border:0 solid black; font-size: 1.5em;
-							width: 100px;"/>원
+							width: 100px;" readonly="readonly"/>원
 							
 						</div>
 						

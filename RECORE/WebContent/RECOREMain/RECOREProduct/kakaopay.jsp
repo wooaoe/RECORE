@@ -78,6 +78,7 @@
 						
 						<form id="userPost" method="post" action="../../Product.do">
 						<input type = "hidden" name = "command" value = "kakaopaycall"/>
+						
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>
 								<ul class="list_payask">

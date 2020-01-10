@@ -206,7 +206,17 @@ public class Product_Controller extends HttpServlet {
 			
 		} else if(command.equals("kakaopaycall")) {
 			
-			response.sendRedirect("./RECOREMain/RECOREProduct/kakaopay2.jsp");
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			
+			
+			
+			
+			dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
 			
 		} else if(command.equals("payComplete")) {
 			

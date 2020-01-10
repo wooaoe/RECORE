@@ -258,38 +258,7 @@ public class ProductDaoImp implements ProductDao {
 		return cdlist;
 	}
 
-	@Override
-	public List<Vo_Cart> Cart_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Cart> mycart = new ArrayList<>();
-		Vo_Cart tmp = new Vo_Cart();
-
-		String sql = "SELECT * FROM CART JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO)";
-
-		try {
-
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			while (rs.next()) {
-				tmp = new Vo_Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getInt(8), rs.getInt(9));
-
-				mycart.add(tmp);
-				System.out.println("imp의 mycart : " + mycart);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rs, pstm, con);
-		}
-
-		return mycart;
-	}
+	
 
 	@Override
 	public Vo_Category_Detail CD_selectAll2(int catdno) {

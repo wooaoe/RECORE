@@ -163,17 +163,38 @@
 	<script type="text/javascript">
 								
 		$(document).ready(function(){
+			$("#user_sameV2").click(function(){
+			
+			if($("#user_sameV2").is(":checked") == true){
+				$("#requiredCus").val("<%=acc.getAcc_name()%>");
+				$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
+				$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
+				$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
+				
+				$("#requiredCus").attr("readonly", true);
+				$("#zipNo").attr("readonly", true);
+				$("#roadAddrPart1").attr("readonly", true);
+				$("#addrDetail").attr("readonly", true);
+			}
+			});
+			
+			$("#new_addrV2").click(function(){
+			
+			if($("#new_addrV2").is(":checked") == true && $("#user_sameV2").is(":checked") == false){
+				
+				$("#requiredCus").val('');
+				$("#zipNo").val('');
+				$("#roadAddrPart1").val('');
+				$("#addrDetail").val('');
+			}
+			});
+			
 			$("#new_addrV2").click(function(){
 				goPopup();
 		});
-		$("#user_sameV2").click(function(){
-			$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
-			$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
-			$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
-			});
-		});
+	});
+		
 	</script>
-
 </head>
 
 
@@ -312,17 +333,18 @@
 						</dt>
 						<dd class="mb-22">
 							<div class="col-2">
-								<input name="firstName" type="text" placeholder="이름을 입력하세요."
-									maxlength="10" value="<%=acc.getAcc_name()%>">
+								<input id = "requiredCus" name="firstName" type="text" placeholder="이름을 입력하세요."
+									maxlength="10" value="">
 							</div>
 						</dd>
 						<dt></dt>
 						<dd class="min-height-auto">
 							<div class="col-2 col-3 radio-wrap">
-								<span class="radio"> <input name="deliveryType"
+								<span class="radio"> 
+								<input name="deliveryType"
 									type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
-
 									<label for="user_sameV2">주문고객과 동일</label></span> <span class="radio">
+																		
 									<input name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp; 
 									<label for="new_addrV2">새로 입력</label>
 								</span>
@@ -352,7 +374,7 @@
 								</div>
 								<div class="row">
 									<input type="text" id="roadAddrPart1" name="roadAddrPart1"
-										class="inputTypeText" placeholder="도로명주소" readonly="readonly"
+										class="inputTypeText" placeholder="도로명주소"
 										value="" />
 								</div>
 								<div class="row">
@@ -453,7 +475,8 @@
 					<!-- 예치금 -->
 					<dt>적립금</dt>
 					<div>
-						<input type="text" value = "<%=acc.getAcc_point()%>" id = "point" style="text-align: right;" />원&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" value = "<%=acc.getAcc_point()%>" id = "point" 
+						style="text-align: right;" onkeyup="usingpoint()" />원&nbsp;&nbsp;&nbsp;&nbsp;
 						<span class="checkbox">
 						<input name="allDepositCheckbox" type="checkbox" id="allDepositCheckboxV2"><i></i>
 						</span>
@@ -625,6 +648,7 @@
 									<button type="button" value=""
 										class="ladda-button btn btn-order btn-big" id="checkout"
 										data-style="zoom-in" onclick="payment();">결제하기</button>
+										
 									<div class="ladda-progress" style="width: 0px;"></div>
 								</div>
 							</div>
