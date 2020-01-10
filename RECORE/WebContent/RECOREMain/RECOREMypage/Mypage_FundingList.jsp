@@ -62,21 +62,60 @@
   	text-align: center;
   }
   
+  .path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    *zoom: 1;
+	}
+	.path span {
+	    overflow: hidden;
+	    position: absolute;
+	    width: 0;
+	    height: 0;
+	    white-space: nowrap;
+	    text-indent: 100%;
+	}
+	.path ol {
+	    float: right;
+	}
+	.path li:first-child {
+	    background: none;
+	}
+	.path li {
+	    float: left;
+	    padding: 0 0 0 12px;
+	    margin: 0 0 0 8px;
+	    color: #757575;
+	    background: url(//img.echosting.cafe24.com/skin/base/layout/ico_path.gif) no-repeat 0 10px;
+	}
+	li {
+	    list-style: none;
+	}
+	.path li a {
+	    color: #757575;
+	}
+	.path li strong, .path li strong a {
+	    color: #2e2e2e;
+	}
+  
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
+   html{
+  	scroll-behavior : smooth;
+  }
   
   </style>
 
 <script type="text/javascript">
 	function pageMove(pageNo){
-		alert(pageNo);
 		location.href = "mypage.do?command=fundinglist&pageno="+pageNo;
 	}
 </script>
 
 </head>
 
-<body id="main">
+<body id="body">
 
 
 	<!-- header -->
@@ -87,16 +126,17 @@
 	<div id="wrap">
 	    <div id="container">
 	    
-    		<!-- <div class="path">
-			    <span>현재 위치</span>
-			    <ol>
-			    	<li><a href="/">홈</a></li>
-			        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
-			        <li title="현재 위치"><strong>펀딩내역 조회</strong></li>
-			    </ol>
-			</div> -->
-			
 	        <div id="content" style="margin-top: 100px;">
+	        
+	    		<div class="path">
+				    <span>현재 위치</span>
+				    <ol>
+				    	<li><a href="issue.do?command=main">홈</a></li>
+				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
+				        <li title="현재 위치"><strong>펀딩내역 조회</strong></li>
+				    </ol>
+				</div>
+				
 				<div class="titleArea">
 				    <h2>펀딩조회</h2>
 				</div>
@@ -105,24 +145,18 @@
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorytab ec-base-tab ">
 					<ul class="menu">
 						<li class="selected">
-							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">펀딩내역조회 (${list_fun_d.size()})</a>
+							<a href="mypage.do?command=fundinglist&pageno=1">펀딩내역조회 (${list_fun_d.size()})</a>
 						</li>
-				    <!--     <li class="">
-				       		<a href="/myshop/order/list.html?mode=cs&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">취소/반품/교환 내역 (0)</a>
-				        </li>
-				        <li class="displaynone">
-				        	<a href="/myshop/order/list_old.html?mode=old&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">이전 주문내역 (0)</a>
-				        </li> -->
 				    </ul>
 				</div>
 				
 				<!-- 날짜 선택 -->
 				<form method="GET" id="OrderHistoryForm" name="OrderHistoryForm">
 					<div class="xans-element- xans-myshop xans-myshop-orderhistoryhead ">
-						<fieldset class="ec-base-box">
+						<!-- <fieldset class="ec-base-box">
 							<legend>검색기간설정</legend>
 							
-							<!-- 주문처리 상태 -->
+							주문처리 상태
 					        <div class="stateSelect ">
 					            <select id="order_status" name="order_status" class="fSelect">
 									<option value="all">전체 펀딩상태</option>
@@ -130,7 +164,7 @@
 									<option value="shipped_standby">펀딩실패</option>
 								</select>        
 							</div>
-							<!-- 기간 선택 -->
+							기간 선택
 					        <span class="period">
 					            <a href="#none" class="btnNormal" days="00"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1_on.gif" alt="오늘"></a>
 					            <a href="#none" class="btnNormal" days="07"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2_on.gif" alt="1주일"></a>
@@ -139,16 +173,17 @@
 					            <a href="#none" class="btnNormal" days="180"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5_on.gif" alt="6개월"></a>
 					        </span>
 					        
-					        <!-- 달력 선택 -->
+					        달력 선택
 					        <input id="history_start_date" name="history_start_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-09-19" type="text">
 					        <button type="button" class="ui-datepicker-trigger"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text">
 					        <button type="button" class="ui-datepicker-trigger">
 					        <img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button>        
 					        <input alt="조회" id="order_search_btn" type="image" src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/btn_search.gif">    
-				        </fieldset>
+				        </fieldset> -->
 				        
 						<ul>
-							<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 펀딩내역을 조회하실 수 있습니다.</li>
+							<!-- <li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 펀딩내역을 조회하실 수 있습니다.</li> -->
+							<li>기본적으로 최근 3개월간의 자료가 조회되며, 3개월 이후 펀딩내역은 QnA게시판을 통해 문의하시기 바랍니다.</li>
 					        <li>펀딩번호를 클릭하시면 해당 펀딩에 대한 상세내역을 확인하실 수 있습니다.</li>
 					    </ul>
 					</div>
@@ -175,7 +210,6 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<!-- <th scope="col">참여일자<br>[참여번호]</th> -->
 								<th scope="col">참여번호</th>
 				                <th scope="col">이미지</th>
 				                <th scope="col">펀딩정보</th>
@@ -186,33 +220,30 @@
 				            </tr>
 			            </thead>
 						<tbody class="center">
-						<c:if test="${null eq list_fun_d}">
+						<c:if test="${null eq list_fun_d}"> <!-- 펀딩내역이 없을 때 -->
 							<tr><td colspan="6"><p class="message" style="border:0px;">펀딩 내역이 없습니다.</p></td></tr>
 						</c:if>
-						<c:if test="${null ne list_fun_d}">
+						<c:if test="${null ne list_fun_d}"> <!-- 펀딩내역이 있을 때 -->
 						<c:set var="count" value="0"></c:set>
-						<c:forEach var="fun" items="${list_fun_d}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
+						<c:forEach var="fun" varStatus="status" items="${list_fun_d}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
 								<td class="number">
 				                	<!-- <p></p> -->
-						            <p><a href="펀딩상세로 연결@@@@@@" class="line">[${fun.fpm_no}]</a></p>
+						            <p><a href="#" class="line">[${fun.fpm_no}]</a></p>
 				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">펀딩취소</a> --> 
 				                </td>
 				                <td class="thumb">
-				                	<a href="/product/detail.html">
+				                	<a href="funding.do?command=selectOneFunding&fund_no=${fun.fund_no}&pageno=1">
 				                	<img src="<%=request.getContextPath()%>/RECOREMain/RECOREFunding/images/${fun.fund_no}/f_img.png"></a>
 			                	</td>
 				                <td class="product left top">
-				                    <!-- <strong class="name">제목</strong> -->
 				                    <strong class="name"><br>
-				                    	<c:if test="${list_fun_d[count].fund_no eq list_fun[count].fund_no}">
-				                    		<a href="펀딩상세로 연결@@@@@@">${list_fun[count].fund_title}</a>
-				                    	</c:if>
+				                    		<a href="funding.do?command=selectOneFunding&fund_no=${fun.fund_no}&pageno=1">
+						                    	<c:if test="${fun.fund_no eq list_fun[status.index].fund_no}">
+						                    		${list_fun[status.index].fund_title}
+						                    	</c:if>
+				                    		</a>
 				                    </strong>
-				                    <!-- <div class="option"></div> -->
-				                    <!-- <ul class="xans-element- xans-myshop xans-myshop-optionset option">
-				                    	<li class=""><strong></strong> (개)</li>
-									</ul> -->
 				                </td>
 				                <td>1개</td>
 				                <td class="right">
@@ -232,7 +263,6 @@
 				        </c:if>
 						</tbody>
 					</table>
-					<!-- <p class="message ">펀딩 내역이 없습니다.</p> -->
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">

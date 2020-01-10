@@ -62,6 +62,12 @@
   	padding: 12px;
   }
   
+  [class^='btn'][class*='Fix'].sizeM {
+    width: 120px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
   a {
   color: black;
   text-decoration: none;
@@ -73,13 +79,16 @@
     color: #A0D9D9;
     text-decoration: underline; 
     }
+  html{
+  	scroll-behavior : smooth;
+  }
   
   
   </style>
 </head>
 
-<body id="main"> 
-<%
+<body id="body"> 
+<%	/* 메인에 주문상태 개수 표시 */
 	List list_order = (List)request.getAttribute("list_order");
 	int count1 = 0; //입금완료
 	int count2 = 0; //배송준비중
@@ -121,16 +130,22 @@
 	
 	<div id="wrap">
     	<div id="container">
-       		 <div id="content" style="margin-top: 210px;">
+       		 <div id="content" style="margin-top: 100px;">
 
 				<div class="titleArea">
 				    <h2>마이 쇼핑</h2>
+				    <c:if test="${vo.acc_no eq 1}">
+				    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				        <span class="gRight">
+				            <a href="manager.do?command=manager_product&catd=all" class="btnSubmitFix sizeM" style="background-color:#A0D9D9; color:white;">관리자페이지</a>
+				        </span>
+				    </c:if>
 				</div>
 
 				<div class="xans-element- xans-myshop xans-myshop-orderstate ">
 				
 					<div class="title">
-						<h3>나의 주문처리 현황 <!-- <span class="desc">(최근 <em>3개월</em> 기준)</span> --></h3>
+						<h3>나의 주문처리 현황 <span class="desc">(최근 <em>3개월</em> 기준)</span></h3>
 	  				</div>
 	  				
 					<div class="state">
@@ -193,8 +208,8 @@
 		           			<p><a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">고객님께서 주문하신 상품의<br> 주문내역을 확인하실 수 있습니다.</a></p>
 		        		</li>
 		        		<li class="shopMain profile">
-		            		<h3><a href="회원정보 링크@@@"><strong>Profile</strong><br><span>회원 정보</span></a></h3>
-		            		<p><a href="회원정보 링크@@@">회원이신 고객님의 개인정보를<br> 관리하는 공간입니다.</a></p>
+		            		<h3><a href="<%=request.getContextPath()%>/Account_Controller.do?command=editpage"><strong>Profile</strong><br><span>회원 정보</span></a></h3>
+		            		<p><a href="<%=request.getContextPath()%>/Account_Controller.do?command=editpage">회원이신 고객님의 개인정보를<br> 관리하는 공간입니다.</a></p>
 		        		</li>
 		        		<li class="shopMain board">
 		           			<h3><a href="<%=request.getContextPath()%>/mypage.do?command=fundinglist&pageno=1"><strong>Funding</strong><br><span>펀딩내역 조회</span></a></h3>

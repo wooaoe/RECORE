@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Interior Design &mdash; Colorlib Website Template</title>
+    <title>RECORE &mdash; FUNDING</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -40,7 +40,8 @@
 			height: 30px; 
 			text-align: center;
 			float: left; 
-			margin-right: 10px;"
+			margin-right: 10px;
+			cursor: pointer;
 		}
 		.newsButton{
 			background-color: #a0d9d9; 
@@ -52,13 +53,16 @@
 			text-align: center;
 			float: left; 
 			margin-right: 10px;
+			cursor: pointer;
 		}
-		
+		html{
+    		scroll-behavior: smooth;
+    	}
 	
 	</style>
     
   </head>
-  <body>
+  <body id = "body">
   
   <div class="site-wrap">
 
@@ -72,67 +76,111 @@
     </div> <!-- .site-mobile-menu -->
     
     
-    <div class="site-navbar-wrap">
+    <div class="site-navbar-wrap" style="background-color: white;">
       <div class="site-navbar-top">
         <div class="container py-3">
+       
+        <!--@@ 로고 위치 @@-->
+        <br>
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
+        <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
+        
           <div class="row align-items-center">
             <div class="col-6">
             </div>
             <div class="col-6">
-              <div class="d-flex ml-auto">
-                <a href="#" class="d-flex align-items-center ml-auto mr-4">
-                  <span class="icon-phone mr-2"></span>
-                  <span class="d-none d-md-inline-block">youremail@domain.com</span>
-                </a>
-                <a href="#" class="d-flex align-items-center">
-                  <span class="icon-envelope mr-2"></span>
-                  <span class="d-none d-md-inline-block">+1 291 2830 302</span>
-                </a>
+              <div class="d-flex ml-auto" style = "position:relative; left: 100px;" >
+               <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+              	</form>
+              	
+              	<!-- 로그인 안되어있을 때 -->
+              	<c:if test="${empty vo }">
+                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
+                 </a>
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+                  <a href = "<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/>
+                  </a>
+                 </c:if>
+                 
+                 <!-- 로그인 되어있을 때 -->
+                  <c:if test="${!empty vo }">
+    				<a href="<%=request.getContextPath()%>/Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+    				<a href = "<%=request.getContextPath()%>/mypage.do?command=cartlist">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/></a>
+    			</c:if>
+                 
+                 
+                 
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      
+      
       <div class="site-navbar">
         <div class="container py-1">
           <div class="row align-items-center">
             <div class="col-2">
-              <h1 class="mb-0 site-logo"><a href="index.html"></a></h1>
             </div>
             <div class="col-10">
               <nav class="site-navigation text-right" role="navigation">
                 <div class="container">
                   <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
 
-                  <ul class="site-menu js-clone-nav d-none d-lg-block">
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1; left: 110px;">
                     <li class="has-children">
-                      <a href="index.html">Home</a>
+                      <a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1" style="color:black;">Funding</a>
                       <ul class="dropdown arrow-top">
-                        <li><a href="#">Menu One</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
-                        <li class="has-children">
-                          <a href="#">Sub Menu</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Menu One</a></li>
-                            <li><a href="#">Menu Two</a></li>
-                            <li><a href="#">Menu Three</a></li>
-                          </ul>
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1">조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=createfundingpage">등록</a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children">
+                    
+                      <a href= "<%=request.getContextPath()%>/Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
+                      <ul class="dropdown arrow-top">
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
+                        	</ul>
+                        </li>
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
+                        	</ul>
                         </li>
                       </ul>
                     </li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li class="has-children">
-                      <a href="projects.html">Projects</a>
-                      <ul class="dropdown arrow-top">
-                        <li><a href="#">Menu One</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
+                    <li  class="has-children"><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
+                    	<ul class="dropdown arrow-top">
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
                       </ul>
                     </li>
-                    <li  class="active"><a href="news.html">News</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li class="has-children"><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
+					    <ul class="dropdown arrow-top">
+					    <li><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all">QnA</a></li>
+					    <li><a href="<%=request.getContextPath()%>/qna.do?command=review_list&catd=all">Review</a></li>
+					    </ul>
+					</li>
+				
                   </ul>
                 </div>
               </nav>
@@ -142,12 +190,12 @@
       </div>
     </div>
 
-    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath() %>/RECOREMain/RECOREFunding/backimg/news.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay inner-page" style="background-image: url(<%=request.getContextPath() %>/RECOREMain/images/fundingbackimg.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-10">
-            <span class="sub-text"></span>
-            <h1>News</h1>
+            <br><br><br><br>
+            <h1>FUNDING</h1>
           </div>
         </div>
       </div>
@@ -272,127 +320,7 @@
       </div>
     </div>
 -->
-    <footer class="site-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 mb-5 mb-lg-0">
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Navigation</h3>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Team</a></li>
-                </ul>
-              </div>
-              <div class="col-md-6 col-lg-6">
-                <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Membership</a></li>
-                </ul>
-              </div>
-            </div>
-
-            
-          </div>
-          <div class="col-lg-4">
-           
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-4">Recent News</h3>
-              <div class="block-25">
-                <ul class="list-unstyled">
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="mb-3">
-                    <a href="#" class="d-flex">
-                      <figure class="image mr-4">
-                        <img src="images/hero_bg_1.jpg" alt="" class="img-fluid">
-                      </figure>
-                      <div class="text">
-                        <span class="small text-uppercase date">Sep 16, 2018</span>
-                        <h3 class="heading font-weight-light">Lorem ipsum dolor sit amet consectetur elit</h3>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-          </div>
-          
-
-          <div class="col-lg-4 mb-5 mb-lg-0">
-
-            <div class="mb-5">
-              <h3 class="footer-heading mb-2">Subscribe Newsletter</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit minima minus odio.</p>
-
-              <form action="#" method="post">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control border-white text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="button-addon2">Send</button>
-                  </div>
-                </div>
-              </form>
-
-            </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <h3 class="footer-heading mb-4">Follow Us</h3>
-
-                <div>
-                  <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                  <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-          
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
+    <%@ include file="/footer.jsp" %>
   </div>
 
   <script src="<%=request.getContextPath() %>/RECOREMain/js/jquery-3.3.1.min.js"></script>

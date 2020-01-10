@@ -8,12 +8,15 @@
 <%@ page import = "java.util.List" %>
 <%@ page import = "com.mvc.vo.Vo_Product" %>
 <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+<%@ page import = "com.mvc.vo.Vo_Account" %>
 
 <!DOCTYPE html>
 <html class="no-js">
-<!--<![endif]-->
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<!-- @@ RECORE favicon @@  -->
+	<link rel="icon" href="<%=request.getContextPath()%>/images/recorefavi.png">
 
 <%@ include file="/headP.jsp"%>
 
@@ -115,10 +118,12 @@
 
 	<%@ include file="/footerPdetail.jsp"%>
 
+	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -138,11 +143,11 @@
 					<ol class="breadcrumb">
 						<li><a
 							href="<%=request.getContextPath()%>/RECOREMain/index.html">Home</a></li>
-						<li><a href="Product.do?command=ProdSelectAll">Product</a></li>
+						<li><a href="Product.do?command=ProdSelectAll&pageno=1">Product</a></li>
 
 						<!-- @@카테고리 타고 넘어오는 부분 종류 뭔지 써주기@@ -->
     			    	<li class="active"><a
-							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}">${cdvo.catd_name}</a></li>
+							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}&pageno=1">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
 				<div class="col-md-6">
@@ -240,7 +245,6 @@
 							<span>사이즈:</span> 
 							<select class="form-control" id = "selsize" name = "size" onchange="selectNum();">
 								<option value = "choice">선택</option>
-								
 								<c:forEach var = "size" items = "${povo}">
 								<option value = "${size.prod_size}">${size.prod_size}</option>
 								</c:forEach>
@@ -290,11 +294,10 @@
 						<div class = "color-swatches" id = "total">
 							<span>총 금액 :</span>
 							<input id = "price" type = "text" value = "" name = "total" 
-							style="background-color:transparent; border:0 solid black;"/>
-							<span>원</span>
+							style="background-color:transparent; border:0 solid black; font-size: 1.5em;
+							width: 100px;"/>원
 							
 						</div>
-						<!-- javascript: form.action = 'Product.do'; document.getElementId('val').value = 'Order'; -->
 						
 						<br><br>
 						<input type = "submit" value = "바로구매" id = "pay" 
@@ -311,24 +314,25 @@
 						
 					 	<script type="text/javascript">
 							
-							function insertCart(){
-								
-								
-								for(var i = 0; i < <%=povo.size()%>; i++){
+							 function insertCart(){
+								 for(var i = 0; i < <%=povo.size()%>; i++){
 									var prod_id = ${povo.get(i).getProd_id()};
 								}
-								var prod_amount = $("#number").val();
-								
-								location.href = "Product.do?command=cartlist&prod_id=" + prod_id 
-										+ "&prod_amount=" + prod_amount;
-								
+								var prod_amount = $("#number").val(); 
+								var acc_no = ${vo.acc_no};
+								var prod_no = ${pvo.prod_no};
+								location.href = "Product.do?command=insertCart&prod_id=" + prod_id 
+									+ "&prod_amount=" + prod_amount + "&acc_no=" + acc_no + "&pseq=" + prod_no;
 							}
+							function insertWish(){
+								var prod_no = ${pvo.prod_no};
+								location.href = "Product.do?command=insertWish&pseq=" + prod_no;
+							} 
 						
 						</script>
 					</div>
 				</div>
 			</div>
-			
 
 
 			<!-- @@ Detail / Q&A / Review @@ -->
@@ -337,18 +341,18 @@
 					<div class="tabCommon mt-20">
 						<br><br><br><br>
 						<ul class="nav nav-tabs" style = "font-size: 11pt;">
-							<li class="active"><a data-toggle="tab" href="#details"
+							<li class="active">
+							<a data-toggle="tab" href="#details"
 								aria-expanded="true">DETAIL</a></li>
-							<li class=""><a data-toggle="tab" href="#reviews"
+							<li class="">
+							<a data-toggle="tab" href="#reviews"
 								aria-expanded="false">REVIEW</a></li>
-							<li class=""><a data-toggle="tab" href="#reviews"
+							<li class="">
+							<a data-toggle="tab" href="#qna"
 								aria-expanded="false">Q&A</a></li>
 						</ul>
 						<div class="tab-content patternbg">
 							
-							<!-- <h4 id = "productInfo">제품 설명 헤드라인</h4>
-					<p style = "text-align: center;">dddddddddddddddd</p> -->
-
 
 							<!-- @@ 상세 내용 이미지 들어가는 곳 @@ -->
 							<c:forEach begin="1" end="${pvo.prod_con_count}" step="1" var="i">
@@ -376,7 +380,7 @@
 												<div class="comment-info">
 													<h4 class="comment-author">
 														<!-- @@고객 아이디@@ -->
-														<a href="#">motop**</a>
+														<a href="#">${vo.acc_id}</a>
 													</h4>
 													
 													<!-- @@ 글 작성 시간 @@ -->
@@ -392,57 +396,40 @@
 												
 											</div>
 										</li>
-										<!-- @@ 리뷰 작성 끝 @@ -->
-
-
-										<!-- @@ 위에 리뷰 반복 @@-->
-										<li class="media"><a class="pull-left" href="#"> <img
-												class="media-object comment-avatar"
-												src="imagesProd/blog/avater-4.jpg" alt="" width="50"
-												height="50" />
-										</a>
-
-											<div class="media-body">
-
-												<div class="comment-info">
-													<div class="comment-author">
-														<a href="#">Jonathon Andrew</a>
-													</div>
-													<time datetime="2013-04-06T13:53">July 02, 2015, at
-														11:34</time>
-													<a class="comment-button" href="#"><i
-														class="tf-ion-chatbubbles"></i>Reply</a>
-												</div>
-
-												<p>리뷰글 적는곳</p>
-
-											</div></li>
-										<!-- End Comment Item -->
+							
+							
+								<!-- @@문의글 상세@@ -->
+								<div id="qna" class="tab-pane fade">
+									<div class="post-comments">
+										<ul class="media-list comments-list m-bot-50 clearlist">
 
 										<!-- Comment Item start-->
-										<li class="media"><a class="pull-left" href="#"> <img
-												class="media-object comment-avatar"
-												src="imagesProd/blog/avater-1.jpg" alt="" width="50"
-												height="50">
+										<li class="media"><a class="pull-left" href="#"> 
+											<img class="media-object comment-avatar" src="imagesProd/blog/avater-1.jpg" 
+											alt="" width="50" height="50" />
 										</a>
 
 											<div class="media-body">
-
 												<div class="comment-info">
-													<div class="comment-author">
-														<a href="#">Jonathon Andrew</a>
-													</div>
-													<time datetime="2013-04-06T13:53">July 02, 2015, at
-														11:34</time>
-													<a class="comment-button" href="#"><i
-														class="tf-ion-chatbubbles"></i>Reply</a>
+													<h4 class="comment-author">
+														<!-- @@고객 아이디@@ -->
+														<a href="#">${vo.acc_id}</a>
+													</h4>
+													
+													<!-- @@ 글 작성 시간 @@ -->
+													<time datetime="2019-12-24T23:00">Dec 23, 2019, at 11:34</time>
+													
+													<!-- @@ reply누르면 댓글 작성할 수 있게 @@  -->
+													<a class="comment-button" href="#">
+													<i class="tf-ion-chatbubbles"></i>Reply</a>
 												</div>
-
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing
-													elit. Quisque at magna ut ante eleifend eleifend.</p>
-
+												
+												<!-- @@ 고객 문의글 가져오기 @@  -->
+												<p>리뷰글 적는 곳</p>
+												
 											</div>
 										</li>
+										<!-- @@ 문의 작성 끝 @@ -->
 									</ul>
 								</div>
 							</div>
@@ -477,22 +464,10 @@
 							<!-- 세일 여부 -->
 							<!-- <span class="bage">Sale</span> -->
 							<!-- Bag이면 가방이랑 연관된 상품, ACC면 악세사리랑 연관된 상품이 뜨도록 어떻게??? -->
-								<img class="img-responsive" id = "img-fluid"
-									src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${sub.prod_no}/f_img.png"
+							
+							<img class="img-responsive" id = "img-fluid"
+							src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${sub.prod_no}/f_img.png"
 									alt="product-img" />
-							<div class="preview-meta">
-								<ul>
-									<!--@@ 이미지 마우스오버할 때 검색/관심상품/장바구니 추가할 수 있게 @@ -->
-									<%-- <li><span data-toggle="modal" data-target="#product-modal">
-											<i class="tf-ion-ios-search" id = "search&${i}" ></i>
-										</span>
-									</li> --%>
-									<!-- @@ 관심상품 @@ -->
-									<li><a href="#"><i class="tf-ion-ios-heart"></i></a></li>
-									<!-- @@ 장바구니 @@ -->
-									<li><a href=""><i class="tf-ion-android-cart"></i></a></li>
-								</ul>
-							</div>
 						</div>
 						<!-- @@ 상품 이름, 가격 @@ -->
 						<div class="product-content">
@@ -518,12 +493,7 @@
 	</section>
 	
 	
-	<!-- @@ 화살표 누르면 상단으로 @@ -->
 	
-	<div style = "position: fixed; bottom: 30px; right: 30px;">
-		<a href = "#body"><img src = "<%=request.getContextPath()%>/images/up-arrow.png" /></a>
-	</div>
-
 	<!-- footer -->
 	<%@ include file="/footer.jsp"%>
 

@@ -125,18 +125,23 @@
     line-height: 14px;
     background: #fff;
   }
-  
+   html{
+  	scroll-behavior : smooth;
+  }
   </style>
 <script type="text/javascript">
-	function updateStatus(status,order_no,prod_id){
-		alert(status);
-		alert(order_no);
-		alert(prod_id);
+	function updateStatus(status,order_no,prod_id){ //주문상태 변경
 		location.href = "mypage.do?command=updateorder&orderno="+order_no+"&prodid="+prod_id+"&status="+status;
+		
+	}
+	
+	function managerUpdate(order_no,prod_id){ //관리자 운송장 번호 등록
+		var tno = prompt('운송장 번호를 입력하세요','');
+		location.href = "mypage.do?command=managerupdate&tno="+tno+"&orderno="+order_no+"&prodid="+prod_id;
 	}
 </script>
 </head>
-<body id="main">
+<body id="body">
 <%
 	Vo_Account acc = (Vo_Account)session.getAttribute("vo");
 %>
@@ -163,7 +168,6 @@
 				</div>
 	
 				<form id="detailForm" name="detailForm" action="/exec/front/MyShop/OrderCancel/" method="POST" enctype="multipart/form-data">
-					<!-- <input id="order_id" name="order_id" fw-filter="isFill" fw-label="주문번호" fw-msg="" value="20200105-0000311" type="hidden"> -->
 					<div class="xans-element- xans-myshop xans-myshop-orderhistorydetail xans-record-">
 						<div class="orderArea">
 	        				<div class="title">
@@ -188,7 +192,7 @@
 					                	</tr>
 										<tr>
 											<th scope="row">주문자</th>
-						                    <td><span><%=acc.getAcc_name()%></span></td>
+						                    <td><span>${vo_acc.acc_name}</span></td>
 						                </tr>
 										<%-- <tr>
 											<th scope="row">주문처리상태</th>
@@ -214,12 +218,11 @@
 											<th scope="row">총 주문금액</th>
 	                   						<td>
 	                   						<c:set var="sum" value="0"></c:set>
-	                   						<c:forEach var="tmp" items="${vo_olist}">
+	                   						<c:forEach var="tmp" items="${vo_olist}"> <!-- 총 주문 금액 -->
 	                   							<c:set var="sum" value="${sum + (tmp.order_price * tmp.order_amount)}"></c:set>
 	                   						</c:forEach>
 	                        					<span class="gSpace20">
 	                            					<strong class="txt14"><fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber></strong>원
-	                            					<%-- <strong class="txt14"><fmt:formatNumber value="${vo_olist.order_amount * vo_olist.order_price}" groupingUsed="true"></fmt:formatNumber></strong>원 --%>
 	                        					</span>
                     						</td>
 	                					</tr>
@@ -337,17 +340,29 @@
 					                            <p class="txtEm">${olist.order_status}</p>
 					                        </td>
 					                        <td>
-					                            <!-- <p class="">-</p> -->
-							                	<c:if test="${olist.order_status eq '입금완료' or olist.order_status eq '배송준비중'}">
-							                		<a href="javascript:updateStatus('취소',${vo_order.order_no},${olist.prod_id})" class="btnNormal">취소신청</a>
-							                	</c:if>
-							                	<c:if test="${olist.order_status eq '배송중' or olist.order_status eq '배송완료'}">
-								                    <a href="javascript:updateStatus('교환',${vo_order.order_no},${olist.prod_id})" class="btnNormal">교환신청</a>
-								                    <a href="javascript:updateStatus('반품',${vo_order.order_no},${olist.prod_id})" class="btnNormal">반품신청</a>
-							                    </c:if>
-							                    <c:if test="${olist.order_status eq '배송완료' and olist.order_isreview ne 'Y'}">
-							                    	<a href="mypage.do?command=reviewform&orderno=${vo_order.order_no}&prodid=${olist.prod_id}" class="btnNormal">리뷰작성</a>
-							                    </c:if>
+					                        	<c:choose>
+					                        		<c:when test="<%=acc.getAcc_no() == 1 %>">
+					                        			<c:if test="${olist.order_status eq '입금완료' and olist.order_tno eq 0}">
+							                				<a href="javascript:managerUpdate(${vo_order.order_no},${olist.prod_id})" class="btnNormal">배송상태변경</a>
+							                			</c:if>
+					       							</c:when>
+					       							<c:otherwise>
+							                        	<!-- 주문상태에 따른 버튼 -->
+									                	<c:if test="${olist.order_status eq '입금완료' or olist.order_status eq '배송준비중'}">
+									                		<a href="javascript:updateStatus('취소',${vo_order.order_no},${olist.prod_id})" class="btnNormal">취소신청</a>
+									                	</c:if>
+									                	<c:if test="${olist.order_status eq '배송중' }">
+										                    <a href="javascript:updateStatus('배송완료',${vo_order.order_no},${olist.prod_id})" class="btnNormal">구매확정</a>
+									                	</c:if>
+									                	<c:if test="${olist.order_status eq '배송완료'}">
+										                    <a href="javascript:updateStatus('교환',${vo_order.order_no},${olist.prod_id})" class="btnNormal">교환신청</a>
+										                    <a href="javascript:updateStatus('반품',${vo_order.order_no},${olist.prod_id})" class="btnNormal">반품신청</a>
+									                    </c:if>
+									                    <c:if test="${olist.order_status eq '배송완료' and olist.order_isreview ne 'Y'}">
+									                    	<a href="mypage.do?command=reviewform&orderno=${vo_order.order_no}&prodid=${olist.prod_id}" class="btnNormal">리뷰작성</a>
+									                    </c:if>
+					       							</c:otherwise>               	
+					                        	</c:choose>
 					                        </td>
 					                    </tr>
 					                    </c:forEach>
@@ -369,7 +384,7 @@
 									<tbody>
 										<tr>
 											<th scope="row">받으시는분</th>
-						                    <td><span><%=acc.getAcc_name()%></span></td>
+						                    <td><span>${vo_acc.acc_name}</span></td>
 						                </tr>
 										<tr class="">
 											<th scope="row">우편번호</th>
@@ -385,7 +400,7 @@
 					                	</tr>
 										<tr>
 											<th scope="row">휴대전화</th>
-					                    	<td><span><%=acc.getAcc_phone()%></span></td>
+					                    	<td><span>${vo_acc.acc_phone}</span></td>
 					                	</tr>
 										<tr>
 											<th scope="row">배송메시지</th>
@@ -397,7 +412,7 @@
 					    </div>
 						<div class="ec-base-button">
 					        <span class="gRight">
-					            <a href="mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeM">주문목록보기</a>
+					            <a href="mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeM" style="background-color:#A0D9D9;">주문목록보기</a>
 					        </span>
 					    </div>
 					</div>

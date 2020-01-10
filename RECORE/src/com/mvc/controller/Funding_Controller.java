@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.mvc.dao.FundingDao;
 import com.mvc.dao.FundingDaoImpl;
 import com.mvc.vo.Vo_Funding;
+import com.mvc.vo.Vo_Funding_Payment;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -207,7 +208,44 @@ public class Funding_Controller extends HttpServlet {
 			
 			//response.sendRedirect("./RECOREMain/index.jsp");
 			
-		}else if(command.equals("deleteFunding")) {
+		}
+		else if(command.equals("payFunding")) {
+			
+			
+			int fpm_price = Integer.parseInt(request.getParameter("fpm_price"));
+			String fpm_card_name = request.getParameter("fpm_card_name");
+			String fpm_card_pw = request.getParameter("fpm_card_pw");
+			String fpm_card_valid= request.getParameter("fpm_card_valid");
+			String fpm_card_cvc= request.getParameter("fpm_card_cvc");
+			
+			
+			
+			Vo_Funding_Payment fvo = new Vo_Funding_Payment();
+			
+			fvo.setFpm_price(fpm_price);
+			fvo.setFpm_card_name(fpm_card_name);
+			fvo.setFpm_card_pw(fpm_card_pw);
+			fvo.setFpm_card_valid(fpm_card_valid);		
+			fvo.setFpm_card_cvc(fpm_card_cvc);
+			
+			
+			
+			boolean res = dao.F_insert(fvo);
+			
+			//int f_seq = dao.F_getSeqCurrval();
+			
+			//Vo_Funding reg = dao.F_selectOne(f_seq);
+			
+			//System.out.println(reg);
+			
+			
+			
+			jsResponse("펀딩에 참여하였습니다.", "funding.do?command=selectAllFunding&pageno=1", response);
+            
+			
+			
+		}
+		else if(command.equals("deleteFunding")) {
 			
 			int pageno = Integer.parseInt(request.getParameter("pageno"));
 			int fseq = Integer.parseInt(request.getParameter("fund_no"));
@@ -230,6 +268,7 @@ public class Funding_Controller extends HttpServlet {
 			
 		}
 		
+		else if(command.equals("totalFundingPayment")) {}
 		
 		
 		

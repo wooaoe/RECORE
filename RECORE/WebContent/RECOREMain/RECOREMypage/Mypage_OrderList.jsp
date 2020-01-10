@@ -91,32 +91,64 @@
     background: #fff;
   }
   
+  .path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    *zoom: 1;
+	}
+	.path span {
+	    overflow: hidden;
+	    position: absolute;
+	    width: 0;
+	    height: 0;
+	    white-space: nowrap;
+	    text-indent: 100%;
+	}
+	.path ol {
+	    float: right;
+	}
+	.path li:first-child {
+	    background: none;
+	}
+	.path li {
+	    float: left;
+	    padding: 0 0 0 12px;
+	    margin: 0 0 0 8px;
+	    color: #757575;
+	    background: url(//img.echosting.cafe24.com/skin/base/layout/ico_path.gif) no-repeat 0 10px;
+	}
+	li {
+	    list-style: none;
+	}
+	.path li a {
+	    color: #757575;
+	}
+	.path li strong, .path li strong a {
+	    color: #2e2e2e;
+	}
+  
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
   a:hover {
     color: #F56D3E;
     text-decoration: underline;
   }
+   html{
+  	scroll-behavior : smooth;
+  }
   
   </style>
 
 <script type="text/javascript">
-	function pageMove(pageNo){
-		alert(pageNo);
+	function pageMove(pageNo){ //페이징
 		location.href = "mypage.do?command=orderlist&pageno="+pageNo;
 	}
-	
-	/* function updateStatus(status,order_no,prod_id){
-		alert(status);
-		alert(order_no);
-		alert(prod_id);
-		location.href = "mypage.do?command=updateorder&orderno="+order_no+"&prodid="+prod_id+"&status="+status;
-	} */
 
 </script>
 </head>
 
-<body id="main">
+<body id="body">
 <%
 	List<Vo_Order_Num> list_order = (List<Vo_Order_Num>)request.getAttribute("list_order");
 
@@ -128,14 +160,14 @@
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
 	        	
-	        	<!-- <div class="path">
+	        	<div class="path">
 				    <span>현재 위치</span>
 				    <ol>
-				    	<li><a href="/">홈</a></li>
+				    	<li><a href="issue.do?command=main">홈</a></li>
 				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
 				        <li title="현재 위치"><strong>주문조회</strong></li>
 				    </ol>
-				</div> -->
+				</div>
 	        	
 				<div class="titleArea">
 				    <h2>주문조회</h2>
@@ -145,21 +177,21 @@
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorytab ec-base-tab ">
 					<ul class="menu">
 						<li class="selected">
-							<a href="/myshop/order/list.html?history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">주문내역조회 (${list_order.size()})</a>
+							<a href="mypage.do?command=orderlist&pageno=1">주문내역조회 (${list_order.size()})</a>
 						</li>
-				        <li class="">
+				        <!-- <li class="">
 				       		<a href="/myshop/order/list.html?mode=cs&amp;history_start_date=2019-09-19&amp;history_end_date=2019-12-18&amp;past_year=2018">취소/반품/교환 내역 (0)</a>
-				        </li>
+				        </li> -->
 				    </ul>
 				</div>
 				
 				<!-- 날짜 선택 -->
 				<form method="GET" id="OrderHistoryForm" name="OrderHistoryForm">
 					<div class="xans-element- xans-myshop xans-myshop-orderhistoryhead ">
-						<fieldset class="ec-base-box">
+						<!-- <fieldset class="ec-base-box">
 							<legend>검색기간설정</legend>
 							
-							<!-- 주문처리 상태 -->
+							주문처리 상태
 					        <div class="stateSelect ">
 					            <select id="order_status" name="order_status" class="fSelect">
 									<option value="all">전체 주문처리상태</option>
@@ -172,7 +204,7 @@
 									<option value="order_return">반품</option>
 								</select>        
 							</div>
-							<!-- 기간 선택 -->
+							기간 선택
 					        <span class="period">
 					            <a href="#none" class="btnNormal" days="00"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date1_on.gif" alt="오늘"></a>
 					            <a href="#none" class="btnNormal" days="07"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date2_on.gif" alt="1주일"></a>
@@ -181,20 +213,17 @@
 					            <a href="#none" class="btnNormal" days="180"><img src="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5.gif" offimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5.gif" onimage="//img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_date5_on.gif" alt="6개월"></a>
 					        </span>
 					        
-					        <!-- 달력 선택 -->
+					        달력 선택
 					        <input id="history_start_date" name="history_start_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-09-19" type="text">
 					        <button type="button" class="ui-datepicker-trigger" id="datepicker"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text">
-					        <script type="text/javascript">
-    							$("#datepicker").datepicker();
-					        </script>
-					        <!-- <button type="button" class="ui-datepicker-trigger"><img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button> ~ <input id="history_end_date" name="history_end_date" class="fText hasDatepicker" readonly="readonly" size="10" value="2019-12-18" type="text"> -->
 					        <button type="button" class="ui-datepicker-trigger">
 					        <img src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/ico_cal.gif" alt="..." title="..."></button>        
 					        <input alt="조회" id="order_search_btn" type="image" src="//img.echosting.cafe24.com/skin/admin_ko_KR/myshop/btn_search.gif">    
-				        </fieldset>
+				        </fieldset> -->
 				        
 						<ul>
-							<li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
+							<!-- <li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li> -->
+							<li>기본적으로 최근 3개월간의 자료가 조회되며, 3개월 이후 주문내역은 QnA게시판을 통해 문의하시기 바랍니다.</li>
 					        <li>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
 					        <li class="">취소/교환/반품 신청은 배송 완료일 기준 30일까지 가능합니다.</li>
 					    </ul>
@@ -238,37 +267,29 @@
 						</c:if>
 						<c:if test="${null ne list_order}">
 						<c:set var="count" value="0"></c:set>
-						<%-- <c:forEach var="order" items="${list_order}" varStatus="status"> --%>
 						<c:forEach var="order" items="${list_order}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 							<tr class="">
 								<td class="number ">
 				                	<br><p>${order.order_date}
 						            <br><a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}" class="line">[${order.order_no}]</a></p>
-				                    <!-- <a href="#none" class="btnNormal displaynone" onclick="">주문취소</a>
-				                    <a href="cancel.html" class="btnNormal displaynone">취소신청</a>
-				                    <a href="exchange.html" class="btnNormal displaynone">교환신청</a>
-				                    <a href="return.html" class="btnNormal displaynone">반품신청</a> -->
 				                </td>
 				                <td class="thumb">
 				                	<a href="mypage.do?command=orderdetail&order_no=${order.order_no}">
-				                	<%-- <a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}"> --%>
 				                	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${order.olist[count].prod_no}/f_img.png" alt=""></a>
 			                	</td>
 				                <td class="product left top">
 				                    <strong class="name"></strong>
 				                    <div class="option">
 				                    	<a href="mypage.do?command=orderdetail&order_no=${order.order_no}">
-				                    	<%-- <a href="mypage.do?command=orderdetail&order_no=${order.order_no}&olist_no=${order.olist[count].prod_no}"> --%>
 				                    		<strong>${order.olist[count].prod_name}&nbsp;&nbsp;<c:if test="${order.olist.size() ne 1}"><strong>외</strong>&nbsp;${order.olist.size() - 1}개</c:if></strong>
 				                    	</a>
 				                    </div>
 				                    <ul class="xans-element- xans-myshop xans-myshop-optionset option">
 				                    	<!-- <li class=""><strong></strong> (개)</li> -->
 									</ul>
-									<p class="gBlank5 displayone">COLOR : ${order.olist[count].prod_color}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIZE : ${order.olist[count].prod_size}</p>
+									<p class="gBlank5 ">COLOR : ${order.olist[count].prod_color}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIZE : ${order.olist[count].prod_size}</p>
 				                </td>
 				                <td>${order.olist.size()}개</td>
-				                <!-- <td>1개</td> -->
 				                <!-- 주문당 총 금액 구하기 -->
 				                <c:set var="sum" value="0"></c:set>
 				                <c:forEach var="tmp" items="${order.olist}">
@@ -277,35 +298,16 @@
 				                <td class="right">
 									<div class="">
 										<fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber>원
-										<%-- <fmt:formatNumber value="${order.olist[count].order_price}" groupingUsed="true"></fmt:formatNumber>원 --%>
 									</div>
 								</td>
 								<td class="state">
 				                    <p class=""><a href="" class="line"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber>원</a></p>
 				                </td>
-				                <%-- <td class="state">
-				                    <p class="txtEm">${order.order_no} / ${order.olist[count].prod_id} / ${order.olist[count].order_status}</p>
-				                    <p class=""><a href="javascript:test(${order.olist[count].order_status})" class="line">[${order.olist[count].order_status}]</a></p>
-				                </td>
-				                <td>
-				                	<c:if test="${order.olist[count].order_status eq '입금완료' or order.olist[count].order_status eq '배송준비중'}">
-				                		<a href="javascript:updateStatus('취소',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">취소신청</a>
-				                	</c:if>
-				                	<c:if test="${order.olist[count].order_status eq '배송중' or order.olist[count].order_status eq '배송완료'}">
-					                    <a href="javascript:updateStatus('교환',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">교환신청</a>
-					                    <a href="javascript:updateStatus('반품',${order.order_no},${order.olist[count].prod_id})" class="btnNormal">반품신청</a>
-				                    </c:if>
-				                    <c:if test="${order.olist[count].order_status eq '배송완료'}">
-				                    	<a href="return.html" class="btnNormal">리뷰작성</a>
-				                    </c:if>
-				                </td> --%>
 				            </tr>
-				            <%-- <c:set var="count" value="${count+1}"></c:set> --%>
 				        </c:forEach>
 				        </c:if>
 						</tbody>
 					</table>
-					<!-- <p class="message ">주문 내역이 없습니다.</p> -->
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-orderhistorypaging ec-base-paginate">

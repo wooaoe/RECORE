@@ -10,9 +10,9 @@ public interface AccountDao {
 	
 	public boolean A_selectAccountphone(String acc_phone);
 
-	public boolean A_insert(Vo_Account acc); //회원가입
+	public boolean A_insert(Vo_Account vo); //회원가입
 
-	public boolean A_update(Vo_Account acc); //회원정보 수정
+	public boolean A_update(Vo_Account vo); //회원정보 수정
 
 	public boolean A_delete(int aseq); // 쿼리문은 update로 사용 / 회원탈퇴 여부 판단
 

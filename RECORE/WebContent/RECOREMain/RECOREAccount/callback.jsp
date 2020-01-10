@@ -54,7 +54,7 @@
     	  session.getAttribute("access_token");
     	  session.getAttribute("refresh_token");
 		  
-		  response.sendRedirect("index.jsp");
+		  response.sendRedirect("./RECOREMain/index.jsp");
     	  
         out.println(res.toString());
       }

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>상품 &mdash; Colorlib Website Template</title>
+    <title>RECORE &mdash; ENROLL</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -31,11 +31,9 @@
 
 
 	<!-- insert 폼 css 적용 -->
-	
+	<link rel="icon" href="<%=request.getContextPath()%>/images/recorefavi.png">
     
     <link href="<%=request.getContextPath() %>/RECOREMain/RECOREIssue/css/main.css" rel="stylesheet" media="all">
-    
-    
     
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     	<script type="text/javascript">

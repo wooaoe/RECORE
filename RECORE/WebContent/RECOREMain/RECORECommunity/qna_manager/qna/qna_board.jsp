@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%-- UserSession --%>
-<%Vo_Account sessionVo = (Vo_Account) session.getAttribute("sessionVo");%>
+<%Vo_Account sessionVo = (Vo_Account) session.getAttribute("vo");%>
 <%-- category --%>
 <% String catd = request.getParameter("catd"); %>
 
@@ -23,13 +23,13 @@
 </head>
 <body>
 	<header>
-	<jsp:include page="/header.jsp"></jsp:include>
+		<jsp:include page="/header.jsp"></jsp:include>
 	</header>
 	<section style="margin: 100px 0 100px 0px;">
 		<section class="section-container">
 			<div class="row" style="width:100%;">
-				<div class="col-md-2"></div>
-				<div class="col-md-8 col-md-offset-2">
+				<div class="col-md-2 col-xs-0"></div>
+				<div class="col-md-8 col-xs-12">
 					<div class="xans-element- xans-board xans-board-listpackage-1002 xans-board-listpackage xans-board-1002 ">
 						<div class="xans-element- xans-board xans-board-title-4 xans-board-title xans-board-4 reviewTitlee ">
 							<h2>
@@ -66,10 +66,9 @@
 									<li id="etc" value="etc" class="selected"><a >취소/교환/반품문의<span class="bar"></span></a></li>
 								</c:otherwise>
 							</c:choose>
-								<li><a href="<%=request.getContextPath()%>/manager.do?command=manager_product&catd=all">Manager</a></li>
+								<%-- <li><a href="<%=request.getContextPath()%>/manager.do?command=manager_product&catd=all">Manager</a></li> --%>
 							</ul>
 						</div>
-						
 						<%-- board --%>
 						<div class="ec-base-table typeList gBorder">
 							<table id="content_table" border="1" summary="">
@@ -155,21 +154,20 @@
 														</div>
 														<p style="padding-right: 20px; text-align: right;" >
 															<c:choose>
-																<c:when test="${sessionVo.acc_id eq list.qna_acc_id && list.qna_re_yn eq 'N'}">
+																<c:when test="${vo.acc_id eq list.qna_acc_id && list.qna_re_yn eq 'N'}">
 																	<input class="btnEmFix" type="button" value="수정" onclick="location.href='qna.do?command=qna_updateform&qna_no=${list.qna_no}'">
 																	<input class="btnEmFix" type="button" value="삭제" onclick="location.href='qna.do?command=qna_delete&qna_no=${list.qna_no}'">
 																</c:when>
 															</c:choose>
-																
-															<c:choose>
-																<c:when test="${sessionVo.acc_id eq 'm1' && list.qna_re_yn eq 'Y'}">
+																												<c:choose>
+																<c:when test="${vo.acc_id eq 'm1' && list.qna_re_yn eq 'Y'}">
 																	<input class="btnEmFix" type="button" value="답글수정" onclick="location.href='qna.do?command=qna_answerupdateform&qna_no=${list.qna_no}'">
 																	<input class="btnEmFix" type="button" value="삭제" onclick="location.href='qna.do?command=qna_delete&qna_no=${list.qna_no}'">
 																</c:when>
 															</c:choose>
 															
 															<c:choose>
-																<c:when test="${sessionVo.acc_id eq 'm1' && list.qna_re_yn eq 'N'}">
+																<c:when test="${vo.acc_id eq 'm1' && list.qna_re_yn eq 'N'}">
 																	<input class="btnEmFix" type="button" value="답글" onclick="location.href='qna.do?command=qna_answerwriteform&qna_pno=${list.qna_no}'">
 																</c:when>
 															</c:choose>
@@ -183,9 +181,15 @@
 							</table>
 						</div>
 					</div>
-					<div style="text-align: right;">
-						<input class="btnEmFix" type="button" value="글쓰기" onclick="location.href='qna.do?command=qna_writeform'">
-					</div>
+							
+					<c:choose>
+						<c:when test="${not empty vo}">
+							<div style="text-align: right;">
+								<input class="btnEmFix" type="button" value="글쓰기" onclick="location.href='qna.do?command=qna_writeform'">
+							</div>
+						</c:when>
+					</c:choose> 
+					
 					<%-- paging --%>
 					<jsp:include page="/RECOREMain/RECORECommunity/qna_manager/qna/qna_paging.jsp">
 					    <jsp:param value="${paging.page}" name="page"/>
@@ -215,7 +219,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-2"></div>
+			<div class="col-md-2 col-xs-0"></div>
 		</section>
 	</section>
 

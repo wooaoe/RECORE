@@ -5,6 +5,7 @@ import java.util.List;
 import com.mvc.vo.Vo_Funding;
 import com.mvc.vo.Vo_Funding_Payment;
 
+
 public interface FundingDao {
 
 	public List<Vo_Funding> F_selectAll(); //펀딩 내역 전체 조회
@@ -19,5 +20,5 @@ public interface FundingDao {
 	
 	
 	public boolean F_delete(int fseq);//삭제기능(테스트용)
-
+	
 }

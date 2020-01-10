@@ -47,6 +47,9 @@
 						<input type="hidden" name="command" value="qna_write"> 
 						<input type="hidden" name="writer" value="${sessionVo.acc_no }">
 						<input type="hidden" name="qna_front_img" id="qna_front_img" value="">
+						<input type="hidden" name="qna_seq_no" id="qna_seq_no" value="0">
+						
+						
 						<div class="xans-element- xans-board xans-board-write-4 xans-board-write xans-board-4">
 							<div class="ec-base-box typeProduct">
 								<p class="thumbnail">
@@ -145,7 +148,22 @@ nhn.husky.EZCreator.createInIFrame({
 <%-- submit --%>
 $(function(){
 	$("#save").click(function(){
-	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		var title =  document.getElementsByName("title")[0].value;
+	    var content = document.getElementById("content").value;
+	    
+	    if( title == ""  || title == null || title == '&nbsp;' || title == '<p>&nbsp;</p>' || typeof title == "undefined")  {
+            alert("제목을 입력하세요.");
+            document.getElementsByName("title")[0].focus(); //포커싱
+            return;
+       	}
+	    if( content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || content=='<p><br></p>')  {
+            alert("내용을 입력하세요.");
+            oEditors.getById["content"].exec("FOCUS"); //포커싱
+            return;
+       	}
+	  
 	    $("#boardWriteForm").submit();
 	});  
 })

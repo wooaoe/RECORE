@@ -238,15 +238,15 @@ public class CommunityDaoImpl implements CommunityDao{
 			prop.load(new FileInputStream(filePath));
 			String sql = prop.getProperty("qna_insert");
 			//(catd_no, sessionVo.getAcc_no(), qna_front_img, qna_title, qna_content, sessionVo.getAcc_id());
-			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,?,0,?,?,?,?,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
-			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,catdno,0,accno,qnafrontimg,title,content,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
-			
+			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,?,?,?,?,?,?,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
+			System.out.println("??????"+qnaVo.getQna_seq_no());
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, qnaVo.getCatd_no());
-			pstmt.setInt(2,qnaVo.getQna_acc_no());
-			pstmt.setString(3, qnaVo.getQna_front_img());
-			pstmt.setString(4, qnaVo.getQna_title());
-			pstmt.setString(5, qnaVo.getQna_content());
+			pstmt.setInt(2, qnaVo.getQna_seq_no());
+			pstmt.setInt(3,qnaVo.getQna_acc_no());
+			pstmt.setString(4, qnaVo.getQna_front_img());
+			pstmt.setString(5, qnaVo.getQna_title());
+			pstmt.setString(6, qnaVo.getQna_content());
 			
 			res = pstmt.executeUpdate();
 			
