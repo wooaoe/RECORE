@@ -44,6 +44,7 @@
 						<input type="hidden" name="command" value="qna_answerupdate"> 
 						<input type="hidden" name="qna_no" value="${qnaVo.qna_no }">
 						<input type="hidden" name="writer" value="${sessionVo.acc_no }">
+						<input type="hidden" name="title" value="${qnaVo.qna_title }">
 						<div class="xans-element- xans-board xans-board-write-4 xans-board-write xans-board-4">
 							<div class="ec-base-table typeWrite ">
 								<table summary="">
@@ -55,7 +56,7 @@
 									<tbody>
 										<tr>
 											<th>제목</th>
-											<td><input name="title" type="text" class="inputTypeText" style="width: 100%; height: 28px;" value="${qnaVo.qna_title }"></td>
+											<td><input type="text" class="inputTypeText" style="width: 100%; height: 28px;" value="${qnaVo.qna_title }" disabled="disabled"></td>
 										</tr>
 										<tr>
 											<th>작성자</th>
@@ -118,6 +119,7 @@ nhn.husky.EZCreator.createInIFrame({
 $(function(){
 	$("#save").click(function(){
 	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	    
 	    $("#boardWriteForm").submit();
 	});  
 })

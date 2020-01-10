@@ -62,21 +62,21 @@
               	
               	<!-- 로그인 안되어있을 때  -->
                 <c:if test="${empty vo }">
-                <a href="Account_Controller.do?command=loginpage" class="d-flex align-items-center">
+                <a href="<%=request.getContextPath()%>/Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                  <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
                  </a>
-                  <a href="Account_Controller.do?command=signuppage" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/Account_Controller.do?command=signuppage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
                   <br>
-                  <a href="Account_Controller.do?command=loginpage" class="d-flex align-items-center">
+                  <a href="<%=request.getContextPath()%>/Account_Controller.do?command=loginpage" class="d-flex align-items-center">
                   <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
-                 <a href = "Account_Controller.do?command=loginpage">
+                 <a href = "<%=request.getContextPath()%>/Account_Controller.do?command=loginpage">
                   <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/></a>
                  </c:if>
                  
                  <!-- 로그인 되어있을 때 -->
                   <c:if test="${!empty vo }">
-    				<a href="Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<a href="<%=request.getContextPath()%>/Account_Controller.do?command=logout" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
     				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
     				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;</span></a>

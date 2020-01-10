@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 import com.oreilly.servlet.MultipartRequest;
@@ -146,9 +146,7 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
-			
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout.jsp", request, response);
-
 			
 		} else if(command.equals("cartOrder")) {
 			
@@ -156,11 +154,9 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("컨트롤러의  tmp : " + tmp);
 			
 			String[] arr_order = tmp.split(",");
-			int[] castArr_order = Arrays.stream(arr_order).sorted().mapToInt(Integer::parseInt).toArray();
 			
 			System.out.println("컨트롤러의 arr_order[0] : " + arr_order[0]);
 			System.out.println("컨트롤러의 arr_order[1] : " + arr_order[1]);
-			System.out.println("컨트롤러의 castArr_order[1] : " + castArr_order);
 			
 			String tmp2[] = tmp.split(",");
 			String id[] = new String[tmp2.length / 2];
@@ -192,10 +188,7 @@ public class Product_Controller extends HttpServlet {
 				System.out.println("prod_amount[" + i + "] : " + amount[i]);
 			}
 			
-			int[] castprod_id = Arrays.stream(id).sorted().mapToInt(Integer::parseInt).toArray();
-			int[] castprod_amount = Arrays.stream(amount).sorted().mapToInt(Integer::parseInt).toArray();
-			
-			Map map = dao.option_selectAll(castprod_id);
+			Map map = dao.option_selectAll(id);
 			List polist = (List)map.get("polist");
 			List plist = (List)map.get("plist");
 			
@@ -205,18 +198,101 @@ public class Product_Controller extends HttpServlet {
 			request.setAttribute("polist", polist);
 			request.setAttribute("plist", plist);
 			
-			request.setAttribute("prod_amount", castprod_amount);
+			request.setAttribute("prod_amount", amount);
+			System.out.println("컨트롤러의 prod_amount: " + amount[0]);
 		
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout2.jsp", request, response);
 			
 			
-		} else if(command.equals("kakaopayCall")) {
-
-			response.sendRedirect("kakaopay2.jsp");
-
-		} else if(command.equals("complete")) {
+		} else if(command.equals("kakaopaycall")) {
 			
-			response.sendRedirect("/RECOREMain/RECOREProduct/afterOrder_page.jsp");
+			response.sendRedirect("./RECOREMain/RECOREProduct/kakaopay2.jsp");
+			
+		} else if(command.equals("payComplete")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("컨트롤러 pseq : " + pseq);
+			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+			System.out.println("컨트롤러 prod_id : " + prod_id);
+			int amount = Integer.parseInt(request.getParameter("prod_amount"));
+			System.out.println("컨트롤러 prod_amount : " + amount);
+			int total = Integer.parseInt(request.getParameter("prod_total"));
+			System.out.println("컨트롤러 prod_total : " + total);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			boolean onum = dao.O_insert(prod_id, total, acc, amount);
+			
+			if(onum) {
+				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
+			}else {
+				
+				jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq, response);
+			}
+			
+			
+		} else if(command.equals("cartComplete")) {
+			
+			String tmp = request.getParameter("Arr_order");
+			System.out.println("컨트롤러의  tmp : " + tmp);
+			
+			String tmp2[] = tmp.split(",");
+			String id[] = new String[tmp2.length / 2];
+			String amount[] = new String[tmp2.length / 2];
+			
+			int j = 0;
+			for (int i = 0; i < id.length; i++) {
+				if (j == 0) {
+					id[i] = tmp2[j];
+				}
+				if (j % 2 == 0) {
+					id[i] = tmp2[j];
+				}
+				j += 2;
+			}
+			
+			int k = 1;
+			for (int i = 0; i < amount.length; i++) {
+				if (k % 2 == 1) {
+					amount[i] = tmp2[k];
+				}
+				k += 2;
+			}
+			
+			for (int i = 0; i < id.length; i++) {
+				System.out.println("prod_id[" + i + "] : " + id[i]);
+			}
+			for (int i = 0; i < amount.length; i++) {
+				System.out.println("prod_amount[" + i + "] : " + amount[i]);
+			}
+			
+			Map map = dao.option_selectAll(id);
+			List polist = (List)map.get("polist");
+			List plist = (List)map.get("plist");
+			
+			System.out.println("컨트롤러의 polist : " + polist.get(1));
+			System.out.println("컨트롤러의 plist : " + plist.get(1));
+			
+			request.setAttribute("polist", polist);
+			request.setAttribute("plist", plist);
+			
+			request.setAttribute("prod_amount", amount);
+			System.out.println("컨트롤러의 prod_amount: " + amount[0]);
+			request.setAttribute("prod_id", id);
+			System.out.println("컨트롤러의 prod_id: " + id[0]);
+			
+			int total = Integer.parseInt(request.getParameter("prod_total"));
+			System.out.println("컨트롤러 prod_total : " + total);
+			
+			boolean onum = dao.O_insert(id, total, acc, amount);
+			
+			if(onum) {
+				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
+			}else {
+				
+				jsResponse("결제에 실패했습니다!", "Product.do?command=cartOrder&Arr_order=" + tmp, response);
+			}
 			
 		} else if (command.equals("insertCart")) {
 

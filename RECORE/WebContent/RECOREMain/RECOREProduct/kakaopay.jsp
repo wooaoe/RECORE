@@ -46,11 +46,11 @@
 	}
 </script>
 <script type="text/javascript">
-	$(document).ready(function(){
+/* 	$(document).ready(function(){
 	$("#request").click(function(){
-		location.href = "kakaopay2.jsp";
+		location.href = "../../Product.do?command=kakaopaycall";
 	});
-	})
+	}) */
 	</script>    
 
 </head>
@@ -76,7 +76,8 @@
 						<strong class="logo_pay"><img src="//t1.daumcdn.net/kakaopay/tesla/20181010/pg_web/images/logo_pay.png" class="img_g" alt="카카오페이"></strong>
 						<p class="desc_payask">결제요청 메시지 전송을 위해<br>아래 정보를 입력해주세요.</p>
 						
-						<form id="userPost" method="post" action="Produc.do">
+						<form id="userPost" method="post" action="../../Product.do">
+						<input type = "hidden" name = "command" value = "kakaopaycall"/>
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>
 								<ul class="list_payask">
@@ -101,7 +102,7 @@
 									</li>
 								</ul>
 
-								<button type="button" id = "request" class="btn_payask">결제요청</button>
+								<button type="submit" id = "request" class="btn_payask">결제요청</button>
 								
 							</fieldset>
 						</form>

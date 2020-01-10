@@ -121,7 +121,14 @@ nhn.husky.EZCreator.createInIFrame({
 $(function(){
 	$("#save").click(function(){
 	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	    $("#boardWriteForm").submit();
+	    var content = document.getElementById("content").value
+	    if( content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || content=='<p><br></p>')  {
+            alert("내용을 입력하세요.");
+            oEditors.getById["content"].exec("FOCUS"); //포커싱
+            return;
+       	}
+	    
+	   $("#boardWriteForm").submit();
 	});  
 })
 </script>

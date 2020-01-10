@@ -13,8 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order;
+import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 import com.mvc.vo.Vo_Review;
@@ -40,20 +43,9 @@ public class ProductDaoImp implements ProductDao {
 
 			while (rs.next()) {
 
-				Vo_Product tmp = new Vo_Product(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getString(3), 
-						rs.getString(4),
-						rs.getString(5), 
-						rs.getString(6), 
-						rs.getInt(7), 
-						rs.getString(8), 
-						rs.getInt(9), 
-						rs.getString(10),
-						rs.getDouble(11), 
-						rs.getDate(12), 
-						rs.getString(13));
+				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				plist.add(tmp);
 				System.out.println("product All : " + plist);
@@ -89,20 +81,9 @@ public class ProductDaoImp implements ProductDao {
 
 			while (rs.next()) {
 
-				Vo_Product tmp = new Vo_Product(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getString(3), 
-						rs.getString(4),
-						rs.getString(5), 
-						rs.getString(6), 
-						rs.getInt(7), 
-						rs.getString(8), 
-						rs.getInt(9), 
-						rs.getString(10),
-						rs.getDouble(11), 
-						rs.getDate(12), 
-						rs.getString(13));
+				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				toplist.add(tmp);
 				System.out.println("toplist : " + toplist);
@@ -119,7 +100,7 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public Map option_selectAll(int []castprod_id) {
+	public Map option_selectAll(String prod_id[]) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
@@ -135,37 +116,21 @@ public class ProductDaoImp implements ProductDao {
 		try {
 
 			pstm = con.prepareStatement(sql);
-			for (int i = 0; i < castprod_id.length; i++) {
-				pstm.setInt(1, castprod_id[i]);
+			for (int i = 0; i < prod_id.length; i++) {
+				pstm.setString(1, prod_id[i]);
 				rs = pstm.executeQuery();
 
 				while (rs.next()) {
-					povo = new Vo_Prod_option(
-							rs.getInt(1), 
-							rs.getInt(2), 
-							rs.getString(3), 
-							rs.getString(4),
+					povo = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
 							rs.getInt(5));
 
 					polist.add(povo);
-					
-					pvo = new Vo_Product(
-							rs.getInt(1), 
-							rs.getInt(6), 
-							rs.getString(7), 
-							rs.getString(8),
-							rs.getString(9),
-							rs.getString(10),
-							rs.getInt(11),
-							rs.getString(12),
-							rs.getInt(13),
-							rs.getString(14),
-							rs.getDouble(15),
-							rs.getDate(16),
-							rs.getString(17)
-							);
-					
-					plist.add(pvo);		
+
+					pvo = new Vo_Product(rs.getInt(1), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),
+							rs.getString(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),
+							rs.getDouble(15), rs.getDate(16), rs.getString(17));
+
+					plist.add(pvo);
 				}
 				System.out.println("imp polist : " + polist);
 				System.out.println("imp plist : " + plist);
@@ -173,7 +138,7 @@ public class ProductDaoImp implements ProductDao {
 			}
 			map.put("polist", polist);
 			map.put("plist", plist);
-		
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -203,20 +168,9 @@ public class ProductDaoImp implements ProductDao {
 			System.out.println("parent 쿼리 실행 : " + sql);
 
 			while (rs.next()) {
-				Vo_Product tmp = new Vo_Product(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getString(3), 
-						rs.getString(4),
-						rs.getString(5), 
-						rs.getString(6), 
-						rs.getInt(7), 
-						rs.getString(8), 
-						rs.getInt(9), 
-						rs.getString(10),
-						rs.getDouble(11), 
-						rs.getDate(12), 
-						rs.getString(13));
+				Vo_Product tmp = new Vo_Product(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getString(10),
+						rs.getDouble(11), rs.getDate(12), rs.getString(13));
 
 				prntlist.add(tmp);
 				System.out.println("parent 쿼리 실행 값 : " + prntlist);
@@ -573,29 +527,64 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public boolean O_insert(Vo_Prod_option povo, Vo_Product prod) {
+	public boolean O_insert(int prod_id, int price, Vo_Account acc, int amount) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res = 0;
 
-		String sql = "INSERT INTO PROD_ORDER VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, ORDER_TNO.NEXTVAL, ?)";
+		String sql = "INSERT INTO PROD_ORDER VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, 0, ?, N)";
+		String sql2 = "INSERT INTO ORDER_NUM VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
 
 		try {
 
 			pstm = con.prepareStatement(sql);
-			pstm.setInt(1, povo.getProd_id());
-			pstm.setInt(2, povo.getProd_stock());
-			pstm.setInt(3, prod.getProd_price());
-			pstm.setString(4, "입금 전");
+			pstm.setInt(1, prod_id);
+			pstm.setInt(2, amount);
+			pstm.setInt(3, price);
+			pstm.setString(4, "입금 완료");
+
+			res = pstm.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return false;
+		try {
+			pstm = con.prepareStatement(sql2);
+			pstm.setInt(1, acc.getAcc_no());
+			pstm.setString(2, acc.getAcc_zipcode());
+			pstm.setString(3, acc.getAcc_addr());
+			pstm.setString(4, acc.getAcc_addr2());
+			pstm.setInt(5, price);
+
+			if (res > 0) {
+				commit(con);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstm, con);
+		}
+
+		return res > 0 ? true : false;
 	}
 
+	@Override
+	public boolean O_insert(String[] prod_id, int price, Vo_Account acc, String[] prod_amount) {
+
+		
+		
+		
+		return false;
+	}
+	
+	
 	@Override
 	public boolean P_insertCart(int acc_no, int prod_id, int amount) {
 
@@ -608,7 +597,7 @@ public class ProductDaoImp implements ProductDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acc_no);
 			pstmt.setInt(2, prod_id);
-			pstmt.setInt(3, amount); // wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
+			pstmt.setInt(3, amount); 
 			res = pstmt.executeUpdate();
 
 			if (res > 0) {
@@ -730,5 +719,6 @@ public class ProductDaoImp implements ProductDao {
 
 		return (res > 0) ? true : false;
 	}
+
 
 }

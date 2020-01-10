@@ -98,6 +98,9 @@
 		padding-top: 10px;
 		padding-bottom: 50px;
 		}
+		html{
+		scroll-behavior: smooth;
+		}
 	
 	
 	</style>    
@@ -125,7 +128,8 @@
     </script>
     
   </head>
-  <body>
+  
+  <body id = "body">
   
   
 	<!-- header -->
@@ -141,7 +145,6 @@
     	<div class="text-muted" style="font-size: 10pt;"></div>
     	</div>
     	<h1  style="margin-top:5rem; font-size: 3rem; text-align: center; padding-bottom: 60px" >${funding_vo.fund_title }</h1>
-    	<!--  div style="text-align: right; padding-right: 17%; padding-top: 30px; padding-bottom: 20px">${funding_vo.fund_regdate }</div-->
     </div>
 
 
@@ -165,7 +168,19 @@
 	<div class="state-box" >
 	 	
  		<div id=deadline >
-<p class="remaining-day"  >${funding_vo.fund_deadline } 펀딩 종료</p></div>
+<p class="remaining-day"  >
+<script>
+
+var dt = "${funding_vo.fund_deadline}";
+var year =dt.getFullYear();
+var month =dt.getMonth();
+var day =dt.today.toLocaleDateString();
+console.log(year);
+console.log(month);
+console.log(day);
+
+</script>
+${funding_vo.fund_deadline } 까지 </p></div>
 <div id="countDay">
 </div>
 <script>
@@ -179,16 +194,36 @@ var diffTime={
 		s:moment.duration(t1.diff(now)).seconds()
 		
 }
+
 console.log(diffTime.d +"일"+diffTime.h+"시간"+diffTime.m+"분"+diffTime.s+"초");
-document.getElementById("countDay").innerHTML = "펀딩종료까지 " + diffTime.d +"일 " + diffTime.h + "시간 " + diffTime.m + "분 "+diffTime.s+"초 남았습니다.";
+document.getElementById("countDay").innerHTML = "종료까지 " + diffTime.d +"일 " + diffTime.h + "시간 " + diffTime.m + "분 "+diffTime.s+"초 남았습니다.";
+
+if(diffTime.s<0){
+	 clearInterval(x); 
+     document.getElementById("countDay").innerHTML = "해당 펀딩은 종료되었습니다."; 
+}
 
 
 });
+
 </script>
+
+
+
  <!-- <p class="rate-bar"><em style="width:156%"></em></p>      
   <!--  p class="achievement-rate"><strong>156</strong>% 달성</p>-->
-		<div id=target_price> <p class="target_price"><strong>목표금액  ${funding_vo.fund_target_price } 원</strong></p></div>	
-<p class="total-amount"><strong></strong></p>
+  
+		<div id=target_price> <p class="target_price"><strong>
+		<script>
+var nf = ${funding_vo.fund_target_price};
+console.log(nf);
+document.getElementById("target_price").innerHTML = "목표금액: "+ nf.toLocaleString()+" 원";
+
+</script>
+		
+		
+		 </strong></p></div>	
+<p class="total-amount"><strong>현재까지 모금된 금액: </strong></p>
 <p class="total-supporter"><strong></strong></p>
 		<div id=creator> 메이커 정보: 
 	${funding_vo.fund_creator }

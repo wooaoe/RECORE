@@ -1,6 +1,7 @@
 package com.mvc.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.mvc.dao.CommunityDaoImpl;
 import com.mvc.dao.ManagerDaoImpl;
 import com.mvc.vo.Vo_Account;
+import com.mvc.vo.Vo_Manager_Payment;
 import com.mvc.vo.Vo_Manager_ProdOption;
 import com.mvc.vo.Vo_QnA;
 import com.mvc.vo.Vo_QnA_Paging;
@@ -78,31 +82,58 @@ public class Community_Manager_Controller extends HttpServlet {
 			List<Vo_Manager_ProdOption> productList = mdao.P_selectAll(paging, category, searchsubject, keyword); 
 			 request.setAttribute("list", productList);
 			 request.setAttribute("paging", paging); 
-			 request.setAttribute("category",category); 
+			 request.setAttribute("catd",category); 
+			 System.out.println("!!!!!!!!!!!!!!!!!!!!카테고리는!" + category);
 			 request.setAttribute("searchsubject", searchsubject);
 			 request.setAttribute("keyword", keyword);
 				dispatch("/RECOREMain/RECORECommunity/qna_manager/manager/manager_product.jsp",request, response);
+			 
+		}else if(command.equals("manager_stock_in")) {
 
-				/*
-			if(isEmpty(sessionVo)) {
-				System.out.println("비로그인.");
-				response.sendRedirect("index.jsp");
-			}else {
-				if(sessionVo.getAcc_m_c().equals("M")) {
-					System.out.println("관리자계정");
-					dispatch("/RECOREMain/RECORECommunity/qna_manager/manager/manager_product.jsp",request, response);
-				}else {
-					System.out.println("유저계정");
-					response.sendRedirect("index.jsp");
-				}
-			}
-*/
+			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+			int stock = Integer.parseInt(request.getParameter("stock"));
 			
-			 
-			  
-			 //Redirect dispatch Method Call 
-			 //dispatch("/RECOREMain/RECORECommunity/qna_manager/manager/manager_product.jsp",request, response);
-			 
+			/*stock update*/
+			boolean res = mdao.P_update_In(prod_id, stock);
+			
+			/*select product option vo*/
+			Vo_Manager_ProdOption productOptionVo = mdao.P_selectOne(prod_id);
+			
+			/*create payment vo*/
+			Vo_Manager_Payment paymentVo = new Vo_Manager_Payment(productOptionVo.getProd_id(), 1, "I", stock);
+			boolean payment_res = mdao.M_insert(paymentVo);
+			
+			/*Ajax Code*/
+			JSONObject obj = new JSONObject();
+			obj.put("prod_stock", productOptionVo.getProd_stock());
+			obj.put("prod_id", prod_id);
+			PrintWriter out = response.getWriter();
+			out.println(obj.toJSONString());
+			System.out.println("obj.toJSONString = servlet에서 보내는 데이터: "+obj.toJSONString());
+			
+
+		}else if(command.equals("manager_stock_out")) {
+			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+			int stock = Integer.parseInt(request.getParameter("stock"));
+
+			/*stock update*/
+			boolean update_res = mdao.P_update_Out(prod_id, stock); 
+			
+			/*select product option vo*/
+			Vo_Manager_ProdOption productOptionVo = mdao.P_selectOne(prod_id);
+			
+			/*create payment vo*/
+			Vo_Manager_Payment paymentVo = new Vo_Manager_Payment(productOptionVo.getProd_id(), 1, "O", stock);
+			boolean payment_res = mdao.M_insert(paymentVo);
+			
+			/*Ajax Code*/
+			JSONObject obj = new JSONObject();
+			obj.put("prod_stock", productOptionVo.getProd_stock());
+			obj.put("prod_id", prod_id);
+			PrintWriter out = response.getWriter();
+			out.println(obj.toJSONString());
+			System.out.println("obj.toJSONString = servlet에서 보내는 데이터: "+obj.toJSONString());
+			
 		}
 
 	}
@@ -115,12 +146,8 @@ public class Community_Manager_Controller extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	private  boolean isEmpty(Object s) {
-		if (s == null) {
-			return true; 
-		}
-		return false;
-	}
+	
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

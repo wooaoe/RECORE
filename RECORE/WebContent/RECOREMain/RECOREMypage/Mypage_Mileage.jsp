@@ -72,18 +72,58 @@
   #left{
   	text-align: center;
   }
+  
+  .path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    *zoom: 1;
+	}
+	.path span {
+	    overflow: hidden;
+	    position: absolute;
+	    width: 0;
+	    height: 0;
+	    white-space: nowrap;
+	    text-indent: 100%;
+	}
+	.path ol {
+	    float: right;
+	}
+	.path li:first-child {
+	    background: none;
+	}
+	.path li {
+	    float: left;
+	    padding: 0 0 0 12px;
+	    margin: 0 0 0 8px;
+	    color: #757575;
+	    background: url(//img.echosting.cafe24.com/skin/base/layout/ico_path.gif) no-repeat 0 10px;
+	}
+	li {
+	    list-style: none;
+	}
+	.path li a {
+	    color: #757575;
+	}
+	.path li strong, .path li strong a {
+	    color: #2e2e2e;
+	}
+  	html{
+  	scroll-behavior : smooth;
+ 	}
+  
   </style>
 
 <script type="text/javascript">
-	function pageMove(pageNo){
-		alert(pageNo);
+	function pageMove(pageNo){ //페이징
 		location.href = "mypage.do?command=mileage&pageno="+pageNo;
 	}
 </script>
 
 </head>
-<body id="main">
-<%
+<body id="body">
+<%	/* 총 사용 포인트 */
 	int acc_point = (int)request.getAttribute("acc_point");
 	List<Vo_Order_Num> list_order = (List<Vo_Order_Num>)request.getAttribute("list_order");
 	int sum_point = 0;
@@ -101,14 +141,14 @@
 	    <div id="container">
 	        <div id="content" style="margin-top: 100px;">
 	        	
-	        	<!-- <div class="path">
+	        	<div class="path">
 				    <span>현재 위치</span>
 				    <ol>
-				    	<li><a href="/">홈</a></li>
+				    	<li><a href="issue.do?command=main">홈</a></li>
 				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
 				        <li title="현재 위치"><strong>적립금</strong></li>
 				    </ol>
-				</div> -->
+				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-mileagehistorypackage ">
 					<div class="xans-element- xans-myshop xans-myshop-head titleArea ">
@@ -129,14 +169,14 @@
 				            <li class="">
 								<strong class="title">미가용 적립금</strong> <span class="data"><span id="xans_myshop_summary_unavail_mileage">0원</span>&nbsp;</span>
 							</li>
-				            <li class="">
+				            <!-- <li class="">
 								<strong class="title">환불예정 적립금</strong> <span class="data"><span id="xans_myshop_summary_returned_mileage">0원</span>&nbsp;</span>
-							</li>
+							</li> -->
 	        			</ul>
 					</div>
 					<div class="ec-base-tab">
 	        			<ul class="menu">
-							<li class="selected"><a href="/myshop/mileage/historyList.html">적립내역보기</a></li>
+							<li class="selected"><a href="mypage.do?command=mileage&pageno=1">적립내역보기</a></li>
 				            <!-- <li><a href="/myshop/mileage/unavailList.html">미가용적립내역보기</a></li>
 				            <li><a href="/myshop/mileage/couponList.html">미가용쿠폰/회원등급적립내역</a></li> -->
 				        </ul>
@@ -159,26 +199,27 @@
 				                        <th scope="col">&nbsp;&nbsp;내용</th>
 			               		    </tr>
 		               		    </thead>
-								<!-- <tbody class="displaynone center"> -->
 								<tbody class="center">
 								<c:if test="${null eq list_order}">
 									<p class="message ">적립금 내역이 없습니다.</p>
 								</c:if>
 								<c:if test="${null ne list_order}">
-								<c:if test="${order.order_point ne 0}">
-								<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
-									<tr class="">
-										<td>${order.order_date}</td>
-				                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
-				                        <td>${order.order_no}</td>
-				                        <td class="left" id="left">사용</td>
-				                    </tr>
-				                </c:forEach>
-				                </c:if>
+									<c:forEach var="order" items="${list_order}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
+										<tr class="">
+											<td>${order.order_date}</td>
+					                        <td class="right"><fmt:formatNumber value="${order.order_point}" groupingUsed="true"></fmt:formatNumber></td>
+					                        <td>${order.order_no}</td>
+											<c:if test="${order.order_point ne 0}">
+						                        <td class="left" id="left">사용</td>
+							                </c:if>
+											<c:if test="${order.order_point eq 0}">
+						                        <td class="left" id="left">미사용</td>
+							                </c:if>
+					                    </tr>
+					                </c:forEach>
 								</c:if>
 								</tbody>
 							</table>
-							<!-- <p class="message ">적립금 내역이 없습니다.</p> -->
 	        			</div>
 					</div>
 				</div>

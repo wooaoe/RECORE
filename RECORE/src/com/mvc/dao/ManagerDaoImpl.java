@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.mvc.vo.Vo_Manager_Payment;
 import com.mvc.vo.Vo_Manager_ProdOption;
 import com.mvc.vo.Vo_QnA_Paging;
+import com.sun.org.apache.regexp.internal.RE;
 
 import static common.JDBCTemplate.*;
 
@@ -32,8 +33,38 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	@Override
 	public boolean M_insert(Vo_Manager_Payment mp) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		Properties prop = new Properties();
+		String filePath = properties("query_community.properties");
+		int res = 0;
+		
+		try {
+			prop.load(new FileInputStream(filePath));
+			//INSERT INTO P_PM VALUES(PPM_SEQ.NEXTVAL,1000,1,'O',1,SYSDATE,NULL);
+
+			String sql = prop.getProperty("manger_p_pm_in");
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, mp.getProd_id());
+			pstmt.setInt(2, mp.getAcc_no());
+			pstmt.setString(3, mp.getPpm_io());
+			pstmt.setInt(4, mp.getPpm_amount());
+			
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt, con);
+		}
+		
+		return (res>0)? true:false;
 	}
 
 	@Override
@@ -243,6 +274,115 @@ public class ManagerDaoImpl implements ManagerDao {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public boolean P_update_In(int prod_id, int stock) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		Properties prop = new Properties();
+		String filePath = properties("query_community.properties");
+		int res = 0;
+		
+		try {
+			prop.load(new FileInputStream(filePath));
+			String sql = prop.getProperty("manager_prod_option_in")+stock+" WHERE PROD_ID = ?";
+			//String sql = "UPDATE PROD_OPTION SET PROD_STOCK = PROD_STOCK + 1";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, prod_id);
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt, con);
+		}
+		
+		
+		return (res>0)? true:false;
+	}
+
+	@Override
+	public boolean P_update_Out(int prod_id, int stock) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		Properties prop = new Properties();
+		String filePath = properties("query_community.properties");
+		int res = 0;
+		
+		try {
+			prop.load(new FileInputStream(filePath));
+			String sql = prop.getProperty("manager_prod_option_out")+stock+" WHERE PROD_ID = ?";
+			//String sql = "UPDATE PROD_OPTION SET PROD_STOCK = PROD_STOCK + 1";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, prod_id);
+			res = pstmt.executeUpdate();
+			
+			if(res>0) {
+				commit(con);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt, con);
+		}
+		
+		
+		return (res>0)? true:false;
+	}
+
+	@Override
+	public Vo_Manager_ProdOption P_selectOne(int prod_id) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		Properties prop = new Properties();
+		String filePath = properties("query_community.properties");
+		ResultSet rs = null;
+		
+		Vo_Manager_ProdOption res = new Vo_Manager_ProdOption();
+		
+		try {
+			prop.load(new FileInputStream(filePath));
+			String sql = "SELECT P.PROD_NAME, P.CATD_NO, O.* FROM PROD_OPTION O JOIN PRODUCT P ON(O.PROD_NO=P.PROD_NO) WHERE PROD_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, prod_id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				res.setProd_name(rs.getString(1));
+				res.setCatd_no(rs.getInt(2));
+				res.setProd_no(rs.getInt(3));
+				res.setProd_id(rs.getInt(4));
+				res.setProd_color(rs.getString(5));
+				res.setProd_size(rs.getString(6));
+				res.setProd_stock(rs.getInt(7));
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			close(rs, pstmt, con);
+			
 		}
 		
 		return res;

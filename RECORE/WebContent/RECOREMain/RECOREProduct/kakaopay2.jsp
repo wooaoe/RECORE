@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ page import = "com.mvc.vo.Vo_Product" %>
+    <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+    <%@ page import="com.mvc.vo.Vo_Account"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,26 +22,33 @@
 
 <script src="/dist/js/v2/min_web_waiting.js?v=99"></script>
 
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo");%>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo");%>
+	
  <script type="text/javascript">
 	$(document).ready(function(){
-		$("#complete").click(function(){
-			opener.location.href = "Product.do?command=complete";
+		<%-- $("#complete").click(function(){
+			var prod_no = <%=pvo.getProd_no()%>
+			alert(prod_no);
+			
+			opener.location.href = "../../Product.do?command=payComplete&pseq=" + prod_no; 
 			window.close();
-		});
-	});
+		}); --%>
 	$("#close").click(function(){
 		var result = confirm('카카오페이 결제를 취소하시겠습니까?');
 		if(result) { 
 			alert("취소 되었습니다.");
 			self.close();
 		} else { 
+			
 		}
 	});
+	});
+	
 </script>
 
 </head>
 <body>
-
 
 		<div class="kakaopay_layer">
 		<span class="dimmed_layer loading_layer" style="display:none"></span>
@@ -46,8 +57,9 @@
 			<div class="layer_head">
 				<strong class="img_pay logo_kakaopay">kakaopay</strong>
 			</div>
-			<form action="Product.do"> 
-			<input type = "hidden" name = "command" value = "complete"/>
+			<form action="../../Product.do"> 
+			<input type = "hidden" name = "command" value = "payComplete"/>
+			<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
 			<div class="layer_body">
 					<fieldset>
 						<legend class="screen_out">휴대폰 번호 및 생년월일 입력</legend>
@@ -56,25 +68,14 @@
 							<li><em class="emph_num">2</em><em class="emph_info">하단의 <span>결제</span> 완료 버튼</em>을 눌러주세요.</li>
 						</ol>
 						<div class="area_btn">
-							<button type="button" class="btn_submit" 
+							<button type="submit" class="btn_submit" 
 							id = "complete" onclick = "javascript: afterorder();">결제 완료</button>
-							
-							
-							
 						</div>
 					</fieldset>
 			</div>
 			</form>
-			<script type="text/javascript">
-				function afterorder(){
-					
-				}
-			
-			
-			</script>
-			
 			<div class="layer_foot">
-				<button class="btn_close"><span class="img_pay" id = "close">닫기</span></button>
+				<button type = "button" class="btn_close"><span class="img_pay" id = "close">닫기</span></button>
 			</div>
 		</div>
 	</div>

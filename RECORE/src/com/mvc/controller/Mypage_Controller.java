@@ -53,62 +53,97 @@ public class Mypage_Controller extends HttpServlet {
       
       if(command.equals("main")){ //main
          List list = (List)map.get("list_order");
-         System.out.println("main에 넘어갈 사이즈 : "+list.size());
          request.setAttribute("list_order", map.get("list_order"));
          dispatch("./RECOREMain/RECOREMypage/Mypage_Main.jsp", request, response);
          
-        }else if(command.equals("orderlist")) { //주문내역조회
-//         System.out.println(map.get("list_order"));
-         List list = (List)map.get("list_order");
-         System.out.println("orderlist 사이즈가??" + list.size());
-         int pageNo = Integer.parseInt(request.getParameter("pageno"));
-         System.out.println("pageNo : " + pageNo);
-         
-         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
-         paging.setPageNo(pageNo);
-         paging.setTotalCount(list.size());
-
-         System.out.println("paging vo의 startpage : " + paging.getStartPage());
-         System.out.println("paging vo의 endpage : " + paging.getEndPage());
-         
-         if(list.isEmpty()) {
-            response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
-         }else {
-            request.setAttribute("list_order", map.get("list_order"));
-            request.setAttribute("page", paging);
-            dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
+      }else if(command.equals("orderlist")) { //주문내역조회
+         if(vo.getAcc_no() == 1) { //관리자 계정일 때
+            List list_order = mdao.selectAllOrder();
+            int pageNo = Integer.parseInt(request.getParameter("pageno"));
+            
+            Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
+            paging.setPageNo(pageNo);
+            paging.setTotalCount(list_order.size());
+            
+            if(list_order.isEmpty()) { //주문내역이 없을 경우
+               response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
+            }else { //주문내역이 있을 경우
+               request.setAttribute("list_order", list_order);
+               request.setAttribute("page", paging);
+               dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
+            }
+            
+         }else { //관리자 계정이 아닐 때
+            List list = (List)map.get("list_order");
+            int pageNo = Integer.parseInt(request.getParameter("pageno"));
+            
+            Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
+            paging.setPageNo(pageNo);
+            paging.setTotalCount(list.size());
+            
+            if(list.isEmpty()) { //주문내역이 없을 경우
+               response.sendRedirect("RECOREMain/RECOREMypage/Mypage_OrderList.jsp");
+            }else { //주문내역이 있을 경우
+               request.setAttribute("list_order", map.get("list_order"));
+               request.setAttribute("page", paging);
+               dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList.jsp", request, response);
+            }
          }
          
       }else if(command.equals("orderdetail")) { //주문내역 상세조회
-         int order_no = Integer.parseInt(request.getParameter("order_no"));
-         List list = (List)map.get("list_order");
-         Vo_Order_Num vo_order = null;
-
-         for(int i=0;i<list.size();i++) {
-            Vo_Order_Num tmp = (Vo_Order_Num)list.get(i);
-            if(tmp.getOrder_no() == order_no) {
-               vo_order = tmp;
+         if(vo.getAcc_no() == 1) {//관리자 계정일 때
+            int order_no = Integer.parseInt(request.getParameter("order_no"));
+            List list = mdao.selectAllOrder();
+            Vo_Account vo_acc = null;
+            Vo_Order_Num vo_order = null;
+            
+            for(int i=0;i<list.size();i++) { //order_no와 맞는 olist가져오기
+               Vo_Order_Num tmp = (Vo_Order_Num)list.get(i);
+               vo_acc = mdao.selectAccount(tmp.getAcc_no());
+               if(tmp.getOrder_no() == order_no) {
+                  vo_order = tmp;
+               }
             }
+            List olist = vo_order.getOlist();
+            
+            request.setAttribute("vo_acc", vo_acc);
+            request.setAttribute("vo_order", vo_order);
+            request.setAttribute("vo_olist", olist);
+            
+            dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList_Detail.jsp", request, response);
+            
+         }else { //관리자 계정이 아닐 때
+            int order_no = Integer.parseInt(request.getParameter("order_no"));
+            List list = (List)map.get("list_order");
+            Vo_Account vo_acc = mdao.selectAccount(vo.getAcc_no());
+            Vo_Order_Num vo_order = null;
+            
+            for(int i=0;i<list.size();i++) { //order_no와 맞는 olist가져오기
+               Vo_Order_Num tmp = (Vo_Order_Num)list.get(i);
+               if(tmp.getOrder_no() == order_no) {
+                  vo_order = tmp;
+               }
+            }
+            List olist = vo_order.getOlist();
+            
+            request.setAttribute("vo_acc", vo_acc);
+            request.setAttribute("vo_order", vo_order);
+            request.setAttribute("vo_olist", olist);
+            
+            dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList_Detail.jsp", request, response);
          }
-         List olist = vo_order.getOlist();
-         
-         request.setAttribute("vo_order", vo_order);
-         request.setAttribute("vo_olist", olist);
-         
-         dispatch("./RECOREMain/RECOREMypage/Mypage_OrderList_Detail.jsp", request, response);
          
       }else if(command.equals("updateorder")) { //주문상태 수정
          int order_no = Integer.parseInt(request.getParameter("orderno"));
          int prod_id = Integer.parseInt(request.getParameter("prodid"));
          String status = request.getParameter("status");
-         System.out.println("orderno,prodid,status : " + order_no + ", " + prod_id + ", " + status);
          
          boolean res = mdao.My_updateOrder_Status(order_no, prod_id, status);
          
          if(res) {
-              jsResponse("변경 성공", "mypage.do?command=orderlist&pageno=1", response);
+              jsResponse("변경 성공", "mypage.do?command=orderdetail&order_no="+order_no, response);
           }else {
-              jsResponse("변경 실패", "mypage.do?command=orderlist&pageno=1", response);
+             jsResponse("변경 실패", "mypage.do?command=orderdetail&order_no="+order_no, response);
           }
          
       }else if(command.equals("reviewform")) { //리뷰등록 폼
@@ -130,27 +165,35 @@ public class Mypage_Controller extends HttpServlet {
          
          if(res) {
             mdao.My_updateIsReview(order_no, prod_id);
-              jsResponse("등록 성공", "mypage.do?command=orderdetail&order_no="+order_no, response);
-           }else {
-              jsResponse("등록 실패", "mypage.do?command=reviewform&orderno="+order_no+"&prodid="+prod_id, response);
-           }
+             jsResponse("등록 성공", "mypage.do?command=orderdetail&order_no="+order_no, response);
+         }else {
+             jsResponse("등록 실패", "mypage.do?command=reviewform&orderno="+order_no+"&prodid="+prod_id, response);
+         }
+         
+      }else if(command.equals("managerupdate")) { //관리자가 배송상태로 변경
+         String tno = request.getParameter("tno");
+         int order_no = Integer.parseInt(request.getParameter("orderno"));
+         int prod_id = Integer.parseInt(request.getParameter("prodid"));
+         
+         boolean res = mdao.managerUpdate(order_no, prod_id, tno);
+         
+         if(res) {
+            jsResponse("변경 성공", "mypage.do?command=orderdetail&order_no="+order_no, response);
+          }else {
+             jsResponse("변경 실패", "mypage.do?command=orderdetail&order_no="+order_no, response);
+          }
          
       }else if(command.equals("fundinglist")) { //펀딩내역 조회
-         System.out.println(map.get("list_fun_d"));
           List list = (List)map.get("list_fun_d");
           int pageNo = Integer.parseInt(request.getParameter("pageno"));
-          System.out.println("pageNo : " + pageNo);
           
-          Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+          Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
           paging.setPageNo(pageNo);
           paging.setTotalCount(list.size());
           
-          Vo_Funding_Payment test = (Vo_Funding_Payment)list.get(0);
-          System.out.println("fund_no????? : " + test.getFund_no());
-          
-          if(list.isEmpty()) {
+          if(list.isEmpty()) { //펀딩내역이 없을 경우
              response.sendRedirect("RECOREMain/RECOREMypage/Mypage_FundingList.jsp");
-          }else {
+          }else { //펀딩 내역이 있을 경우
              request.setAttribute("list_fun", map.get("list_fun"));
              request.setAttribute("list_fun_d", map.get("list_fun_d"));
              request.setAttribute("page", paging);
@@ -158,18 +201,16 @@ public class Mypage_Controller extends HttpServlet {
           }
          
       }else if(command.equals("wishlist")) { //위시리스트 조회
-         System.out.println(map.get("list_wish"));
          List list = (List)map.get("list_wish");
          int pageNo = Integer.parseInt(request.getParameter("pageno"));
-         System.out.println("pageNo : " + pageNo);
          
-         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
          paging.setPageNo(pageNo);
          paging.setTotalCount(list.size());
          
-         if(list.isEmpty()) {
+         if(list.isEmpty()) { //위시리스트가 없을 경우
             response.sendRedirect("RECOREMain/RECOREMypage/Mypage_WishList.jsp");
-         }else {
+         }else { //위시리스트가 있을 경우
             request.setAttribute("list_wish", map.get("list_wish"));
             System.out.println("서블릿 map의 wish : " + map.get("list_wish"));
             request.setAttribute("page", paging);
@@ -181,9 +222,9 @@ public class Mypage_Controller extends HttpServlet {
          boolean res = mdao.My_deleteWish_One(vo.getAcc_no(), prod_no);
          
          if(res) {
-            jsResponse("삭제 성공", "mypage.do?command=wishlist", response);
+            jsResponse("삭제 성공", "mypage.do?command=wishlist&pageno=1", response);
          }else {
-            jsResponse("삭제 실패", "mypage.do?command=wishlist", response);
+            jsResponse("삭제 실패", "mypage.do?command=wishlist&pageno=1", response);
          }
          
       }else if(command.equals("deletecheckedwish")) { //위시리스트 상품 선택 삭제
@@ -191,23 +232,24 @@ public class Mypage_Controller extends HttpServlet {
          String[] list_prod_no = prod_no.split(",");
          System.out.println("넘어온 arr" + list_prod_no[0]);
          boolean res = false;
-         for(int i=0;i<list_prod_no.length;i++) {
+         
+         for(int i=0;i<list_prod_no.length;i++) { //선택된 prod_no들 삭제
             res = mdao.My_deleteWish_One(vo.getAcc_no(), Integer.parseInt(list_prod_no[i]));
          }
          
          if(res) {
-            jsResponse("삭제 성공", "mypage.do?command=cartlist", response);
+            jsResponse("삭제 성공", "mypage.do?command=wishlist&pageno=1", response);
          }else {
-            jsResponse("삭제 실패", "mypage.do?command=cartlist", response);
+            jsResponse("삭제 실패", "mypage.do?command=wishlist&pageno=1", response);
          }
          
       }else if(command.equals("deletewishall")) { //위시리스트 상품 전체 삭제
          boolean res = mdao.My_deleteWish_All(vo.getAcc_no());
          
          if(res) {
-            jsResponse("삭제 성공", "mypage.do?command=wishlist", response);
+            jsResponse("삭제 성공", "mypage.do?command=wishlist&pageno=1", response);
          }else {
-            jsResponse("삭제 실패", "mypage.do?command=wishlist", response);
+            jsResponse("삭제 실패", "mypage.do?command=wishlist&pageno=1", response);
          }
          
       }else if(command.equals("mileage")) { //마일리지 조회
@@ -216,35 +258,29 @@ public class Mypage_Controller extends HttpServlet {
          List list = (List)map.get("list_order");
          
          int pageNo = Integer.parseInt(request.getParameter("pageno"));
-         System.out.println("pageNo : " + pageNo);
          
-         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
          paging.setPageNo(pageNo);
          paging.setTotalCount(list.size());
          
          request.setAttribute("page", paging);
-         
-         System.out.println(list.size());
-         dispatch("./RECOREMain/RECOREMypage/Mypage_Mileage2.jsp", request, response);
+         dispatch("./RECOREMain/RECOREMypage/Mypage_Mileage.jsp", request, response);
          
       }else if(command.equals("boardlist")) { //게시글 조회
-        System.out.println("command : " + command);
-        List list = (List)map.get("list_qna");
+         List list = (List)map.get("list_qna");
          int pageNo = Integer.parseInt(request.getParameter("pageno"));
-         System.out.println("pageNo : " + pageNo);
          
-         Vo_Mypage_Paging paging = new Vo_Mypage_Paging();
+         Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
          paging.setPageNo(pageNo);
          paging.setTotalCount(list.size());
         
-        if(list.isEmpty()) {
-           response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp");
-        }else {
-           request.setAttribute("list_qna", map.get("list_qna"));
+         if(list.isEmpty()) { //게시글이 없을 경우
+            response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp");
+         }else { //게시글이 있을 경우
+             request.setAttribute("list_qna", map.get("list_qna"));
              request.setAttribute("page", paging);
-//           System.out.println("서블릿에서 listqna : " + map.get("list_qna"));
-           dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList2.jsp", request, response);
-        }
+             dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp", request, response);
+         }
          
       }else if(command.equals("boarddetail")) { //게시글 상세조회
          int qna_no = Integer.parseInt(request.getParameter("qnano"));
@@ -261,7 +297,6 @@ public class Mypage_Controller extends HttpServlet {
          request.setAttribute("vo_prod", vo_prod);
          request.setAttribute("catd", vo_prod.getProd_catd());
          
-         
          dispatch("./RECOREMain/RECOREMypage/Mypage_Board_Detail.jsp", request, response);
          
       }else if(command.equals("updateboard")) { //게시글 수정form
@@ -276,10 +311,6 @@ public class Mypage_Controller extends HttpServlet {
          String title = request.getParameter("title");
          String content = request.getParameter("content");
          
-         System.out.println("qna_no 잘넘어옴? : " + qna_no);
-         System.out.println("title 잘넘어옴? : " + title);
-         System.out.println("content 잘넘어옴? : " + content);
-         
          boolean res = mdao.My_updateBoard(qna_no, title, content);
          
          if(res) {
@@ -289,10 +320,11 @@ public class Mypage_Controller extends HttpServlet {
          }
          
       }else if(command.equals("deleteboard")) { //게시글 삭제
-         boolean result = Boolean.valueOf(request.getParameter("result"));
+         boolean result = Boolean.valueOf(request.getParameter("result")); //confirm에서 선택 결과
          int qna_no = Integer.parseInt(request.getParameter("qnano"));
+         
          if(result) {
-            boolean res = mdao.My_deleteBoard(vo.getAcc_no(), qna_no);
+            boolean res = mdao.My_deleteBoard(qna_no);
             if(res) {
                    jsResponse("삭제 성공", "mypage.do?command=boardlist&pageno=1", response);
                 }else {
@@ -302,15 +334,32 @@ public class Mypage_Controller extends HttpServlet {
             dispatch("mypage.do?command=boarddetail&qnano="+qna_no, request, response);
          }
          
+      }else if(command.equals("searchboard")) { //게시글 검색
+         int pageNo = Integer.parseInt(request.getParameter("pageno"));
+         String catd = request.getParameter("catd");
+         String keyword = request.getParameter("keyword");
+         
+         List list_search = mdao.My_searchBoard(vo.getAcc_no(), catd, keyword);
+          
+          Vo_Mypage_Paging paging = new Vo_Mypage_Paging(); //페이징
+          paging.setPageNo(pageNo);
+          paging.setTotalCount(list_search.size());
+         
+          if(list_search.isEmpty()) { //게시글이 없을 경우
+              response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp");
+          }else { //게시글이 있을 경우
+              request.setAttribute("list_qna", list_search);
+              request.setAttribute("page", paging);
+              dispatch("./RECOREMain/RECOREMypage/Mypage_BoardList.jsp", request, response);
+          }
+         
       }else if(command.equals("cartlist")) { //장바구니 조회
-         System.out.println("command : " + command);
          List list = (List)map.get("list_cart");
          
-         if(list.isEmpty()) {
+         if(list.isEmpty()) { //장바구니에 상품이 없을 경우
             response.sendRedirect("./RECOREMain/RECOREMypage/Mypage_Cart.jsp");
-         }else {
+         }else { //장바구니에 상품이 있을 경우
             request.setAttribute("list_cart", map.get("list_cart"));
-            System.out.println("서블릿에서 listcart : " + map.get("list_cart"));
             dispatch("./RECOREMain/RECOREMypage/Mypage_Cart.jsp", request, response);
          }
          
@@ -326,6 +375,7 @@ public class Mypage_Controller extends HttpServlet {
          
       }else if(command.equals("deletecartall")) { //장바구니 상품 전체 삭제
          boolean res = mdao.My_deleteCart_All(vo.getAcc_no());
+         
          if(res) {
             jsResponse("삭제 성공", "./RECOREMain/RECOREMypage/Mypage_Cart.jsp", response);
          }else {
@@ -337,7 +387,8 @@ public class Mypage_Controller extends HttpServlet {
          String[] list_prod_id = prod_id.split(",");
          System.out.println("넘어온 arr" + list_prod_id[0]);
          boolean res = false;
-         for(int i=0;i<list_prod_id.length;i++) {
+         
+         for(int i=0;i<list_prod_id.length;i++) { //선택된 prod_id 삭제
             res = mdao.My_deleteCart_One(vo.getAcc_no(), Integer.parseInt(list_prod_id[i]));
          }
          
@@ -349,9 +400,8 @@ public class Mypage_Controller extends HttpServlet {
          
       }else if(command.equals("cartupdate")) { //장바구니 수량 변경
          int prod_id = Integer.parseInt(request.getParameter("prod_id"));
-         System.out.println("업데이트 할 prod_id" + prod_id);
          int cart_amount = Integer.parseInt(request.getParameter("cart_amount"));
-         System.out.println("업데이트 할 수량 : " + cart_amount);
+         
          boolean res = mdao.My_updateCart(prod_id, cart_amount);
          
          if(res) {

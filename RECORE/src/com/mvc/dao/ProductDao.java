@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
 import com.mvc.vo.Vo_Prod_option;
@@ -20,7 +21,7 @@ public interface ProductDao {
 	
 	public List<Vo_Product> Child_selectAll(int pseq); // 옷 전체 조회
 	
-	public Map option_selectAll(int castprod_id[]); //상품 옵션 
+	public Map option_selectAll(String prod_id[]); //상품 옵션 
 	
 	public Vo_Product P_selectOne(int pseq); // 상품 선택 조회
 	
@@ -40,12 +41,13 @@ public interface ProductDao {
 
 	public boolean P_insert(Vo_Product pvo); // 상품 등록
 	
-	public boolean O_insert(Vo_Prod_option povo, Vo_Product pvo); //상품 결제페이지 
+	public boolean O_insert(int prod_id, int price, Vo_Account acc, int amount); //상품 결제페이지 (바로구매) 
+	public boolean O_insert(String prod_id[], int price, Vo_Account acc, String prod_amount[]); //상품 결제페이지 (전체구매) 
 
 	public boolean P_insertCart(int acc_no, int prod_id, int amount); // 장바구니
 
 	public boolean P_insertWish(int acc_no, int prod_no); // 관심상품
-
+	
 	public boolean P_update(Vo_Product pvo); // 상품 수정
 
 	public boolean P_delete(int aseq); // 상품 삭제

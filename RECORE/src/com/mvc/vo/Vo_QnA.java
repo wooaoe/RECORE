@@ -71,9 +71,10 @@ public class Vo_QnA {
 
 
 	//글쓰기 생성자
-	public Vo_QnA(int catd_no, int qna_acc_no, String qna_front_img, String qna_title, String qna_content,
+	public Vo_QnA(int catd_no, int qna_seq_no, int qna_acc_no, String qna_front_img, String qna_title, String qna_content,
 			String qna_acc_id) {
 		this.catd_no = catd_no;
+		this.qna_seq_no = qna_seq_no;
 		this.qna_acc_no = qna_acc_no;
 		this.qna_front_img = qna_front_img;
 		this.qna_title = qna_title;

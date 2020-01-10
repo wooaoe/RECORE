@@ -1,0 +1,779 @@
+@charset "UTF-8";
+
+input[type="hidden" i] {
+    display: none;
+    -webkit-appearance: initial;
+    background-color: initial;
+    cursor: default;
+    padding: initial;
+    border: initial;
+}
+.ec-base-layer .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 11px 20px;
+    cursor: pointer;
+}
+[class^='btn'][class*='Fix'].sizeS {
+    width: 96px;
+}
+[class^='btn'].sizeS {
+    padding: 6px 8px;
+}
+.ec-base-layer .ec-base-button {
+    padding: 9px;
+    border-top: 1px solid #d7d5d5;
+    text-align: center;
+    background: #fbfafa;
+}
+.ec-base-layer .content {
+    padding: 20px;
+    font-size: 12px;
+}
+.ec-base-button:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+.ec-base-layer .header > h1, .ec-base-layer .header > h3 {
+    font-size: 14px;
+    line-height: 1.5;
+}
+.xans-member-edit .layerLeave h3 {
+    margin: 0;
+    color: #fff;
+}
+.ec-base-layer .header {
+    padding: 7px 35px 7px 19px;
+    color: #fff;
+    background: #124734;
+}
+.xans-member-edit .layerLeave {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    width: 600px;
+    margin: -205px 0 0 -300px;
+    display: none;
+}
+.ec-base-layer {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    border: 1px solid #757575;
+    background: #fff;
+}
+.ec-base-button.justify .gRight {
+    position: absolute;
+    right: 0;
+}
+.ec-base-button .gRight {
+    float: right;
+    text-align: right;
+}
+input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+}
+.gIndent20 {
+    margin-left: 20px;
+}
+.xans-member-edit #birth_year, .xans-member-edit #marry_year, .xans-member-edit #partner_year {
+    width: 60px;
+    margin: 0 4px 0 0;
+}
+.xans-member-edit #birth_month, .xans-member-edit #marry_month, .xans-member-edit #partner_month, .xans-member-edit #birth_day, .xans-member-edit #marry_day, .xans-member-edit #partner_day {
+    width: 30px;
+    margin: 0 4px 0 0;
+}
+.xans-member-edit #email1 {
+    margin-right: 4px;
+}
+input[type=radio] + label, input[type=checkbox] + label {
+    margin: 0 4px 0 2px;
+}
+label {
+    cursor: default;
+}
+input[type="radio" i] {
+    background-color: initial;
+    cursor: default;
+    -webkit-appearance: radio;
+    box-sizing: border-box;
+    margin: 3px 3px 0px 5px;
+    padding: initial;
+    border: initial;
+}
+input[type=radio], input[type=checkbox] {
+    width: 13px;
+    height: 13px;
+    border: 0;
+}
+.xans-member-edit .verify {
+    position: relative;
+    display: inline-block;
+    width: 146px;
+    height: 24px;
+    vertical-align: top;
+}
+.txtInfo {
+    color: #707070;
+}
+.gBlank5 {
+    display: block;
+    margin-top: 5px;
+}
+button {
+    -webkit-appearance: button;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    background-color: buttonface;
+    box-sizing: border-box;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+button {
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+}
+.xans-member-edit #phone2, .xans-member-edit #phone3, .xans-member-edit #mobile2, .xans-member-edit #mobile3 {
+    width: 50px;
+    margin: 0 4px;
+}
+.xans-member-edit #phone1, .xans-member-edit #mobile1 {
+    width: 60px;
+    margin: 0 4px 0 0;
+}
+.xans-member-edit #addr1, .xans-member-edit #addr2 {
+    width: 280px;
+    margin: 5px 0 0;
+}
+[class^='btnNormal'], a[class^='btnNormal'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #222;
+    background-color: #fff;
+}
+
+.xans-member-edit #postcode1, .xans-member-edit #postcode2 {
+    width: 40px;
+    text-align: center;
+}
+.xans-member-edit #hint_answer {
+    width: 500px;
+}
+option {
+    font-weight: normal;
+    display: block;
+    white-space: pre;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+[class^='btn'] img {
+    margin: -2px 1px 0;
+    vertical-align: middle;
+}
+.ec-base-tooltip .btnClose {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+}
+.xans-member-edit .ec-base-tooltip.typeUpper .edge {
+    left: 20%;
+}
+.ec-base-tooltip.typeUpper .edge {
+    top: auto;
+    bottom: -6px;
+}
+.ec-base-tooltip .edge {
+    z-index: 20;
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    display: block;
+    margin: 0 0 0 -5px;
+    width: 10px;
+    height: 6px;
+}
+input[type=text], input[type=password] {
+    height: 28px;
+    line-height: 22px;
+    padding: 2px 4px;
+    border: 1px solid #d5d5d5;
+    color: #353535;
+    font-size: 12px;
+}
+.ec-base-tooltip .txtWarn {
+    color: #f65b54;
+}
+.ec-base-tooltip {
+    display: none;
+    z-index: 2;
+    position: absolute;
+    top: 24px;
+    padding: 15px;
+    border: 1px solid #565960;
+    background: #fff;
+    -webkit-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.15);
+    box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.15);
+}
+.txtWarn {
+    color: #f76560;
+}
+ul {
+    list-style-type: disc;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+input[type="password" i] {
+    -webkit-text-security: disc !important;
+}
+.xans-member-edit .eTooltip {
+    position: relative;
+    display: inline-block;
+}
+.eTooltip{
+    display: inline-block;
+}
+.gBlank10 {
+    display: block;
+    margin-top: 10px;
+}
+[class^='btn'][class*='Fix'].sizeM {
+    width: 120px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+[class^='btn'][class*='Fix'] {
+    width: 72px;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+[class^='btn'].sizeM {
+    padding: 10px 16px;
+}
+[class^='btnSubmit'], a[class^='btnSubmit'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #fff;
+    background-color: #05ce7c;
+}
+[class^='btnEm'], a[class^='btnEm'] {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    font-family: "굴림",Gulim;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: #555;
+    background-color: #fff;
+    border: solid 1px #aaa;
+    margin-left: 5px;
+}
+.ec-base-button.justify {
+    position: relative;
+}
+.ec-base-button {
+    padding: 10px 0;
+    text-align: center;
+}
+.ec-base-box.typeThinBg {
+    border-width: 1px;
+    border-color: #d7d5d5;
+    background-color: #fff;
+}
+.xans-member-edit .agreeArea {
+    color: #747474;
+    line-height: 20px;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+caption {
+    display: none;
+}
+caption {
+    display: table-caption;
+}
+.ec-base-layer .ec-base-table tbody th {
+    padding: 9px 0 8px 10px;
+}
+.ec-base-table table:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: #d7d5d5;
+}
+colgroup {
+    display: table-column-group;
+}
+col {
+    display: table-column;
+}
+.ec-base-layer .content > .ec-base-table table:first-child {
+    margin-top: 0;
+}
+.ec-base-layer .ec-base-table table {
+    line-height: 1.4;
+}
+	.ec-base-table table {
+     position: relative;
+    margin: 10px 0 0;
+    border: 1px solid #d7d5d5;
+    border-top: 0;
+    color: #fff;
+    line-height: 1.5;
+}
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+table[Attributes Style] {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border-color: grey;
+}
+.required img {
+    vertical-align: middle;
+}
+.required {
+    color: #353535;
+    text-align: right;
+}
+.displaynone {
+    display: none;
+}
+.displaynone {
+    display: none !important;
+}
+.xans-member-edit h3 {
+    margin: 50px 0 10px;
+    font-size: 16px;
+    color: #2e2e2e;
+}
+
+h3 {
+	text-align : center;
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+input, select, textarea {
+    font-size: 100%;
+    font-family: "돋움",Dotum;
+    color: #353535;
+    vertical-align: middle;
+}
+.xans-member-edit .layerLeave h4 {
+    margin: 20px 0 10px;
+    padding: 20px 0 0;
+    border-top: 1px solid #e8e8e8;
+}
+h4 {
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+select {
+    height: 27px;
+    border: 1px solid #d5d5d5;
+}
+select:not(:-internal-list-box) {
+    overflow: visible !important;
+}
+select {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: -internal-light-dark-color(white, black);
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    border-radius: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(169, 169, 169);
+    border-image: initial;
+}
+.txtEm {
+     color: #333;
+}
+.ec-base-box.typeMember .information .description {
+    display: table-cell;
+    padding: 0 10px;
+    width: auto;
+    line-height: 1.5em;
+    border-left: 1px solid #e8e8e8;
+    vertical-align: middle;
+}
+.ec-base-box.typeMember .information > .thumbnail img {
+    max-width: 70px;
+}
+.xans-myshop-asyncbenefit .thumbnail img {
+    max-width: 70px;
+    max-height: 70px;
+}
+.ec-base-box.typeMember .information > .title {
+    vertical-align: middle;
+}
+.ec-base-box.typeMember .information > .title, .ec-base-box.typeMember .information > .thumbnail {
+    display: table-cell;
+    padding: 0 15px;
+    width: 70px;
+    text-align: center;
+    vertical-align: middle;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.ec-base-box.typeMember .information {
+    display: table;
+    table-layout: fixed;
+    padding: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.ec-base-box.typeMember.gMessage {
+    border-width: 1px;
+    border-color: #d7d5d5;
+}
+.ec-base-box.typeMember {
+    padding: 0;
+}
+.ec-base-box {
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #dfdfdf;
+    color: #404040;
+}
+.titleArea {
+    width: 1050px;
+    min-height: 30px;
+    margin: 30px auto 20px;
+}
+.titleArea h2 {
+    color: #2e2e2e;
+    font-size: 25px;
+	text-align : center;
+}
+h2 {
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.xans-myshop-asyncbenefit {
+    margin: 0 0 20px;
+    color: #353535;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+.path li strong, .path li strong a {
+    color: #2e2e2e;
+}
+strong {
+    font-weight: bold;
+}
+.path li a {
+    color: #757575;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+a {
+    text-decoration: none!important;
+}
+a:-webkit-any-link {
+//    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.path li:first-child {
+    background: none;
+}
+.path li {
+    float: left;
+    padding: 0 0 0 12px;
+    margin: 0 0 0 8px;
+    color: #757575;
+    background: url(//img.echosting.cafe24.com/skin/base/layout/ico_path.gif) no-repeat 0 10px;
+}
+li {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+#content {
+    margin-top: 100px;
+}
+#content {
+    width: 1050px;
+    margin: 100px auto 100px;
+}
+hr.layout {
+    display: none;
+}
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.path ol {
+    float: right;
+}
+.path span {
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    white-space: nowrap;
+    text-indent: 100%;
+}
+.path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    *zoom: 1;
+}
+#container {
+    margin: 0 auto;
+    *zoom: 1;
+    min-width: 1050px;
+}
+#wrap {
+    position: relative;
+    margin: 0 auto;
+}
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, img {
+    margin: 0;
+    padding: 0;
+}
+div {
+    display: block;
+}
+body, code {
+    font-family: 'Noto Sans KR',sans-serif;
+    color: #353535;
+    background: #fff;
+    font-size: 13px;
+}
+html {
+    color: -internal-root-color;
+}
+	tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.ec-base-table th:first-child {
+    border-left: 0;
+}
+.ec-base-table th {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.ec-base-table.typeWrite img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+.ec-base-table img {
+    vertical-align: middle;
+}
+img, fieldset {
+    border: none;
+    vertical-align: top;
+}
+.ec-base-table.typeWrite td {
+    padding: 15px 10px 15px;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+.ec-base-table td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #dfdfdf;
+    color: #353535;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.ec-base-table tbody th {
+    padding: 11px 0 10px 18px;
+    border: 1px solid #dfdfdf;
+    border-bottom-width: 0;
+    color: #353535;
+    text-align: left;
+    font-weight: normal;
+    background-color: #fff;
+}
+.ec-base-layer .ec-base-table.typeWrite td {
+    padding: 5px 10px 4px;
+}
+th, td {
+    border: 0;
+    vertical-align: top;
+}
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}

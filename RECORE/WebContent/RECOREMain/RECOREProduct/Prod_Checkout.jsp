@@ -52,7 +52,9 @@
 	href="https://assets.kolonmall.com/_ui/css/kop/desktop/Order-a59824e1c6.css" />
 
  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
+	
+	<!-- @@ RECORE favicon @@  -->
+	<link rel="icon" href="<%=request.getContextPath()%>/images/recorefavi.png">
 
 
 <%@ include file="/head.jsp"%>
@@ -228,9 +230,9 @@
 									</p>
 
 									<ul class="meta" style="position: relative; top: 20px;">
-										<li><em>수량</em> <span><%=amount%></span></li>
+										<li><em>수량</em><span id = "amountval"><%=amount%></span></li>
 										<li><em>옵션</em>&nbsp; 
-										<span> 
+										<span id = "optval"> 
 										<% for (String c : color) {
 										 	out.println(c);
 										 	}

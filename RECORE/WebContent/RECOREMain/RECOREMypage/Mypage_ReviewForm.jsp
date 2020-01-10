@@ -24,11 +24,15 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js "></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/js/qna_boardwrite.js"></script>
-
+<style type="text/css">
+	 html{
+  	scroll-behavior : smooth;
+  }
+</style>
 
 </head>
 
-<body>
+<body id = "body">
 <%
 	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
 %>
@@ -74,7 +78,7 @@
 										</tr>
 										<tr>
 											<th>평점</th>
-											<td><input type="number" name="rating" min="1" max="5" style="width:30px;"/>점</td>
+											<td><input type="number" name="rating" value="0" min="0" max="5" style="width:30px;"/>점</td>
 										</tr>
 										<!-- <tr class="displaynone">
 											<th scope="row">이메일</th>

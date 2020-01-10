@@ -91,7 +91,10 @@
 									<td class="thumb" style="border-right: 1px solid #dfdfdf;">&nbsp;</td>
 								<%} %>
 								<td class="sPrdName" style="border-right: 1px solid #dfdfdf;">${list.prod_name }</td>
-								<td style="border-right: 1px solid #dfdfdf;"><button class="btnNormal selectBtn" onclick="" value="bt">선택</button></td>
+								<td style="border-right: 1px solid #dfdfdf;"><button class="btnNormal selectBtn" onclick="" value="bt">선택</button>
+								<input type="hidden" id="prod_no" value="${list.prod_no }"/>
+								</td>
+								
 								</tr>
 							</c:forEach>
 						</c:otherwise>

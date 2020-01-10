@@ -15,6 +15,9 @@
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+	<!-- @@ RECORE favicon @@  -->
+	<link rel="icon" href="<%=request.getContextPath()%>/images/recorefavi.png">
+
 <%@ include file="/headP.jsp"%>
 
 
@@ -330,7 +333,6 @@
 					</div>
 				</div>
 			</div>
-			
 
 
 			<!-- @@ Detail / Q&A / Review @@ -->

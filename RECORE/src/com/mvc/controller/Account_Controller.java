@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.mvc.dao.AccountDaoImp;
 import com.mvc.vo.Vo_Account;
+import com.sun.glass.ui.Window;
 
 /**
  * Servlet implementation class Login_Register_Controller
@@ -60,7 +61,7 @@ public class Account_Controller extends HttpServlet {
 						jsResponse("관리자 로그인 성공", "./RECOREMain/index.html", response);
 					} else if (vo.getAcc_m_c().equals("C")) { // 유저페이지
 						System.out.println(vo.getAcc_id());
-						jsResponse(vo.getAcc_id() + "님 환영합니다.", "./RECOREMain/index.html", response);
+						jsResponse(vo.getAcc_id() + " 회원님 환영합니다.", "./RECOREMain/index.html", response);
 					}
 				} else {
 					jsResponse("탈퇴한 회원입니다", "./RECOREMain/RECOREAccount/Acc_Login.jsp", response);
@@ -76,7 +77,7 @@ public class Account_Controller extends HttpServlet {
 			response.sendRedirect("./RECOREMain/index.html");
 			System.out.println(session);
 
-		} else if (command.equals("withdrawal")) {
+		} else if (command.equals("deleteUser")) {
 			HttpSession session = request.getSession();
 			Vo_Account vo = (Vo_Account) session.getAttribute("vo");
 			boolean res = false;
@@ -95,7 +96,7 @@ public class Account_Controller extends HttpServlet {
 			String acc_birth_year = request.getParameter("birth_year");
 			
 			String acc_birth_month = request.getParameter("birth_month");
-			switch(acc_birth_month) {
+/*			switch(acc_birth_month) {
 			case "1" : acc_birth_month="01";
 			break;
 			case "2" : acc_birth_month="02";
@@ -114,9 +115,9 @@ public class Account_Controller extends HttpServlet {
 			break;
 			case "9" : acc_birth_month="09";
 			break;
-			}
+			}	*/
 			String acc_birth_day = request.getParameter("birth_day");
-			switch(acc_birth_day) {
+/*			switch(acc_birth_day) {
 			case "1" : acc_birth_day="01";
 			break;
 			case "2" : acc_birth_day="02";
@@ -135,7 +136,7 @@ public class Account_Controller extends HttpServlet {
 			break;
 			case "9" : acc_birth_day="09";
 			break;
-			}
+			}	*/
 			String acc_birth = (acc_birth_year+acc_birth_month+acc_birth_day);
 			String acc_phone1 = request.getParameter("mobile1");
 			String acc_phone2 = request.getParameter("mobile2");
@@ -159,15 +160,47 @@ public class Account_Controller extends HttpServlet {
 
 			boolean res = dao.A_insert(vo);
 			if (res) {
-				dispatch("/RECOREMain/RECORECommunity/qna_manager/qna/qna_board.jsp", request, response);
+				/* dispatch("./RECOREMain/index.jsp", request, response); */
 				jsResponse("회원가입 성공", "./RECOREMain/index.html", response);
 			} else {
-
+				jsResponse("회원가입 실패", "./RECOREMain/RECOREAccount/Acc_Signup.jsp", response);
 			}
+			
+		} else if(command.equals("Acc_update")){
+			int acc_seq = Integer.parseInt(request.getParameter("acc_no"));
+			String acc_pw = request.getParameter("passwd");
+			String acc_phone1 = request.getParameter("mobile1");
+			String acc_phone2 = request.getParameter("mobile2");
+			String acc_phone3 = request.getParameter("mobile3");
+			String acc_phone = acc_phone1+acc_phone2+acc_phone3;
+			String acc_email = request.getParameter("email");
+			String acc_zipcode = request.getParameter("zipNo");
+			String acc_addr = request.getParameter("roadAddrPart1");
+			String acc_addr2 = request.getParameter("addrDetail");
+			
+			
+			Vo_Account vo = new Vo_Account();
+			vo.setAcc_pw(acc_pw);
+			vo.setAcc_phone(acc_phone);
+			vo.setAcc_email(acc_email);
+			vo.setAcc_zipcode(acc_zipcode);
+			vo.setAcc_addr(acc_addr);
+			vo.setAcc_addr2(acc_addr2);
+			vo.setAcc_no(acc_seq);
+			
+			boolean res = dao.A_update(vo);
+
+			if(res) {
+				jsResponse("회원정보 수정 성공", "./RECOREMain/RECOREMypage/Mypage_Main.jsp", response);	
+			}
+			
+			
 		} else if(command.equals("loginpage")) {
 			response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Login.jsp");
+		
 		} else if(command.equals("signuppage")) {
 			response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Signup.jsp");
+		
 		} else if(command.equals("editpage")) {
 			HttpSession session = request.getSession();
 			Vo_Account vo = (Vo_Account) session.getAttribute("vo");
@@ -177,6 +210,7 @@ public class Account_Controller extends HttpServlet {
 			} else {
 				response.sendRedirect("./RECOREMain/RECOREAccount/Acc_Login.jsp");
 			}
+		
 		} else if(command.equals("idcheck")) {
 			String id = request.getParameter("member_id");
 			boolean res = dao.A_selectAccountOne(id);

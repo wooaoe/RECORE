@@ -7,7 +7,13 @@
 <%-- UserSession --%>
 <% Vo_Account sessionVo = (Vo_Account)session.getAttribute("vo"); %>
 <%-- category --%>
-<% String catd = request.getParameter("category"); %>
+<% String catd = request.getParameter("catd");%>
+<% String searchsubject = request.getParameter("searchsubject");%>
+<% String keyword = request.getParameter("keyword");
+	if(keyword==null){
+		keyword="";
+	}
+%>
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
@@ -32,6 +38,11 @@
 .ec-base-table thead th{font-size: 13px; border-left: 0px;}
 .ec-base-table.gBorder td{font-size: 13px; border-left: 0px; border-bottom: 1px solid;}
 </style>
+<script type="text/javascript">
+var catd = '<%=catd%>';
+var searchsubject = '<%=searchsubject%>';
+var keyword = '<%=keyword%>'; 
+</script>
 </head>
 <body>
 	<header>
@@ -60,7 +71,7 @@
 												<td>카테고리</td>
 												<td>
 													<select id="catd" name="catd" style="width: 90px;">
-														<option id="all" value="all" selected="selected">전체</option>
+														<option id="all" value="all">전체</option>
 														<option id="bag_acc" value="bag_acc" >BAG/ACC</option>
 														<option id="outer" value="outer">OUTER</option>
 														<option id="top" value="top">TOP</option>
@@ -76,12 +87,12 @@
 												<td>검색어</td>
 												<td>
 													<select name="searchsubject" style="width: 90px;">
-														<option value="" selected="selected">----선택----</option>
-														<option value="number" >상품번호</option>
-														<option value="id">상품아이디</option>
-														<option value="name">상품명</option>
+														<option id="base" value="" selected="selected">----선택----</option>
+														<option id="number" value="number" >상품번호</option>
+														<option id="id" value="id">상품아이디</option>
+														<option id="name" value="name">상품명</option>
 													</select> 
-													<input id="keyword" name="keyword" class="inputTypeText" value="" type="text"></input>
+													<input id="keyword" name="keyword" class="inputTypeText" value="<%=keyword %>" type="text"></input>
 													<button id="searchbt" class="btnEmFix" type="submit">검색</button>
 												</td>
 											</tr>
@@ -101,7 +112,7 @@
 									<col style="width: 500px;">
 									<col style="width: 100px;">
 									<col style="width: 100px;">
-									<col style="width: 70px;">
+									<col style="width: 150px;">
 								</colgroup>
 								<thead class="xans-element- xans-board xans-board-listheader-1002 xans-board-listheader xans-board-1002 text-center">
 									<tr style="text-align: center;">
@@ -114,7 +125,7 @@
 										<th></th>
 									</tr>
 								</thead>
-								<tbody class="xans-element- xans-board xans-board-list-1002 xans-board-list xans-board-1002 center boardCursor">
+								<tbody class="xans-element- xans-board xans-board-list-1002 xans-board-list xans-board-1002 center">
 									<c:choose>
 										<c:when test="${empty list }">
 												<tr>
@@ -134,12 +145,13 @@
 														<%-- 상품명 --%>
 														<td style="text-align: left;">${list.prod_name }</td>
 														<%-- 현재고 --%>
-														<td>${list.prod_stock }</td>
+														<td><span id="${list.prod_id}">${list.prod_stock }</span></td>
 														<%-- 조정재고 --%>
-														<td><input type="text" name="prod_stock" style="width: 60px;"></td>
+														<td><input id="new_prod_stock" type="text" name="new_prod_stock" style="width: 60px;"></td>
 														<%-- 저장버튼 --%>
 														<td style="text-align: center;">
-															<a id="${list.prod_id }" class="savebtn btn btn-default" role="button">저장</a>
+															<a id="savestock" class="saveInbtn btn btn-default" role="button">입고</a>
+															<a id="savestock" class="saveOutbtn btn btn-default" role="button">출고</a>
 														</td>
 													</tr>
 												</c:forEach>

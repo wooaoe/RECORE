@@ -73,17 +73,33 @@
   
   a:link { color: black; text-decoration: none;}
   a:visited { color: black; text-decoration: none;}
+   html{
+  	scroll-behavior : smooth;
+  }
   </style>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	function pageMove(pageNo){
-		alert(pageNo);
+	
+	function pageMove(pageNo){ //페이징
 		location.href = "mypage.do?command=boardlist&pageno="+pageNo;
 	}
+	
+	function searchBoard(){ //검색
+		var catd = $("#search_key option:selected").val();
+		var keyword = $("#searchval").val();
+		location.href = "mypage.do?command=searchboard&catd="+catd+"&keyword="+keyword+"&pageno=1";
+	}
+	
+	/* function selectList(){
+		alert("함수 들어옴?");
+		var catd = $("#board_sort option:selected").val();
+		location.href = "mypage.do?command=boardselect&pageno=1&catd="+catd;
+	} */
 </script>
 
 </head>
-<body id="main">
+<body id="body">
 <%
 	Vo_Account acc = (Vo_Account)session.getAttribute("vo");
 %>
@@ -99,7 +115,7 @@
 				<div class="path">
 				    <span>현재 위치</span>
 				    <ol>
-				    	<li><a href="/">홈</a></li>
+				    	<li><a href="issue.do?command=main">홈</a></li>
 				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
 				        <li title="현재 위치"><strong>게시물 관리</strong></li>
 				    </ol>
@@ -110,14 +126,14 @@
 				</div>
 	
 				<div class="xans-element- xans-myshop xans-myshop-boardpackage ">
-					<div class="xans-element- xans-myshop xans-myshop-boardlisthead ">
+					<!-- <div class="xans-element- xans-myshop xans-myshop-boardlisthead ">
 						<p>분류 선택 
-							<select id="board_sort" name="board_sort" fw-filter="" fw-label="" fw-msg="" onchange="BOARD.change_sort('boardSearchForm', this);">
-								<option value="D">작성 일자별</option>
-								<option value="C">분류별</option>
+							<select id="board_sort" name="board_sort" fw-filter="" fw-label="" fw-msg="" onchange="selectList();">
+								<option value="CATD_NO">분류별</option>
+								<option value="QNA_REGDATE">작성 일자별</option>
 							</select>
 						</p>
-					</div>
+					</div> -->
 					<div class="xans-element- xans-myshop xans-myshop-boardlist ec-base-table typeList gBorder gBlank10">
 						<table border="1" summary="">
 							<%-- <caption>게시물 관리 목록</caption> --%>
@@ -145,14 +161,6 @@
 							</c:if>
 							<c:if test="${null ne list_qna}">
 							<c:forEach var="qna" items="${list_qna}" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
-								<!-- <tr class="xans-record-">
-									<td>2</td>
-					                <td><a href="/board/상품문의/6/" class="txtEm">상품문의</a></td>
-					                <td class="left subject">&nbsp;&nbsp;&nbsp;<img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_re.gif" alt="답변" class="ec-common-rwd-image"> <img src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/ico_lock.gif" alt="비밀글" class="ec-common-rwd-image"> <a href="/board/product/read.html?no=263&amp;board_no=6">문의합니다</a> </td>
-					                <td></td>
-					                <td><span class="txtNum">2019-12-30</span></td>
-					                <td><span class="txtNum">2</span></td>
-	            				</tr> -->
 								<tr class="xans-record-">
 									<td>${qna.qna_no}</td>
 					                <td>
@@ -174,7 +182,6 @@
 					        </c:if>
 							</tbody>
 						</table>
-						<!-- <p class="message displaynone">게시물이 없습니다.</p> -->
 					</div>
 				</div>
 	
@@ -206,28 +213,23 @@
 						<img src="//img.echosting.cafe24.com/skin/base/common/btn_page_last.gif" alt="마지막 페이지">
 					</a>
 				</div>
-	
-				<form id="boardSearchForm" name="" action="/myshop/board_list.html" method="get" target="" enctype="multipart/form-data">
-					<input id="board_no" name="board_no" value="" type="hidden">
-					<input id="page" name="page" value="1" type="hidden">
-					<input id="board_sort" name="board_sort" value="" type="hidden">
+				
+				<!-- 검색 -->
+				<form id="boardSearchForm" name="" action="" method="get" target="" enctype="multipart/form-data">
 					<div class="xans-element- xans-myshop xans-myshop-boardlistsearch ">
 						<fieldset class="boardSearch">
 							<legend>게시물 검색</legend>
 	        					<p>
 	        						<select id="search_key" name="search_key" fw-filter="" fw-label="" fw-msg="">
-										<option value="subject">제목</option>
-										<option value="content">내용</option>
-										<option value="writer_name">글쓴이</option>
-										<!-- <option value="member_id">아이디</option>
-										<option value="nick_name">별명</option> -->
+										<option value="QNA_TITLE">제목</option>
+										<option value="QNA_CONTENT">내용</option>
 									</select> 
-									<input id="search" name="search" fw-filter="" fw-label="" fw-msg="" class="inputTypeText" placeholder="" value="" type="text"> 
-									<a href="#none" class="btnEmFix" onclick="BOARD.form_submit('boardSearchForm');">찾기</a>
+									<input id="searchval" name="search" fw-filter="" fw-label="" fw-msg="" class="inputTypeText" placeholder="" type="text"> 
+									<a href="#none" class="btnEmFix" onclick="searchBoard();">찾기</a>
 								</p>
 	    				</fieldset>
 					</div>
-				</form>        
+				</form>    
 			</div><!-- content 끝@@@@ -->
 			<hr class="layout">
 			
