@@ -397,8 +397,6 @@ public class ProductDaoImp implements ProductDao {
 
 		return povo;
 	}
-	
-	
 
 	@Override
 	public Map<List, String> choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo) {
@@ -452,6 +450,38 @@ public class ProductDaoImp implements ProductDao {
 		String sql = "";
 
 		return null;
+	}
+
+	@Override
+	public Vo_Account Cus_selectOne(int acc_no) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Vo_Account accval = null;
+
+		String sql = "SELECT ACC_ZIPCODE, ACC_ADDR, ACC_ADDR2, ACC_POINT FROM ACCOUNT WHERE ACC_NO = ?";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, acc_no);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				accval = new Vo_Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),
+						rs.getString(10), rs.getString(11), rs.getInt(12), rs.getString(13));
+
+				System.out.println("imp의 accVal 값 : " + accval);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstm, con);
+		}
+
+		return accval;
 	}
 
 	@Override
@@ -698,7 +728,5 @@ public class ProductDaoImp implements ProductDao {
 
 		return (res > 0) ? true : false;
 	}
-
-	
 
 }

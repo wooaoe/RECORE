@@ -5,10 +5,12 @@
 	
 	<%@ page import = "com.mvc.vo.Vo_Product" %>
 	<%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+	<%@ page import = "com.mvc.vo.Vo_Account" %>
 	<%@ page import = "java.util.List" %>
 	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
 	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
 	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
@@ -43,21 +45,28 @@
     
 <script type="text/javascript">
 	function checkval(){
-		if($("#userPhone").val().length == 11){
+		
+		var phone = $("#userPhone").val();
+		
+		if(phone.length == 11){
 			$("#em").hide();
 			$("#em2").text("특수문자 없이 숫자만 입력해주세요.");
 			$("#userBirth").focus();
-		}else if($("#userPhone").val().length == 0){
+		}else if(phone.length == 0 || phone.length < 11){
 			$("#em").show();
 		}
 	}
 	function checkval2(){
-		if($("#userBirth").val().length == 6){
+		
+		var birth = $("#userBirth").val();
+		var phone = $("#userPhone").val();
+		
+		if(birth.length == 6){
 			$("#em2").hide();
-		}else if($("#userBirth").val().length == 0 || $("#userBirth").val().length < 6){
+		}else if(birth.length == 0 || birth.length < 6){
 			$("#em2").show();
 		}
-		if($("#userBirth").val().length == 6 && $("#userPhone").val().length == 11){
+		if(birth.length == 6 && phone.length == 11){
 			$("#request").css("background-color", "#ffe900").css("color", "black");
 		}
 	}
@@ -65,14 +74,27 @@
 		
 		$("#request").click(function(){
 			
+			 var accinfo = new Array();
+			 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
+			
 			var url = "Product.do?command=kakaopaycall2&pseq=" + <%=prod_no%> + "&acc_no=" +
-						<%=acc_no%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
-						"&prod_id=" + <%=prod_id%>;
+						<%=acc.getAcc_no()%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
+						"&prod_id=" + <%=prod_id%> + "&accinfo=" + accinfo;
+						
+						
+			/* a$.ajax({
+				url: url, 
+				dataType:"json",
+				success: function(msg){
+					$("#aftertotal").text(msg.totalPrice);
+				 		alert("재고 수정이 완료되었습니다.");
+				 },
+				 error:function(){
+				 	alert("재고 수정에 실패하였습니다. 다시 시도해주세요.");
+				 }
+			}) */				
 			
 			location.href = url;
-			
-			
-					
 					
 		});
 	});
@@ -106,8 +128,6 @@
 						
 						<form id="userPost" method="get" action="../../Product.do">
 						<input type = "hidden" name = "command" value = "kakaopaycall2"/>
-						
-						
 						
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>

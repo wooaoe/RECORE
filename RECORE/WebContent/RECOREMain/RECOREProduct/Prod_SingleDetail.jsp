@@ -10,6 +10,20 @@
 <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
 <%@ page import = "com.mvc.vo.Vo_Account" %>
 
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
+	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
+	
+	<%! String url; %>
+	<%! int catdno;  %>
+	<% if(pvo.getProd_catd() == 6 || pvo.getProd_catd() == 7 || pvo.getProd_catd() == 8 ||
+		  pvo.getProd_catd() == 9 || pvo.getProd_catd() == 10 || pvo.getProd_catd() == 11 ||
+		  pvo.getProd_catd() == 12){ %>
+	<% url = "ChildSelectAll"; %>
+	<% } %>
+	
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -119,19 +133,6 @@
 	<%@ include file="/footerPdetail.jsp"%>
 
 	
-	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
-	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
-	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
-	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
-	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
-	
-	<%! String url; %>
-	<%! int catdno;  %>
-	<% if(pvo.getProd_catd() == 6 || pvo.getProd_catd() == 7 || pvo.getProd_catd() == 8 ||
-		  pvo.getProd_catd() == 9 || pvo.getProd_catd() == 10 || pvo.getProd_catd() == 11 ||
-		  pvo.getProd_catd() == 12){ %>
-	<% url = "ChildSelectAll"; %>
-	<% } %>
 	
 
 	<!--상품 상세 페이지 -->

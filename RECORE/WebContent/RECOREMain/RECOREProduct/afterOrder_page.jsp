@@ -8,6 +8,8 @@
     <%@ page import="com.mvc.vo.Vo_Category_Detail"%>
     <%@ page import="com.mvc.vo.Vo_Product"%>
     <%@ page import = "java.util.List"%>
+    
+    <%Vo_Account sessionVo = (Vo_Account) session.getAttribute("vo");%>
 
 <!DOCTYPE html>
 <html>
@@ -117,7 +119,7 @@
 		<tr>
 		<th scope="row">최종결제금액</th>
            <td>
-             <strong class="txtEm txt18">15,000</strong><strong class="txtEm">원</strong> 
+             <strong class="txtEm txt18" id = "aftertotal">15,000</strong><strong class="txtEm">원</strong> 
              <span class="txtEm displaynone"></span>
            </td>
         </tr>

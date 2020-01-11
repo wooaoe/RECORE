@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.mvc.dao.OrderDao;
 import com.mvc.dao.OrderDaoImp;
 import com.mvc.dao.ProductDao;
@@ -220,33 +222,19 @@ public class Product_Controller extends HttpServlet {
 			request.setAttribute("povo", povo);
 			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
-			
 			dispatch("./RECOREMain/RECOREProduct/kakaopay.jsp", request, response);
+			
 			
 		} else if(command.equals("kakaopaycall2")) {
 			
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
 			System.out.println("pseq : " + pseq);
-			
-			Vo_Product pvo = dao.P_selectOne(pseq);
-			request.setAttribute("pvo", pvo);
-			
-			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
-			request.setAttribute("povo", povo);
-			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
-			
-			dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
-			
-		} else if(command.equals("payComplete")) {
-			
-			int pseq = Integer.parseInt(request.getParameter("pseq"));
-			System.out.println("컨트롤러 pseq : " + pseq);
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			System.out.println("컨트롤러 prod_id : " + prod_id);
 			int amount = Integer.parseInt(request.getParameter("amount"));
 			System.out.println("컨트롤러 prod_amount : " + amount);
-			int order_no = Integer.parseInt(request.getParameter("order_no"));
-			System.out.println("컨트롤러 acc_no : " + amount);
+			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
+			System.out.println("컨트롤러 acc_no : " + acc_no);
 			int total = Integer.parseInt(request.getParameter("totalPrice"));
 			System.out.println("컨트롤러 prod_total : " + total);
 			
@@ -255,30 +243,36 @@ public class Product_Controller extends HttpServlet {
 			
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
-			boolean onum = dao.O_insert(acc);
-			boolean oprod = dao.O_insert(order_no, prod_id, amount, total);
+//			String cusinfo = request.getParameter("accinfo");
+//			System.out.println("컨트롤러의 cusinfo : " + "cusinfo");
 			
-			for(int i = 0; i < povo.size(); i++) {
-				
-				String color = povo.get(i).getProd_color();
-				String size = povo.get(i).getProd_size();
-				
-				if(onum) {
-					dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
-				}else {
-					jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq +
-							"&color=" + color + "&size=" + size + "&product-quantity=" + amount + 
-							"&total=" + total, response);
-				}
-				if(oprod) {
-					dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
-				}else {
-					jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq, response);
-				}
-				
+			
+			dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
+			
+		} else if(command.equals("payComplete")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+			System.out.println("컨트롤러 prod_id : " + prod_id);
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			System.out.println("컨트롤러 prod_amount : " + amount);
+			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
+			System.out.println("컨트롤러 acc_no : " + acc_no);
+			int total = Integer.parseInt(request.getParameter("totalPrice"));
+			System.out.println("컨트롤러 prod_total : " + total);
+			
+			boolean onum = dao.O_insert(acc); //Vo_Account 객체를 매개변수로 넣어줌 --> 파라미터 값으로 뭘 어떻게 넣어줘야하지???
+			
+			if(onum) {
+				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
+			}else {
+				jsResponse("결제 요청에 실패하였습니다!", "Product.do?command=kakaopaycall&pseq="+ pseq 
+						+ "&acc_no=" + acc_no + "&amount=" + amount 
+						+ "&totalPrice=" + total + "&prod_id=" + prod_id, response);
 			}
-			
 			
 			
 		} else if(command.equals("cartComplete")) {

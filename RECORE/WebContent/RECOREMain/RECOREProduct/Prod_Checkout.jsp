@@ -90,10 +90,54 @@
 	width: 300px
 }
 </style>
-
-
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			
+				var usingpoint = <%=totalPrice - acc.getAcc_point()%>;
+				var oldVal = $("#point").val();
+				var point = <%=acc.getAcc_point()%>;
+				var originprice = <%=totalPrice%>;
+				var numformat = "<fmt:formatNumber>${pvo.prod_price}</fmt:formatNumber>원";	
+				var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
+				var res = "<fmt:formatNumber><%=totalPrice - acc.getAcc_point()%></fmt:formatNumber>원";
+				
+			$("#allDepositCheckboxV2").change(function(){
+									
+				if($("#allDepositCheckboxV2").is(":checked") == true){
+					if(originprice < point){
+						$("#allDepositCheckboxV2").prop("checked", false);
+							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+					}else if(originprice < 50000){
+						$("#allDepositCheckboxV2").prop("checked", false);
+						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+					}else{
+						$("#point2").html(numformat_point);
+						$("#totalPrice").html(res);
+						$("#point").val("0");
+						$("#point").attr("readonly", true);
+					}
+				}else{
+					$("#totalPrice").html(numformat);
+					$("#point2").empty();
+					$("#point").val(point);
+					$("#point").attr("readonly", true);
+				}
+			});
+			
+		});
+	</script>
+	
 	<script type="text/javascript">
     
+	function goPopup(){
+		
+		var popupX = (document.body.offsetWidth / 2) - (570 / 2);
+		var popupY= (document.body.offsetHeight / 2);
+		
+	    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
+	}
 	 function payment(){
 		
 		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
@@ -111,6 +155,7 @@
 
 			var popX = winX + (winWidth - 434)/2;
 			var popY = winY + (winHeight - 569)/2;
+			var $totalPrice = $("#totalPrice").val();
 			
 			var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
 						+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
@@ -120,13 +165,6 @@
 		}
 		
 	} 
-	function goPopup(){
-		
-		var popupX = (document.body.offsetWidth / 2) - (570 / 2);
-		var popupY= (document.body.offsetHeight / 2);
-		
-	    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
-	}
 	
 	/** API 서비스 제공항목 확대 (2017.02) **/
 	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
@@ -140,41 +178,8 @@
 	</script>
 	
 	<script type="text/javascript">
-		$(document).ready(function(){
-			
-			$("#allDepositCheckboxV2").change(function(){
-				var usingpoint = <%=totalPrice - acc.getAcc_point()%>;
-				var point = $("#point").val();
-				var point2 = <%=acc.getAcc_point()%>;
-				var originprice = <%=totalPrice%>;
-									
-				var numformat = "<fmt:formatNumber>${pvo.prod_price}</fmt:formatNumber>원";	
-				var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
-				var res = "<fmt:formatNumber><%=totalPrice - acc.getAcc_point()%></fmt:formatNumber>원";
-									
-				if($("#allDepositCheckboxV2").is(":checked") == true){
-					if(originprice < point){
-						$("#allDepositCheckboxV2").prop("checked", false);
-							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else if(originprice < 50000){
-						$("#allDepositCheckboxV2").prop("checked", false);
-						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else{
-						$("#point2").html(numformat_point);
-						$("#totalPrice").html(res);
-						$("#point").val("0");
-					}
-				}else{
-					$("#totalPrice").html(numformat);
-					$("#point2").empty();
-					$("#point").val(point2);
-				}
-			});
-		});
-	</script>
-	
-	<script type="text/javascript">
 		
+	
 	</script>
 	
 	<script type="text/javascript">
@@ -339,15 +344,14 @@
 
 			<!-- 주문자 정보 입력 -->
 			<form id="form" name="form">
-			
 				<div class="order-write">
 					<h5>주문고객 / 배송지 정보</h5>
 					<dl class="order-form">
 						<dt>주문고객</dt>
 						<dd class="user-info">
-							<span id="customerNameArea"><%=acc.getAcc_name()%></span><span
-								id="customerMobileNumberArea"><%=acc.getAcc_phone()%></span><span
-								id="customerEmailArea"><%=acc.getAcc_email()%></span>
+							<span id="customerNameArea"><%=acc.getAcc_name()%></span>
+							<span id="customerMobileNumberArea"><%=acc.getAcc_phone()%></span>
+							<span id="customerEmailArea"><%=acc.getAcc_email()%></span>
 						</dd>
 						<dt class="mb-22">
 							받는분<em class="required" aria-required="true">필수</em>
@@ -430,40 +434,8 @@
 									<option value="019">019</option>
 								</select> 
 								<input name="cellPhone2" type="tel" maxlength="4" 
-								value="" onKeyup = "phone"> 
-								<input name="cellPhone3" type="tel" maxlength="4" value="">
-							</div>
-						</dd>
-						<dt>전화번호</dt>
-						<dd>
-							<div class="col-phone">
-								<input type="hidden" name="phone">
-								<select name="phone01">
-									<option value="02">02</option>
-									<option value="031">031</option>
-									<option value="032">032</option>
-									<option value="033">033</option>
-									<option value="041">041</option>
-									<option value="042">042</option>
-									<option value="043">043</option>
-									<option value="050">050</option>
-									<option value="051">051</option>
-									<option value="052">052</option>
-									<option value="053">053</option>
-									<option value="054">054</option>
-									<option value="055">055</option>
-									<option value="061">061</option>
-									<option value="062">062</option>
-									<option value="063">063</option>
-									<option value="064">064</option>
-									<option value="070">070</option>
-									<option value="010">010</option>
-									<option value="011">011</option>
-									<option value="016">016</option>
-									<option value="0130">0130</option>
-									</select>
-									<input name="phone02" type="tel" maxlength="4" value="">
-									<input name="phone03" type="tel" maxlength="4" value="">
+								value="<%=arr[1] %>" onKeyup = "phone"> 
+								<input name="cellPhone3" type="tel" maxlength="4" value="<%=arr[2]%>">
 							</div>
 						</dd>
 
@@ -487,25 +459,22 @@
 						</dd>
 					</dl>
 				</div>
-			<!-- </form> -->
-
 			<!-- 포인트 사용 -->
-			<!-- <form> -->
 				<div class="order-write sale-select">
 					<br>
 					<!-- 예치금 -->
 					<dt>적립금</dt>
 					<div>
-						<input type="text" value = "" id = "point" 
-						style="text-align: right;" onkeyup="usingpoint()" />원&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" value = "<%=acc.getAcc_point()%>" id = "point" 
+						style="text-align: right;" readonly />원&nbsp;&nbsp;&nbsp;&nbsp;
+						
 						<span class="checkbox">
 						<input name="allDepositCheckbox" type="checkbox" id="allDepositCheckboxV2"><i></i>
 						</span>
 						<label for="allDepositCheckboxV2">모두사용</label>
 					</div>
-					
-			<!-- </form>
- -->
+			 </form>
+ 
 
 			<!-- 결제수단 선택 폼 -->
 			<!-- <form> -->

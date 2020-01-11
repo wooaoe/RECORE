@@ -3,18 +3,18 @@
     
     <%@ page import = "com.mvc.vo.Vo_Product" %>
     <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+    <%@ page import = "com.mvc.vo.Vo_Account" %>
 	<%@ page import = "java.util.List" %>
 	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
 	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
 	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
 	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
 	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
 	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
-    
-    
     
 
 <!DOCTYPE html>
@@ -40,13 +40,11 @@
  	function afterorder(){
  		
  		var url = "Product.do?command=payComplete&pseq=" + <%=prod_no%> + "&prod_id=" + <%=prod_id%> + 
- 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc_no%> + "&amount=" + <%=amount%>;
- 		
+ 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%>;
+ 			 	
  		opener.location.href = url;
  		window.close();
  	}
- 
- 
 	
  	$(document).ready(function(){
  		
