@@ -141,7 +141,7 @@ public class Account_Controller extends HttpServlet {
 			String acc_phone1 = request.getParameter("mobile1");
 			String acc_phone2 = request.getParameter("mobile2");
 			String acc_phone3 = request.getParameter("mobile3");
-			String acc_phone = acc_phone1+acc_phone2+acc_phone3;
+			String acc_phone = acc_phone1+"-"+acc_phone2+"-"+acc_phone3; ;
 			String acc_email = request.getParameter("email");
 			String acc_zipcode = request.getParameter("zipNo");
 			String acc_addr = request.getParameter("roadAddrPart1");
@@ -172,7 +172,7 @@ public class Account_Controller extends HttpServlet {
 			String acc_phone1 = request.getParameter("mobile1");
 			String acc_phone2 = request.getParameter("mobile2");
 			String acc_phone3 = request.getParameter("mobile3");
-			String acc_phone = acc_phone1+acc_phone2+acc_phone3;
+			String acc_phone = acc_phone1+"-"+acc_phone2+"-"+acc_phone3; ;
 			String acc_email = request.getParameter("email");
 			String acc_zipcode = request.getParameter("zipNo");
 			String acc_addr = request.getParameter("roadAddrPart1");

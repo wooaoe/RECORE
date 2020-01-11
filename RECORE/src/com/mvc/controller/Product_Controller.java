@@ -229,32 +229,13 @@ public class Product_Controller extends HttpServlet {
 			
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
 			System.out.println("pseq : " + pseq);
-			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
-			System.out.println("컨트롤러 prod_id : " + prod_id);
-			int amount = Integer.parseInt(request.getParameter("amount"));
-			System.out.println("컨트롤러 prod_amount : " + amount);
-			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
-			System.out.println("컨트롤러 acc_no : " + acc_no);
-			int total = Integer.parseInt(request.getParameter("totalPrice"));
-			System.out.println("컨트롤러 prod_total : " + total);
 			
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
-			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
-//			String cusinfo = request.getParameter("accinfo");
-//			System.out.println("컨트롤러의 cusinfo : " + "cusinfo");
-			
-			
-			dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
-			
-		} else if(command.equals("payComplete")) {
-			
-			int pseq = Integer.parseInt(request.getParameter("pseq"));
-			System.out.println("pseq : " + pseq);
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			System.out.println("컨트롤러 prod_id : " + prod_id);
 			int amount = Integer.parseInt(request.getParameter("amount"));
@@ -264,18 +245,115 @@ public class Product_Controller extends HttpServlet {
 			int total = Integer.parseInt(request.getParameter("totalPrice"));
 			System.out.println("컨트롤러 prod_total : " + total);
 			
-			boolean onum = dao.O_insert(acc); //Vo_Account 객체를 매개변수로 넣어줌 --> 파라미터 값으로 뭘 어떻게 넣어줘야하지???
+			int acc_point = Integer.parseInt(request.getParameter("acc_point"));
+			System.out.println("kakaocall의 accpoint : " + acc_point);
+			
+			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
+			request.setAttribute("orderlist", orderlist);
+			System.out.println("컨트롤러의 orderlist : " + orderlist);
+			
+			String resinfo = request.getParameter("acc_addrs");
+			System.out.println("컨트롤러의 resinfo : " + resinfo);
+			
+			String info2[] = resinfo.split(",");
+			
+			for(int i = 0; i < info2.length; i++) {
+			System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
+			}
+			
+			boolean onum = dao.O_insert(acc.getAcc_no(), info2, acc_point);
 			
 			if(onum) {
+				dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
+			}else {
+				jsResponse("결제 요청에 실패하였습니다!", "Product.do?command=ProdDetail&pseq="+ pseq + "&catdno=" + pvo.getProd_catd(), response);
+			}
+			
+		} else if(command.equals("payComplete")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			
+			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+			System.out.println("컨트롤러 prod_id : " + prod_id);
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			System.out.println("컨트롤러 prod_amount : " + amount);
+			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
+			System.out.println("컨트롤러 acc_no : " + acc_no);
+			int total = Integer.parseInt(request.getParameter("totalPrice"));
+			System.out.println("컨트롤러 prod_total : " + total);
+			
+			int acc_point = Integer.parseInt(request.getParameter("acc_point"));
+			System.out.println("kakaocall의 accpoint : " + acc_point);
+			
+			String resinfo = request.getParameter("acc_addrs");
+			System.out.println("컨트롤러의 resinfo : " + resinfo);
+			
+			String info2[] = resinfo.split(",");
+			
+			for(int i = 0; i < info2.length; i++) {
+			System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
+			}
+			
+			int order_no = Integer.parseInt(request.getParameter("order_no"));
+			System.out.println("컨트롤러의 order_no : " + order_no);
+			
+			Vo_Order_Num order_num = dao.Order_selectOne(order_no);
+			request.setAttribute("order_num", order_num);
+			System.out.println("컨트롤러의 order_num : " + order_num);
+			
+			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
+			request.setAttribute("orderlist", orderlist);
+			System.out.println("컨트롤러의 orderlist : " + orderlist);
+			
+			boolean pnum = dao.O_insert(order_no, prod_id, amount, total);
+			
+			//Product.do?command=Order&pseq=170&color=BLACK&size=FREE&product-quantity=1&total=58000
+			//<% String[] color = request.getParameterValues("color");%>
+//			<% String[] size = request.getParameterValues("size");%>
+//			<% int amount = Integer.parseInt(request.getParameter("product-quantity"));	%>
+//			<% int totalPrice = Integer.parseInt(request.getParameter("total"));%>
+			
+			if(pnum) {
 				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
 			}else {
-				jsResponse("결제 요청에 실패하였습니다!", "Product.do?command=kakaopaycall&pseq="+ pseq 
-						+ "&acc_no=" + acc_no + "&amount=" + amount 
-						+ "&totalPrice=" + total + "&prod_id=" + prod_id, response);
+				jsResponse("결제 실패!", "Product.do?command=ProdDetail&pseq="+ pseq + "&catdno=" + pvo.getProd_catd() , response);
 			}
 			
 			
-		} else if(command.equals("cartComplete")) {
+		} else if(command.equals("Ordercomplete")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			
+			int order_no = Integer.parseInt(request.getParameter("order_no"));
+			System.out.println("컨트롤러의 order_no : " + order_no);
+			
+			Vo_Order_Num order_num = dao.Order_selectOne(order_no);
+			request.setAttribute("order_num", order_num);
+			System.out.println("컨트롤러의 order_num : " + order_num);
+			
+			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
+			request.setAttribute("orderlist", orderlist);
+			System.out.println("컨트롤러의 orderlist : " + orderlist);
+			
+			
+		}
+		
+		
+		else if(command.equals("cartComplete")) {
 			
 			String tmp = request.getParameter("Arr_order");
 			System.out.println("컨트롤러의  tmp : " + tmp);

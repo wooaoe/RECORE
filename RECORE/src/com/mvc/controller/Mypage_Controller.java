@@ -57,6 +57,7 @@ public class Mypage_Controller extends HttpServlet {
          dispatch("./RECOREMain/RECOREMypage/Mypage_Main.jsp", request, response);
          
       }else if(command.equals("orderlist")) { //주문내역조회
+    	  
          if(vo.getAcc_no() == 1) { //관리자 계정일 때
             List list_order = mdao.selectAllOrder();
             int pageNo = Integer.parseInt(request.getParameter("pageno"));

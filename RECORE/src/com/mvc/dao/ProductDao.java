@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
@@ -33,9 +34,13 @@ public interface ProductDao {
 	
 	public Vo_Category_Detail CD_selectOne(Vo_Product pvo); //카테고리 선택 조회
 	
-	public Vo_Account Cus_selectOne(int acc_no);
-	
 	public ArrayList<Vo_Prod_option> po_selectOne(Vo_Product pvo); //상품 옵션 선택 조회
+	
+	public List<Vo_Order_Num> Order_selectAll(); //주문번호 찾아서 prod_order insert
+	
+	public Vo_Order_Num Order_selectOne(int order_no); //주문번호 찾아서 prod_order insert
+	
+	public Vo_Order ProdOrder_selectOne(int order_no); //주문번호 찾아서 prod_order 조회 
 	
 	public Map choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo);
 
@@ -43,7 +48,7 @@ public interface ProductDao {
 	
 	public boolean O_insert(int order_no, int prod_id, int price, int amount); //상품 결제페이지 (바로구매) 
 	
-	public boolean O_insert(Vo_Account accval); //상품 결제페이지 (바로구매) 
+	public boolean O_insert(int acc_no, String acc_addrs[], int acc_pont); //상품 결제페이지 (바로구매) 
 	
 	public boolean O_insert(String prod_id[], int price, Vo_Account acc, String prod_amount[]); //상품 결제페이지 (전체구매) 
 

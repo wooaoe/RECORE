@@ -4,10 +4,12 @@
     <%@ page import = "com.mvc.vo.Vo_Product" %>
     <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
     <%@ page import = "com.mvc.vo.Vo_Account" %>
+    <%@ page import = "com.mvc.vo.Vo_Order_Num" %>
 	<%@ page import = "java.util.List" %>
 	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% List<Vo_Order_Num> olist = (List)request.getAttribute("orderlist"); %>
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
 	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
@@ -15,6 +17,13 @@
 	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
 	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
 	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
+	<% int acc_point = Integer.parseInt(request.getParameter("acc_point"));%>
+    <% String acc_addrs[] = request.getParameterValues("acc_addr"); %>
+    <%! int order_no; %>
+    <% for(int i = 0; i < olist.size(); i++){
+    		order_no = olist.get(i).getOrder_no();
+    	}
+    %>
     
 
 <!DOCTYPE html>
@@ -39,9 +48,14 @@
 
  	function afterorder(){
  		
+ 		var accinfo = new Array();
+		 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
+		 
  		var url = "Product.do?command=payComplete&pseq=" + <%=prod_no%> + "&prod_id=" + <%=prod_id%> + 
- 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%>;
- 			 	
+ 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc.getAcc_no()%> + 
+ 					"&amount=" + <%=amount%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc_point%> + 
+ 					"&order_no=" + <%=order_no%>;
+ 			 		
  		opener.location.href = url;
  		window.close();
  	}

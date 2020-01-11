@@ -6,16 +6,10 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ page import="com.mvc.vo.Vo_Category_Detail"%>
-    <%@ page import="com.mvc.vo.Vo_Order_Num"%>
-    <%@ page import="com.mvc.vo.Vo_Order"%>
     <%@ page import="com.mvc.vo.Vo_Product"%>
     <%@ page import = "java.util.List"%>
     
     <%Vo_Account sessionVo = (Vo_Account) session.getAttribute("vo");%>
-    <% List<Vo_Order_Num> olist = (List)request.getAttribute("orderlist"); %>
-    <% int order_no = Integer.parseInt(request.getParameter("order_no")); %>
-    <% int acc_point = Integer.parseInt(request.getParameter("acc_point"));%>
-    
 
 <!DOCTYPE html>
 <html>
@@ -100,14 +94,12 @@
          <strong>고객님의 주문이 완료 되었습니다.</strong>
             	주문내역 및 배송에 관한 안내는 <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">주문조회</a> 를 통하여 확인 가능합니다.
         </p>
-            <c:forEach var = "order" items = "${olist}">
         <ul>
-			<li>주문번호 : <strong>${order.order_no}</strong>
+			<li>주문번호 : <strong>20200105-0000241</strong>
 			</li>
-            <li>주문일자 : <span>${order.order_date}</span>
+            <li>주문일자 : <span>2020-01-05 19:22:13</span>
 			</li>
         </ul>
-			</c:forEach>
 	</div>
 	
 	<div class="orderArea">
@@ -123,22 +115,18 @@
 				<col style="width:auto;">
 				</colgroup>
 		<tbody>
+		
 		<tr>
 		<th scope="row">최종결제금액</th>
-		   <c:set var = "i" value = "0"></c:set>
-		   <c:forEach var = "price" items = "${olist}">
            <td>
-             <strong class="txtEm txt18" id = "aftertotal">
-             ${price.get(i).getOlist().get(i).getOrder_price() - price.get(i).getOrder_point()}</strong><strong class="txtEm">원</strong> 
+             <strong class="txtEm txt18" id = "aftertotal">15,000</strong><strong class="txtEm">원</strong> 
              <span class="txtEm displaynone"></span>
            </td>
-           <c:set var = "i" value = "${olist.size()}"></c:set>
-           </c:forEach>
         </tr>
 		<tr>
 		<th scope="row">결제수단</th>
            <td>
-             <strong><span>카카오페이 결제</span></strong>
+             <strong><span>카드 결제</span></strong>
              
             </td>
         </tr>
@@ -178,25 +166,13 @@
           </tr>
           
           
-		<tfoot class="right">
-		
-		<tr>
-		   <c:set var = "i" value = "0"></c:set>
-		   <c:forEach var = "price" items = "${olist}">
+		<tfoot class="right"><tr>
 			<td colspan="7">
-				<span class="gLeft">[기본배송]</span> 상품구매금액 
-				<strong>${price.get(i).getOlist().get(i).getOrder_price()}
-				<span class="displaynone"> (0)</span>
-				</strong>
-				<span class="displaynone"></span>
-				 + 배송비 0 <span class="displaynone"> - 상품할인금액 ${price.get(i).getOrder_point()}</span> = 합계 : 
-				 <strong class="txtEm gIndent10">
-		 		<span class="txt18">${price.get(i).getOlist().get(i).getOrder_price() - price.get(i).getOrder_point()}</span>원
-		 		</strong> 
-		 		<span class="displaynone"></span>
+				<span class="gLeft">[기본배송]</span> 상품구매금액 <strong>15,000
+				<span class="displaynone"> (0)</span></strong><span class="displaynone"></span>
+				 + 배송비 0 <span class="displaynone"> - 상품할인금액 0</span> = 합계 : <strong class="txtEm gIndent10">
+		 		<span class="txt18">17,500</span>원</strong> <span class="displaynone"></span>
 			</td>
-			 <c:set var = "i" value = "${olist.size()}"></c:set>
-           </c:forEach>
 
 		</tr>
 		</tfoot>
@@ -219,49 +195,19 @@
               </div>
               </div>
            	</td>
-                        
             <td>1</td>
             <td><span class="txtInfo">-</span></td>
             <td><div class="txtInfo">기본배송</div></td>
             <td class="right">
 			<strong>15,000원</strong>
 			
-			<div class="displaynone"></div>
+			 <div class="displaynone"></div>
 			</td>
             </tr>
-			<tr class="xans-record-">
-					
-             <td class="thumb">
-                 <a href="/product/detail.html?product_no=303&amp;cate_no=91">
-                 <img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" 
-                   onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
-                 <td class="left">
-                 <strong class="name">
-                 <a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약
-                 </a>
-                 </strong>
-            <div class="option "></div>
-               <p class="gBlank5 displaynone">무이자할부 상품</p>
-             </td>
-                        
-             <td class="right">
-               <div class="">
-               <strong>0원</strong>
-               <div class="displaynone">
-               </div>
-               </div>
-             </td>
-             <td>1</td>
-             <td><span class="txtInfo">-</span></td>
-             <td><div class="txtInfo">기본배송</div></td>
-                        <td class="right">
-                        
-			 <strong>0원</strong><div class="displaynone"></div>
-			 </td>
-             </tr>
+            
 			</tbody>
 			</table>
-			</div>
+			</div> 
     </div>
     
  	<div class="orderArea displaynone">

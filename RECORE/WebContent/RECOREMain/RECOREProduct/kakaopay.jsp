@@ -17,6 +17,8 @@
 	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
 	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
 	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
+	<% int point = Integer.parseInt(request.getParameter("acc_point")); %>
+	<% String acc_addrs[] = request.getParameterValues("acc_addr"); %>
 
     
 <!DOCTYPE html>
@@ -31,7 +33,7 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <link rel="stylesheet" type="text/css" href="//t1.daumcdn.net/kakaopay/tesla/20191122/pg-web/css/common.min.css">
-    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+ <!--    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script src="//t1.daumcdn.net/kakaopay/tesla/20180108/pg_web/js/lib/jquery.min.js"></script>
     
 
@@ -41,9 +43,12 @@
 
 <script type="text/javascript" src="/dist/js/v2/min_user_info.js?v=99"></script>
 
- <script src="//t1.daumcdn.net/kakaopay/tesla/20180108/pg_web/js/lib/jquery.min.js"></script>
+ <script src="//t1.daumcdn.net/kakaopay/tesla/20180108/pg_web/js/lib/jquery.min.js"></script> -->
+ 
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     
 <script type="text/javascript">
+	
 	function checkval(){
 		
 		var phone = $("#userPhone").val();
@@ -68,35 +73,24 @@
 		}
 		if(birth.length == 6 && phone.length == 11){
 			$("#request").css("background-color", "#ffe900").css("color", "black");
+			<%-- alert(<%=point%>); --%>
+			
 		}
 	}
 	$(document).ready(function(){
 		
 		$("#request").click(function(){
-			
-			 var accinfo = new Array();
-			 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
-			
-			var url = "Product.do?command=kakaopaycall2&pseq=" + <%=prod_no%> + "&acc_no=" +
-						<%=acc.getAcc_no()%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
-						"&prod_id=" + <%=prod_id%> + "&accinfo=" + accinfo;
-						
-						
-			/* a$.ajax({
-				url: url, 
-				dataType:"json",
-				success: function(msg){
-					$("#aftertotal").text(msg.totalPrice);
-				 		alert("재고 수정이 완료되었습니다.");
-				 },
-				 error:function(){
-				 	alert("재고 수정에 실패하였습니다. 다시 시도해주세요.");
-				 }
-			}) */				
-			
-			location.href = url;
+			 
+		 var accinfo = new Array();
+		 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
+		
+		 var url = "Product.do?command=kakaopaycall2&pseq=" + <%=prod_no%> + "&acc_no=" +
+					<%=acc.getAcc_no()%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
+					"&prod_id=" + <%=prod_id%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=point%>; 
 					
-		});
+		
+		location.href = url;
+		})
 	});
 	
 	
@@ -153,7 +147,7 @@
 									</li>
 								</ul>
 
-								<button type="button" id = "request" class="btn_payask">결제요청</button>
+								<button type="button" id = "request" class="btn_payask" onclick = "request();">결제요청</button>
 								
 							</fieldset>
 						</form>

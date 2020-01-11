@@ -157,11 +157,52 @@
 			var popY = winY + (winHeight - 569)/2;
 			var $totalPrice = $("#totalPrice").val();
 			
-			var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
-						+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
-						+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%>;
-						
+		<%-- 	var decode1 = encodeURI(<%=acc.getAcc_zipcode()%> , "UTF-8");
+			var decode2 = encodeURI(<%=acc.getAcc_addr()%> , "UTF-8");
+			var decode3 = encodeURI(<%=acc.getAcc_addr2()%> , "UTF-8"); --%>
+			
+			var accinfo = new Array();
+			 accinfo = ['<%=acc.getAcc_zipcode()%>', '<%=acc.getAcc_addr()%>', '<%=acc.getAcc_addr2()%>'];
+			 
+			var zeropoint = 0;
+			
+			if($("#allDepositCheckboxV2").is(":checked") == false){
+				
+				var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
+				+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
+				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + "&acc_addr=" + accinfo
+				+ "&acc_point=" + zeropoint;
+				
 				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+				
+							/* $.ajax({
+								   type : "POST",
+								   url : "test.do",
+								   async : false,
+								   data : {code: code, cls_code: cls_code, admin_id: admin_id, before_admin_id: before_admin_id} ,
+								   dataType : "json",
+								   cache: false,
+								   success: function(data){    
+								    alert("저장되었습니다.");
+								    },
+								   error : function (data) {
+								    alert('죄송합니다. 잠시 후 다시 시도해주세요.');
+								    return false;
+								   }  
+								  }); */ 			
+							
+		
+			}else{
+				
+				var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
+				+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
+				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + 
+				"&acc_zipcode=" + <%=acc.getAcc_zipcode()%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc.getAcc_point()%>;
+				
+				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+				
+			}
+						
 		}
 		
 	} 
