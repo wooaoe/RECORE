@@ -5,7 +5,7 @@
 	<%response.setContentType("text/html; charset=UTF-8");%>
 	<%@ page import = "com.mvc.vo.Vo_Account" %>
     
-    <% Vo_Account acc = (Vo_Account)session.getAttribute("acc"); %>
+    <% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
     <% int total = 40000; %>
 	
 <!DOCTYPE html>

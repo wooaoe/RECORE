@@ -14,9 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mvc.vo.Vo_Account;
-import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
-import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
@@ -258,8 +256,6 @@ public class ProductDaoImp implements ProductDao {
 		return cdlist;
 	}
 
-	
-
 	@Override
 	public Vo_Category_Detail CD_selectAll2(int catdno) {
 
@@ -401,14 +397,16 @@ public class ProductDaoImp implements ProductDao {
 
 		return povo;
 	}
+	
+	
 
 	@Override
-	public Map<String, String> choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo) {
+	public Map<List, String> choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
-		Map<String, String> choice = new HashMap<>();
+		Map<List, String> choice = new HashMap<>();
 		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
 
 		String sql = "SELECT * FROM PROD_OPTION WHERE PROD_NO = ?";
@@ -427,7 +425,7 @@ public class ProductDaoImp implements ProductDao {
 
 			for (int i = 0; i < polist.size(); i++) {
 
-				choice.put(polist.get(i).getProd_color(), polist.get(i).getProd_size());
+				choice.put(polist, polist.get(i).getProd_size());
 			}
 			System.out.println("productimp choice map 값 : " + choice);
 
@@ -496,18 +494,18 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public boolean O_insert(int prod_id, int price, Vo_Account acc, int amount) {
+	public boolean O_insert(int order_no, int prod_id, int amount, int price) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res = 0;
 
-		String sql = "INSERT INTO PROD_ORDER VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, 0, ?, N)";
-		String sql2 = "INSERT INTO ORDER_NUM VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
+		String sql = "INSERT INTO PROD_ORDER VALUES(?, ?, ?, ?, '0', ?, 'N')";
 
 		try {
 
 			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, order_no);
 			pstm.setInt(1, prod_id);
 			pstm.setInt(2, amount);
 			pstm.setInt(3, price);
@@ -517,22 +515,38 @@ public class ProductDaoImp implements ProductDao {
 
 			if (res > 0) {
 				commit(con);
+				System.out.println("insert 성공");
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstm, con);
 		}
 
+		return res > 0 ? true : false;
+	}
+
+	@Override
+	public boolean O_insert(Vo_Account session) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		int res = 0;
+
+		String sql = "INSERT INTO ORDER_NUM VALUES(ORDER_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
+
 		try {
-			pstm = con.prepareStatement(sql2);
-			pstm.setInt(1, acc.getAcc_no());
-			pstm.setString(2, acc.getAcc_zipcode());
-			pstm.setString(3, acc.getAcc_addr());
-			pstm.setString(4, acc.getAcc_addr2());
-			pstm.setInt(5, price);
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, session.getAcc_no());
+			pstm.setString(2, session.getAcc_zipcode());
+			pstm.setString(3, session.getAcc_addr());
+			pstm.setString(4, session.getAcc_addr2());
+			pstm.setInt(5, session.getAcc_point());
 
 			if (res > 0) {
 				commit(con);
+				System.out.println("insert 성공");
 			}
 
 		} catch (SQLException e) {
@@ -547,13 +561,9 @@ public class ProductDaoImp implements ProductDao {
 	@Override
 	public boolean O_insert(String[] prod_id, int price, Vo_Account acc, String[] prod_amount) {
 
-		
-		
-		
 		return false;
 	}
-	
-	
+
 	@Override
 	public boolean P_insertCart(int acc_no, int prod_id, int amount) {
 
@@ -566,7 +576,7 @@ public class ProductDaoImp implements ProductDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acc_no);
 			pstmt.setInt(2, prod_id);
-			pstmt.setInt(3, amount); 
+			pstmt.setInt(3, amount);
 			res = pstmt.executeUpdate();
 
 			if (res > 0) {
@@ -689,5 +699,6 @@ public class ProductDaoImp implements ProductDao {
 		return (res > 0) ? true : false;
 	}
 
+	
 
 }

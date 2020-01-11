@@ -3,7 +3,19 @@
     
     <%@ page import = "com.mvc.vo.Vo_Product" %>
     <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
-    <%@ page import="com.mvc.vo.Vo_Account"%>
+	<%@ page import = "java.util.List" %>
+	
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	
+	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
+	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
+	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
+	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
+	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
+    
+    
+    
 
 <!DOCTYPE html>
 <html>
@@ -22,28 +34,32 @@
 
 <script src="/dist/js/v2/min_web_waiting.js?v=99"></script>
 
-	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo");%>
-	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo");%>
 	
  <script type="text/javascript">
-	$(document).ready(function(){
-		<%-- $("#complete").click(function(){
-			var prod_no = <%=pvo.getProd_no()%>
-			alert(prod_no);
-			
-			opener.location.href = "../../Product.do?command=payComplete&pseq=" + prod_no; 
-			window.close();
-		}); --%>
-	$("#close").click(function(){
-		var result = confirm('카카오페이 결제를 취소하시겠습니까?');
-		if(result) { 
-			alert("취소 되었습니다.");
-			self.close();
-		} else { 
-			
+
+ 	function afterorder(){
+ 		
+ 		var url = "Product.do?command=payComplete&pseq=" + <%=prod_no%> + "&prod_id=" + <%=prod_id%> + 
+ 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc_no%> + "&amount=" + <%=amount%>;
+ 		
+ 		opener.location.href = url;
+ 		window.close();
+ 	}
+ 
+ 
+	
+ 	$(document).ready(function(){
+ 		
+ 		$("#close").click(function(){
+			var result = confirm('카카오페이 결제를 취소하시겠습니까?');
+			if(result) { 
+				alert("취소 되었습니다.");
+				self.close();
+			} else { 
 		}
 	});
-	});
+ });
+	
 	
 </script>
 
@@ -68,7 +84,7 @@
 							<li><em class="emph_num">2</em><em class="emph_info">하단의 <span>결제</span> 완료 버튼</em>을 눌러주세요.</li>
 						</ol>
 						<div class="area_btn">
-							<button type="submit" class="btn_submit" 
+							<button type="button" class="btn_submit" 
 							id = "complete" onclick = "javascript: afterorder();">결제 완료</button>
 						</div>
 					</fieldset>

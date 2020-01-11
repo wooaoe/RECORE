@@ -1,5 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%request.setCharacterEncoding("UTF-8");%>
+	<%response.setContentType("text/html; charset=UTF-8");%>
+	
+	<%@ page import = "com.mvc.vo.Vo_Product" %>
+	<%@ page import = "com.mvc.vo.Vo_Prod_option" %>
+	<%@ page import = "java.util.List" %>
+	
+	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	
+	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
+	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
+	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
+	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
+	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
+
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,18 +61,29 @@
 			$("#request").css("background-color", "#ffe900").css("color", "black");
 		}
 	}
-</script>
-<script type="text/javascript">
-/* 	$(document).ready(function(){
-	$("#request").click(function(){
-		location.href = "../../Product.do?command=kakaopaycall";
+	$(document).ready(function(){
+		
+		$("#request").click(function(){
+			
+			var url = "Product.do?command=kakaopaycall2&pseq=" + <%=prod_no%> + "&acc_no=" +
+						<%=acc_no%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
+						"&prod_id=" + <%=prod_id%>;
+			
+			location.href = url;
+			
+			
+					
+					
+		});
 	});
-	}) */
-	</script>    
+	
+	
+</script>
 
 </head>
 <body>
 
+	
 
 <div class="kakaopay_layer">
 		<!-- 팝업 시작 -->
@@ -76,8 +104,10 @@
 						<strong class="logo_pay"><img src="//t1.daumcdn.net/kakaopay/tesla/20181010/pg_web/images/logo_pay.png" class="img_g" alt="카카오페이"></strong>
 						<p class="desc_payask">결제요청 메시지 전송을 위해<br>아래 정보를 입력해주세요.</p>
 						
-						<form id="userPost" method="post" action="../../Product.do">
-						<input type = "hidden" name = "command" value = "kakaopaycall"/>
+						<form id="userPost" method="get" action="../../Product.do">
+						<input type = "hidden" name = "command" value = "kakaopaycall2"/>
+						
+						
 						
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>
@@ -103,7 +133,7 @@
 									</li>
 								</ul>
 
-								<button type="submit" id = "request" class="btn_payask">결제요청</button>
+								<button type="button" id = "request" class="btn_payask">결제요청</button>
 								
 							</fieldset>
 						</form>

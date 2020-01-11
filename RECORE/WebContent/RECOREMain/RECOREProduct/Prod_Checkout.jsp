@@ -15,7 +15,22 @@
 <%@ page import="com.mvc.vo.Vo_Account"%>
 <%@ page import="com.mvc.vo.Vo_Order_Num"%>
 <%@ page import="com.mvc.vo.Vo_Order"%>
+<%@ page import="java.util.List"%>
 
+	<% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%>
+	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
+	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
+	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
+	<% String[] arr = acc.getAcc_phone().split("-");%>
+	<% String[] color = request.getParameterValues("color");%>
+	<% String[] size = request.getParameterValues("size");%>
+	<% int amount = Integer.parseInt(request.getParameter("product-quantity"));	%>
+	<% int totalPrice = Integer.parseInt(request.getParameter("total"));%>
+	<%! int prod_id; %>
+	<% for(int i = 0; i < povo.size(); i++){
+		prod_id = povo.get(i).getProd_id();
+		}
+	%>
 
 <!DOCTYPE html>
 <html>
@@ -76,18 +91,10 @@
 }
 </style>
 
-	<% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%>
-	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
-	<% String[] arr = acc.getAcc_phone().split("-");%>
-	<% String[] color = request.getParameterValues("color");%>
-	<% String[] size = request.getParameterValues("size");%>
-	<% int amount = Integer.parseInt(request.getParameter("product-quantity"));	%>
-	<% int totalPrice = Integer.parseInt(request.getParameter("total"));%>
-	
 
 	<script type="text/javascript">
     
-	function payment(){
+	 function payment(){
 		
 		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
 			alert("동의란을 체크하세요.");
@@ -104,9 +111,15 @@
 
 			var popX = winX + (winWidth - 434)/2;
 			var popY = winY + (winHeight - 569)/2;
-				window.open("RECOREMain/RECOREProduct/kakaopay.jsp","poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+			
+			var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
+						+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
+						+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%>;
+						
+				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
 		}
-	}
+		
+	} 
 	function goPopup(){
 		
 		var popupX = (document.body.offsetWidth / 2) - (570 / 2);
@@ -143,7 +156,7 @@
 					if(originprice < point){
 						$("#allDepositCheckboxV2").prop("checked", false);
 							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else if(origin < 50000){
+					}else if(originprice < 50000){
 						$("#allDepositCheckboxV2").prop("checked", false);
 						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
 					}else{
@@ -158,6 +171,10 @@
 				}
 			});
 		});
+	</script>
+	
+	<script type="text/javascript">
+		
 	</script>
 	
 	<script type="text/javascript">
@@ -188,18 +205,21 @@
 				$("#addrDetail").val('');
 			}
 			});
-			
 			$("#new_addrV2").click(function(){
 				goPopup();
 		});
 	});
 		
 	</script>
+	
+	
+	
 </head>
 
 
 <body class="series-site V2 layout-width-1000">
 
+	
 
 	<!-- header -->
 	<%@ include file="/header.jsp"%>
@@ -234,6 +254,7 @@
 						</thead>
 
 						<!-- 장바구니에 담았던 상품 정보 들어감 -->
+						
 						<tbody>
 							<tr>
 								<td class="thumb" style=""><a
@@ -318,7 +339,7 @@
 
 			<!-- 주문자 정보 입력 -->
 			<form id="form" name="form">
-
+			
 				<div class="order-write">
 					<h5>주문고객 / 배송지 정보</h5>
 					<dl class="order-form">
@@ -364,7 +385,7 @@
 								<div class="row">
 									<div class="col-2">
 										<input type="hidden" id="confmKey" name="confmKey" value="">
-										<input type="text" id="zipNo" name="zipNo" placeholder="우편번호" />
+										<input type="text" id="zipNo" name="zipNo" placeholder="우편번호" readonly="readonly"/>
 									</div>
 									<div class="col-3">
 										<button type="button" class="btn btn-line btn-small"
@@ -374,12 +395,12 @@
 								</div>
 								<div class="row">
 									<input type="text" id="roadAddrPart1" name="roadAddrPart1"
-										class="inputTypeText" placeholder="도로명주소"
+										class="inputTypeText" placeholder="도로명주소" readonly="readonly"
 										value="" />
 								</div>
 								<div class="row">
 									<input type="text" id="addrDetail" name="addrDetail"
-										placeholder="상세주소" value="" />
+										placeholder="상세주소" value="" readonly="readonly"/>
 								</div>
 							</dd>
 						</div>
@@ -408,9 +429,9 @@
 									<option value="018">018</option>
 									<option value="019">019</option>
 								</select> 
-								<input name="cellPhone2" type="tel" maxlength="4"
-									value="<%=arr[1]%>"> <input name="cellPhone3"
-									type="tel" maxlength="4" value="<%=arr[2]%>">
+								<input name="cellPhone2" type="tel" maxlength="4" 
+								value="" onKeyup = "phone"> 
+								<input name="cellPhone3" type="tel" maxlength="4" value="">
 							</div>
 						</dd>
 						<dt>전화번호</dt>
@@ -466,16 +487,16 @@
 						</dd>
 					</dl>
 				</div>
-			</form>
+			<!-- </form> -->
 
 			<!-- 포인트 사용 -->
-			<form>
+			<!-- <form> -->
 				<div class="order-write sale-select">
 					<br>
 					<!-- 예치금 -->
 					<dt>적립금</dt>
 					<div>
-						<input type="text" value = "<%=acc.getAcc_point()%>" id = "point" 
+						<input type="text" value = "" id = "point" 
 						style="text-align: right;" onkeyup="usingpoint()" />원&nbsp;&nbsp;&nbsp;&nbsp;
 						<span class="checkbox">
 						<input name="allDepositCheckbox" type="checkbox" id="allDepositCheckboxV2"><i></i>
@@ -483,11 +504,11 @@
 						<label for="allDepositCheckboxV2">모두사용</label>
 					</div>
 					
-			</form>
-
+			<!-- </form>
+ -->
 
 			<!-- 결제수단 선택 폼 -->
-			<form>
+			<!-- <form> -->
 				<div class="order-info" id="paymentMethodAreaV2">
 					<div class="way">
 						<h5>결제수단선택</h5>

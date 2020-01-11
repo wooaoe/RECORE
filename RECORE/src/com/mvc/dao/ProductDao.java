@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.mvc.vo.Vo_Account;
-import com.mvc.vo.Vo_Cart;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 import com.mvc.vo.Vo_Review;
@@ -39,7 +39,10 @@ public interface ProductDao {
 
 	public boolean P_insert(Vo_Product pvo); // 상품 등록
 	
-	public boolean O_insert(int prod_id, int price, Vo_Account acc, int amount); //상품 결제페이지 (바로구매) 
+	public boolean O_insert(int order_no, int prod_id, int price, int amount); //상품 결제페이지 (바로구매) 
+	
+	public boolean O_insert(Vo_Account session); //상품 결제페이지 (바로구매) 
+	
 	public boolean O_insert(String prod_id[], int price, Vo_Account acc, String prod_amount[]); //상품 결제페이지 (전체구매) 
 
 	public boolean P_insertCart(int acc_no, int prod_id, int amount); // 장바구니

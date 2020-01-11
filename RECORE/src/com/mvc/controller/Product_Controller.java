@@ -146,6 +146,10 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
+			
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout.jsp", request, response);
 			
 		} else if(command.equals("cartOrder")) {
@@ -212,9 +216,24 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
 			
+			dispatch("./RECOREMain/RECOREProduct/kakaopay.jsp", request, response);
 			
+		} else if(command.equals("kakaopaycall2")) {
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			request.setAttribute("pvo", pvo);
+			
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
+			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
 			
 			dispatch("./RECOREMain/RECOREProduct/kakaopay2.jsp", request, response);
 			
@@ -224,22 +243,42 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("컨트롤러 pseq : " + pseq);
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			System.out.println("컨트롤러 prod_id : " + prod_id);
-			int amount = Integer.parseInt(request.getParameter("prod_amount"));
+			int amount = Integer.parseInt(request.getParameter("amount"));
 			System.out.println("컨트롤러 prod_amount : " + amount);
-			int total = Integer.parseInt(request.getParameter("prod_total"));
+			int order_no = Integer.parseInt(request.getParameter("order_no"));
+			System.out.println("컨트롤러 acc_no : " + amount);
+			int total = Integer.parseInt(request.getParameter("totalPrice"));
 			System.out.println("컨트롤러 prod_total : " + total);
 			
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
-			boolean onum = dao.O_insert(prod_id, total, acc, amount);
+			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
+			request.setAttribute("povo", povo);
 			
-			if(onum) {
-				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
-			}else {
+			boolean onum = dao.O_insert(acc);
+			boolean oprod = dao.O_insert(order_no, prod_id, amount, total);
+			
+			for(int i = 0; i < povo.size(); i++) {
 				
-				jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq, response);
+				String color = povo.get(i).getProd_color();
+				String size = povo.get(i).getProd_size();
+				
+				if(onum) {
+					dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
+				}else {
+					jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq +
+							"&color=" + color + "&size=" + size + "&product-quantity=" + amount + 
+							"&total=" + total, response);
+				}
+				if(oprod) {
+					dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
+				}else {
+					jsResponse("결제에 실패했습니다!", "Product.do?command=Order&pseq=" + pseq, response);
+				}
+				
 			}
+			
 			
 			
 		} else if(command.equals("cartComplete")) {
