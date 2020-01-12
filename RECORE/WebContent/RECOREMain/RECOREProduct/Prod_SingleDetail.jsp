@@ -1,3 +1,7 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="com.mvc.vo.Vo_Prod_option"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -99,6 +103,128 @@
 </head>
 
 <body id="body">
+
+
+	    <div class="site-navbar-wrap" style="background-color: white;">
+      <div class="site-navbar-top">
+        <div class="container py-3">
+       
+        <!--@@ 로고 위치 @@-->
+        <br>
+        <div style = "text-align: center;"><a href = "<%=request.getContextPath()%>/RECOREMain/index.html">
+        <img alt="" src = "<%=request.getContextPath()%>/images/logo2.png"></a></div>
+        
+          <div class="row align-items-center">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+              <div class="d-flex ml-auto" style = "position:relative; left: 100px;" >
+               <form id="search" method="get" action="#" class="d-flex align-items-center ml-auto mr-4">
+                	<!-- <input type="text" name="query" placeholder="Search" />
+              		<a href="#search"> &nbsp; Search</a>  -->
+              	</form>
+              	
+              	<!-- 로그인 안되어있을 때 -->
+              	<c:if test="${empty vo }">
+                <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                 <span class="d-none d-md-inline-block" style="color:black;">로그인 &nbsp;&nbsp;</span>
+                 </a>
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Signup.jsp" class="d-flex align-items-center">
+                  <span class="d-none d-md-inline-block" style="color:black;">회원가입 &nbsp;&nbsp;</span></a>
+                  <br>
+                  <a href="<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp" class="d-flex align-items-center">
+                  <!-- <a href="RECOREMypage/Mypage_Main.jsp" class="d-flex align-items-center"> -->
+                  <span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+                  <a href = "<%=request.getContextPath()%>/RECOREMain/RECOREAccount/Acc_Login.jsp">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/>
+                  </a>
+                 </c:if>
+                 
+                 <!-- 로그인 되어있을 때 -->
+                  <c:if test="${!empty vo }">
+    				<a href="<%=request.getContextPath()%>/Account_Controller.do?command=logout" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">로그아웃&nbsp;&nbsp;</span></a>
+    				<a href="<%=request.getContextPath()%>/mypage.do?command=main" class="d-flex align-items-center">
+    				<span class="d-none d-md-inline-block" style="color:black;">마이페이지&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+    				<a href = "<%=request.getContextPath()%>/mypage.do?command=cartlist">
+                  <img class="d-none d-md-inline-block" src = "<%=request.getContextPath()%>/images/cart3.png"/></a>
+    			</c:if>
+                 
+                 
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <div class="site-navbar">
+        <div class="container py-1">
+          <div class="row align-items-center">
+            <div class="col-2">
+            </div>
+            <div class="col-10">
+              <nav class="site-navigation text-right" role="navigation">
+                <div class="container">
+                  <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+
+                  <ul class="site-menu js-clone-nav d-none d-lg-block" style = "position:relative; z-index: 1; left: 110px;">
+                    <li class="has-children">
+                      <a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1" style="color:black;">Funding</a>
+                      <ul class="dropdown arrow-top">
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=selectAllFunding&pageno=1">조회</a></li>
+                        <li><a href="<%=request.getContextPath()%>/funding.do?command=createfundingpage">등록</a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children">
+                    
+                      <a href= "<%=request.getContextPath()%>/Product.do?command=ProdSelectAll&pageno=1" style= "color:black;">Product</a>
+                      <ul class="dropdown arrow-top">
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=6&pageno=1">Bag/Acc</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/Product.do?command=ParentSelectAll&catdid=4&pageno=1">Clothing</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=7&pageno=1">Outer</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=8&pageno=1">Top</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=9&pageno=1">Bottom</a></li>                        	
+                        	</ul>
+                        </li>
+                        <li><a href="<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=10&pageno=1">Wallet</a></li>
+                        <li class = "has-children"><a href="<%=request.getContextPath()%>/Product.do?command=ParentSelectAll&catdid=6&pageno=1">Life</a>
+                        	<ul class = "dropdown arrow-down">
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=11&pageno=1">Supply</a></li>                        	
+								<li><a href = "<%=request.getContextPath()%>/Product.do?command=ChildSelectAll&catdno=12&pageno=1">Home</a></li>                        	
+                        	</ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li  class="has-children"><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1" style="color:black;">Issue</a>
+                    	<ul class="dropdown arrow-top">
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllNews&pageno=1">News</a></li>
+                        <li><a href="<%=request.getContextPath()%>/issue.do?command=selectAllExhibition&pageno=1">Exhibition</a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all" style="color:black;">Community</a>
+					    <ul class="dropdown arrow-top">
+					    <li><a href="<%=request.getContextPath()%>/qna.do?command=qna_list&catd=all">QnA</a></li>
+					    <li><a href="<%=request.getContextPath()%>/qna.do?command=review_list&catd=all">Review</a></li>
+					    </ul>
+					</li>
+				
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	
+	
+	
+	
 
 	<%@ include file="/footerPdetail.jsp"%>
 
@@ -202,54 +328,62 @@
 						<!-- <p>제품 정보 글 쓰는 곳</p>
 						<br> -->
 						
-						<script type="text/javascript">
 						
-							$("#selcolor").change(function(){
+						
+						<!-- 컬러를 선택했을때 사이즈값을 변경해서 출력하게 해주는 ajax()  from 성일 -->						
+						<script type="text/javascript">
+						$(function(){
+							
+							$("#selcolor").on('change',function(){
 								
-								var selcolor = $("#selcolor").val();
+								var selcolor = $("#selcolor option:selected").text();
+								var prod_no = ${pvo.prod_no}
 							
 								console.log(selcolor);
 								
 								$.ajax({
 								
 									url:"<%=request.getContextPath()%>/Product.do?command=selsize",
-									
 									type : 'get',
-									
 									dataType:"json",
-									
 									data: {
-										
+										"prod_no" : prod_no,
 										"selcolor" : selcolor
-										
 									},
 									
 									success : function(data) {
-
-										
-										
+										$("#selsize").html("<option value = '' selected = 'selected'>선택</option>");
+										var sizelist = data.ressize;										
+										for(var i = 0 ; i<data.sizecount ; i++){
+											$("#selsize").append($("<option value = 'options'>").text(sizelist[i]))
+										}
 								    },
 								    error : function() {
-
-								    
-								    
+								    	alert("해당 컬러의 사이즈를 가져오는데에 실패하였습니다.");
 								    }
-									
-									
-									
-									
 								})
-								
-								
-								
-								
 							});
-							
-							
-						
+						});
 						
 						</script>
 						
+						<!-- 컬러가 여러개일경우 중복을 제거해주는 과정 from 성일 -->
+						<%
+						
+						ArrayList<Vo_Prod_option> povolist = (ArrayList<Vo_Prod_option>)request.getAttribute("povo");
+						HashSet colorset = new HashSet();
+						for(int i = 0 ; i<povolist.size() ; i++){
+							colorset.add(povolist.get(i).getProd_color());
+						}
+						
+						List<String> colorlist = new ArrayList<String>();
+						Iterator it = colorset.iterator();
+						
+						while(it.hasNext()){
+							colorlist.add((String)it.next());
+						}
+						
+						%>
 
 						
 						<br>
@@ -257,8 +391,8 @@
 							<span>색상:</span> 
 							<select class="form-control" id = "selcolor">
 								<option value = "" selected = "selected">선택</option>
-								<c:forEach var = "color" items = "${povo}">
-								<option value = "optionc">${color.prod_color}</option>
+								<c:forEach var = "color" items = "<%=colorlist %>">
+								<option value = "optionc">${color}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -271,9 +405,7 @@
 							<select class="form-control" id = "selsize">
 								<option value = "" selected = "selected">선택</option>
 								
-								<c:forEach var = "size" items = "${povo}">
-								<option value = "options">${size.prod_size}</option>
-								</c:forEach>
+								
 								
 							</select>
 						</div>

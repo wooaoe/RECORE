@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.mvc.dao.AccountDaoImp;
 import com.mvc.dao.OrderDao;
 import com.mvc.dao.OrderDaoImp;
@@ -336,12 +338,38 @@ public class Product_Controller extends HttpServlet {
 
 	         
 	        
+		}else if(command.equals("selsize")) {
+			
+			System.out.println("selsize 커맨드 실행");
+			
+			int pno = Integer.parseInt(request.getParameter("prod_no"));
+			String selcolor = request.getParameter("selcolor");
+			
+			System.out.println("선택한 컬러 : "+ selcolor);
+			
+			Vo_Product pvo = dao.P_selectOne(pno);
+			List<Vo_Prod_option> polist = dao.po_selectOne(pvo);
+			
+			List<String> sizelist = new ArrayList<String>();
+			
+			for(Vo_Prod_option po : polist) {
+				if(po.getProd_color().equals(selcolor)) {
+					sizelist.add(po.getProd_size());
+				}
+			}
+			
+			int sizecount = sizelist.size();
+
+			JSONObject obj = new JSONObject();
+			System.out.println("선택한 컬러의 size 리스트 = "+sizelist);
+			
+			obj.put("sizecount", sizecount);		
+			obj.put("ressize", sizelist);
+			
+			PrintWriter out = response.getWriter();
+			out.println(obj.toJSONString());
 		}
-
 	}
-	
-
-
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response) {
 
