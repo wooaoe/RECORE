@@ -202,6 +202,56 @@
 						<!-- <p>제품 정보 글 쓰는 곳</p>
 						<br> -->
 						
+						<script type="text/javascript">
+						
+							$("#selcolor").change(function(){
+								
+								var selcolor = $("#selcolor").val();
+							
+								console.log(selcolor);
+								
+								$.ajax({
+								
+									url:"<%=request.getContextPath()%>/Product.do?command=selsize",
+									
+									type : 'get',
+									
+									dataType:"json",
+									
+									data: {
+										
+										"selcolor" : selcolor
+										
+									},
+									
+									success : function(data) {
+
+										
+										
+								    },
+								    error : function() {
+
+								    
+								    
+								    }
+									
+									
+									
+									
+								})
+								
+								
+								
+								
+							});
+							
+							
+						
+						
+						</script>
+						
+
+						
 						<br>
 						<div class="product-size">
 							<span>색상:</span> 
@@ -220,9 +270,11 @@
 							<span>사이즈:</span> 
 							<select class="form-control" id = "selsize">
 								<option value = "" selected = "selected">선택</option>
+								
 								<c:forEach var = "size" items = "${povo}">
 								<option value = "options">${size.prod_size}</option>
 								</c:forEach>
+								
 							</select>
 						</div>
 						<script type="text/javascript">
