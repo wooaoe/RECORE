@@ -6,10 +6,15 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ page import="com.mvc.vo.Vo_Category_Detail"%>
+    <%@ page import="com.mvc.vo.Vo_Order_Num"%>
+    <%@ page import="com.mvc.vo.Vo_Order"%>
+    <%@ page import="com.mvc.vo.Vo_Order_Prod"%>
     <%@ page import="com.mvc.vo.Vo_Product"%>
     <%@ page import = "java.util.List"%>
     
     <%Vo_Account sessionVo = (Vo_Account) session.getAttribute("vo");%>
+   
+    
 
 <!DOCTYPE html>
 <html>
@@ -95,11 +100,13 @@
             	주문내역 및 배송에 관한 안내는 <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">주문조회</a> 를 통하여 확인 가능합니다.
         </p>
         <ul>
-			<li>주문번호 : <strong>20200105-0000241</strong>
+     
+			<li>주문번호 : <strong></strong>
 			</li>
-            <li>주문일자 : <span>2020-01-05 19:22:13</span>
+            <li>주문일자 : <span></span>
 			</li>
         </ul>
+			
 	</div>
 	
 	<div class="orderArea">
@@ -115,18 +122,23 @@
 				<col style="width:auto;">
 				</colgroup>
 		<tbody>
-		
 		<tr>
 		<th scope="row">최종결제금액</th>
            <td>
-             <strong class="txtEm txt18" id = "aftertotal">15,000</strong><strong class="txtEm">원</strong> 
+           	<%--  <c:set var = "i" value = "0"></c:set>
+           	 <c:forEach var = "porder" items = "${pOrderlist}">
+             <c:set var = "i" value = "${pOrderlist.size()}"></c:set>
+             </c:forEach> --%>
+             <strong class="txtEm txt18" id = "aftertotal">
+            </strong><strong class="txtEm">원</strong> 
              <span class="txtEm displaynone"></span>
            </td>
+        
         </tr>
 		<tr>
 		<th scope="row">결제수단</th>
            <td>
-             <strong><span>카드 결제</span></strong>
+             <strong><span>카카오페이 결제</span></strong>
              
             </td>
         </tr>
@@ -166,13 +178,23 @@
           </tr>
           
           
-		<tfoot class="right"><tr>
+		<tfoot class="right">
+		
+		<tr>
+		   
 			<td colspan="7">
-				<span class="gLeft">[기본배송]</span> 상품구매금액 <strong>15,000
-				<span class="displaynone"> (0)</span></strong><span class="displaynone"></span>
-				 + 배송비 0 <span class="displaynone"> - 상품할인금액 0</span> = 합계 : <strong class="txtEm gIndent10">
-		 		<span class="txt18">17,500</span>원</strong> <span class="displaynone"></span>
+				<span class="gLeft">[기본배송]</span> 상품구매금액 
+				<strong>
+				<span class="displaynone"> (0)</span>
+				</strong>
+				<span class="displaynone"></span>
+				 + 배송비 0 <span class="displaynone"> - 상품할인금액 </span> = 합계 : 
+				 <strong class="txtEm gIndent10">
+		 		<span class="txt18"></span>원
+		 		</strong> 
+		 		<span class="displaynone"></span>
 			</td>
+			
 
 		</tr>
 		</tfoot>
@@ -195,19 +217,49 @@
               </div>
               </div>
            	</td>
+                        
             <td>1</td>
             <td><span class="txtInfo">-</span></td>
             <td><div class="txtInfo">기본배송</div></td>
             <td class="right">
 			<strong>15,000원</strong>
 			
-			 <div class="displaynone"></div>
+			<div class="displaynone"></div>
 			</td>
             </tr>
-            
+			<tr class="xans-record-">
+					
+             <td class="thumb">
+                 <a href="/product/detail.html?product_no=303&amp;cate_no=91">
+                 <img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" 
+                   onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
+                 <td class="left">
+                 <strong class="name">
+                 <a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약
+                 </a>
+                 </strong>
+            <div class="option "></div>
+               <p class="gBlank5 displaynone">무이자할부 상품</p>
+             </td>
+                        
+             <td class="right">
+               <div class="">
+               <strong>0원</strong>
+               <div class="displaynone">
+               </div>
+               </div>
+             </td>
+             <td>1</td>
+             <td><span class="txtInfo">-</span></td>
+             <td><div class="txtInfo">기본배송</div></td>
+                        <td class="right">
+                        
+			 <strong>0원</strong><div class="displaynone"></div>
+			 </td>
+             </tr>
 			</tbody>
 			</table>
-			</div> 
+			</div>
     </div>
     
  	<div class="orderArea displaynone">
@@ -301,7 +353,7 @@
 
 		<tbody>
 		<th scope="row">받으시는분</th>
-	      <td><span>최승혜</span></td>
+	      <td><span></span></td>
 	    </tr>
 	
 		<tr class="">

@@ -14,7 +14,7 @@
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
-	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
+	<%-- <% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %> --%>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -301,6 +301,7 @@
 						</div>
 						
 						<br><br>
+						
 						<input type = "submit" value = "바로구매" id = "pay" 
 						class = "btn btn-main mt-20" />&nbsp;&nbsp; 
 						
@@ -311,6 +312,7 @@
 						<input type = "button" value = "관심상품" id = "wish"
 						onclick="insertWish();"
 						class="btn btn-main mt-20">
+						
 						</form>
 						
 					 	<script type="text/javascript">
@@ -322,11 +324,14 @@
 								var prod_amount = $("#number").val(); 
 								var acc_no = ${vo.acc_no};
 								var prod_no = ${pvo.prod_no};
+								
 								location.href = "Product.do?command=insertCart&prod_id=" + prod_id 
 									+ "&prod_amount=" + prod_amount + "&acc_no=" + acc_no + "&pseq=" + prod_no;
+								
 							}
 							function insertWish(){
 								var prod_no = ${pvo.prod_no};
+								
 								location.href = "Product.do?command=insertWish&pseq=" + prod_no;
 							} 
 						

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+    <%request.setCharacterEncoding("UTF-8");%>
+	<%response.setContentType("text/html; charset=UTF-8");%>
+	
     <%@ page import = "com.mvc.vo.Vo_Product" %>
     <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
     <%@ page import = "com.mvc.vo.Vo_Account" %>
@@ -8,9 +10,12 @@
 	<%@ page import = "java.util.List" %>
 	
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+	<% Vo_Order_Num onum = (Vo_Order_Num)request.getAttribute("order_num"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
 	<% List<Vo_Order_Num> olist = (List)request.getAttribute("orderlist"); %>
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
+	<% int order_seq = (int)request.getAttribute("order_seq"); %>
+	
 	
 	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
 	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
@@ -19,11 +24,7 @@
 	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
 	<% int acc_point = Integer.parseInt(request.getParameter("acc_point"));%>
     <% String acc_addrs[] = request.getParameterValues("acc_addr"); %>
-    <%! int order_no; %>
-    <% for(int i = 0; i < olist.size(); i++){
-    		order_no = olist.get(i).getOrder_no();
-    	}
-    %>
+   
     
 
 <!DOCTYPE html>
@@ -43,18 +44,18 @@
 
 <script src="/dist/js/v2/min_web_waiting.js?v=99"></script>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 	
  <script type="text/javascript">
 
  	function afterorder(){
  		
- 		var accinfo = new Array();
-		 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
+ 		var order_seq = <%=order_seq%>;
+ 		var prod_no = <%=prod_no%>;
 		 
- 		var url = "Product.do?command=payComplete&pseq=" + <%=prod_no%> + "&prod_id=" + <%=prod_id%> + 
- 					"&totalPrice=" + <%=totalPrice%> + "&acc_no=" + <%=acc.getAcc_no()%> + 
- 					"&amount=" + <%=amount%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc_point%> + 
- 					"&order_no=" + <%=order_no%>;
+ 		var url = "Product.do?command=payComplete&pseq=" + prod_no + "&prod_id=" + <%=prod_id%> + 
+ 					"&totalPrice=" + <%=totalPrice%> + "&amount=" + <%=amount%> + "&order_seq=" + order_seq;
  			 		
  		opener.location.href = url;
  		window.close();
@@ -63,10 +64,17 @@
  	$(document).ready(function(){
  		
  		$("#close").click(function(){
+			
+ 			var order_seq = <%=order_seq%>;
+ 			var prod_no = <%=prod_no%>;
 			var result = confirm('카카오페이 결제를 취소하시겠습니까?');
+			
 			if(result) { 
-				alert("취소 되었습니다.");
-				self.close();
+				var url = "Product.do?command=payDelete&order_seq=" + order_seq + "&pseq=" + prod_no;
+				alert(order_seq);
+				opener.document.location = url;
+				window.close();
+				
 			} else { 
 		}
 	});
@@ -85,9 +93,9 @@
 			<div class="layer_head">
 				<strong class="img_pay logo_kakaopay">kakaopay</strong>
 			</div>
-			<form action="../../Product.do"> 
-			<input type = "hidden" name = "command" value = "payComplete"/>
-			<input type = "hidden" name = "pseq" value = "${pvo.prod_no}"/>
+			<form action=""> 
+			<%-- <input type = "hidden" name = "command" value = "payDelete"/>
+			<input type = "hidden" name = "order_no" value = "<%=order_no%>"/> --%>
 			<div class="layer_body">
 					<fieldset>
 						<legend class="screen_out">휴대폰 번호 및 생년월일 입력</legend>
@@ -103,7 +111,7 @@
 			</div>
 			</form>
 			<div class="layer_foot">
-				<button type = "button" class="btn_close"><span class="img_pay" id = "close">닫기</span></button>
+				<button type = "button" class="btn_close" id = "close">닫기</button>
 			</div>
 		</div>
 	</div>

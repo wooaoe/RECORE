@@ -15,15 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
-
 import com.mvc.dao.OrderDao;
 import com.mvc.dao.OrderDaoImp;
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
+import com.mvc.vo.Vo_Order_Num2;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 import com.oreilly.servlet.MultipartRequest;
@@ -236,14 +236,14 @@ public class Product_Controller extends HttpServlet {
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
 			
-			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
-			System.out.println("컨트롤러 prod_id : " + prod_id);
-			int amount = Integer.parseInt(request.getParameter("amount"));
-			System.out.println("컨트롤러 prod_amount : " + amount);
-			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
-			System.out.println("컨트롤러 acc_no : " + acc_no);
-			int total = Integer.parseInt(request.getParameter("totalPrice"));
-			System.out.println("컨트롤러 prod_total : " + total);
+//			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
+//			System.out.println("컨트롤러 prod_id : " + prod_id);
+//			int amount = Integer.parseInt(request.getParameter("amount"));
+//			System.out.println("컨트롤러 prod_amount : " + amount);
+//			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
+//			System.out.println("컨트롤러 acc_no : " + acc_no);
+//			int total = Integer.parseInt(request.getParameter("totalPrice"));
+//			System.out.println("컨트롤러 prod_total : " + total);
 			
 			int acc_point = Integer.parseInt(request.getParameter("acc_point"));
 			System.out.println("kakaocall의 accpoint : " + acc_point);
@@ -260,6 +260,10 @@ public class Product_Controller extends HttpServlet {
 			for(int i = 0; i < info2.length; i++) {
 			System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
 			}
+			
+			int order_seq = dao.O_CurrVal();
+			request.setAttribute("order_seq", order_seq);
+			System.out.println("컨트롤러의 order_seq : " + order_seq);
 			
 			boolean onum = dao.O_insert(acc.getAcc_no(), info2, acc_point);
 			
@@ -277,83 +281,71 @@ public class Product_Controller extends HttpServlet {
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
-			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
-			request.setAttribute("povo", povo);
-			
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			System.out.println("컨트롤러 prod_id : " + prod_id);
 			int amount = Integer.parseInt(request.getParameter("amount"));
 			System.out.println("컨트롤러 prod_amount : " + amount);
-			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
-			System.out.println("컨트롤러 acc_no : " + acc_no);
 			int total = Integer.parseInt(request.getParameter("totalPrice"));
 			System.out.println("컨트롤러 prod_total : " + total);
 			
-			int acc_point = Integer.parseInt(request.getParameter("acc_point"));
-			System.out.println("kakaocall의 accpoint : " + acc_point);
-			
-			String resinfo = request.getParameter("acc_addrs");
-			System.out.println("컨트롤러의 resinfo : " + resinfo);
-			
-			String info2[] = resinfo.split(",");
-			
-			for(int i = 0; i < info2.length; i++) {
-			System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
-			}
-			
-			int order_no = Integer.parseInt(request.getParameter("order_no"));
-			System.out.println("컨트롤러의 order_no : " + order_no);
-			
-			Vo_Order_Num order_num = dao.Order_selectOne(order_no);
-			request.setAttribute("order_num", order_num);
-			System.out.println("컨트롤러의 order_num : " + order_num);
-			
 			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
 			request.setAttribute("orderlist", orderlist);
-			System.out.println("컨트롤러의 orderlist : " + orderlist);
+			System.out.println("paycomplete의 orderlist olist 나오니??? : " + orderlist);
+			System.out.println(orderlist.get(10).getOlist().get(10).getOrder_price());
 			
-			boolean pnum = dao.O_insert(order_no, prod_id, amount, total);
+			int order_seq = Integer.parseInt(request.getParameter("order_seq"));
+			System.out.println("paycomplete 현재 order_seq: " + order_seq);
 			
-			//Product.do?command=Order&pseq=170&color=BLACK&size=FREE&product-quantity=1&total=58000
-			//<% String[] color = request.getParameterValues("color");%>
-//			<% String[] size = request.getParameterValues("size");%>
-//			<% int amount = Integer.parseInt(request.getParameter("product-quantity"));	%>
-//			<% int totalPrice = Integer.parseInt(request.getParameter("total"));%>
+			List<Vo_Order_Num> Ordernum_selone = dao.Order_selectOne(order_seq);
+			request.setAttribute("Onum", Ordernum_selone);
+			System.out.println("결제완료 command의 ordernum_selone의 값 olist 나오니??? : " + Ordernum_selone);
+//			
+//			List<Vo_Order_Prod> orderPnum = dao.Order_selectAll(order_seq);
+//			request.setAttribute("orderPnum", orderPnum);
+//			System.out.println("결제완료 command의 orderPnum의 selecAll값 : " + orderPnum);
+			
+			Vo_Order prod_order = dao.ProdOrder_selectOne(order_seq);
+			request.setAttribute("prod_order", prod_order);
+			System.out.println("결제 완료 command의 prod_order 객체 : " + prod_order);
+			
+			Vo_Order_Num2 ordernum2 = dao.O_selectOne(order_seq);
+			request.setAttribute("ordernum", ordernum2);
+			System.out.println("결제완료 command의 ordernum2 selone의 값 : " + ordernum2);
+			
+			boolean pnum = dao.POrder_insert(order_seq, prod_id, amount, total);
 			
 			if(pnum) {
 				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
 			}else {
-				jsResponse("결제 실패!", "Product.do?command=ProdDetail&pseq="+ pseq + "&catdno=" + pvo.getProd_catd() , response);
+				jsResponse("결제 실패!", "Product.do?command=ProdDetail&pseq="+ pseq + "&catdno=" + pvo.getProd_catd(), response);
 			}
 			
 			
-		} else if(command.equals("Ordercomplete")) {
+		} else if(command.equals("payDelete")) {
 			
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
 			System.out.println("pseq : " + pseq);
 			
+			int order_seq = Integer.parseInt(request.getParameter("order_seq"));
+			System.out.println("컨트롤러의 order_seq : " + order_seq);
+			
 			Vo_Product pvo = dao.P_selectOne(pseq);
 			request.setAttribute("pvo", pvo);
 			
-			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
-			request.setAttribute("povo", povo);
+			List<Vo_Order_Num> order_one = dao.Order_selectOne(order_seq);
+			request.setAttribute("order_one", order_one);
+			System.out.println("컨트롤러의 order_num : " + order_one);
 			
-			int order_no = Integer.parseInt(request.getParameter("order_no"));
-			System.out.println("컨트롤러의 order_no : " + order_no);
+			boolean ordernumdel = dao.Order_delete(order_seq);
 			
-			Vo_Order_Num order_num = dao.Order_selectOne(order_no);
-			request.setAttribute("order_num", order_num);
-			System.out.println("컨트롤러의 order_num : " + order_num);
-			
-			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
-			request.setAttribute("orderlist", orderlist);
-			System.out.println("컨트롤러의 orderlist : " + orderlist);
+			if(ordernumdel) {
+				jsResponse("결제 취소", "Product.do?command=ProdSelectAll&pageno=1", response);
+			}else {
+				jsResponse("결제 요청 취소 실패!", "Product.do?command=ProdDetail&pseq="+ pseq + "&catdno=" + pvo.getProd_catd(), response);
+			}
 			
 			
-		}
-		
-		
-		else if(command.equals("cartComplete")) {
+		} else if(command.equals("cartComplete")) {
 			
 			String tmp = request.getParameter("Arr_order");
 			System.out.println("컨트롤러의  tmp : " + tmp);
@@ -406,17 +398,20 @@ public class Product_Controller extends HttpServlet {
 			int total = Integer.parseInt(request.getParameter("prod_total"));
 			System.out.println("컨트롤러 prod_total : " + total);
 			
-			boolean onum = dao.O_insert(id, total, acc, amount);
+			int order_seq = Integer.parseInt(request.getParameter("order_seq"));
+			System.out.println("paycomplete 현재 order_seq: " + order_seq);
 			
-			if(onum) {
+			boolean pnum = dao.AllPOrder_insert(order_seq, id, total, amount);
+			
+			if(pnum) {
 				dispatch("./RECOREMain/RECOREProduct/afterOrder_page.jsp", request, response);
 			}else {
-				
 				jsResponse("결제에 실패했습니다!", "Product.do?command=cartOrder&Arr_order=" + tmp, response);
 			}
 			
 		} else if (command.equals("insertCart")) {
 
+			
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			int amount = Integer.parseInt(request.getParameter("prod_amount"));
 			int pseq = Integer.parseInt(request.getParameter("pseq"));

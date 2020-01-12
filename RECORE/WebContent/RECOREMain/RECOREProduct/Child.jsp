@@ -8,6 +8,7 @@
 	<%@ page import = "java.util.List" %>
 	<%@ page import = "com.mvc.vo.Vo_Product" %>
 	<%@ page import = "com.mvc.vo.Vo_Category_Detail" %>
+	<%@ page import = "com.mvc.vo.Vo_Account" %>
 	
 	
 	<%List<Vo_Product> child = (List)request.getAttribute("child"); %>
@@ -243,8 +244,40 @@
     <br><br>
     
 
-    <div class="site-section">
+     <div class="site-section">
       <div class="container">
+            <div class="row"> 
+          <div class="col-12 text-center">
+            <span class="sub-title">PRODUCT</span>
+            <h2 class="font-weight-bold text-black mb-5"><%=kinds %></h2>
+            		
+					
+<%
+	
+				if(session.getAttribute("vo") != null){
+					Vo_Account vo_a = (Vo_Account)session.getAttribute("vo");
+
+					if(vo_a.getAcc_m_c().equals("M")){		
+%>	
+		            <span class="" onclick="location.href='Product.do?command=insertpage'"
+					style="background-color:#a0d9d9;
+					width: 80px; 
+					height: 30px;
+					font-size:13px; 
+					text-align: center;
+					float: right; 
+					padding-top: 3px;
+					margin-bottom: 25px;
+					color:white;">상품등록</span>
+<%					
+					}
+				}			
+%>		
+			
+          </div>
+        </div>
+        
+        
         <div class="row">
           
           <!-- @@ 이미지 들어가는 곳 @@ -->

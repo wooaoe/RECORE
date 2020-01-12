@@ -1,20 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%request.setCharacterEncoding("UTF-8");%>
-	<%response.setContentType("text/html; charset=UTF-8");%>
-    
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%
+	response.setContentType("text/html; charset=UTF-8");
+%>
+
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     <%@ page import="com.mvc.vo.Vo_Category_Detail"%>
     <%@ page import="com.mvc.vo.Vo_Order_Num"%>
+    <%@ page import="com.mvc.vo.Vo_Order_Num2"%>
     <%@ page import="com.mvc.vo.Vo_Order"%>
+    <%@ page import="com.mvc.vo.Vo_Order_Prod"%>
     <%@ page import="com.mvc.vo.Vo_Product"%>
     <%@ page import = "java.util.List"%>
     
-    <%Vo_Account sessionVo = (Vo_Account) session.getAttribute("vo");%>
-    <% List<Vo_Order_Num> olist = (List)request.getAttribute("orderlist"); %>
-    <% int order_no = Integer.parseInt(request.getParameter("order_no")); %>
-    <% int acc_point = Integer.parseInt(request.getParameter("acc_point"));%>
+    <% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
+    <% List<Vo_Order_Num> orderlist = (List)request.getAttribute("orderlist"); %>
+    <% Vo_Order_Num2 onum2 = (Vo_Order_Num2)request.getAttribute("ordernum"); %>
+    <% Vo_Order pnum = (Vo_Order)request.getAttribute("prod_order"); %>
+    <% int totalPrice = Integer.parseInt(request.getParameter("totalPrice")); %>
+   	<% int order_seq = Integer.parseInt(request.getParameter("order_seq")); %>
+   	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
     
 
 <!DOCTYPE html>
@@ -64,12 +72,13 @@
     <link rel="stylesheet" type="text/css" 
     href="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/cssOrder/afterOder_page.css"/>
     
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     
   </head>
   
   <body id = "body">
   
-  <%@ include file = "/header.jsp" %>
+  <%@ include file="/header.jsp"%>
     
     <div id="wrap">
     
@@ -100,14 +109,17 @@
          <strong>고객님의 주문이 완료 되었습니다.</strong>
             	주문내역 및 배송에 관한 안내는 <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1">주문조회</a> 를 통하여 확인 가능합니다.
         </p>
-            <c:forEach var = "order" items = "${olist}">
+     		<c:set var = "i" value = "0"></c:set>
+     		<c:forEach var = "orderno" items = "${orderlist}">
+     		<c:set var = "i" value = "${orderlist.size()}"></c:set>
+     		</c:forEach>
         <ul>
-			<li>주문번호 : <strong>${order.order_no}</strong>
+			<li>주문번호 : <strong>${ordernum.order_no}</strong>
 			</li>
-            <li>주문일자 : <span>${order.order_date}</span>
+            <li>주문일자 : <span>${ordernum.order_date}</span>
 			</li>
         </ul>
-			</c:forEach>
+			
 	</div>
 	
 	<div class="orderArea">
@@ -125,15 +137,15 @@
 		<tbody>
 		<tr>
 		<th scope="row">최종결제금액</th>
-		   <c:set var = "i" value = "0"></c:set>
-		   <c:forEach var = "price" items = "${olist}">
            <td>
              <strong class="txtEm txt18" id = "aftertotal">
-             ${price.get(i).getOlist().get(i).getOrder_price() - price.get(i).getOrder_point()}</strong><strong class="txtEm">원</strong> 
+             <fmt:formatNumber><%=totalPrice%>
+			 </fmt:formatNumber>
+            </strong>
+            <strong class="txtEm">원</strong> 
              <span class="txtEm displaynone"></span>
            </td>
-           <c:set var = "i" value = "${olist.size()}"></c:set>
-           </c:forEach>
+        
         </tr>
 		<tr>
 		<th scope="row">결제수단</th>
@@ -176,27 +188,24 @@
             <th scope="col">배송구분</th>
             <th scope="col">합계</th>
           </tr>
-          
-          
+       
 		<tfoot class="right">
 		
 		<tr>
-		   <c:set var = "i" value = "0"></c:set>
-		   <c:forEach var = "price" items = "${olist}">
+		   
 			<td colspan="7">
 				<span class="gLeft">[기본배송]</span> 상품구매금액 
-				<strong>${price.get(i).getOlist().get(i).getOrder_price()}
+				<strong>
 				<span class="displaynone"> (0)</span>
 				</strong>
 				<span class="displaynone"></span>
-				 + 배송비 0 <span class="displaynone"> - 상품할인금액 ${price.get(i).getOrder_point()}</span> = 합계 : 
+				 + 배송비 0 <span class="displaynone"> - 상품할인금액&nbsp;${ordernum.order_point}</span> = 합계 : 
 				 <strong class="txtEm gIndent10">
-		 		<span class="txt18">${price.get(i).getOlist().get(i).getOrder_price() - price.get(i).getOrder_point()}</span>원
+		 		<span class="txt18">${prod_order.order_price}</span>원
 		 		</strong> 
 		 		<span class="displaynone"></span>
 			</td>
-			 <c:set var = "i" value = "${olist.size()}"></c:set>
-           </c:forEach>
+			
 
 		</tr>
 		</tfoot>
@@ -204,61 +213,33 @@
 		<tbody class="xans-element- xans-order xans-order-normalresultlist center">
 			<tr class="xans-record-">
 			<td class="thumb">
-				<a href="/product/detail.html?product_no=303&amp;cate_no=91">
-				<img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="">
+				<a href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}">
+				<img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png" onerror="" alt="">
 				</a></td>
             <td class="left">
-            <strong class="name"><a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약</a></strong>
+            <strong class="name"><a href="" class="ec-product-name">${pvo.prod_name}</a></strong>
             <div class="option "></div>
               <p class="gBlank5 displaynone">무이자할부 상품</p>
             </td>
+            
             <td class="right">
               <div class="displaynone">
-              <strong>15,000원</strong>
+              <strong> <fmt:formatNumber>${pvo.prod_price}
+			 </fmt:formatNumber>원</strong>
               <div class="displaynone">
               </div>
               </div>
            	</td>
                         
-            <td>1</td>
+            <td>${prod_order.order_amount}</td>
             <td><span class="txtInfo">-</span></td>
             <td><div class="txtInfo">기본배송</div></td>
             <td class="right">
-			<strong>15,000원</strong>
+			<strong>${prod_order.order_price}</strong>
 			
 			<div class="displaynone"></div>
 			</td>
             </tr>
-			<tr class="xans-record-">
-					
-             <td class="thumb">
-                 <a href="/product/detail.html?product_no=303&amp;cate_no=91">
-                 <img src="//dalisalda.com/web/product/tiny/20191212/6353d3867b386a9d99c10eddc8e5914f.jpg" 
-                   onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
-                 <td class="left">
-                 <strong class="name">
-                 <a href="/product/아르지탈-민트-치약/303/category/91/" class="ec-product-name">[아르지탈] 민트 치약
-                 </a>
-                 </strong>
-            <div class="option "></div>
-               <p class="gBlank5 displaynone">무이자할부 상품</p>
-             </td>
-                        
-             <td class="right">
-               <div class="">
-               <strong>0원</strong>
-               <div class="displaynone">
-               </div>
-               </div>
-             </td>
-             <td>1</td>
-             <td><span class="txtInfo">-</span></td>
-             <td><div class="txtInfo">기본배송</div></td>
-                        <td class="right">
-                        
-			 <strong>0원</strong><div class="displaynone"></div>
-			 </td>
-             </tr>
 			</tbody>
 			</table>
 			</div>
@@ -291,21 +272,21 @@
 	    <th scope="col" style = "text-align:center;"><strong style = "text-align:center;">총 결제금액</strong></th>
 	</tr>
 	</thead>
-	
 	<tbody class="center">
 		<tr>
 		<td class="price">
 		<div class="box txt16">
-		<strong><span class="txt23">17,500</span>원</strong><span class="displaynone"></span>
+			
+		<strong><span class="txt23"><fmt:formatNumber><%=pvo.getProd_price() * amount%></fmt:formatNumber></span>원</strong><span class="displaynone"></span>
 		</div>
 		</td>
 		<td class=""><div class="box txt16">
-		<strong>- <span class="txt23">2,500</span>원</strong><span class="displaynone"></span>
+		<strong>- <span class="txt23"><fmt:formatNumber>${ordernum.order_point}</fmt:formatNumber></span>원</strong><span class="displaynone"></span>
 		</div>
 		</td>
 	
 		<td><div class="box txtEm txt16">
-		<strong><span class="txt23">15,000</span>원</strong><span class="displaynone"></span>
+		<strong><span class="txt23"><fmt:formatNumber><%=totalPrice - onum2.getOrder_point()%></fmt:formatNumber></span>원</strong><span class="displaynone"></span>
 	</div>
 	</td>
     </tr>
@@ -324,7 +305,7 @@
 	<tbody>
 	<tr class="sum txt13">
 	<th scope="row"><strong>적립금 적용</strong></th>
-        <td><strong class="txt14">2,500</strong>원</td>
+        <td><strong class="txt14">${ordernum.order_point}</strong>원</td>
     </tr>
 	
 </tbody>
@@ -355,25 +336,20 @@
 
 		<tbody>
 		<th scope="row">받으시는분</th>
-	      <td><span>최승혜</span></td>
+	      <td><span>${vo.acc_name}</span></td>
 	    </tr>
 	
 		<tr class="">
 		<th scope="row">우편번호</th>
-	      <td><span>08740</span></td>
+	      <td><span>${ordernum.order_zipcode}</span></td>
 	    </tr>
 		<tr class="">
 		<th scope="row">주소</th>
-          <td><span>서울특별시 관악구 남부순환로233길 29-3 (봉천동) 샤인빌 304호</span></td>
+          <td><span>${ordernum.order_addr}&nbsp;${ordernum.order_addr2}</span></td>
          </tr>
-
-		<tr>
-		<th scope="row">일반전화</th>
-		<td></td>
-		</tr>
 		<tr>
 		<th scope="row">휴대전화</th>
-		<td><span>010-6473-3048</span></td>
+		<td><span>${vo.acc_phone}</span></td>
 		</tr>
 		<tr>
 		<th scope="row">배송메시지</th>
@@ -392,29 +368,6 @@
             <a href="<%=request.getContextPath()%>/mypage.do?command=orderlist&pageno=1" class="btnSubmitFix sizeL">주문확인하기</a>
         </span>
     </div>
-    
-
-    
-		<div id="order_layer_detail" class="totalDetail ec-base-layer">
-	        <div class="header">
-	            <h3>총 주문금액 상세내역</h3>
-	        </div>
-	        <div class="content">
-	            <p>17,500원</p>
-	            <ul class="ec-base-desc typeDot gLarge rightDD">
-					<li>
-						<strong class="term">상품금액</strong><span class="desc">15,000원</span>
-					</li>
-	 
-	                <li>
-						<strong class="term">배송비</strong><span class="desc">2,500원</span>
-					</li>
-	            </ul>
-			</div>
-	        <a href="#none" class="close" onclick="OrderLayer.offDiv('order_layer_detail');">
-	        <img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
-	    </div>
-
 	</table>
 	</div>
 	</div>

@@ -12,7 +12,7 @@ public class Vo_Order {
    private int order_amount; // 주문 수량
    private int order_price; // 금액
    private String order_tno; // 송장번호
-   private String order_status; // 주문 상태
+   private String order_status; // 주문 상태1
    private String order_isreview; // 리뷰 작성 여부
    
 
