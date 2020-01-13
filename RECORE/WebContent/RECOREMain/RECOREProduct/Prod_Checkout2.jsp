@@ -15,6 +15,16 @@
 <%@ page import="com.mvc.vo.Vo_Account"%>
 <%@ page import="com.mvc.vo.Vo_Order_Num"%>
 <%@ page import="com.mvc.vo.Vo_Order"%>
+<%@ page import="java.util.List"%>
+
+
+
+	<%-- <% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%> --%>
+	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
+	<% String[] arr = acc.getAcc_phone().split("-");%>
+	<% List amount = (List)request.getAttribute("prod_amount"); %>
+	<% List price = (List)request.getAttribute("arr_price"); %> 
+	<% List prod_id = (List)request.getAttribute("prod_id"); %> 	
 
 
 <!DOCTYPE html>
@@ -63,6 +73,9 @@
 
 <%@ include file="/head.jsp"%>
 
+
+
+
 <style type="text/css">
 
 /* 전체적인 폼 위치 편경 */
@@ -80,43 +93,130 @@
 }
 </style>
 
-</head>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$("#new_addrV2").click(function(){
+			goPopup();
+											
+	});
+		$("#user_sameV2").click(function(){
+			
+		$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
+		$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
+		$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
+					
+	});
+											
+	});
+</script>
 
+<script type="text/javascript">
+	
+	 $(document).ready(function(){ //적립금 모두 사용 체크하면 발생하는 이벤트 함수 
+		
+		
+		var point = <%=acc.getAcc_point()%>;
+		var originprice = 50000;
+		var numformat = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";	
+		var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
+		var res = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";
+		
+			$("#allDepositCheckboxV2").change(function(){ //모두사용 체크박스에 변화가 있을 때 발생하는 함수 시작 
+							
+				if($("#allDepositCheckboxV2").is(":checked") == true){ //모두사용이 체크되면 실행 
+					if(originprice < point){ //상품 총 금액(적립금 비포함)이 포인트 값보다 적으면 발생 
+						$("#allDepositCheckboxV2").prop("checked", false); 
+							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+					
+					}else if(originprice < 50000){ //상품 총 금액(적립금 비포함)이 5만원 미만이면 발생 
 
-<body class="series-site V2 layout-width-1000">
-
-	<% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%>
-	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
-	<% String[] arr = acc.getAcc_phone().split("-");%>
-
+						$("#allDepositCheckboxV2").prop("checked", false);
+						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
+						
+					}else{ //포인트값보다 크고, 5만원 이상이면 발생 
+						$("#point2").html(numformat_point); //결제 정보 적립금 부분에 html태그 뿌려줌 
+						$("#totalPrice").html(res); //포인트가 차감된 전체 금액 html태그 뿌려줌 
+						$("#point").val("0"); //모두 사용을 누르면 적립금 value = 0으로 세팅 
+						$("#point").attr("readonly", true);
+					}
+				}else{
+					$("#totalPrice").html(numformat);
+					$("#point2").empty();
+					$("#point").val(point);
+					$("#point").attr("readonly", true);
+				}
+			});
+			
+		}); 
+	</script>
+	
 	<script type="text/javascript">
     
-	function payment(){
-		
-		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
-			alert("동의란을 체크하세요.");
-		}else if($("#kakaoV2").prop("checked")==false){
-			alert("결제수단을 체크해주세요.");
-		}else{
-			var popup1 = (document.body.offsetWidth / 2) - (434.4 / 2);
-			//&nbsp;만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-
-			var popup2= (document.body.offsetHeight / 2);
-			//&nbsp;만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
-
-			window.open("RECOREMain/RECOREProduct/kakaopay.jsp",  
-					"popupNo2", "status=no, height=569.6, width=434.4" + ", left=" + popup1 + ",  top=" + popup2);
-		}
-	}
-	function goPopup(){
+	 function goPopup(){ //우편번호 찾기 누르면 실행되는 함수
 		
 		var popupX = (document.body.offsetWidth / 2) - (570 / 2);
 		var popupY= (document.body.offsetHeight / 2);
 		
 	    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
-		
 	}
 	
+		
+	 function payment(){ //결제하기 누르면 발생하는 이벤트 
+
+		 var index = <%=amount.size()%>;
+		 var amount1 = <%=amount%>;
+		 var price2 = <%=price%>;
+		 var names = new Array(amount1);
+		 alert("names?" + names);
+		 var a = names.split(',');
+		 alert(a);
+		 
+		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
+			alert("동의란을 체크하세요.");
+		}else if($("#kakaoV2").prop("checked")==false){
+			alert("결제수단을 체크해주세요.");
+		}else{ //동의란,결제수단이 모두 체크되어 있으면 팝업창 오픈 
+			
+			var winHeight = document.body.clientHeight;	// 현재창의 높이
+			var winWidth = document.body.clientWidth;	// 현재창의 너비
+			var winX = window.screenLeft;	// 현재창의 x좌표
+			var winY = window.screenTop;	// 현재창의 y좌표
+			var width = 434;
+			var height = 569;
+
+			var popX = winX + (winWidth - 434)/2;
+			var popY = winY + (winHeight - 569)/2;
+			
+			var accinfo = new Array();
+			accinfo = ['<%=acc.getAcc_zipcode()%>', '<%=acc.getAcc_addr()%>', '<%=acc.getAcc_addr2()%>'];
+			alert(accinfo); //해당하는 계정의 주소를 배열에 담아줌 
+			 
+			var zeropoint = 0;
+			var usingpoint = <%=acc.getAcc_point()%>;
+			
+			if($("#allDepositCheckboxV2").is(":checked") == false){ 
+				//적립금 모두 사용이 체크되어 있지 않다면 point = 0로 보내기
+				
+				var url = "Product.do?command=cartkakaocall&amount=" + <%=amount%> +
+				"&totalPrice=" + <%=price%> + "&prod_id=" + <%=prod_id%> + "&acc_addr=" + accinfo +
+				"&acc_point=" + zeropoint; 
+				
+				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+		     
+			}else{
+				
+				//모두 사용이 체크되어 있다면 계정의 포인트 값 보내주기
+				
+				var url = "Product.do?command=cartkakaocall&amount=" + <%=amount%> +
+				"&totalPrice=" + <%=price%> + "&prod_id=" + <%=prod_id%> + "&acc_addr=" + accinfo +
+				"&acc_point=" + usingpoint; 
+				
+				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
+			}
+						
+		}
+	} 
 	/** API 서비스 제공항목 확대 (2017.02) **/
 	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
 			, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
@@ -127,7 +227,61 @@
 	}
    
 	</script>
+	
+	<script type="text/javascript">
+								
+		$(document).ready(function(){
+			$("#user_sameV2").click(function(){ 
+				//주문자와 동일이 체크되면 value 값 뿌려주고 readonly로 바꿈 
+			
+			if($("#user_sameV2").is(":checked") == true){
+				
+				$("#requiredCus").val("<%=acc.getAcc_name()%>");
+				$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
+				$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
+				$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
+				
+				$("#requiredCus").attr("readonly", true);
+				$("#zipNo").attr("readonly", true);
+				$("#roadAddrPart1").attr("readonly", true);
+				$("#addrDetail").attr("readonly", true);
+			}
+			});
+			
+			/* $("#new_addrV2").click(function(){
+			
+			if($("#new_addrV2").is(":checked") == true && $("#user_sameV2").is(":checked") == false){
+				//주문자와 동일 버튼이 해제되어있고, 새로입력 버튼이 체크 되었다면 vlaue값 비워주기 
+				$("#requiredCus").val('');
+				$("#zipNo").val('');
+				$("#roadAddrPart1").val('');
+				$("#addrDetail").val('');
+			
+				goPopup();
+			}
+		}); */
+	}); 
+		
+	</script>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+						
+			$("#kakaoV2").click(function(){
+				if($("#info").css("display") == "none"){
+					$("#info").show(); 
+				}else {
+					$("#info").hide();
+				}
+			});
+		});
+	</script>
 
+</head>
+
+
+<body class="series-site V2 layout-width-1000">
+	
 	<!-- header -->
 	<%@ include file="/header.jsp"%>
 
@@ -165,6 +319,7 @@
 						</thead>
 
 						<!-- 장바구니에 담았던 상품 정보 들어감 -->
+						
 						<tbody>
 						<c:forEach var = "prod" items = "${plist}" varStatus = "status">
 							<tr>
@@ -182,9 +337,9 @@
 									</p>
 
 									<ul class="meta" style="position: relative; top: 20px;">
-										<li><em>수량</em> <span>${prod_amount[status.index]}</span></li>
+										<li><em>수량</em> <span id = "amount">${prod_amount[status.index]}</span></li>
 										<li><em>옵션</em>&nbsp; 
-										<span> 
+										<span id = "prodOption"> 
 											${polist.get(status.index).getProd_color()}, &nbsp;${polist.get(status.index).getProd_size()}
 										 </span>
 										 </li>
@@ -201,11 +356,16 @@
 									<div class="cost">배송비 무료</div></td>
 							</tr>
 						</c:forEach>
+						
 						</tbody>
 					</table>
 				</div>
 
-
+				<script type="text/javascript">
+					
+				
+				
+				</script>
 				<!-- 주문상품 금액 / 배송비 / 총 주문금액 -->
 				<div class="billing-v2">
 					<div class="default-pay">
@@ -237,7 +397,7 @@
 					<div class="total">
 						<div>
 							<strong>총 주문금액</strong><span id="totalBasePriceV2">
-							<em><fmt:formatNumber>${sum}
+							<em id = "totalorder"><fmt:formatNumber>${sum}
 							</fmt:formatNumber></em>원</span>
 						</div>
 					</div>
@@ -253,9 +413,9 @@
 					<dl class="order-form">
 						<dt>주문고객</dt>
 						<dd class="user-info">
-							<span id="customerNameArea"><%=acc.getAcc_name()%></span><span
-								id="customerMobileNumberArea"><%=acc.getAcc_phone()%></span><span
-								id="customerEmailArea"><%=acc.getAcc_email()%></span>
+							<span id="customerNameArea"><%=acc.getAcc_name()%></span>
+							<span id="customerMobileNumberArea"><%=acc.getAcc_phone()%></span>
+							<span id="customerEmailArea"><%=acc.getAcc_email()%></span>
 						</dd>
 						<dt class="mb-22">
 							받는분<em class="required" aria-required="true" required = "required">필수</em>
@@ -269,34 +429,14 @@
 						<dt></dt>
 						<dd class="min-height-auto">
 							<div class="col-2 col-3 radio-wrap">
-								<span class="radio"> <input name="deliveryType"
-									type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
+								<span class="radio"> 
+								<input name="deliveryType" type="radio" id="user_sameV2" 
+								value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
 
-									<label for="user_sameV2">주문고객과 동일</label></span> <span class="radio">
-									<input name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp; 
-									<label for="new_addrV2">새로 입력</label>
-								</span>
+									<label for="user_sameV2">주문고객과 동일</label></span> 
 
-								<script type="text/javascript">
-								
-								$(document).ready(function(){
-										$("#new_addrV2").click(function(){
-											
-											goPopup();
-											
-										});
-										$("#user_sameV2").click(function(){
-											
-											$("#zipNo").val("<%=acc.getAcc_zipcode()%>");
-											$("#roadAddrPart1").val("<%=acc.getAcc_addr()%>");
-											$("#addrDetail").val("<%=acc.getAcc_addr2()%>");
-										
-										});
-											
-									});
-								</script>
-								<span class="radio"> <input name="deliveryType"
-									type="radio" id="cvs_addrV2" value="CVSNET">
+								<span class="radio"> 
+								<input name="deliveryType" type="radio" id="cvs_addrV2" value="CVSNET">
 								</span>
 							</div>
 						</dd>
@@ -336,7 +476,7 @@
 								<div class="row"></div>
 							</dd>
 						</div>
-
+						
 
 						<!-- 휴대폰/전화번호/배송메모 입력받는 폼 -->
 						<dt>
@@ -344,8 +484,8 @@
 						</dt>
 						<dd>
 							<div class="col-phone">
-								<input type="hidden" name="cellPhone"> 
-								<select name="cellPhone1">
+								<input type="hidden" name="cellPhone" id = "cellPhone" value = ""> 
+								<select name="cellPhone1" id = "cellphone">
 									<option value="010">010</option>
 									<option value="011">011</option>
 									<option value="016">016</option>
@@ -353,44 +493,40 @@
 									<option value="018">018</option>
 									<option value="019">019</option>
 								</select> 
+								
+								<script type="text/javascript">
+									$(function(){
+										
+										var options = $("#cellphone option:selected").val();
+										
+										$("#cellphone").on("change", function(){
+										if(options == 010){
+											$("#cellPhone").prop("value", "010"); 
+											alert($("#cellPhone").val());
+										}else if(options == 011){
+											$("#cellPhone").val("011");
+											alert($("#cellPhone").val())
+										}else if(options == 016){
+											$("#cellPhone").val("016");
+										}else if(options == 017){
+											$("#cellPhone").val("017");
+										}else if(options == 018){
+											$("#cellPhone").val("018");
+										}else if(options == 019){
+											$("#cellPhone").val("019");
+										}
+										});
+
+									});
+								</script>
 								<input name="cellPhone2" type="tel" maxlength="4"
-									value="<%=arr[1]%>"> <input name="cellPhone3"
+									value="<%=arr[1]%>"> 
+								<input name="cellPhone3"
 									type="tel" maxlength="4" value="<%=arr[2]%>">
 							</div>
 						</dd>
-						<dt>전화번호</dt>
-						<dd>
-							<div class="col-phone">
-								<input type="hidden" name="phone">
-								<select name="phone01">
-									<option value="02">02</option>
-									<option value="031">031</option>
-									<option value="032">032</option>
-									<option value="033">033</option>
-									<option value="041">041</option>
-									<option value="042">042</option>
-									<option value="043">043</option>
-									<option value="050">050</option>
-									<option value="051">051</option>
-									<option value="052">052</option>
-									<option value="053">053</option>
-									<option value="054">054</option>
-									<option value="055">055</option>
-									<option value="061">061</option>
-									<option value="062">062</option>
-									<option value="063">063</option>
-									<option value="064">064</option>
-									<option value="070">070</option>
-									<option value="010">010</option>
-									<option value="011">011</option>
-									<option value="016">016</option>
-									<option value="0130">0130</option>
-									</select>
-									<input name="phone02" type="tel" maxlength="4" value="">
-									<input name="phone03" type="tel" maxlength="4" value="">
-							</div>
-						</dd>
-
+						
+					
 						<!-- 배송 메모 -->
 						<dt>
 							배송메모<em></em>
@@ -429,40 +565,6 @@
 				
 			</form>
 			
-			<script type="text/javascript">
-			$(document).ready(function(){
-			
-			$("#allDepositCheckboxV2").change(function(){
-		
-				var point = $("#point").val();
-				var point2 = <%=acc.getAcc_point()%>;
-				var originprice = ${sum};
-									
-				var numformat = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";	
-				var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
-				var res = "<fmt:formatNumber>${sum - pointusing}</fmt:formatNumber>원";
-									
-				if($("#allDepositCheckboxV2").is(":checked") == true){
-					if(originprice < point){
-						$("#allDepositCheckboxV2").prop("checked", false);
-							alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else if(origin < 50000){
-						$("#allDepositCheckboxV2").prop("checked", false);
-						alert("주문 금액 5만원 이상 시 적립금 사용이 가능합니다.");
-					}else{
-						$("#point2").html(numformat_point);
-						$("#totalPrice").html(res);
-						$("#point").val("0");
-					}
-				}else{
-					$("#totalPrice").html(numformat);
-					$("#point2").empty();
-					$("#point").val(point2);
-				}
-			});
-		});
-	</script>
-			
 
 
 			<!-- 결제수단 선택 폼 -->
@@ -482,18 +584,7 @@
 						</span> 
 						<label for="keepPayment">지금 선택한 결제수단을 다음에도 사용</label>
 					</div>
-					<script type="text/javascript">
-					$(document).ready(function(){
-						
-						$("#kakaoV2").click(function(){
-							if($("#info").css("display") == "none"){
-								$("#info").show(); 
-							}else {
-								$("#info").hide();
-							}
-						});
-					});
-					</script>
+					
 
 					<div class="kakao" id="info" style="display: none;">
 						<h5>카카오페이 안내</h5>
@@ -568,6 +659,7 @@
 
 			<!-- 오른쪽에 뜨는 결제 정보 폼 -->
 			<form id="form2" name="form2">
+			
 				<div style="min-height: 771.063px;" id="paymentform">
 					<div class="react-sticky" style="transform: translateZ(0px);">
 						<article class="sticky-menu"
@@ -623,9 +715,10 @@
 								<div class="buttons end-row">
 									<button type="button" value=""
 										class="ladda-button btn btn-order btn-big" id="checkout"
-										data-style="zoom-in" onclick="payment();">결제하기</button>
+										data-style="zoom-in"onclick="payment();">결제하기</button>
 									<div class="ladda-progress" style="width: 0px;"></div>
 								</div>
+								
 							</div>
 						</article>
 					</div>

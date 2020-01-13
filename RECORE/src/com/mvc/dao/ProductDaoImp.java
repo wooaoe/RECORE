@@ -98,7 +98,7 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public Map option_selectAll(String prod_id[]) {
+	public Map option_selectAll(List prod_id) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
@@ -114,8 +114,8 @@ public class ProductDaoImp implements ProductDao {
 		try {
 
 			pstm = con.prepareStatement(sql);
-			for (int i = 0; i < prod_id.length; i++) {
-				pstm.setString(1, prod_id[i]);
+			for (int i = 0; i < prod_id.size(); i++) {
+				pstm.setString(1, (String) prod_id.get(i));
 				rs = pstm.executeQuery();
 
 				while (rs.next()) {
@@ -393,8 +393,6 @@ public class ProductDaoImp implements ProductDao {
 		return povo;
 	}
 
-	
-
 	@Override
 	public List<Vo_Review> Review_selectOne(Vo_Product pvo) {
 
@@ -462,7 +460,7 @@ public class ProductDaoImp implements ProductDao {
 			pstm.setInt(1, order_no);
 			pstm.setInt(2, prod_id);
 			pstm.setInt(3, amount);
-			pstm.setInt(4, price);
+			pstm.setInt(4, price / amount);
 			pstm.setString(5, "입금완료");
 
 			res = pstm.executeUpdate();
@@ -518,7 +516,6 @@ public class ProductDaoImp implements ProductDao {
 
 		return res > 0 ? true : false;
 	}
-
 
 	@Override
 	public boolean P_insertCart(int acc_no, int prod_id, int amount) {
@@ -709,13 +706,12 @@ public class ProductDaoImp implements ProductDao {
 	}
 
 	@Override
-	public List<Vo_Order_Num> Order_selectOne(int order_no) {
+	public Vo_Order_Num Order_selectOne(int order_no) {
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Order> prod_order = new ArrayList<>();
-		List<Vo_Order_Num> order_num = new ArrayList<>();
 		Vo_Order_Num ordervo = new Vo_Order_Num();
 		Vo_Order porder = new Vo_Order();
 
@@ -742,7 +738,7 @@ public class ProductDaoImp implements ProductDao {
 						rs.getString(12),
 						rs.getString(13), 
 						rs.getString(14));
-
+				
 				prod_order.add(porder);
 				System.out.println("imp의 prod_order list : " + prod_order);
 			}
@@ -757,18 +753,10 @@ public class ProductDaoImp implements ProductDao {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				ordervo = new Vo_Order_Num(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getString(3), 
-						rs.getString(4),
-						rs.getString(5), 
-						rs.getDate(6), 
-						rs.getInt(7), 
-						prod_order);
-				order_num.add(ordervo);
-				
-				System.out.println("imp의 order_num의 selectone : " + order_num);
+				ordervo = new Vo_Order_Num(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getDate(6), rs.getInt(7), prod_order);
+
+				System.out.println("imp의 order_num의 selectone : " + ordervo);
 			}
 
 		} catch (SQLException e) {
@@ -777,7 +765,7 @@ public class ProductDaoImp implements ProductDao {
 			close(rs, pstm, con);
 		}
 
-		return order_num;
+		return ordervo;
 	}
 
 	@Override
@@ -787,7 +775,7 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Vo_Order porder = new Vo_Order();
-
+		System.out.println("imp의 order_seq값 : " + order_no);
 		String sql = "SELECT * FROM PROD_ORDER JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) WHERE ORDER_NO = ?";
 
 		try {
@@ -796,26 +784,15 @@ public class ProductDaoImp implements ProductDao {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				porder = new Vo_Order(
-						rs.getInt(1),
-						rs.getInt(2),
-						rs.getInt(12),
-						rs.getString(16),
-						rs.getString(15),
-						rs.getString(9),
-						rs.getString(10),
-						rs.getInt(4),
-						rs.getInt(5),
-						rs.getString(6),
-						rs.getString(7),
-						rs.getString(8)						
-				);
+				porder = new Vo_Order(rs.getInt(1), rs.getInt(2), rs.getInt(12), rs.getString(16), rs.getString(15),
+						rs.getString(9), rs.getString(10), rs.getInt(4), rs.getInt(5), rs.getString(6), rs.getString(7),
+						rs.getString(8));
 				System.out.println("prod_order join imp 값 : " + porder);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rs, pstm, con);
 		}
 
@@ -839,14 +816,8 @@ public class ProductDaoImp implements ProductDao {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				porder = new Vo_Order_Prod(
-						rs.getInt(1), 
-						rs.getInt(2), 
-						rs.getInt(3), 
-						rs.getInt(4), 
-						rs.getString(5),
-						rs.getString(6), 
-						rs.getString(7));
+				porder = new Vo_Order_Prod(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5),
+						rs.getString(6), rs.getString(7));
 				orderprod.add(porder);
 				System.out.println("imp의 prod_order selectone : " + orderprod);
 			}
@@ -916,10 +887,9 @@ public class ProductDaoImp implements ProductDao {
 		return O_seq;
 	}
 
-	
 	@Override
-	public boolean AllPOrder_insert(int order_no, String[] prod_id, int price, String[] prod_amount) {
-		
+	public boolean AllPOrder_insert(int order_no, String prod_id, String price, String prod_amount) {
+
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res = 0;
@@ -928,12 +898,12 @@ public class ProductDaoImp implements ProductDao {
 
 		try {
 
-//			pstm = con.prepareStatement(sql);
-//			pstm.setInt(1, order_no);
-//			pstm.setInt(2, prod_id);
-//			pstm.setInt(3, prod_amount);
-//			pstm.setInt(4, price);
-//			pstm.setString(5, "입금완료");
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, order_no);
+			pstm.setInt(2, Integer.parseInt(prod_id));
+			pstm.setInt(3, Integer.parseInt(prod_amount));
+			pstm.setInt(4, Integer.parseInt(price));
+			pstm.setString(5, "입금완료");
 
 			res = pstm.executeUpdate();
 
@@ -947,89 +917,60 @@ public class ProductDaoImp implements ProductDao {
 		} finally {
 			close(pstm, con);
 		}
-		
-		
-		
-		
-		
-		
-		
-		return false;
+
+		return res > 0 ? true : false;
 	}
 
 	@Override
 	public Vo_Order_Num2 O_selectOne(int order_seq) {
-		
+
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Order_Prod> porder = new ArrayList<>();
 		Vo_Order_Prod prodorder = null;
 		Vo_Order_Num2 ordernum = null;
-		
+
 		String sql = "SELECT * FROM PROD_ORDER WHERE ORDER_NO = ?";
 		String sql2 = "SELECT * FROM ORDER_NUM WHERE ORDER_NO = ?";
-		
-		
-			try {
-				pstm = con.prepareStatement(sql);
-				pstm.setInt(1, order_seq);
-				rs = pstm.executeQuery();
-				
-				while(rs.next()) {
-					prodorder = new Vo_Order_Prod(
-							rs.getInt(1),
-							rs.getInt(2),
-							rs.getInt(3),
-							rs.getInt(4),
-							rs.getString(5),
-							rs.getString(6),
-							rs.getString(7)
-							);
-					porder.add(prodorder);
-				}	
-			} catch (SQLException e) {
-				e.printStackTrace();
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, order_seq);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				prodorder = new Vo_Order_Prod(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5),
+						rs.getString(6), rs.getString(7));
+				porder.add(prodorder);
 			}
-			try {
-				pstm = con.prepareStatement(sql2);
-				pstm.setInt(1, order_seq);
-				rs = pstm.executeQuery();
-				
-				while(rs.next()) {
-					ordernum = new Vo_Order_Num2(
-							rs.getInt(1),
-							rs.getInt(2),
-							rs.getString(3),
-							rs.getString(4),
-							rs.getString(5),
-							rs.getDate(6),
-							rs.getInt(7),
-							porder
-							);
-					System.out.println("imp의 Vo_Order_prod 값 : " + ordernum);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(rs, pstm, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			pstm = con.prepareStatement(sql2);
+			pstm.setInt(1, order_seq);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				ordernum = new Vo_Order_Num2(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getDate(6), rs.getInt(7), porder);
+				System.out.println("imp의 Vo_Order_prod 값 : " + ordernum);
 			}
-		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstm, con);
+		}
+
 		return ordernum;
 	}
 
-	
-	
 	/*
 	 * String prod_order_sql =
 	 * "SELECT * FROM ORDER_NUM JOIN PROD_ORDER USING(ORDER_NO) " +
 	 * "JOIN PROD_OPTION USING(PROD_ID) JOIN PRODUCT USING(PROD_NO) " +
 	 * "ORDER BY ORDER_NO, PROD_ID ASC";
 	 */
-	
-	
-	
-	
-	
 
 }

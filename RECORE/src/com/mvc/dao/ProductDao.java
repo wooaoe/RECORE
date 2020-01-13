@@ -23,7 +23,7 @@ public interface ProductDao {
 	
 	public List<Vo_Product> Child_selectAll(int pseq); // 옷 전체 조회
 	
-	public Map option_selectAll(String prod_id[]); //상품 옵션 
+	public Map option_selectAll(List prod_id); //상품 옵션 
 	
 	public Vo_Product P_selectOne(int pseq); // 상품 선택 조회
 	
@@ -41,7 +41,7 @@ public interface ProductDao {
 	
 	public List<Vo_Order_Prod> Order_selectAll(int order_seq); //주문번호 찾아서 prod_order 조회
 	
-	public List<Vo_Order_Num> Order_selectOne(int order_seq); //주문번호 찾아서 order_num 조회
+	public Vo_Order_Num Order_selectOne(int order_seq); //주문번호 찾아서 order_num 조회
 	
 	public Vo_Order ProdOrder_selectOne(int order_seq); //주문번호 찾아서 prod_order 조회 
 	
@@ -53,7 +53,7 @@ public interface ProductDao {
 	
 	public boolean O_insert(int acc_no, String acc_addrs[], int acc_pont); //ORDER_NUM insert 
 	
-	public boolean AllPOrder_insert(int order_seq, String prod_id[], int price, String prod_amount[]); //상품 결제페이지 (전체구매) 
+	public boolean AllPOrder_insert(int order_seq, String prod_id, String price, String prod_amount); //상품 결제페이지 (전체구매) 
 
 	public boolean P_insertCart(int acc_no, int prod_id, int amount); // 장바구니 insert
 

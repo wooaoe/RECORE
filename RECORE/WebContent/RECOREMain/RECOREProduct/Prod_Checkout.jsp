@@ -174,30 +174,12 @@
 				+ "&acc_point=" + zeropoint;
 				
 				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
-				
-							/* $.ajax({
-								   type : "POST",
-								   url : "test.do",
-								   async : false,
-								   data : {code: code, cls_code: cls_code, admin_id: admin_id, before_admin_id: before_admin_id} ,
-								   dataType : "json",
-								   cache: false,
-								   success: function(data){    
-								    alert("저장되었습니다.");
-								    },
-								   error : function (data) {
-								    alert('죄송합니다. 잠시 후 다시 시도해주세요.');
-								    return false;
-								   }  
-								  }); */ 			
-							
 		
 			}else{
 				
 				var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
 				+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
-				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + 
-				"&acc_zipcode=" + <%=acc.getAcc_zipcode()%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc.getAcc_point()%>;
+				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc.getAcc_point()%>;
 				
 				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
 				

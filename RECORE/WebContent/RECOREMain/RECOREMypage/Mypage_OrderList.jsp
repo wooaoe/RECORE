@@ -293,7 +293,7 @@
 				                <!-- 주문당 총 금액 구하기 -->
 				                <c:set var="sum" value="0"></c:set>
 				                <c:forEach var="tmp" items="${order.olist}">
-				                	<c:set var="sum" value="${sum + tmp.order_price}"></c:set>
+				                	<c:set var="sum" value="${sum + (tmp.order_price * tmp.order_amount)}"></c:set>
 				                </c:forEach>
 				                <td class="right">
 									<div class="">

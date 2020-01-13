@@ -8,17 +8,13 @@
 	<%@ page import = "com.mvc.vo.Vo_Account" %>
 	<%@ page import = "java.util.List" %>
 	
-	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
-	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
 	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
-	<% int prod_no = Integer.parseInt(request.getParameter("pseq")); %>
-	<% int acc_no = Integer.parseInt(request.getParameter("acc_no")); %>
-	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
-	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
-	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
+	<% String amount = (String)request.getAttribute("amount"); %> 
+	<% String totalPrice = (String)request.getAttribute("totalPrice");%>
+	<% String prod_id = (String)request.getAttribute("prod_id");%>
 	<% int point = Integer.parseInt(request.getParameter("acc_point")); %>
-	<% String acc_addrs[] = request.getParameterValues("acc_addr"); %>
+	<% String acc_addrs[] = request.getParameterValues("acc_addr"); %> 
 
     
 <!DOCTYPE html>
@@ -84,24 +80,29 @@
 		}else if(birth.length < 6){
 			$("#request").prop("disabled", true);
 		}
-		
 	}
-	$(document).ready(function(){
-		
-		$("#request").click(function(){
-			 
-		 var accinfo = new Array();
-		 accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"];
-		
-		 var url = "Product.do?command=kakaopaycall2&pseq=" + <%=prod_no%> + "&acc_no=" +
-					<%=acc.getAcc_no()%> + "&amount=" + <%=amount%> + "&totalPrice=" + <%=totalPrice%> + 
-					"&prod_id=" + <%=prod_id%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=point%>; 
-					
-			location.href = url;
-		
-		});
-	});
 	
+ 	 $(document).ready(function(){
+		
+		$("#request").click(function(){ 
+		 
+			
+			var arr_amount = $("#amount").val();
+			var arr_totalPrice = $("#totalPrice").val();
+			var arr_prod_id = $("#prod_id").val();
+			var tess_point = <%=point%>;
+			 var accinfo = new Array();
+				accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"]; 
+				alert(accinfo);
+			var url = "Product.do?command=cartkakaocall2&amount=" + arr_amount + "&totalPrice=" + arr_totalPrice + 
+							"&prod_id=" + arr_prod_id + "&acc_addrs=" + accinfo + "&acc_point=" + tess_point; 
+							
+				location.href = url; 
+			
+			
+		});
+	 }); 
+
 	
 </script>
 
@@ -129,15 +130,19 @@
 						<strong class="logo_pay"><img src="//t1.daumcdn.net/kakaopay/tesla/20181010/pg_web/images/logo_pay.png" class="img_g" alt="카카오페이"></strong>
 						<p class="desc_payask">결제요청 메시지 전송을 위해<br>아래 정보를 입력해주세요.</p>
 						
-						<form id="userPost" method="get" action="../../Product.do">
-						<input type = "hidden" name = "command" value = "kakaopaycall2"/>
-						
+						<form id="userPost" method="get" action="">
+						<!-- <input type = "hidden" name = "command" value = "kakaopaycall2"/> -->
+						 <input id ="amount" type = "hidden" name = "amount" value = "<%=amount%>"/> 
+						 <input id ="totalPrice" type = "hidden" name = "totalPrice" value = "<%=totalPrice%>"/> 
+						 <input id ="prod_id" type = "hidden" name = "prod_id" value = "<%=prod_id%>"/> 
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>
 								<ul class="list_payask">
 									<li>
                                     <span class="txt_payask">
-                                        <label for="userPhone" class="lab_payask">휴대폰 번호</label>
+                                        <label for="userPhone" class="lab_payask">
+                                        	휴대폰 번호 
+                                        </label>
 										 		<em id = "em" style = "font-size: 9pt; color: red;">특수문자 없이 숫자만 입력해주세요.</em>
                                     </span>
 										<input type="text" id="userPhone" class="inp_payask" 
@@ -156,7 +161,8 @@
 									</li>
 								</ul>
 
-								<button type="button" id = "request" class="btn_payask" onclick = "request();">결제요청</button>
+								<button type="button" id = "request" class="btn_payask" 
+								onclick = "request();">결제요청</button>
 								
 							</fieldset>
 						</form>

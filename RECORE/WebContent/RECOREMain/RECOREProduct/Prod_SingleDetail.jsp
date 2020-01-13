@@ -14,7 +14,7 @@
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
-	<%-- <% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %> --%>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -75,41 +75,46 @@
 	<script type="text/javascript">
 	
 		$(document).ready(function(){
-		$("#minus").click(function(){
-		var stat = $("#number").val();
-		var num = parseInt(stat, 10);
-		num--;
+			
+			$("#minus").click(function(){
+				var stat = $("#number").val();
+				var num = parseInt(stat, 10);
+				num--;
+				
+				var price = ${pvo.prod_price};
 											
-		if(num < 0){
-												
-		alert("최소 1개 이상 선택해주세요.");
-		num = 1;
-		}
-		$("#number").val(num);
+				if(num < 0){
+					alert("최소 1개 이상 선택해주세요.");
+					num = 1; 
+				}
+				
+				$("#number").val(num);
+				$("#price").val(price)
 											
-		var amount = parseInt($("#number").val());
-		var price = ${pvo.prod_price};
-		var total = amount * price;
-		$("#price").val(total);
+				var amount = parseInt($("#number").val());
+				var total = amount * price;
+				$("#price").val(total);
 											
 		});
 		
 		$("#plus").click(function(){
 											
-		var stat = $("#number").val();
-		var num = parseInt(stat, 10);
-		num++;
+			var stat = $("#number").val();
+			var num = parseInt(stat, 10);
+			num++;
 											
-		if(num > 10){
-		alert("최대 10개 이상 구매하실 수 없습니다.");
-		num = 1;
-		}
-		$("#number").val(num);
+			var price = ${pvo.prod_price};
+			
+			if(num > 10){
+				alert("최대 10개 이상 구매하실 수 없습니다.");
+				num = 1;
+			}
+				$("#number").val(num);
+				$("#price").val(price);
 											
-		var amount = parseInt($("#number").val());
-		var price = ${pvo.prod_price};
-		var total = amount * price;
-		$("#price").val(total);
+				var amount = parseInt($("#number").val());
+				var total = amount * price;
+				$("#price").val(total);
 		});
 										
 		});
@@ -151,13 +156,6 @@
 							href="Product.do?command=<%=url%>&catdno=${pvo.prod_catd}&pageno=1">${cdvo.catd_name}</a></li>
 					</ol>
 				</div>
-				<div class="col-md-6">
-					<ol class="product-pagination text-right">
-						<li><a href="#"><i class="tf-ion-ios-arrow-left"></i>
-								Next </a></li>
-						<li><a href="#">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
-					</ol>
-				</div>
 			</div>
 
 			<div class="row mt-20">
@@ -178,7 +176,6 @@
 									data-zoom-image="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png" />
 								</div>
 								</div>
-
 								<!-- sag sol -->
 								<a class='left carousel-control' href='#carousel-custom'
 									data-slide='prev'> <i class="tf-ion-ios-arrow-left"></i>
@@ -200,7 +197,6 @@
 									src='<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png'
 									alt='' /></li>
 							</ol>
-
 						</div>
 					</div>
 				</div>
@@ -227,7 +223,6 @@
 						<!-- @@ 상품 옵션 값 보내주기 @@ -->
 						
 						<form action = "" method = "get" id = "form" name = "form">
-						
 						<input type = "hidden" name = "command" value = "Order" id = "val"/> 
 						<input type = "hidden" name = "pseq" value = "${pvo.prod_no}" id = "val2"/>
 						
