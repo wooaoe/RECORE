@@ -1,6 +1,7 @@
 package com.mvc.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -8,13 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.mvc.vo.Vo_Cart;
+import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
+import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
-import com.mvc.vo.Vo_Wish;
+import com.mvc.vo.Vo_Review;
 
 public class ProductDaoImp implements ProductDao {
 
@@ -25,8 +29,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> plist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -83,41 +85,7 @@ public class ProductDaoImp implements ProductDao {
 
 				toplist.add(tmp);
 				System.out.println("toplist : " + toplist);
-				
-			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs, pstm, con);
-		}
-
-		return toplist;
-	}
-
-	@Override
-	public List<Vo_Prod_option> option_selectAll() {
-
-		Connection con = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
-
-		String sql = "SELECT * FROM PROD_OPTION";
-
-		try {
-			pstm = con.prepareStatement(sql);
-			rs = pstm.executeQuery();
-
-			System.out.println("옵션 query 실행 : " + sql);
-
-			while (rs.next()) {
-				Vo_Prod_option opt = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
-						rs.getInt(5));
-
-				polist.add(opt);
-
-				System.out.println("상품 옵션 리스트 값 : " + polist);
 			}
 
 		} catch (SQLException e) {
@@ -126,7 +94,56 @@ public class ProductDaoImp implements ProductDao {
 			close(rs, pstm, con);
 		}
 
-		return polist;
+		return toplist;
+	}
+
+	@Override
+	public Map option_selectAll(String prod_id[]) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
+		List<Vo_Product> plist = new ArrayList<Vo_Product>();
+		Map map = new HashMap();
+		Vo_Prod_option povo = null;
+		Vo_Product pvo = null;
+
+		String sql = "SELECT * FROM PROD_OPTION JOIN PRODUCT USING(PROD_NO) WHERE PROD_ID = ?";
+
+		try {
+
+			pstm = con.prepareStatement(sql);
+			for (int i = 0; i < prod_id.length; i++) {
+				pstm.setString(1, prod_id[i]);
+				rs = pstm.executeQuery();
+
+				while (rs.next()) {
+					povo = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+							rs.getInt(5));
+
+					polist.add(povo);
+
+					pvo = new Vo_Product(rs.getInt(1), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9),
+							rs.getString(10), rs.getInt(11), rs.getString(12), rs.getInt(13), rs.getString(14),
+							rs.getDouble(15), rs.getDate(16), rs.getString(17));
+
+					plist.add(pvo);
+				}
+				System.out.println("imp polist : " + polist);
+				System.out.println("imp plist : " + plist);
+
+			}
+			map.put("polist", polist);
+			map.put("plist", plist);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstm, con);
+		}
+
+		return map;
 	}
 
 	@Override
@@ -136,8 +153,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> prntlist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -176,8 +191,6 @@ public class ProductDaoImp implements ProductDao {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		List<Vo_Product> childlist = new ArrayList<Vo_Product>();
-
-//		1. PRODUCT 쿼리 실행문장 (위에서 옵션 리스트를 마지막 인덱스값에 넣어주기)
 
 		try {
 
@@ -384,45 +397,176 @@ public class ProductDaoImp implements ProductDao {
 
 		return povo;
 	}
+	
+	
+
+	@Override
+	public Map<List, String> choice_selectOption(ArrayList<Vo_Prod_option> povo, Vo_Product pvo) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<List, String> choice = new HashMap<>();
+		List<Vo_Prod_option> polist = new ArrayList<Vo_Prod_option>();
+
+		String sql = "SELECT * FROM PROD_OPTION WHERE PROD_NO = ?";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pvo.getProd_no());
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Vo_Prod_option tmp = new Vo_Prod_option(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+						rs.getInt(5));
+
+				polist.add(tmp);
+			}
+
+			for (int i = 0; i < polist.size(); i++) {
+
+				choice.put(polist, polist.get(i).getProd_size());
+			}
+			System.out.println("productimp choice map 값 : " + choice);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			close(rs, pstm, con);
+		}
+
+		return choice;
+	}
+
+	@Override
+	public List<Vo_Review> Review_selectOne(Vo_Product pvo) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Vo_Review> rev = new ArrayList<>();
+
+		String sql = "";
+
+		return null;
+	}
 
 	@Override
 	public boolean P_insert(Vo_Product pvo) {
 
-		/*
-		 * Connection con = getConnection(); PreparedStatement pstm = null; int res = 0;
-		 * 
-		 * String sql = "INSERT INTO PRODUCT VALUES()";
-		 */
-
-		return false;
-	}
-
-	@Override
-	public boolean O_insert(Vo_Prod_option povo, Vo_Product prod) {
+		// insert 메소드 만들거임 from 김성일
 
 		Connection con = getConnection();
 		PreparedStatement pstm = null;
 		int res = 0;
 
-		String sql = "INSERT INTO PROD_ORDER VALUES(ORDER_NUM.NEXTVAL, ?, ?, ?, ORDER_TNO.NEXTVAL, ?)";
+		String sql = "INSERT INTO PRODUCT VALUES(PROD_SEQ.NEXTVAL,?,'f_img','th_img',?,?,?,'con_img',?,?,?,SYSDATE,?)";
+		System.out.println(sql);
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pvo.getProd_catd());
+			pstm.setString(2, pvo.getProd_name());
+			pstm.setString(3, pvo.getProd_brand());
+			pstm.setInt(4, pvo.getProd_price());
+			pstm.setInt(5, pvo.getProd_con_count());
+			pstm.setString(6, pvo.getProd_dc_yn());
+			pstm.setDouble(7, pvo.getProd_dc());
+			pstm.setString(8, pvo.getProd_note());
+
+			res = pstm.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+				System.out.println("커밋완료");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstm, con);
+		}
+
+		return (res > 0) ? true : false;
+	}
+
+	@Override
+	public boolean O_insert(int order_no, int prod_id, int amount, int price) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		int res = 0;
+
+		String sql = "INSERT INTO PROD_ORDER VALUES(?, ?, ?, ?, '0', ?, 'N')";
 
 		try {
 
 			pstm = con.prepareStatement(sql);
-			pstm.setInt(1, povo.getProd_id());
-			pstm.setInt(2, povo.getProd_stock());
-			pstm.setInt(3, prod.getProd_price());
-			pstm.setString(4, "입금 전");
+			pstm.setInt(1, order_no);
+			pstm.setInt(1, prod_id);
+			pstm.setInt(2, amount);
+			pstm.setInt(3, price);
+			pstm.setString(4, "입금 완료");
+
+			res = pstm.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+				System.out.println("insert 성공");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstm, con);
 		}
+
+		return res > 0 ? true : false;
+	}
+
+	@Override
+	public boolean O_insert(Vo_Account session) {
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		int res = 0;
+
+		String sql = "INSERT INTO ORDER_NUM VALUES(ORDER_SEQ.NEXTVAL, ?, ?, ?, ?, SYSDATE, ?)";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, session.getAcc_no());
+			pstm.setString(2, session.getAcc_zipcode());
+			pstm.setString(3, session.getAcc_addr());
+			pstm.setString(4, session.getAcc_addr2());
+			pstm.setInt(5, session.getAcc_point());
+
+			if (res > 0) {
+				commit(con);
+				System.out.println("insert 성공");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstm, con);
+		}
+
+		return res > 0 ? true : false;
+	}
+
+	@Override
+	public boolean O_insert(String[] prod_id, int price, Vo_Account acc, String[] prod_amount) {
 
 		return false;
 	}
 
 	@Override
-	public boolean P_insertCart(int acc_no, int prod_id) {
+	public boolean P_insertCart(int acc_no, int prod_id, int amount) {
+
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		int res = 0;
@@ -432,12 +576,13 @@ public class ProductDaoImp implements ProductDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acc_no);
 			pstmt.setInt(2, prod_id);
-			pstmt.setInt(3, 1); // wishlist에서 장바구니 추가할 때 수량은 기본값으로 1로 한다.
+			pstmt.setInt(3, amount);
 			res = pstmt.executeUpdate();
 
 			if (res > 0) {
 				commit(con);
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -483,5 +628,77 @@ public class ProductDaoImp implements ProductDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public int P_getSeqCurrval() {
+		// 현재 prod_seq 의 시퀀스 번호를 가져오는 메소드
+
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int p_seq = 0;
+
+		try {
+
+			String sql = "SELECT LAST_NUMBER FROM USER_SEQUENCES  WHERE SEQUENCE_NAME = 'PROD_SEQ'";
+			System.out.println(sql);
+
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				p_seq = rs.getInt(1);
+
+			}
+
+			p_seq--;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, con);
+		}
+
+		System.out.println(p_seq);
+
+		return p_seq;
+	}
+
+	@Override
+	public boolean POinsert(int pseq, Vo_Prod_option povo) {
+
+		// prod_option insert하는 메소드 따로 만들거임 from 김성일
+
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		int res = 0;
+
+		String sql = "INSERT INTO PROD_OPTION VALUES(?,PROD_ID_SEQ.NEXTVAL,?,?,?)";
+
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, pseq);
+			pstm.setString(2, povo.getProd_color());
+			pstm.setString(3, povo.getProd_size());
+			pstm.setInt(4, povo.getProd_stock());
+
+			res = pstm.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstm, con);
+		}
+
+		return (res > 0) ? true : false;
+	}
+
+	
 
 }

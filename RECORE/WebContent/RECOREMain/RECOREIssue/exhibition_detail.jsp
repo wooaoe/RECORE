@@ -5,7 +5,10 @@
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+<%@ page import="com.mvc.vo.Vo_Account" %>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,7 +92,22 @@
         <div style="text-align: right; margin-right: 100px;">${issue_vo.iss_writer }</div>
     	<div style="text-align: right; margin-right: 100px;">${issue_vo.iss_source }</div>
     	<div style="text-align: right; margin-right: 100px;"><a href="${issue_vo.iss_note }">${issue_vo.iss_note }</a></div>
+    	
+<%
+	
+				if(session.getAttribute("vo") != null){
+					Vo_Account vo_a = (Vo_Account)session.getAttribute("vo");
+
+					if(vo_a.getAcc_m_c().equals("M")){		
+%>    	
+    	
        	<div style="text-align: right; margin-right: 100px;"><button id="deletebtn" onclick="deleteExhibition()">글삭제</button></div> 	
+       	
+<%
+					}
+				}
+%>
+
       </div>
     </div>
 

@@ -32,8 +32,7 @@ public class Community_QnA_Controller extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
@@ -53,9 +52,7 @@ public class Community_QnA_Controller extends HttpServlet {
 			 * 작성자: 주희진
 			 * Date: 2019. 12. 30.
 			 */
-			String uu = request.getSession().getServletContext().getRealPath("/");
 
-			System.out.println(uu);
 			
 			/* QnA list catd(카테고리),searchsubject(검색조건),keyword(키워드) 값 Load*/
 			String catd = null;
@@ -92,11 +89,11 @@ public class Community_QnA_Controller extends HttpServlet {
 			System.out.println("list:...."+ list.size());
 			System.out.println("totalCount:...."+ totalCount);
 			/*Session Load & Set*/
-			HttpSession httpSession = request.getSession(true);
+			//HttpSession httpSession = request.getSession(true);
 
 			/*[테스트용] 로그인된 Account정보 세션 바인딩*/
-			Vo_Account vo = dao.getAccount(1);
-			httpSession.setAttribute("sessionVo", vo);
+			//Vo_Account vo = dao.getAccount(1);
+			//httpSession.setAttribute("sessionVo", vo);
 			//httpSession.setAttribute("catd", catd);
 			
 			//JSONObject obj = new JSONObject(); 
@@ -218,7 +215,7 @@ public class Community_QnA_Controller extends HttpServlet {
 			int qna_no = Integer.parseInt(request.getParameter("qna_no"));
 			String qna_title = request.getParameter("title");
 			String qna_content = request.getParameter("content");
-
+			System.out.println("ㅠ_ㅠ:? " + qna_title);
 			/*답글 생성자 Load*/
 			Vo_QnA qnaVo = new Vo_QnA(qna_no, qna_title, qna_content);
 
@@ -253,8 +250,13 @@ public class Community_QnA_Controller extends HttpServlet {
 			// int qna_acc_no = Integer.parseInt(request.getParameter("writer"));
 			String qna_content = request.getParameter("content");
 			String qna_front_img = request.getParameter("qna_front_img");
+			int qna_seq_no = Integer.parseInt(request.getParameter("qna_seq_no"));
 			int catd_no = Integer.parseInt(request.getParameter("catd_no"));
-			
+			/*
+			 * if(request.getParameter("qna_seq_no")!=null) { System.out.println(
+			 * "ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ머하냐???"); qna_seq_no =
+			 * Integer.parseInt(request.getParameter("qna_seq_no")); }
+			 */
 			/* 작성자 Session Load */
 			HttpSession getSession = request.getSession(false);
 			Vo_Account sessionVo = (Vo_Account) getSession.getAttribute("sessionVo");
@@ -264,10 +266,10 @@ public class Community_QnA_Controller extends HttpServlet {
 			System.out.println("qna_content: " + qna_content);
 			System.out.println("qna_front_img: " + qna_front_img);
 			System.out.println("catd_no: ." + catd_no);
-
+			System.out.println("qna_seq_no: ." + qna_seq_no);
 			/*글 생성자 Load*/
-			Vo_QnA qnaVo = new Vo_QnA(catd_no, sessionVo.getAcc_no(), qna_front_img, qna_title, qna_content, sessionVo.getAcc_id());
-			
+			Vo_QnA qnaVo = new Vo_QnA(catd_no, qna_seq_no, sessionVo.getAcc_no(), qna_front_img, qna_title, qna_content, sessionVo.getAcc_id());
+			System.out.println("글생성자 ...ㅠㅠ.ㅠ.ㅠ" + qnaVo);
 			/*글 insert*/
 			boolean res = dao.Cq_insert(qnaVo);
 
@@ -413,11 +415,12 @@ public class Community_QnA_Controller extends HttpServlet {
 			 */
 			
 			/* QnA list catd(카테고리),searchsubject(검색조건),keyword(키워드) 값 Load*/
-			//String catd = (String)request.getParameter("catd");
+			String catd = (String)request.getParameter("catd");
 			String searchsubject = (String)request.getParameter("searchsubject");
 			String keyword = (String)request.getParameter("keyword");
-			//System.out.println("searchsubject" + searchsubject);
-			//System.out.println("keyword"+keyword);
+			System.out.println("catd" + catd);
+			System.out.println("searchsubject" + searchsubject);
+			System.out.println("keyword"+keyword);
 			
 			/*Page Code*/
 			int page = 1;
@@ -428,25 +431,26 @@ public class Community_QnA_Controller extends HttpServlet {
 			paging.setPage(page);
 
 			/* QnA list Total Row Load */
-			int totalCount = dao.Cr_selectAllCount();
+			int totalCount = dao.Cr_selectAllCount(catd, searchsubject, keyword);
 			paging.setTotalCount(totalCount);
 
 			/* QnA list Load & RequestSet */
-			List<Vo_Review> list = dao.Cr_selectAll(paging);
+			List<Vo_Review> list = dao.Cr_selectAll(paging, catd, searchsubject, keyword);
 			request.setAttribute("list", list);
 			request.setAttribute("paging", paging);
-			//request.setAttribute("catd", catd);
+			request.setAttribute("catd", catd);
 			request.setAttribute("searchsubject", searchsubject);
 			request.setAttribute("keyword", keyword);
 			
 			
-			//System.out.println("_____________________catd" + catd);
+			System.out.println("_____________________catd" + catd);
 			System.out.println("list:...."+ list.size());
 			System.out.println("totalCount:...."+ totalCount);
 			/*Session Load & Set*/
 			HttpSession httpSession = request.getSession(true);
 
 			/*[테스트용] 로그인된 Account정보 세션 바인딩*/
+			System.out.println("테스트용 vo 호출합니다.");
 			Vo_Account vo = dao.getAccount(1);
 			httpSession.setAttribute("sessionVo", vo);
 			

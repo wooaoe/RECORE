@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mvc.dao.FundingDaoImpl;
 import com.mvc.dao.IssueDao;
 import com.mvc.dao.IssueDaoImpl;
+import com.mvc.vo.Vo_Funding;
 import com.mvc.vo.Vo_Issue;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -35,10 +37,26 @@ public class Issue_Controller extends HttpServlet {
       request.setCharacterEncoding("utf-8");
       response.setContentType("text/html; charset=UTF-8");
       IssueDaoImpl dao = new IssueDaoImpl();
+      FundingDaoImpl fdao = new FundingDaoImpl();
       
       String command = request.getParameter("command");
       
-      if(command.equals("selectAllNews")) {
+      if(command.equals("main")) {
+    	  
+    	  List<Vo_Issue> nlist = dao.I_selectAll();
+    	  List<Vo_Issue> elist = dao.I_selectAllExhibition();
+    	  List<Vo_Funding> flist = fdao.F_selectAll();
+    	  
+    	  request.setAttribute("nlist", nlist);
+    	  request.setAttribute("elist", elist);
+    	  request.setAttribute("flist", flist);
+    	  
+          dispatch("./RECOREMain/index.jsp", request, response);
+    	  
+    	  
+    	  
+      }else if(command.equals("selectAllNews")) {
+    	  
          try {
          
             int page = Integer.parseInt(request.getParameter("pageno"));   //몇번째 페이지인지 나타내줌

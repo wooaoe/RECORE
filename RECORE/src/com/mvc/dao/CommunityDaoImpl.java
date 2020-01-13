@@ -5,7 +5,7 @@ import static common.JDBCTemplate.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
-
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,17 +60,12 @@ public class CommunityDaoImpl implements CommunityDao{
 			}else {
 				if(catd.equals("all")) { 
 					sql = prop.getProperty("qna_searchselectAll") + " "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO IN (14,15,16) ORDER BY QNA_PNO DESC, QNA_NO) QNA) WHERE row_num >= ?) WHERE row_num <= ? ";
-					
-					System.out.println("Cq_selectAll 검색조건 있을경우 읭1???ㄹㄹㄹ?ㅗㅜ???????????: "+sql);
 				}else if(catd.equals("product")) {
 					sql = prop.getProperty("qna_searchselectAll") + " "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=16 ORDER BY QNA_PNO DESC, QNA_NO) QNA) WHERE row_num >= ?) WHERE row_num <= ? ";
-					System.out.println("Cq_selectAll 검색조건 있을경우 읭2???????????????: "+sql);
 				}else if(catd.equals("delivery")) {
 					sql = prop.getProperty("qna_searchselectAll") + " "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=14 ORDER BY QNA_PNO DESC, QNA_NO) QNA) WHERE row_num >= ?) WHERE row_num <= ? ";
-					System.out.println("Cq_selectAll 검색조건 있을경우 읭3???????????????: "+sql);
 				}else if(catd.equals("etc")) {
 					sql = prop.getProperty("qna_searchselectAll") + " "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=15 ORDER BY QNA_PNO DESC, QNA_NO) QNA) WHERE row_num >= ?) WHERE row_num <= ? ";
-					System.out.println("Cq_selectAll 검색조건 있을경우 읭4???????????????: "+sql);
 				}
 				
 				pstmt = con.prepareStatement(sql);
@@ -177,6 +172,8 @@ public class CommunityDaoImpl implements CommunityDao{
 		String sql="";
 		ResultSet rs = null;
 		int res = 0;
+		System.out.println("SELECT ALL COUNT ==");
+		System.out.println("catd:" + catd + "/ " + "searchsubject: "+searchsubject+"/ keyword: " + keyword);
 		try {
 			prop.load(new FileInputStream(filePath));
 			if(searchsubject==null || keyword==null) {
@@ -194,20 +191,19 @@ public class CommunityDaoImpl implements CommunityDao{
 			}else {
 				
 				if(catd.equals("all")) {
-					sql = prop.getProperty("qna_searchAllCount") +" ? LIKE '%' || ? || '%' AND CATD_NO IN (14,15,16)";
+					sql = prop.getProperty("qna_searchAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO IN (14,15,16))";
 				}else if(catd.equals("product")) {
-					sql = prop.getProperty("qna_searchAllCount") +" ? LIKE '%' || ? || '%' AND CATD_NO=16";
+					sql = prop.getProperty("qna_searchAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=16)";
 				}else if(catd.equals("delivery")) {
-					sql = prop.getProperty("qna_searchAllCount") +" ? LIKE '%' || ? || '%' AND CATD_NO=14";
+					sql = prop.getProperty("qna_searchAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=14)";
 				}else if(catd.equals("etc")) {
-					sql = prop.getProperty("qna_searchAllCount") +" ? LIKE '%' || ? || '%' AND CATD_NO=15";
+					sql = prop.getProperty("qna_searchAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=15)";
 				}
 				
 				
 				System.out.println("검색조건 있을경우: "+sql);
 				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, searchsubject);
-				pstmt.setString(2, keyword);
+				pstmt.setString(1, keyword);
 				
 			}
 			
@@ -242,15 +238,15 @@ public class CommunityDaoImpl implements CommunityDao{
 			prop.load(new FileInputStream(filePath));
 			String sql = prop.getProperty("qna_insert");
 			//(catd_no, sessionVo.getAcc_no(), qna_front_img, qna_title, qna_content, sessionVo.getAcc_id());
-			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,?,0,?,?,?,?,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
-			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,catdno,0,accno,qnafrontimg,title,content,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
-			
+			//INSERT INTO QNA VALUES(QNA_SEQ.NEXTVAL,?,?,?,?,?,?,0,SYSDATE,'N',0,QNA_SEQ.NEXTVAL)
+			System.out.println("??????"+qnaVo.getQna_seq_no());
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, qnaVo.getCatd_no());
-			pstmt.setInt(2,qnaVo.getQna_acc_no());
-			pstmt.setString(3, qnaVo.getQna_front_img());
-			pstmt.setString(4, qnaVo.getQna_title());
-			pstmt.setString(5, qnaVo.getQna_content());
+			pstmt.setInt(2, qnaVo.getQna_seq_no());
+			pstmt.setInt(3,qnaVo.getQna_acc_no());
+			pstmt.setString(4, qnaVo.getQna_front_img());
+			pstmt.setString(5, qnaVo.getQna_title());
+			pstmt.setString(6, qnaVo.getQna_content());
 			
 			res = pstmt.executeUpdate();
 			
@@ -392,12 +388,12 @@ public class CommunityDaoImpl implements CommunityDao{
 	
 
 	/**
-	 * Method 설명: 
+	 * Method 설명: Review 글 전체 리스트 로드
 	 * 작성자: 
 	 * 2019. 12. 27.
 	 */
 	@Override
-	public List<Vo_Review> Cr_selectAll(Vo_QnA_Paging paging) {
+	public List<Vo_Review> Cr_selectAll(Vo_QnA_Paging paging, String catd, String searchsubject, String keyword) {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		Properties prop = new Properties();
@@ -406,32 +402,108 @@ public class CommunityDaoImpl implements CommunityDao{
 		String sql = "";
 		List<Vo_Review> list = null;
 		
+		int catdNum = 0;
 		int startNum = paging.getStartNum();
 		int endNum = paging.getEndNum();
 		
 		try {
 			prop.load(new FileInputStream(filePath));
-			sql = prop.getProperty("review_selectAll");
+			/*
+			 * sql = prop.getProperty("review_selectAll");
+			 * 
+			 * pstmt = con.prepareStatement(sql); pstmt.setInt(1, startNum); pstmt.setInt(2,
+			 * endNum);
+			 */
+			 
+			if(searchsubject==null || keyword==null) {
+				if(catd.equals("all")) {
+					sql = prop.getProperty("review_selectAll");
+				}else if(catd.equals("bag_acc")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 6;
+				}else if(catd.equals("outer")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 7;
+				}else if(catd.equals("top")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 8;
+				}else if(catd.equals("bottom")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 9;
+				}else if(catd.equals("wallet")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 10;
+				}else if(catd.equals("office")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 11;
+				}else if(catd.equals("home")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 12;
+				}else if(catd.equals("furniture")) {
+					sql = prop.getProperty("review_selectCategoryAll");
+					catdNum = 13;
+				}
+				
+				if(catdNum > 0){
+					System.out.println("catdNum : " + catdNum + " ================================" + "검색조건 없고 카테고리만 있음");
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, catdNum);
+					pstmt.setInt(2, startNum);
+					pstmt.setInt(3, endNum);
+				}else{
+					System.out.println("================================" + "검색조건 없고 카테고리도 없음");
+					pstmt = con.prepareStatement(sql);
+					pstmt.setInt(1, startNum);
+					pstmt.setInt(2, endNum);
+				}
+				System.out.println("Cr_selectAll 검색조건 없을경우: "+sql);
+			}else {
+				//sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				if(catd.equals("all")) { 
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("bag_acc")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 6 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("outer")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 7 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("top")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 8 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("bottom")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 9 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("wallet")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 10 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("office")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 11 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("home")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 12 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}else if(catd.equals("furniture")) {
+					sql = prop.getProperty("review_searchselectAll") + " WHERE "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO = 13 ORDER BY REVIEW_REGDATE DESC) REVIEW) WHERE row_num >= ?) WHERE row_num <= ?";
+				}
+						
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+				pstmt.setInt(2, startNum);
+				pstmt.setInt(3, endNum);
+				System.out.println("Cr_selectAll 검색조건 있을경우 읭5??????444?????????: "+sql);
+			}
 			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, startNum);
-			pstmt.setInt(2, endNum);
-			
+
 			rs = pstmt.executeQuery();
 			if(rs != null) {
 				list = new ArrayList<Vo_Review>();
 				while(rs.next()) {
 					Vo_Review reviewVo = new Vo_Review();
 					reviewVo.setProd_no(rs.getInt(2));
-					reviewVo.setProd_name(rs.getString(3));
-					reviewVo.setProd_front_img(rs.getString(4));
-					reviewVo.setAcc_id(rs.getString(5));
-					reviewVo.setOrder_no(rs.getInt(6));
-					reviewVo.setProd_id(rs.getInt(7));
-					reviewVo.setReview_title(rs.getString(8));
-					reviewVo.setReview_content(rs.getString(9));
-					reviewVo.setReview_rate(rs.getInt(10));
-					reviewVo.setReview_regdate(rs.getDate(11));
+					reviewVo.setCatd_no(rs.getInt(3));
+					reviewVo.setProd_name(rs.getString(4));
+					reviewVo.setProd_front_img(rs.getString(5));
+					reviewVo.setAcc_id(rs.getString(6));
+					reviewVo.setOrder_no(rs.getInt(7));
+					reviewVo.setProd_id(rs.getInt(8));
+					reviewVo.setReview_title(rs.getString(9));
+					reviewVo.setReview_content(rs.getString(10));
+					reviewVo.setReview_rate(rs.getInt(11));
+					reviewVo.setReview_regdate(rs.getDate(12));
+					reviewVo.setReview_recon(rs.getString(13));
 					
 					list.add(reviewVo);
 				}
@@ -447,11 +519,90 @@ public class CommunityDaoImpl implements CommunityDao{
 		System.out.println("리뷰 list : " + list);
 		return list;
 	}
-	
+	/**
+	 * Method 설명: Review 조회 글 전체 Row 개수 Count
+	 * 작성자: 주희진
+	 * Date: 2020. 01. 03.
+	 */
 	@Override
-	public int Cr_selectAllCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int Cr_selectAllCount(String catd, String searchsubject, String keyword) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		Properties prop = new Properties();
+		String filePath = properties("query_community.properties");
+		String sql="";
+		ResultSet rs = null;
+		int res = 0;
+		
+		try {
+			prop.load(new FileInputStream(filePath));
+			//sql = prop.getProperty("review_selectAllCount");
+			if(searchsubject==null || keyword==null) {
+				if(catd.equals("all")) {
+					sql = prop.getProperty("review_selectAllCount") + ")";
+				}else if(catd.equals("bag_acc")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 6)";
+				}else if(catd.equals("outer")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 7)";
+				}else if(catd.equals("top")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 8)";
+				}else if(catd.equals("bottom")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 9)";
+				}else if(catd.equals("wallet")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 10)";
+				}else if(catd.equals("office")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 11)";
+				}else if(catd.equals("home")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 12)";
+				}else if(catd.equals("furniture")) {
+					sql = prop.getProperty("review_selectCategoryAllCount")+" WHERE CATD_NO = 13)";
+				}
+				
+				pstmt = con.prepareStatement(sql);
+				
+				System.out.println("cr검색조건 없을경우: "+sql);
+				
+			}else {
+				
+				if(catd.equals("all")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%')";
+				}else if(catd.equals("bag_acc")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=6)";
+				}else if(catd.equals("outer")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=7)";
+				}else if(catd.equals("top")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=8)";
+				}else if(catd.equals("bottom")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=9)";
+				}else if(catd.equals("wallet")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=10)";
+				}else if(catd.equals("office")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=11)";
+				}else if(catd.equals("home")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=12)";
+				}else if(catd.equals("furniture")) {
+					sql = prop.getProperty("review_searchselectAllCount") +" "+searchsubject+" LIKE '%' || ? || '%' AND CATD_NO=13)";
+				}
+				
+				
+				System.out.println("cr검색조건 있을경우: "+sql);
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+				
+			}
+			//pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				res = rs.getInt(1);
+			}
+				
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 	
 	@Override
@@ -471,12 +622,13 @@ public class CommunityDaoImpl implements CommunityDao{
 	 	@ 기능: 로그인 유저 정보 (임시)
 	*/
 	public Vo_Account getAccount(int acc_no) {
+		System.out.println("****************************");
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM ACCOUNT WHERE ACC_NO=?";
 		Vo_Account res = new Vo_Account();
-		
+		System.out.println("로그인 유저 정보"+acc_no);
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, acc_no);
@@ -497,7 +649,7 @@ public class CommunityDaoImpl implements CommunityDao{
 				res.setAcc_isReg(rs.getString(11));
 				res.setAcc_point(rs.getInt(12));
 				res.setAcc_m_c(rs.getString(13));
-				
+				System.out.println("유저정보." + res);
 			}
 			
 		} catch (SQLException e) {

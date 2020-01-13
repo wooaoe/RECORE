@@ -1,42 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.mvc.vo.Vo_Account" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <%response.setContentType("text/html; charset=UTF-8");%>
-<%-- Login Session Get --%>
+
+<%-- UserSession --%>
 <%Vo_Account sessionVo = (Vo_Account)session.getAttribute("sessionVo");%>
-<%-- vo.getAcc_id(); System.out.println("현재 로그인된 Acoount 정보:"+vo); --%>
-<%-- Attribute 정보 : parent / vo --%>
+<%-- category --%>
 <% String catd = (String)session.getAttribute("catd"); %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>RECORE - QNA</title>
 
-<%-- # 현재 페이지  CSS / 순서 변경 금지 --%>
+<%-- css --%>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qna.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/css/qnaanswer.css">
-
-<%-- # HEAD CSS / 순서 변경 금지 --%>
- <jsp:include page="/head.jsp"></jsp:include> 
+<jsp:include page="/head.jsp"></jsp:include> 
  
-<%-- # Smart Editor JS / 순서 변경 금지 --%>
+<%-- SmartEditor --%>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js "></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/js/qna_boardwrite.js"></script>
 
-
 </head>
-
 <body>
-	<%-- header code 추가 --%>
 	<header>
 		<jsp:include page="/header.jsp"></jsp:include>
 	</header>
-	<%-- section code 추가 --%>
 	<section style="margin: 100px 0 100px 0px;">
 		<section class="section-container">
 			<div class="row" style="width:100%;">
@@ -45,39 +39,34 @@
 					<%-- Page title --%>
 					<div class="xans-element- xans-board xans-board-title-4 xans-board-title xans-board-4 reviewTitlee ">
 						<h2>
-							<span>문의답변</span>
+							<span>문의작성</span>
 						</h2>
 					</div>
 					<%-- Write Form --%>
 					<form id="boardWriteForm" action="qna.do" method="post">
-						<%-- command * parentboardno 전송 값 --%>
 						<input type="hidden" name="command" value="qna_write"> 
 						<input type="hidden" name="writer" value="${sessionVo.acc_no }">
 						<input type="hidden" name="qna_front_img" id="qna_front_img" value="">
-
+						<input type="hidden" name="qna_seq_no" id="qna_seq_no" value="0">
+						
+						
 						<div class="xans-element- xans-board xans-board-write-4 xans-board-write xans-board-4">
-
 							<div class="ec-base-box typeProduct">
 								<p class="thumbnail">
-									<a href="#">
-									<img style="width: 77px; height: 77px;"id="iPrdImg" src=""
-										 onerror="this.src='//img.echosting.cafe24.com/thumb/75x75.gif'" alt=""></a>
+									<img style="width: 77px; height: 77px;"id="iPrdImg" src="" onerror="this.src='//img.echosting.cafe24.com/thumb/75x75.gif'" alt="">
 								</p>
 								<div class="information" style="padding-left: 30px;">
 									<span id="sPrdCommonImg"></span>
 									<h3>
-										<a href="#"><span id="sPrdName" style="font-weight: bold; font-family: 'Noto Sans KR',sans-serif; color: #000;"></span></a>
+										<span id="sPrdName" style="font-weight: bold; font-family: 'Noto Sans KR',sans-serif; color: #000;"></span>
 									</h3>
 									<p class="button">
-										<span id="iPrdView" class="displaynone" style="display: inline;">
-										<a href="#" id="aPrdLink" class="btnNormal" target="_blank">상품상세보기</a></span> 
 										<span class="">
 										<a href="#none" class="btnNormal" onclick="popup();">상품정보선택</a>
-											</span>
+										</span>
 									</p>
 								</div>
 							</div>
-							
 							<div class="ec-base-table typeWrite ">
 								<table summary="">
 									<caption>글쓰기 폼</caption>
@@ -102,14 +91,6 @@
 											<th>작성자</th>
 											<td>${sessionVo.acc_id }</td>
 										</tr>
-										<!-- <tr class="displaynone">
-											<th scope="row">이메일</th>
-											<td></td>
-										</tr>
-										<tr class="displaynone">
-											<th scope="row">평점</th>
-											<td></td>
-										</tr> -->
 										<%-- Smart Editor --%>
 										<tr>
 											<td colspan="2" style="padding: 0px;">
@@ -117,9 +98,7 @@
 												style="width:100%; height:412px;" placeholder="내용을 입력하세요."></textarea>
 											</td>
 										</tr>
-
 									</tbody>
-									
 								</table>
 							</div>
 							<div class="ec-base-button ">
@@ -139,15 +118,11 @@
 			</div>
 		</section>
 	</section>
-
-		<jsp:include page="/footer.jsp"></jsp:include>
-
-
-
-
+	
+	<%-- footer --%>
+	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>
-
 
 <%-- Smart Editor --%>
 <script type="text/javascript">
@@ -168,16 +143,28 @@ nhn.husky.EZCreator.createInIFrame({
 		// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
 		bUseModeChanger : false
 	}
-	
 });
 
-//저장버튼 클릭시 form 전송
+<%-- submit --%>
 $(function(){
 	$("#save").click(function(){
-	    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		var title =  document.getElementsByName("title")[0].value;
+	    var content = document.getElementById("content").value;
+	    
+	    if( title == ""  || title == null || title == '&nbsp;' || title == '<p>&nbsp;</p>' || typeof title == "undefined")  {
+            alert("제목을 입력하세요.");
+            document.getElementsByName("title")[0].focus(); //포커싱
+            return;
+       	}
+	    if( content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>' || content=='<p><br></p>')  {
+            alert("내용을 입력하세요.");
+            oEditors.getById["content"].exec("FOCUS"); //포커싱
+            return;
+       	}
+	  
 	    $("#boardWriteForm").submit();
 	});  
 })
-
-
 </script>

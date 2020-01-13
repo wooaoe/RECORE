@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import static common.JDBCTemplate.*;
 
@@ -19,14 +20,13 @@ public class AccountDaoImp implements AccountDao {
 		ResultSet rs = null;
 		Vo_Account accvo = new Vo_Account();
 
-		String sql = "SELECT * FROM ACCOUNT WHERE ACC_ID = ? AND ACC_PW = ? AND ACC_ISREG = ?";
+		String sql = "SELECT * FROM ACCOUNT WHERE ACC_ID = ? AND ACC_PW = ? ";
 		System.out.println("쿼리 준비");
 		
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, acc_id);
 			pstm.setString(2, acc_pw);
-			pstm.setString(3, "Y");
 			rs = pstm.executeQuery();
 			System.out.println("account query 실행 : " + sql);
 			while (rs.next()) {
@@ -51,9 +51,9 @@ public class AccountDaoImp implements AccountDao {
 	public boolean A_insert(Vo_Account vo) {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO ACCOUNT VALUES(ACC_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Y', 10000, 'C') ";
 		int res = 0;
-		String sql = " INSERT INTO ACCOUNT VALUES(ACC_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Y', 10000, 'C')";
-		
+		System.out.println(vo);
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getAcc_id());
@@ -67,9 +67,11 @@ public class AccountDaoImp implements AccountDao {
 			pstmt.setString(9, vo.getAcc_addr2());
 			
 			res = pstmt.executeUpdate();
+			
 			if(res>0) {
 				commit(con);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -79,23 +81,25 @@ public class AccountDaoImp implements AccountDao {
 	}
 
 	@Override
-	public boolean A_update(Vo_Account acc) {
+	public boolean A_update(Vo_Account vo) {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		int res = 0;
-		String sql = " UPDATE ACCOUNT SET ACC_PW=?, ACC_ZIPCODE=?, ACC_ADDR=?, ACC_ADDR2=? ACC_PHONE=?, ACC_EMAIL=? ";
+		String sql = " UPDATE ACCOUNT SET ACC_PW=?, ACC_EMAIL=?, ACC_PHONE=?, ACC_ZIPCODE=?, ACC_ADDR=?, ACC_ADDR2=? WHERE ACC_NO=? ";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, acc.getAcc_pw());
-			pstmt.setString(2, acc.getAcc_zipcode());
-			pstmt.setString(3, acc.getAcc_addr());
-			pstmt.setString(4, acc.getAcc_addr2());
-			pstmt.setString(5, acc.getAcc_phone());
-			pstmt.setString(6, acc.getAcc_email());
+			pstmt.setString(1, vo.getAcc_pw());
+			pstmt.setString(2, vo.getAcc_email());
+			pstmt.setString(3, vo.getAcc_phone());
+			pstmt.setString(4, vo.getAcc_zipcode());
+			pstmt.setString(5, vo.getAcc_addr());
+			pstmt.setString(6, vo.getAcc_addr2());
+			pstmt.setInt(7, vo.getAcc_no());
+			
 			
 			res = pstmt.executeUpdate();
-			
+
 			if(res>0) {
 				commit(con);
 			}
@@ -108,15 +112,15 @@ public class AccountDaoImp implements AccountDao {
 	}
 
 	@Override
-	public boolean A_delete(int seq) {
+	public boolean A_delete(int aseq) {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
 		int res = 0;
-		String sql = " UPDATE ACCOUNT SET ACC_ISREG = 'Y' WHERE ACC_NO=? " ;
+		String sql = " UPDATE ACCOUNT SET ACC_ISREG = 'N' WHERE ACC_NO=? " ;
 		
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, seq);
+			pstmt.setInt(1, aseq);
 			res = pstmt.executeUpdate();
 			if(res>0) {
 				commit(con);
@@ -128,6 +132,63 @@ public class AccountDaoImp implements AccountDao {
 		}
 		return (res>0)?true:false;
 	}
+
+	@Override
+	public boolean A_selectAccountOne(String acc_id) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = " SELECT * FROM ACCOUNT WHERE ACC_ID=? ";
+		ResultSet rs = null;
+		boolean res = false;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acc_id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				res = true;
+			} else {
+				res = false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, con);
+		}
+		
+		
+		return res;
+	}
+
+	@Override
+	public boolean A_selectAccountphone(String acc_phone) {
+		Connection con = getConnection();
+		PreparedStatement pstmt = null;
+		String sql = " SELECT * FROM ACCOUNT WHERE ACC_PHONE=? ";
+		ResultSet rs = null;
+		boolean pres = false;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, acc_phone);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pres = true;
+			} else {
+				pres = false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, con);
+		}
+		
+		return pres;
+	}
+	
+	
 
 
 }

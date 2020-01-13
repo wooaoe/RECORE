@@ -24,11 +24,15 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js "></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/editor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/RECOREMain/RECORECommunity/qna_manager/qna/js/qna_boardwrite.js"></script>
-
+<style type="text/css">
+	 html{
+  	scroll-behavior : smooth;
+  }
+</style>
 
 </head>
 
-<body>
+<body id = "body">
 <%
 	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
 %>
@@ -89,14 +93,7 @@
 											<th>작성자</th>
 											<td><%=vo_acc.getAcc_name()%></td>
 										</tr>
-										<!-- <tr class="displaynone">
-											<th scope="row">이메일</th>
-											<td></td>
-										</tr>
-										<tr class="displaynone">
-											<th scope="row">평점</th>
-											<td></td>
-										</tr> -->
+										
 										<%-- Smart Editor --%>
 										<tr>
 											<td colspan="2" style="padding: 0px;">

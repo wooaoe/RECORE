@@ -71,6 +71,46 @@
   	color: white;
   }
   
+  .path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+    *zoom: 1;
+	}
+	.path span {
+	    overflow: hidden;
+	    position: absolute;
+	    width: 0;
+	    height: 0;
+	    white-space: nowrap;
+	    text-indent: 100%;
+	}
+	.path ol {
+	    float: right;
+	}
+	.path li:first-child {
+	    background: none;
+	}
+	.path li {
+	    float: left;
+	    padding: 0 0 0 12px;
+	    margin: 0 0 0 8px;
+	    color: #757575;
+	    background: url(//img.echosting.cafe24.com/skin/base/layout/ico_path.gif) no-repeat 0 10px;
+	}
+	li {
+	    list-style: none;
+	}
+	.path li a {
+	    color: #757575;
+	}
+	.path li strong, .path li strong a {
+	    color: #2e2e2e;
+	}
+	 html{
+  	scroll-behavior : smooth;
+  }
+	
   </style>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -92,8 +132,7 @@
 		});
 	}
 	
-	function deleteChecked(){
-		alert("버튼 클릭?");
+	function deleteChecked(){ //선택 상품 삭제
 		var Arr_prod_no = new Array();
 		for(var i=0;i<$('#chktd input').length;i++){
 			var box = document.getElementById("wish_idx_"+i);
@@ -105,18 +144,15 @@
 		console.log(Arr_prod_id);
 	}
 	
-	function pageMove(pageNo){
-		alert(pageNo);
+	function pageMove(pageNo){ //페이징
 		location.href = "mypage.do?command=wishlist&pageno="+pageNo;
 	}
 </script>
 </head>
 
-<body id="main">
+<body id="body">
 <%
 	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
-	/* List<Vo_wish> vo_wish = (List)request.getAttribute("vo_wish");
-	Object vo_wish = request.getAttribute("vo_wish"); */
 	List<Vo_Wish> vo_wish = (List<Vo_Wish>)request.getAttribute("list_wish");
 %>
 	<!-- header -->
@@ -126,14 +162,14 @@
 	    <div id="container">
 	        <div id="content" style="margin-top: 130px;">
 	        	
-	        	<!-- <div class="path">
+	        	<div class="path">
 				    <span>현재 위치</span>
 				    <ol>
-				    	<li><a href="/">홈</a></li>
+				    	<li><a href="issue.do?command=main">홈</a></li>
 				        <li><a href="mypage.do?command=main">마이쇼핑</a></li>
 				        <li title="현재 위치"><strong>관심상품</strong></li>
 				    </ol>
-				</div> -->
+				</div>
 	        
 				<div class="titleArea">
 				    <h2>관심상품</h2>
@@ -141,7 +177,7 @@
 		
 				<div class="xans-element- xans-myshop xans-myshop-wishlist ec-base-table typeList xans-record-">
 					<table border="1" summary="" class="">
-						<%-- <caption>관심상품 목록</caption> --%><!-- css display:none이 적용안되는 듯. 일단 주석처리-->
+						<%-- <caption>관심상품 목록</caption> --%>
 					    <colgroup>
 							<col style="width:27px;">
 							<col style="width:92px">
@@ -169,61 +205,32 @@
 				            </tr>
 			            </thead>
 			            <tbody class="xans-element- xans-myshop xans-myshop-wishlistitem center">
+			            	<!-- 위시리스트 상품이 없을 때 -->
 			            	<c:if test="${null eq list_wish}">
-			            		<!-- <p class="message displaynone">관심상품 내역이 없습니다.</p> -->
 			            		<tr><td colspan="9"><p class=""><br>관심상품 내역이 없습니다.</p></td></tr>
 			            	</c:if>
-			            	<!-- @@@@@wish 리스트 반복문@@@@@ -->
+			            	<!-- 위시리스트 상품이 있을 때 -->
 			            	<c:if test="${null ne list_wish}"> 
+			            	<c:set var="index_no" value="0"></c:set>
 			            	<c:forEach var="wish" items="${list_wish}" varStatus="status" begin="${(page.rowContent * page.pageNo) - page.rowContent}" end="${(page.rowContent * page.pageNo) - 1}">
 				            	<tr class="xans-record-">
 									<td id="chktd"><!-- wish_idx[] 원래 input name-->
-										<!-- <input name="chk" id="wish_idx_0" enable-order="1" reserve-order="N" enable-purchase="1" class="" is-set-product="F" value="126" type="checkbox"> -->
-										<input type="checkbox" id="wish_idx_${status.index}" name="chk" value="${wish.prod_no}">
+										<input type="checkbox" id="wish_idx_${index_no}" name="chk" value="${wish.prod_no}">
+										<%-- <input type="checkbox" id="wish_idx_${status.index}" name="chk" value="${wish.prod_no}"> --%>
 									</td>
 					                <td class="thumb">
 					                	<a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${wish.prod_no}&catdno=${wish.catd_no}">
 					                		<img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${wish.prod_no}/f_img.png">
-					                		<!-- <img src="//dalisalda.com/web/product/medium/20191115/d34787634339f49b3938426c0213c468.jpg" alt=""> -->
 					                	</a>
 				                	</td>
 					                <td class="left">
 					                    <strong class="name">
-					                    <!-- <a href="상품1경로@@@@@" class="ec-product-name">[프레시버블]<br>유기농 소프넛(솝베리) 친환경 살림 세트 500g</a> -->
-					                    <%-- <a href="상품1경로@@@@@" class="ec-product-name"><%=vo_wish.get(0).getProd_name() %></a> --%>
 					                    	<a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${wish.prod_no}&catdno=${wish.catd_no}" class="ec-product-name"><strong>[${wish.prod_brand}]</strong><br>${wish.prod_name}</a>
 					                    </strong>
 					                    <ul class="xans-element- xans-myshop xans-myshop-optionall option">
-					                    	<li class="xans-record-">
-												<strong class="displaynone"></strong>
-												<span class="displaynone">(개)</span><br>
-												<a href="#none" onclick="NewWishlist.showOptionChangeLayer('wishlist_option_modify_layer_0')" class="btnNormal gBlank5 displaynone">옵션변경</a>
-					                            <div class="optionModify ec-base-layer" id="wishlist_option_modify_layer_0">
-					                                <div class="header">
-					                                    <h3>옵션변경</h3>
-					                                </div>
-					                                <div class="content">
-														<ul class="prdInfo">
-															<li></li>
-					                                        <li class="option"></li>
-					                                    </ul>
-														<div class="prdModify">
-					                                        <h4>상품옵션</h4>
-				                                        </div>
-					                                </div>
-					                                <div class="ec-base-button">
-					                                    <a href="#none" class="btnSubmitFix sizeS " onclick="NewWishlist.modify('add', '0', '135');">추가</a>
-					                                    <a href="#none" class="btnNormalFix sizeS" onclick="NewWishlist.modify('update', '0', '135');">변경</a>
-					                                </div>
-						                                <a href="#none" class="close" onclick="$('.optionModify').hide();"><img src="//img.echosting.cafe24.com/skin/base/common/btn_close.gif" alt="닫기"></a>
-						                            </div>
-							
-					                        </li>
 										</ul>
 									</td>
 					                <td class="price right">
-										<!-- <strong class="">25,500원<br></strong><br><strong class="displaynone">25500</strong> -->
-										<%-- <strong class=""><%=vo_wish2.get(0).getProd_price() %>원<br></strong><br><strong class="displaynone">25500</strong> --%>
 										<strong class=""><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원<br></strong><br><strong class="displaynone">25500</strong>
 									</td>
 					                <td><span class="txtInfo"></span></td>
@@ -231,36 +238,19 @@
 					                	<div class="txtInfo">기본배송<div class="displaynone">(해외배송가능)</div></div>
 					                </td>
 					                <td>
-										<!-- <span class="">2,500원<br></span> 조건</td> -->
 										<span class="">무료배송<br></span>  </td>
-					                <!-- <td class="price right">28,000원</td> -->
-					                <%-- <td class="price right"><%=vo_wish2.get(0).getProd_price() %>원</td> --%>
 					                <td class="price right"><fmt:formatNumber value="${wish.prod_price}" groupingUsed="true"></fmt:formatNumber>원</td>
 					                <td class="button">
-					                    <a href="Product.do?command=Order&pseq=${wish.prod_no}" class="btnSubmit ">주문하기</a>
-					                    <!-- <a href="#none" onclick="NewWishlist.actionOrder('basket', 0)" class="btnNormal ">장바구니담기</a> -->
-					                    <!-- <a href="mypage.do?command=insertcart&prod_id=수정@@@@@@@@" class="btnNormal ">장바구니담기</a> -->
-					                    <!-- <a href="#none" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a> -->
+					                    <%-- <a href="Product.do?command=Order&pseq=${wish.prod_no}" class="btnSubmit ">주문하기</a> --%>
+					                    <%-- <a href="Product.do?command=Order&pseq=${wish.prod_no}&color=red&size=free&product-quantity=1&total=${wish.prod_price}" class="btnSubmit ">주문하기</a> --%>
 					                    <a href="mypage.do?command=deletewishone&prod_no=${wish.prod_no}" class="btnNormal btn_wishlist_del" rel="135||000A||"><i class="icoDelete"></i> 삭제</a>
 					                </td>
 				            	</tr>
+				            	<c:set var="index_no" value="${index_no+1}"></c:set>
 							</c:forEach>
 							</c:if>
-							<%-- </c:otherwise> --%>
-							<!-- <tr>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-								<td>확인@@@@@@@</td>
-							</tr> -->
 						</tbody>
 					</table>
-					<!-- <p class="message displaynone">관심상품 내역이 없습니다.</p> -->
 				</div>
 				
 				<div class="xans-element- xans-myshop xans-myshop-wishlistbutton ec-base-button xans-record-">
@@ -270,9 +260,9 @@
 				        <!-- <a href="#none" class="btnNormal" onclick="NewWishlist.basket();">장바구니 담기</a> -->
 				    </span>
 					<span class="gRight">
-				        <a href="#none" class="btnSubmitFix sizeM">전체상품주문</a>
-				        <!-- <a href="#none" class="btnEmFix sizeM" onclick="NewWishlist.deleteAll();">관심상품 비우기</a> -->
-				        <a href="mypage.do?command=deletewishall" class="btnEmFix sizeM">관심상품 비우기</a>
+				        <a href="mypage.do?command=deletewishall" class="btnSubmitFix sizeM" style="background-color:#A0D9D9;">관심상품 비우기</a>
+				        <!-- <a href="#none" class="btnSubmitFix sizeM">전체상품주문</a> -->
+				        <!-- <a href="mypage.do?command=deletewishall" class="btnEmFix sizeM">관심상품 비우기</a> -->
 				    </span>
 				</div>
 				

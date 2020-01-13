@@ -25,6 +25,15 @@ public class Vo_Manager_Payment {
 		this.ppm_amount = ppm_amount;
 		this.ppm_date = ppm_date;
 	}
+	
+	//insert In/Out
+	public Vo_Manager_Payment(int prod_id, int acc_no, String ppm_io, int ppm_amount) {
+		super();
+		this.prod_id = prod_id;
+		this.acc_no = acc_no;
+		this.ppm_io = ppm_io;
+		this.ppm_amount = ppm_amount;
+	}
 
 	public int getPpm_no() {
 		return ppm_no;

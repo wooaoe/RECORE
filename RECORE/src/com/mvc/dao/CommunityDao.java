@@ -34,9 +34,10 @@ public interface CommunityDao {
 	
 	/*Review*/
 		
-	public List<Vo_Review> Cr_selectAll(Vo_QnA_Paging paging); // Review 전체 조회
+	public List<Vo_Review> Cr_selectAll(Vo_QnA_Paging paging, String catd, String searchsubject, String keyword); // Review 전체 조회
 	/*QnA 조회 글 전체 ROW 개수 조회*/
-	public int Cr_selectAllCount();
+	public int Cr_selectAllCount(String catd, String searchsubject, String keyword);
+	
 	public boolean Cr_insert(Vo_Review rev); // Review 등록
 	
 	public boolean Cr_update(Vo_Review rev); //Review 수정

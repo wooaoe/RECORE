@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <% String catd = request.getParameter("catd"); %> --%>
+<% String catd = request.getParameter("catd"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +21,12 @@
 	<c:choose>
 		<c:when test="${param.prev}">
 			<div class="arrow arrow--left">
-	    		<span><a href="${action}?command=review_list&page=${param.beginPage-1}">prev</a></span>
+	    		<span><a href="${action}?command=review_list&page=${param.beginPage-1}&catd=<%=catd %>">prev</a></span>
 	    	</div>
-		<li class="xans-record-" style="padding-left: 5px;"><a href="${action}?command=review_list&page=${param.beginPage-1}">&lt;</a></li>
+		<li class="xans-record-" style="padding-left: 5px;"><a href="${action}?command=review_list&page=${param.beginPage-1}&catd=<%=catd %>">&lt;</a></li>
 		</c:when>
 		<c:when test="${param.page-1 >0}">
-			<li class="xans-record-" style="padding-left: 5px;"><a href="${action}?command=review_list&page=${param.page-1}">&lt;</a></li>
+			<li class="xans-record-" style="padding-left: 5px;"><a href="${action}?command=review_list&page=${param.page-1}&catd=<%=catd %>">&lt;</a></li>
 		</c:when>
  		<c:otherwise>
 			<li class="xans-record-" style="padding-left: 5px;"><a href="#">&lt;</a></li>
@@ -42,7 +42,7 @@
 		            <li class="xans-record-"><a href="#" class="this">${index}</a></li>
 		        </c:when>
 		        <c:otherwise>
-		            <li class="xans-record-"><a href="${action}?command=review_list&page=${index}" class="other">${index}</a></li>
+		            <li class="xans-record-"><a href="${action}?command=review_list&page=${index}&catd=<%=catd %>" class="other">${index}</a></li>
 		        </c:otherwise>
 		    </c:choose>
 		 
@@ -51,14 +51,14 @@
 
 	<c:choose>
 		<c:when test="${param.next}">
-		<li class="xans-record-" style="padding-right: 5px;"><a href="${action}?command=review_list&page=${param.page+1}">&gt;</a></li>
+		<li class="xans-record-" style="padding-right: 5px;"><a href="${action}?command=review_list&page=${param.page+1}&catd=<%=catd %>">&gt;</a></li>
 		<div class="arrow arrow--right">
 		
-	    <span><a href="${action}?command=review_list&page=${param.endPage+1}">next</a></span>
+	    <span><a href="${action}?command=review_list&page=${param.endPage+1}&catd=<%=catd %>">next</a></span>
 	    </div>
 		</c:when>
 		<c:when test="${param.page+1 <= param.endPage}">
-			<li class="xans-record-" style="padding-right: 5px;"><a href="${action}?command=review_list&page=${param.page+1}">&gt;</a></li>
+			<li class="xans-record-" style="padding-right: 5px;"><a href="${action}?command=review_list&page=${param.page+1}&catd=<%=catd %>">&gt;</a></li>
 		</c:when>
 		<c:otherwise>
 			<li class="xans-record-" style="padding-right: 5px;"><a href="#">&gt;</a></li>

@@ -105,23 +105,23 @@
     color: #F56D3E;
     text-decoration: underline;
   } */
+  html{
+  	scroll-behavior : smooth;
+  }
   
   </style>
 <script type="text/javascript">
-	function deleteBoard(qna_no){
-		alert(qna_no);
+	function deleteBoard(qna_no){ //게시글 삭제
 		var res = confirm("정말 삭제하시겠습니까?");
-		alert(res);
 		location.href="mypage.do?command=deleteboard&qnano="+qna_no+"&result="+res;
 	}
 	
-	function boardUpdate(qna_no){
-		alert(qna_no);
+	function boardUpdate(qna_no){ //게시글 수정
 		location.href="mypage.do?command=updateboard&qnano="+qna_no;
 	}
 </script>
 </head>
-<body id="main">
+<body id="body">
 <%
 	Vo_Account acc = (Vo_Account)session.getAttribute("vo");
 %>
@@ -162,14 +162,6 @@
 					</div>
 					</c:if>
 					<form id="BoardDelForm" name="" action="/exec/front/Board/del/6" method="post" target="_self" enctype="multipart/form-data">
-						<input id="no" name="no" value="261" type="hidden">
-						<input id="bulletin_no" name="bulletin_no" value="214" type="hidden">
-						<input id="board_no" name="board_no" value="6" type="hidden">
-						<input id="member_id" name="member_id" value="park21yc" type="hidden">
-						<input id="list_url" name="list_url" value="/board/product/list.html?board_no=6" type="hidden">
-						<input id="bdf_modify_url" name="bdf_modify_url" value="/board/product/modify.html?board_act=edit&amp;no=261&amp;board_no=6" type="hidden">
-						<input id="bdf_del_url" name="bdf_del_url" value="/exec/front/Board/del/6" type="hidden">
-						<input id="bdf_action_type" name="bdf_action_type" value="" type="hidden">
 						<div class="xans-element- xans-board xans-board-read-4 xans-board-read xans-board-4">
 							<div class="ec-base-table typeWrite ">
 	            				<table border="1" summary="">
@@ -196,9 +188,6 @@
 						                            <li class="">
 						                                <strong>작성일</strong> <span class="txtNum">${vo_qna.qna_regdate}</span>
 						                            </li>
-						                            <li class="displaynone">
-						                                <strong>추천</strong> <span class="txtNum"> <a href="#none" class="btnNormal" onclick="BOARD_READ.article_vote('/exec/front/Board/vote/6?no=261&amp;board_no=6&amp;page=&amp;return_url=%2Fboard%2Fproduct%2Fread.html');"><img src="//img.echosting.cafe24.com/skin/base/common/btn_icon_recommend.gif" alt=""> 추천하기</a></span>
-						                            </li>
 						                            <li class="">
 						                                <strong>조회수</strong> <span class="txtNum">${vo_qna.qna_view_count}</span>
 						                            </li>
@@ -206,7 +195,7 @@
 												<div class="detail"><p>${vo_qna.qna_content}</p></div>
 		                    				</td>
 		                				</tr>
-										<tr class="attach displaynone">
+										<!-- <tr class="attach displaynone">
 											<th scope="row">첨부파일</th>
 						                    <td></td>
 						                </tr>
@@ -215,7 +204,7 @@
 		                    				<td>
 		                    					<input id="password" name="password" fw-filter="" fw-label="비밀번호" fw-msg="" onkeydown="if (event.keyCode == 13 || event.which == 13) { return false; }" value="" type="password"> <span class="ec-base-help txtInfo">삭제하려면 비밀번호를 입력하세요.</span>
 											</td>
-		                				</tr>
+		                				</tr> -->
 									</tbody>
 								</table>
 							</div>

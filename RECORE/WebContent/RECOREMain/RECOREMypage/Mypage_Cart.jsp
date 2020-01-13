@@ -87,6 +87,9 @@
   [class^='btnSubmit'], a[class^='btnSubmit'] {
   	color: white;
   }
+   html{
+  	scroll-behavior : smooth;
+  }
   
   </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -109,13 +112,13 @@
 		});
 	}
 	
-	function amountUp(index){
+	function amountUp(index){ //수량 up
 		var rec = parseInt(document.getElementById("quantity_id_"+index).value);
 		var up = rec+1;
 		document.getElementById("quantity_id_"+index).value = up;
 	}
 	
-	function amountDown(index){
+	function amountDown(index){ //수량 down
 		var rec = parseInt(document.getElementById("quantity_id_"+index).value);
 		var up = rec-1;
 		if(up>0){
@@ -125,14 +128,12 @@
 		}
 	}
 	
-	function modifyAmount(index, prod_id){
+	function modifyAmount(index, prod_id){ //수량 db변경
 		var rec = parseInt(document.getElementById("quantity_id_"+index).value);
 		location.href="mypage.do?command=cartupdate&prod_id="+prod_id+"&cart_amount="+rec;
-		alert(id);
 	}
 	
-	function deleteChecked(){
-		alert("버튼 클릭?");
+	function deleteChecked(){ //선택된 상품 삭제
 		var Arr_prod_id = new Array();
 		for(var i=0;i<$('#chktd input').length;i++){
 			var box = document.getElementById("basket_chk_id_"+i);
@@ -144,17 +145,44 @@
 		console.log(Arr_prod_id);
 	}
 	
-	function orderAll(){
-		alert("전체 주문?");
+	function orderAll(){ //전체 주문
+		var Arr_order = new Array();
+		for(var i=0;i<$('#chktd input').length;i++){
+			Arr_order.push([$("#basket_chk_id_"+i).val(),$("#quantity_id_"+i).val()]);
+		}
+		
+		location.href="Product.do?command=cartOrder&Arr_order="+Arr_order;
+		
+		/* @@확인용@@ */
+		/* for(var i=0;i<Arr_order.length;i++){
+			alert(Arr_order[i]);
+		} */
+		
+	}
+	
+	function orderSelect(){ //선택 주문
+		var Arr_order = new Array();
+		
+		for(var i=0;i<$('#chktd input').length;i++){
+			if($("#basket_chk_id_"+i).is(":checked")){
+				Arr_order.push([$("#basket_chk_id_"+i).val(),$("#quantity_id_"+i).val()]);
+			}
+		}
+		
+		location.href="Product.do?command=cartOrder&Arr_order="+Arr_order;
+		
+		/* 확인용 */
+		/* for(var i=0;i<Arr_order.length;i++){
+			alert(Arr_order[i]);
+		} */
+		
 	}
 	
 </script>
 </head>
-<body id="main">
+<body id="body">
 <%
 	Vo_Account vo_acc = (Vo_Account)session.getAttribute("vo");
-	/* List<Vo_wish> vo_wish = (List)request.getAttribute("vo_wish");
-	Object vo_wish = request.getAttribute("vo_wish"); */
 	List<Vo_Cart> list_cart = (List<Vo_Cart>)request.getAttribute("list_cart");
 %>
 	<!-- header -->
@@ -174,8 +202,7 @@
 	            			<h3 class="title">혜택정보</h3>
 	            			<div class="description">
 	                			<ul class="mileage">
-									<li><a href="/myshop/mileage/historyList.html">가용적립금 : <strong><fmt:formatNumber value="<%=vo_acc.getAcc_point() %>" groupingUsed="true"></fmt:formatNumber>원</strong></a></li>
-	                    			<li class="displaynone"><a href="/myshop/deposits/historyList.html">예치금 : <strong></strong></a></li>
+									<li><a href="mypage.do?command=mileage&pageno=1">가용적립금 : <strong><fmt:formatNumber value="<%=vo_acc.getAcc_point() %>" groupingUsed="true"></fmt:formatNumber>원</strong></a></li>
 	                			</ul>
 							</div>
 	        			</div>
@@ -228,9 +255,7 @@
  													<c:set var="sum" value="${sum + (cart_price.prod_price*cart_price.cart_amount)}"></c:set>
  												</c:forEach>
  												<fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber>
- 												<%-- <c:out value="${sum}"></c:out>원 <span class="displaynone">()</span> --%>
  											</strong>
-											<!-- <strong>22000원 <span class="displaynone">()</span></strong> -->
 											<span class="displaynone"> </span><span class="displaynone"> + 부가세 <span class="displaynone"> </span></span> + 배송비 <span id="normal_normal_ship_fee">0</span>
 											<span class="displaynone"> </span> <span id="normal_normal_benefit_price_area" class="displaynone"> - 상품할인금액 <span id="normal_normal_benefit_price">0</span> </span> = 합계 : <strong class="txtEm gIndent10">
 											<span id="normal_normal_ship_fee_sum" class="txt18"><fmt:formatNumber value="${sum}" groupingUsed="true"></fmt:formatNumber></span>원</strong> <span class="displaynone"> </span>
@@ -247,16 +272,11 @@
 	                				<c:forEach var="cart" items="${list_cart}" varStatus="status">
 	                				<tr class="xans-record-">
 										<td id="chktd">
-											<!-- <input type="checkbox" id="basket_chk_id_0" name="chk"> -->
-											<%-- <input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}" onclick="deleteChecked(${status.index});"> --%>
-											<%-- <input type="checkbox" id="basket_chk_id_0" name="chk" value="${cart.prod_id}"> --%>
-											<%-- <input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}"> --%>
 											<input type="checkbox" id="basket_chk_id_${status.index}" name="chk" value="${cart.prod_id}">
 										</td>
 					                    <td class="thumb gClearLine">
 					                    	<a href="Product.do?command=ProdDetail&pseq=${cart.prod_no}&catdno=${cart.catd_no}">
 					                    	<img src="<%=request.getContextPath() %>/RECOREMain/RECOREProduct/product/${cart.prod_no}/f_img.png">
-				                    		<!-- <img src="//dalisalda.com/web/product/tiny/20191206/90446b2ad04fff657071104925ed4b7b.jpg" onerror="this.src='//img.echosting.cafe24.com/thumb/img_product_small.gif';" alt="[웬즈데이블루]아보카도 타조알 비누 퓨어"> -->
 					                    	</a>
 					                    </td>
 					                    <td class="left gClearLine">
@@ -269,35 +289,23 @@
 		                    			</td>
 		                    			<td class="right">
 		                        			<div id="product_price_div0" class="">
-												<%-- <strong>${cart.prod_price}원</strong><p class="displaynone"></p> --%>
 												<fmt:formatNumber value="${cart.prod_price}" groupingUsed="true"></fmt:formatNumber>
-												
 											</div>
-											<!-- 할인가격@@@@@@@@@@@ -->
-		                        			<!-- <div id="product_sale_price_div0" class="displaynone">
-												<strong><span id="product_sale_price_front0">17,000</span>원</strong><p class="displaynone"></p>
-											</div> -->
 		                    			</td>
 					                    <td>
 					                        <span class="">
 					                            <span class="ec-base-qty">
 					                            <!-- 수량 -->
-					                            <%-- <input id="quantity_id_0" name="quantity_name_0" size="2" value="${cart.cart_amount}" type="text"> --%>
 					                            <input id="quantity_id_${status.index}" name="quantity_name_0" size="2" value="${cart.cart_amount}" type="text">
 					                            <!-- 수량 증가 버튼 -->
-					                            <!-- <a href="javascript:;" onclick="Basket.addQuantityShortcut('quantity_id_0', 0);"> -->
-					                            <!-- <a href="#" onclick="amountUp();"> -->
 					                            <a href="#" onclick="amountUp(${status.index});">
 					                            	<img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_up.gif" alt="수량증가" class="up">
 					                            </a>
 					                            <!-- 수량 감소 버튼 -->
-					                            <!-- <a href="javascript:;" onclick="Basket.outQuantityShortcut('quantity_id_0', 0);"> -->
-					                            <!-- <a href="#" onclick="amountDown();"> -->
 					                            <a href="#" onclick="amountDown(${status.index});">
 					                            	<img src="//img.echosting.cafe24.com/skin/base/common/btn_quantity_down.gif" alt="수량감소" class="down">
 					                            </a>
 					                            </span>
-					                            <!-- <a href="javascript:;" class="btnNormal gBlank5" onclick="Basket.modifyQuantity()">변경</a> -->
 					                            <a href="#" class="btnNormal gBlank5" onclick="modifyAmount(${status.index},${cart.prod_id})">변경</a>
 					                        </span>
 					                        <span class="displaynone">1</span>
@@ -310,7 +318,8 @@
 											<strong><span id="sum_price_front0"><fmt:formatNumber value="${cart.prod_price * cart.cart_amount}" groupingUsed="true"></fmt:formatNumber></span>원</strong><div class="displaynone"></div>
 										</td>
 					                    <td class="button">
-					                        <a href="Product.do?command=Order&pseq=${cart.prod_no}" class="btnSubmit ">주문하기</a>
+					                        <a href="Product.do?command=Order&pseq=${cart.prod_no}&color=${cart.prod_color}&size=${cart.prod_size}&product-quantity=${cart.cart_amount}&total=${cart.cart_amount * cart.prod_price}" class="btnSubmit" style="background-color:#A0D9D9;">주문하기</a>
+					                        <%-- <a href="Product.do?command=Order&pseq=${cart.prod_no}" class="btnSubmit ">주문하기</a> --%>
 					                        <a href="mypage.do?command=insertwish&prod_no=${cart.prod_no}" class="btnNormal">관심상품등록</a>
 					                        <a href="mypage.do?command=deletecartone&prod_id=${cart.prod_id}" class="btnNormal"><i class="icoDelete"></i> 삭제</a>
 					                    </td>
@@ -389,12 +398,12 @@
 					</div>
 					
 					<div class="xans-element- xans-order xans-order-totalorder ec-base-button justify">
-						<a href="#" class="btnSubmitFix sizeM " onclick="orderAll();">전체상품주문</a>
+						<a href="#" class="btnSubmitFix sizeM " style="background-color:#A0D9D9;" onclick="orderAll();">전체상품주문</a>
 						<a href="#" class="btnEmFix sizeM " onclick="orderSelect();">선택상품주문</a>
 						<span class="gRight">
 						
 							<!-- 쇼핑계속하기 누르면 상품 전체 페이지 뜨도록 -->
-	            			<a href="<%=request.getContextPath()%>/Product.do?command=ProdSelectAll" class="btnNormalFix sizeM">쇼핑계속하기</a>
+	            			<a href="<%=request.getContextPath()%>/Product.do?command=ProdSelectAll&pageno=1" class="btnNormalFix sizeM">쇼핑계속하기</a>
 	        			</span>
 					</div>
 				</div>
