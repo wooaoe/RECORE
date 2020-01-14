@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mvc.dao.OrderDao;
-import com.mvc.dao.OrderDaoImp;
+import com.mvc.dao.MyPageDao;
+import com.mvc.dao.MyPageDaoImp;
 import com.mvc.dao.ProductDao;
 import com.mvc.dao.ProductDaoImp;
 import com.mvc.vo.Vo_Account;
 import com.mvc.vo.Vo_Category_Detail;
-import com.mvc.vo.Vo_Issue;
 import com.mvc.vo.Vo_Order;
 import com.mvc.vo.Vo_Order_Num;
 import com.mvc.vo.Vo_Order_Num2;
@@ -29,7 +28,6 @@ import com.mvc.vo.Vo_Prod_option;
 import com.mvc.vo.Vo_Product;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 
 @WebServlet("/a.do")
 public class Product_Controller extends HttpServlet {
@@ -46,8 +44,7 @@ public class Product_Controller extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		ProductDao dao = new ProductDaoImp();
-		OrderDao order = new OrderDaoImp();
-
+		MyPageDao mdao = new MyPageDaoImp();
 		HttpSession session = request.getSession();
 		Vo_Account acc = (Vo_Account) session.getAttribute("vo");
 
@@ -451,14 +448,17 @@ public class Product_Controller extends HttpServlet {
 			int prod_price = prod_Order.get(0).getOrder_price();
 			System.out.println("cartcomplete의 order_price 확인 : " + prod_price);
 			
+			//결제완료 후 장바구니 삭제
+			boolean tmp = mdao.My_deleteCart_All(acc.getAcc_no());
+			
 			if (pnum) {
-				dispatch("./RECOREMain/RECOREProduct/afterOrder_cart.jsp", request, response);
+			 dispatch("./RECOREMain/RECOREProduct/afterOrder_cart.jsp", request, response);
 			} else {
 				jsResponse("결제 실패!", "Product.do?command=ProdSelectAll&pageno=1",	response);
 			}
 			
 		
-		} else if (command.equals("insertCart")) {
+		}else if (command.equals("insertCart")) {
 
 			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
 			int amount = Integer.parseInt(request.getParameter("prod_amount"));

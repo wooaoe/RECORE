@@ -41,18 +41,11 @@
  <script type="text/javascript">
 
  	function afterorder(){
- 		<%-- 
- 		<input id = "amount" type = "hidden" name = "amount" value = "<%=amount%>"/>
-			<input id = "totalPrice" type = "hidden" name = "totalPrice" value = "<%=totalPrice%>"/> 
-			<input id = "prod_id" type = "hidden" name = "prod_id" value = "<%=prod_id%>"/> 
-			<input id = "order_seq" type = "hidden" name = "order_seq" value = "<%=order_seq%>"/> --%>
- 		
- 		
+ 		 		
  		var order_seq_tmp = $("#order_seq").val();
  		var amount_tmp = $("#amount").val();
  		var total_tmp = $("#totalPrice").val();
  		var prod_id_tmp = $("#prod_id").val();
- 		
 		 
  		 var url = "Product.do?command=cartComplete&prod_id=" + prod_id_tmp + 
  					"&totalPrice=" + total_tmp + "&amount=" + amount_tmp + "&order_seq=" + order_seq_tmp;
@@ -70,12 +63,11 @@
 			
 			if(result) { 
 				var url = "Product.do?command=cartPayDelete&order_seq=" + order_seq_test;
-				alert(order_seq_test);
 				opener.document.location = url;
 				window.close();
 				
 			} else { 
-		}
+			}
 	});
  });
 	

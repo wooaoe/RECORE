@@ -53,38 +53,44 @@
 		
 		var phone = $("#userPhone").val();
 		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
-		 
-		if(phone.length == 11 && regExp.test(phone) == false){
+		var phonNumberCheck = RegExp(/^01[0179][0-9]{7,8}$/);
+		
+		if(phone.length == 11 && regExp.test(phone) == true){
 			$("#em").hide();
 			$("#userBirth").focus();
 			$("#em2").text("특수문자 없이 숫자만 입력해주세요.");
-		}else if(phone.length == 0 || phone.length < 11){
+		}else if(phone.length == 0 || phone.length < 11 || regExp.test(phone) != true){
 			$("#em").show();
 			
-		}else if(regExp.test(phone) == true){
+		}else if(phonNumberCheck.test(phone) != true){
 			$("userPhone").val('');
 		}
 		
 	}
-	function checkval2(){
+function checkval2(){
 		
 		var birth = $("#userBirth").val();
 		var phone = $("#userPhone").val();
 		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+		var phonNumberCheck = RegExp(/^01[0179][0-9]{7,8}$/);
 		
-		if(birth.length == 6 && regExp.test(birth) == false){
+		if(birth.length == 6 && birthdayCheck(birth) == true){
 			$("#em2").hide();
-		}else if(birth.length == 0 || birth.length < 6 || regExp.test(birth) == true){
+		}else if(birth.length == 0 || birth.length < 6 || regExp.test(birth) != true){
 			$("#em2").show();
 			$("#request").prop("disabled", true);
+			return false;
 		}
-		if(birth.length == 6 && phone.length == 11 && regExp.test(birth) == false && regExp.test(phone) == false ){
+		if(birth.length == 6 && phone.length == 11 && regExp.test(birth) == true && regExp.test(phone) == true ){
 			$("#request").css("background-color", "#ffe900").css("color", "black");
 			$("#request").prop("disabled", false);
-		}else if(birth.length < 6){
-			$("#request").prop("disabled", true);
+			return true;
 		}
-		
+		if(birth.length < 6 || phone.length < 11 || birth.length == 0 || phone.length == 0 || regExp.test(phone) != true){
+			$("#request").prop("disabled", true);
+			$("#request").css("background-color", "#ddd").css("color", "#999");
+			return false;
+		}
 	}
 	$(document).ready(function(){
 		
@@ -129,7 +135,7 @@
 						<strong class="logo_pay"><img src="//t1.daumcdn.net/kakaopay/tesla/20181010/pg_web/images/logo_pay.png" class="img_g" alt="카카오페이"></strong>
 						<p class="desc_payask">결제요청 메시지 전송을 위해<br>아래 정보를 입력해주세요.</p>
 						
-						<form id="userPost" method="get" action="../../Product.do">
+						<form id="userPost" method="get" action="">
 						<input type = "hidden" name = "command" value = "kakaopaycall2"/>
 						
 							<fieldset class="fld_payask">

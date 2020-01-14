@@ -208,7 +208,7 @@
 				<img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${olist.prod_no}/f_img.png" onerror="" alt="">
 				</a></td>
             <td class="left">
-            <strong class="name"><a href="" class="ec-product-name">${olist.prod_name}</a></strong>
+            <strong class="name"><a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${olist.prod_no}&catdno=${olist.catd_no}" class="ec-product-name">${olist.prod_name}</a></strong>
             <div class="option "></div>
               <p class="gBlank5 displaynone">무이자할부 상품</p>
             </td>

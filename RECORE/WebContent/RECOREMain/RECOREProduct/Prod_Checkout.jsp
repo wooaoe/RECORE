@@ -144,6 +144,8 @@
 			alert("동의란을 체크하세요.");
 		}else if($("#kakaoV2").prop("checked")==false){
 			alert("결제수단을 체크해주세요.");
+		}else if($("#user_sameV2").is(":checked") == false){
+			alert("주소를 입력해주세요.");
 		}else{
 			
 			var winHeight = document.body.clientHeight;	// 현재창의 높이
@@ -155,11 +157,6 @@
 
 			var popX = winX + (winWidth - 434)/2;
 			var popY = winY + (winHeight - 569)/2;
-			var $totalPrice = $("#totalPrice").val();
-			
-		<%-- 	var decode1 = encodeURI(<%=acc.getAcc_zipcode()%> , "UTF-8");
-			var decode2 = encodeURI(<%=acc.getAcc_addr()%> , "UTF-8");
-			var decode3 = encodeURI(<%=acc.getAcc_addr2()%> , "UTF-8"); --%>
 			
 			var accinfo = new Array();
 			 accinfo = ['<%=acc.getAcc_zipcode()%>', '<%=acc.getAcc_addr()%>', '<%=acc.getAcc_addr2()%>'];
@@ -179,7 +176,8 @@
 				
 				var url = "Product.do?command=kakaopaycall&pseq="+<%=pvo.getProd_no()%> 
 				+ "&acc_no=" + <%=acc.getAcc_no()%> + "&amount=" + <%=amount%> 
-				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + "&acc_addrs=" + accinfo + "&acc_point=" + <%=acc.getAcc_point()%>;
+				+ "&totalPrice=" + <%=totalPrice%> + "&prod_id=" + <%=prod_id%> + "&acc_addrs=" + accinfo + 
+				"&acc_point=" + <%=acc.getAcc_point()%>;
 				
 				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
 				
@@ -392,9 +390,6 @@
 								<input name="deliveryType"
 									type="radio" id="user_sameV2" value="SAME_CUSTOMER_ADDRESS"><i></i>&nbsp;
 									<label for="user_sameV2">주문고객과 동일</label></span> <span class="radio">
-																		
-									<input name="deliveryType" type="radio" id="new_addrV2" value="NEW"><i></i>&nbsp; 
-									<label for="new_addrV2">새로 입력</label>
 								</span>
 
 								

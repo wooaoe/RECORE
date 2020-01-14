@@ -14,7 +14,7 @@
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
 	<% List<Vo_Product> toplist = (List)request.getAttribute("toplist"); %>
 	<% List<Vo_Prod_option> povo = (List)request.getAttribute("povo"); %>
-	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %>
+	<% Vo_Account acc = (Vo_Account)session.getAttribute("vo"); %> 
 	
 	<%! String url; %>
 	<%! int catdno;  %>
@@ -312,7 +312,8 @@
 						
 					 	<script type="text/javascript">
 							
-							 function insertCart(){
+					 		function insertCart(){
+								
 								 for(var i = 0; i < <%=povo.size()%>; i++){
 									var prod_id = ${povo.get(i).getProd_id()};
 								}
@@ -320,14 +321,15 @@
 								var acc_no = ${vo.acc_no};
 								var prod_no = ${pvo.prod_no};
 								
-								location.href = "Product.do?command=insertCart&prod_id=" + prod_id 
+									location.href = "Product.do?command=insertCart&prod_id=" + prod_id 
 									+ "&prod_amount=" + prod_amount + "&acc_no=" + acc_no + "&pseq=" + prod_no;
 								
 							}
 							function insertWish(){
+								
 								var prod_no = ${pvo.prod_no};
 								
-								location.href = "Product.do?command=insertWish&pseq=" + prod_no;
+									location.href = "Product.do?command=insertWish&pseq=" + prod_no;
 							} 
 						
 						</script>

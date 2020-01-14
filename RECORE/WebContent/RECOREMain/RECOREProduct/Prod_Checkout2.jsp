@@ -22,6 +22,7 @@
 	<%-- <% Vo_Product pvo = (Vo_Product) request.getAttribute("pvo");%> --%>
 	<% Vo_Account acc = (Vo_Account) session.getAttribute("vo");%>
 	<% String[] arr = acc.getAcc_phone().split("-");%>
+<%-- 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %> --%>
 	<% List amount = (List)request.getAttribute("prod_amount"); %>
 	<% List price = (List)request.getAttribute("arr_price"); %> 
 	<% List prod_id = (List)request.getAttribute("prod_id"); %> 	
@@ -164,20 +165,13 @@
 		
 	 function payment(){ //결제하기 누르면 발생하는 이벤트 
 
-		 var index = <%=amount.size()%>;
-		 var amount1 = <%=amount%>;
-		 var price2 = <%=price%>;
-		 var names = new Array(amount1);
-		 alert("names?" + names);
-		 var a = names.split(',');
-		 alert(a);
-		 
 		if($("input:checkbox[id='agreeV2']").is(":checked") == false){
 			alert("동의란을 체크하세요.");
 		}else if($("#kakaoV2").prop("checked")==false){
 			alert("결제수단을 체크해주세요.");
-		}else{ //동의란,결제수단이 모두 체크되어 있으면 팝업창 오픈 
-			
+		}else if($("#user_sameV2").is(":checked") == false){
+			alert("주소를 입력해주세요.");
+		}else{
 			var winHeight = document.body.clientHeight;	// 현재창의 높이
 			var winWidth = document.body.clientWidth;	// 현재창의 너비
 			var winX = window.screenLeft;	// 현재창의 x좌표
@@ -206,8 +200,7 @@
 		     
 			}else{
 				
-				//모두 사용이 체크되어 있다면 계정의 포인트 값 보내주기
-				
+				 //모두 사용이 체크되어 있다면 계정의 포인트 값 보내주기
 				var url = "Product.do?command=cartkakaocall&amount=" + <%=amount%> +
 				"&totalPrice=" + <%=price%> + "&prod_id=" + <%=prod_id%> + "&acc_addr=" + accinfo +
 				"&acc_point=" + usingpoint; 
@@ -215,7 +208,8 @@
 				window.open(url,"poppay","width="+width+"px,height="+height+"px,top="+popY+",left="+popX+",scrollbars=no");
 			}
 						
-		}
+			}
+			
 	} 
 	/** API 서비스 제공항목 확대 (2017.02) **/
 	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
@@ -248,18 +242,6 @@
 			}
 			});
 			
-			/* $("#new_addrV2").click(function(){
-			
-			if($("#new_addrV2").is(":checked") == true && $("#user_sameV2").is(":checked") == false){
-				//주문자와 동일 버튼이 해제되어있고, 새로입력 버튼이 체크 되었다면 vlaue값 비워주기 
-				$("#requiredCus").val('');
-				$("#zipNo").val('');
-				$("#roadAddrPart1").val('');
-				$("#addrDetail").val('');
-			
-				goPopup();
-			}
-		}); */
 	}); 
 		
 	</script>

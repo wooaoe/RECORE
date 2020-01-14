@@ -213,11 +213,11 @@
 		<tbody class="xans-element- xans-order xans-order-normalresultlist center">
 			<tr class="xans-record-">
 			<td class="thumb">
-				<a href="Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}">
+				<a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}">
 				<img src="<%=request.getContextPath()%>/RECOREMain/RECOREProduct/product/${pvo.prod_no}/f_img.png" onerror="" alt="">
 				</a></td>
             <td class="left">
-            <strong class="name"><a href="" class="ec-product-name">${pvo.prod_name}</a></strong>
+            <strong class="name"><a href="<%=request.getContextPath()%>/Product.do?command=ProdDetail&pseq=${pvo.prod_no}&catdno=${pvo.prod_catd}" class="ec-product-name">${pvo.prod_name}</a></strong>
             <div class="option "></div>
               <p class="gBlank5 displaynone">무이자할부 상품</p>
             </td>

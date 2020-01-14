@@ -246,7 +246,7 @@
 
      <div class="site-section">
       <div class="container">
-            <div class="row"> 
+            <div class="row" style = "position: relative; bottom: 50px;"> 
           <div class="col-12 text-center">
             <span class="sub-title">PRODUCT</span>
             <h2 class="font-weight-bold text-black mb-5"><%=kinds %></h2>
