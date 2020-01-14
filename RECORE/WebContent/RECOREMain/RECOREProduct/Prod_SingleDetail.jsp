@@ -9,6 +9,10 @@
 <%@ page import = "com.mvc.vo.Vo_Product" %>
 <%@ page import = "com.mvc.vo.Vo_Prod_option" %>
 <%@ page import = "com.mvc.vo.Vo_Account" %>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="com.mvc.vo.Vo_Prod_option"%>
+<%@page import="java.util.ArrayList"%>
 
 	<% Vo_Product pvo = (Vo_Product)request.getAttribute("pvo"); %>
 	<% List<Vo_Product> plist = (List)request.getAttribute("plist"); %>
@@ -130,6 +134,62 @@
 	
 							
 	</script>
+	
+	<script type="text/javascript">
+		$(function(){
+							
+		$("#selcolor").on('change',function(){
+								
+			var selcolor = $("#selcolor option:selected").text();
+			var pseq = ${pvo.prod_no};
+							
+				console.log(selcolor);
+								
+				$.ajax({
+								
+					url:"<%=request.getContextPath()%>/Product.do?command=selsize",
+					type : 'get',
+					dataType:"json",
+					data: {
+							"pseq" : pseq,
+							"selcolor" : selcolor
+						 },
+									
+					success : function(data) {
+					$("#selsize").html("<option value = '' selected = 'selected'>선택</option>");
+						var sizelist = data.ressize;										
+							for(var i = 0 ; i<data.sizecount ; i++){
+								$("#selsize").append($("<option>").val(sizelist[i]).text(sizelist[i]))
+								}
+							},
+							error : function() {
+								 alert("해당 컬러의 사이즈를 가져오는데에 실패하였습니다.");
+								    }
+								})
+							});
+						});
+						
+						</script>
+						
+						<!-- 컬러가 여러개일경우 중복을 제거해주는 과정 from 성일 -->
+						<%
+						
+						ArrayList<Vo_Prod_option> povolist = (ArrayList<Vo_Prod_option>)request.getAttribute("povo");
+						HashSet colorset = new HashSet();
+						for(int i = 0 ; i<povolist.size() ; i++){
+							colorset.add(povolist.get(i).getProd_color());
+						}
+						
+						List<String> colorlist = new ArrayList<String>();
+						Iterator it = colorset.iterator();
+						
+						while(it.hasNext()){
+							colorlist.add((String)it.next());
+						}
+						
+						%>
+	
+	
 
 </head>
 
@@ -229,9 +289,9 @@
 						<div class="product-size">
 							<span>색상:</span> 
 							<select class="form-control" id = "selcolor" name = "color" onchange="selectNum();">
-								<option value = "choice">선택</option>
-								<c:forEach var = "color" items = "${povo}">
-								<option value = "${color.prod_color}">${color.prod_color}</option>
+								<option value = "">선택</option>
+								<c:forEach var = "color" items = "<%=colorlist %>">
+								<option value = "${color}">${color}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -240,11 +300,7 @@
 						<div class="product-size">
 							<span>사이즈:</span> 
 							<select class="form-control" id = "selsize" name = "size" onchange="selectNum();">
-								<option value = "choice">선택</option>
-								<c:forEach var = "size" items = "${povo}">
-								<option value = "${size.prod_size}">${size.prod_size}</option>
-								</c:forEach>
-								
+								<option value = "" selected = "selected">선택</option>
 							</select>
 						</div>
 						

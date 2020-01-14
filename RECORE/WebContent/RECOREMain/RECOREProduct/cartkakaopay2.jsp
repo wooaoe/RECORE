@@ -47,7 +47,7 @@
  		var total_tmp = $("#totalPrice").val();
  		var prod_id_tmp = $("#prod_id").val();
 		 
- 		 var url = "Product.do?command=cartComplete&prod_id=" + prod_id_tmp + 
+ 		var url = "Product.do?command=cartComplete&prod_id=" + prod_id_tmp + 
  					"&totalPrice=" + total_tmp + "&amount=" + amount_tmp + "&order_seq=" + order_seq_tmp;
  			 		
  		opener.location.href = url;
@@ -67,7 +67,7 @@
 				window.close();
 				
 			} else { 
-			}
+		}
 	});
  });
 	

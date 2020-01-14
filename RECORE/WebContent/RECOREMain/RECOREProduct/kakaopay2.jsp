@@ -23,7 +23,7 @@
 	<% int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));%>
 	<% int prod_id = Integer.parseInt(request.getParameter("prod_id"));%>
 	<% int acc_point = Integer.parseInt(request.getParameter("acc_point"));%>
-    <% String acc_addrs[] = request.getParameterValues("acc_addr"); %>
+    <% String acc_addrs = request.getParameter("acc_addrs"); %>
    
     
 
@@ -69,6 +69,11 @@
  			var prod_no = <%=prod_no%>;
 			var result = confirm('카카오페이 결제를 취소하시겠습니까?');
 			
+			
+			
+			
+			
+			
 			if(result) { 
 				var url = "Product.do?command=payDelete&order_seq=" + order_seq + "&pseq=" + prod_no;
 				alert(order_seq);
@@ -94,8 +99,10 @@
 				<strong class="img_pay logo_kakaopay">kakaopay</strong>
 			</div>
 			<form action=""> 
-			<%-- <input type = "hidden" name = "command" value = "payDelete"/>
-			<input type = "hidden" name = "order_no" value = "<%=order_no%>"/> --%>
+			<input id = "amount" type = "hidden" name = "amount" value = "<%=amount%>"/>
+			<input id = "totalPrice" type = "hidden" name = "totalPrice" value = "<%=totalPrice%>"/> 
+			<input id = "prod_id" type = "hidden" name = "prod_id" value = "<%=prod_id%>"/> 
+			<input id = "order_seq" type = "hidden" name = "order_seq" value = "<%=order_seq%>"/> 
 			<div class="layer_body">
 					<fieldset>
 						<legend class="screen_out">휴대폰 번호 및 생년월일 입력</legend>

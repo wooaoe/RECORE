@@ -14,7 +14,7 @@
 	<% String totalPrice = (String)request.getAttribute("totalPrice");%>
 	<% String prod_id = (String)request.getAttribute("prod_id");%>
 	<% int point = Integer.parseInt(request.getParameter("acc_point")); %>
-	<% String acc_addrs[] = request.getParameterValues("acc_addr"); %> 
+	<% String acc_addrs = (String)request.getAttribute("acc_addrs"); %> 
 
     
 <!DOCTYPE html>
@@ -45,64 +45,55 @@
     
 <script type="text/javascript">
 	
-	function checkval(){
-		
-		var phone = $("#userPhone").val();
-		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
-		var phonNumberCheck = RegExp(/^01[0179][0-9]{7,8}$/);
-		
-		if(phone.length == 11 && phonNumberCheck.test(phone) == true){
-			$("#em").hide();
-			$("#userBirth").focus();
-			$("#em2").text("특수문자 없이 숫자만 입력해주세요.");
-		}else if(phone.length == 0 || phone.length < 11 || regExp.test(phone) != true || phonNumberCheck.test(phone) != true ){
-			$("#em").show();
-			
-		}else if(phonNumberCheck.test(phone) != true){
-			$("userPhone").val('');
-		}
-		
+function checkval(){
+	
+	var phone = $("#userPhone").val();
+	var phonNumberCheck = RegExp(/^01[0179][0-9]{7,8}$/);
+	
+	if(phone.length == 11 && phonNumberCheck.test(phone)){
+		$("#em").hide();
+		$("#userBirth").focus();
+		$("#em2").text("특수문자 없이 숫자만 입력해주세요.");
+	}else if(phone.length == 0 || phone.length < 11 || !phonNumberCheck.test(phone) ){
+		$("#em").show();
 	}
-	function checkval2(){
-		
-		var birth = $("#userBirth").val();
-		var phone = $("#userPhone").val();
-		var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
-		var phonNumberCheck = RegExp(/^01[0179][0-9]{7,8}$/);
-		
-		if(birth.length == 6 && regExp.test(birth) == true){
-			$("#em2").hide();
-		}else if(birth.length == 0 || birth.length < 6 || regExp.test(birth) ==false || regExp.test(birth) == false){
-			$("#em2").show();
-			$("#request").prop("disabled", true);
-		}
-		if(birth.length == 6 && phone.length == 11 && regExp.test(birth) && phonNumberCheck.test(phone)){
-			$("#request").css("background-color", "#ffe900").css("color", "black");
-			$("#request").prop("disabled", false);
-			return true;
-		}
-		if(birth.length < 6 || phone.length < 11 || birth.length == 0 || phone.length == 0 || 
-				!regExp.test(phone) || !regExp.test(birth)){
-			$("#request").prop("disabled", true);
-			$("#request").css("background-color", "#ddd").css("color", "#999");
-			return false;
-		}
+	
+}
+function checkval2(){
+	
+	var birth = $("#userBirth").val();
+	var phone = $("#userPhone").val();
+	var regExp = /([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))/;
+
+	
+	if(birth.length == 6 && regExp.test(birth)){
+		$("#em2").hide();
+	}else if(birth.length == 0 || birth.length < 6 || !regExp.test(birth)){
+		$("#em2").show();
 	}
+	if(birth.length == 6 && phone.length == 11 && regExp.test(birth)){
+		$("#request").css("background-color", "#ffe900").css("color", "black");
+		$("#request").prop("disabled", false);
+	}
+	if(birth.length < 6 || phone.length < 11 || birth.length == 0 || phone.length == 0 || !regExp.test(birth)){
+		$("#request").css("background-color", "#ddd").css("color", "#999");
+		$("#request").prop("disabled", true);
+	}
+}
 	
  	 $(document).ready(function(){
 		
 		$("#request").click(function(){ 
-		 
 			
 			var arr_amount = $("#amount").val();
 			var arr_totalPrice = $("#totalPrice").val();
 			var arr_prod_id = $("#prod_id").val();
 			var test_point = <%=point%>;
-			 var accinfo = new Array();
-				accinfo = ["<%=acc.getAcc_zipcode()%>", "<%=acc.getAcc_addr()%>", "<%=acc.getAcc_addr2()%>"]; 
+			var tmp = $("#acc_addrs").val();
+			
 				
 			var url = "Product.do?command=cartkakaocall2&amount=" + arr_amount + "&totalPrice=" + arr_totalPrice + 
-							"&prod_id=" + arr_prod_id + "&acc_addrs=" + accinfo + "&acc_point=" + test_point; 
+							"&prod_id=" + arr_prod_id + "&acc_addrs=" + tmp + "&acc_point=" + test_point; 
 							
 				location.href = url; 
 			
@@ -142,6 +133,7 @@
 						 <input id ="amount" type = "hidden" name = "amount" value = "<%=amount%>"/> 
 						 <input id ="totalPrice" type = "hidden" name = "totalPrice" value = "<%=totalPrice%>"/> 
 						 <input id ="prod_id" type = "hidden" name = "prod_id" value = "<%=prod_id%>"/> 
+						 <input type = "hidden" id = "acc_addrs" name = "acc_addrs" value = "${acc_addrs}"/>
 							<fieldset class="fld_payask">
 								<legend class="screen_out">결제정보입력</legend>
 								<ul class="list_payask">

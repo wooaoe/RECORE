@@ -28,6 +28,9 @@
 	<% List prod_id = (List)request.getAttribute("prod_id"); %> 	
 
 
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,12 +119,12 @@
 	
 	 $(document).ready(function(){ //적립금 모두 사용 체크하면 발생하는 이벤트 함수 
 		
-		
-		var point = <%=acc.getAcc_point()%>;
-		var originprice = 50000;
-		var numformat = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";	
-		var numformat_point = "<fmt:formatNumber>-<%=acc.getAcc_point()%></fmt:formatNumber>원";
-		var res = "<fmt:formatNumber>${sum}</fmt:formatNumber>원";
+		/* var orginprice_tmp = $("#totalPrice").val(); */
+	 	
+		var point = $("#point").val();
+		var originprice = $("#total").val();
+		var numformat_point = "<fmt:formatNumber>${vo.acc_point}</fmt:formatNumber>원";
+		var res = originprice - point;
 		
 			$("#allDepositCheckboxV2").change(function(){ //모두사용 체크박스에 변화가 있을 때 발생하는 함수 시작 
 							
@@ -137,7 +140,8 @@
 						
 					}else{ //포인트값보다 크고, 5만원 이상이면 발생 
 						$("#point2").html(numformat_point); //결제 정보 적립금 부분에 html태그 뿌려줌 
-						$("#totalPrice").html(res); //포인트가 차감된 전체 금액 html태그 뿌려줌 
+						$("#totalPrice").text(res+ "원"); //포인트가 차감된 전체 금액 html태그 뿌려줌 
+						
 						$("#point").val("0"); //모두 사용을 누르면 적립금 value = 0으로 세팅 
 						$("#point").attr("readonly", true);
 					}
@@ -161,7 +165,6 @@
 		
 	    var pop = window.open("RECOREMain/RECOREProduct/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes," + "left=" + popupX + ", top=" + popupY);
 	}
-	
 		
 	 function payment(){ //결제하기 누르면 발생하는 이벤트 
 
@@ -169,8 +172,6 @@
 			alert("동의란을 체크하세요.");
 		}else if($("#kakaoV2").prop("checked")==false){
 			alert("결제수단을 체크해주세요.");
-		}else if($("#user_sameV2").is(":checked") == false){
-			alert("주소를 입력해주세요.");
 		}else{
 			var winHeight = document.body.clientHeight;	// 현재창의 높이
 			var winWidth = document.body.clientWidth;	// 현재창의 너비
@@ -182,12 +183,16 @@
 			var popX = winX + (winWidth - 434)/2;
 			var popY = winY + (winHeight - 569)/2;
 			
+			var zipcode1 = $("#zipNo").val();
+			var addr1 = $("#roadAddrPart1").val();
+			var addr2 = $("#addrDetail").val();
 			var accinfo = new Array();
-			accinfo = ['<%=acc.getAcc_zipcode()%>', '<%=acc.getAcc_addr()%>', '<%=acc.getAcc_addr2()%>'];
+			
+			accinfo = [zipcode1, addr1, addr2];
 			alert(accinfo); //해당하는 계정의 주소를 배열에 담아줌 
 			 
 			var zeropoint = 0;
-			var usingpoint = <%=acc.getAcc_point()%>;
+			var usingpoint = $("#point").val();
 			
 			if($("#allDepositCheckboxV2").is(":checked") == false){ 
 				//적립금 모두 사용이 체크되어 있지 않다면 point = 0로 보내기
@@ -219,7 +224,6 @@
 		document.form.addrDetail.value = addrDetail;
 		document.form.zipNo.value = zipNo;
 	}
-   
 	</script>
 	
 	<script type="text/javascript">
@@ -475,32 +479,6 @@
 									<option value="018">018</option>
 									<option value="019">019</option>
 								</select> 
-								
-								<script type="text/javascript">
-									$(function(){
-										
-										var options = $("#cellphone option:selected").val();
-										
-										$("#cellphone").on("change", function(){
-										if(options == 010){
-											$("#cellPhone").prop("value", "010"); 
-											alert($("#cellPhone").val());
-										}else if(options == 011){
-											$("#cellPhone").val("011");
-											alert($("#cellPhone").val())
-										}else if(options == 016){
-											$("#cellPhone").val("016");
-										}else if(options == 017){
-											$("#cellPhone").val("017");
-										}else if(options == 018){
-											$("#cellPhone").val("018");
-										}else if(options == 019){
-											$("#cellPhone").val("019");
-										}
-										});
-
-									});
-								</script>
 								<input name="cellPhone2" type="tel" maxlength="4"
 									value="<%=arr[1]%>"> 
 								<input name="cellPhone3"
@@ -544,6 +522,8 @@
 						<label for="allDepositCheckboxV2">모두사용</label>
 					</div>
 					<c:set var = "pointusing" value = "<%=acc.getAcc_point()%>"></c:set>
+					<input type = "hidden" id = "point" name = "point" value = "${pointusing}"/>
+					<input type = "hidden" id = "total" name = "total" value = "${sum}"/>
 				
 			</form>
 			

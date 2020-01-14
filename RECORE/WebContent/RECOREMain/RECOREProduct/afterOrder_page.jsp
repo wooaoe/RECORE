@@ -23,7 +23,7 @@
     <% int totalPrice = Integer.parseInt(request.getParameter("totalPrice")); %>
    	<% int order_seq = Integer.parseInt(request.getParameter("order_seq")); %>
    	<% int amount = Integer.parseInt(request.getParameter("amount")); %>
-    
+    <% List<String> acc_addrs = (List<String>)request.getAttribute("acc_addrs"); %>
 
 <!DOCTYPE html>
 <html>

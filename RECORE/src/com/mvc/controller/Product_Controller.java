@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import com.mvc.dao.MyPageDao;
 import com.mvc.dao.MyPageDaoImp;
 import com.mvc.dao.ProductDao;
@@ -208,6 +210,7 @@ public class Product_Controller extends HttpServlet {
 
 			dispatch("./RECOREMain/RECOREProduct/Prod_Checkout2.jsp", request, response);
 
+			
 		} else if (command.equals("cartkakaocall")) {
 
 			List<Vo_Product> plist = dao.P_selectAll();
@@ -225,6 +228,17 @@ public class Product_Controller extends HttpServlet {
 			request.setAttribute("totalPrice", total);
 			request.setAttribute("prod_id", prod_id);
 			request.setAttribute("amount", amount);
+			
+			String resinfo = request.getParameter("acc_addrs");
+			System.out.println("kakaocall2의 acc_addrs : " + resinfo);
+
+			String info2[] = resinfo.split(",");
+
+			for (int i = 0; i < info2.length; i++) {
+				System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
+			}
+			request.setAttribute("acc_addrs", resinfo);
+			
 
 			dispatch("./RECOREMain/RECOREProduct/cartkakaopay.jsp", request, response);
 
@@ -247,7 +261,9 @@ public class Product_Controller extends HttpServlet {
 			for (int i = 0; i < info2.length; i++) {
 				System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
 			}
-
+			
+			request.setAttribute("acc_addrs", resinfo);
+			
 			int order_seq = dao.O_CurrVal();
 			request.setAttribute("order_seq", order_seq);
 			System.out.println("컨트롤러의 order_seq : " + order_seq);
@@ -277,7 +293,18 @@ public class Product_Controller extends HttpServlet {
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
 			System.out.println("povo prod_id : " + povo.get(0).getProd_id());
+			
+			String resinfo = request.getParameter("acc_addrs");
+			System.out.println("kakaocall2의 acc_addrs : " + resinfo);
 
+			String info2[] = resinfo.split(",");
+
+			for (int i = 0; i < info2.length; i++) {
+				System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
+			}
+			request.setAttribute("acc_addrs", resinfo);
+
+			
 			dispatch("./RECOREMain/RECOREProduct/kakaopay.jsp", request, response);
 
 		} else if (command.equals("kakaopaycall2")) {
@@ -291,35 +318,27 @@ public class Product_Controller extends HttpServlet {
 			ArrayList<Vo_Prod_option> povo = dao.po_selectOne(pvo);
 			request.setAttribute("povo", povo);
 
-//			int prod_id = Integer.parseInt(request.getParameter("prod_id"));
-//			System.out.println("컨트롤러 prod_id : " + prod_id);
-//			int amount = Integer.parseInt(request.getParameter("amount"));
-//			System.out.println("컨트롤러 prod_amount : " + amount);
-//			int acc_no = Integer.parseInt(request.getParameter("acc_no"));
-//			System.out.println("컨트롤러 acc_no : " + acc_no);
-//			int total = Integer.parseInt(request.getParameter("totalPrice"));
-//			System.out.println("컨트롤러 prod_total : " + total);
+			String resinfo = request.getParameter("acc_addrs");
+			System.out.println("kakaocall2의 acc_addrs : " + resinfo);
 
+			String info2[] = resinfo.split(",");
+			
+			for (int i = 0; i < info2.length; i++) {
+				System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
+			}
+			
 			int acc_point = Integer.parseInt(request.getParameter("acc_point"));
 			System.out.println("kakaocall의 accpoint : " + acc_point);
 
 			List<Vo_Order_Num> orderlist = dao.Order_selectAll();
 			request.setAttribute("orderlist", orderlist);
 			System.out.println("컨트롤러의 orderlist : " + orderlist);
-
-			String resinfo = request.getParameter("acc_addrs");
-			System.out.println("컨트롤러의 resinfo : " + resinfo);
-
-			String info2[] = resinfo.split(",");
-
-			for (int i = 0; i < info2.length; i++) {
-				System.out.println("info2[" + i + "]의 배열 값 : " + info2[i]);
-			}
-
+			
 			int order_seq = dao.O_CurrVal();
 			request.setAttribute("order_seq", order_seq);
 			System.out.println("컨트롤러의 order_seq : " + order_seq);
 
+			
 			boolean onum = dao.O_insert(acc.getAcc_no(), info2, acc_point);
 
 			if (onum) {
@@ -329,6 +348,7 @@ public class Product_Controller extends HttpServlet {
 						"Product.do?command=ProdDetail&pseq=" + pseq + "&catdno=" + pvo.getProd_catd(), response);
 			}
 
+			
 		} else if (command.equals("payComplete")) {
 
 			int pseq = Integer.parseInt(request.getParameter("pseq"));
@@ -449,8 +469,7 @@ public class Product_Controller extends HttpServlet {
 			System.out.println("cartcomplete의 order_price 확인 : " + prod_price);
 			
 			//결제완료 후 장바구니 삭제
-			boolean tmp = mdao.My_deleteCart_All(acc.getAcc_no());
-			
+			boolean tmp = mdao.My_deleteCart_All(acc.getAcc_no());			
 			if (pnum) {
 			 dispatch("./RECOREMain/RECOREProduct/afterOrder_cart.jsp", request, response);
 			} else {
@@ -641,6 +660,39 @@ public class Product_Controller extends HttpServlet {
 			}
 			jsResponse("상품등록에 성공 하였습니다.", "Product.do?command=ProdSelectAll&pageno=1", response);
 
+			
+		} else if(command.equals("selsize")) {
+			
+			System.out.println("selsize 커맨드 실행");
+			
+			int pseq = Integer.parseInt(request.getParameter("pseq"));
+			System.out.println("pseq : " + pseq);
+			
+			String selcolor = request.getParameter("selcolor");
+			
+			System.out.println("선택한 컬러 : "+ selcolor);
+			
+			Vo_Product pvo = dao.P_selectOne(pseq);
+			List<Vo_Prod_option> polist = dao.po_selectOne(pvo);
+			
+			List<String> sizelist = new ArrayList<String>();
+			
+			for(Vo_Prod_option po : polist) {
+				if(po.getProd_color().equals(selcolor)) {
+					sizelist.add(po.getProd_size());
+				}
+			}
+			
+			int sizecount = sizelist.size();
+
+			JSONObject obj = new JSONObject();
+			System.out.println("선택한 컬러의 size 리스트 = "+sizelist);
+			
+			obj.put("sizecount", sizecount);		
+			obj.put("ressize", sizelist);
+			
+			PrintWriter out = response.getWriter();
+			out.println(obj.toJSONString());
 		}
 	}
 
