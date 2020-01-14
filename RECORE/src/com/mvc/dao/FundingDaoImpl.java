@@ -49,6 +49,8 @@ public class FundingDaoImpl implements FundingDao {
 						rs.getString(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getDate(8), rs.getDate(9),
 						rs.getString(10));
 				
+				System.out.println(tmp);
+				
 				list.add(tmp);
 				
 			}
